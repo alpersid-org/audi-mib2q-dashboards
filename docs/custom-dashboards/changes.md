@@ -4,6 +4,19 @@ This ledger describes concrete changes for reviewers and subsequent agents.
 Chronological session evidence remains append-only in [audit/LOG.md](audit/LOG.md).
 Current work state is in [audit/CURRENT.md](audit/CURRENT.md).
 
+## P2-05 — reviewable increment package (2026-11-07)
+
+User request: "Start P2-05". Branch `feature/p2-05-package`. Documentation only;
+no tests, builds, demos or preview generation (user's no-test instruction).
+
+| Changed path | Change and purpose |
+| --- | --- |
+| [package.md](package.md) | New reviewer entry point: quick start, artifacts, historical P2-04 outcomes, limitations/integration blocker, change summary vs upstream, rollback, step-5 acceptance. |
+| [previews README](../../dashboard/previews/README.md) | States preview verification history and links the package page. |
+| [PLAN.md](PLAN.md), [status.md](status.md), [HANDOFF.md](HANDOFF.md), [AGENTS.md](../../AGENTS.md), [PROJECT.md](../../PROJECT.md) | Record P2-05 scope/state and link package.md. |
+| [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | START and COMPLETE events; checkpoint. |
+| [changes.md](changes.md) | This section. |
+
 ## P2-04 — final testing stage (2026-11-07)
 
 User request: "Start P2-04, but before make sure you update the documentation,

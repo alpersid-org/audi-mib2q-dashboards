@@ -566,3 +566,28 @@ feature; earlier project history is available in Git and [status.md](../status.m
   commit or rewrite.
 - Tests: none run (active user instruction). P2-04 results remain historical.
 - Next action: push master and feature branch, verify remote SHAs; await task.
+
+## 2026-11-07T20:30:46Z | 20261107T200748Z-claude-10 | START / P2-05
+
+- Task/status: `P2-05` (PLAN step 5: package the reviewable increment) / `IN_PROGRESS`.
+- Authorization: user request "Start P2-05". Active testing policy: "do not run
+  any test, there will be a ask at the end to implement and run the tests" — no
+  tests, builds-as-validation, demos, benchmarks or preview generation.
+- Branch `feature/p2-05-package` from master f7e9fb2.
+- Read-only git evidence: git diff --name-status b127988 HEAD lists 48 paths, all
+  `A` (added); no upstream file modified or deleted. git diff 85c523e HEAD --
+  dashboard tests is empty, so code/tests/previews are unchanged since P2-04
+  verified the saved previews byte-identical to CLI output. No regeneration needed.
+- Plan: add docs/custom-dashboards/package.md (quick start, artifacts, historical
+  test outcomes, limitations/blocker, change summary vs upstream, rollback) and
+  update previews README, PLAN, status, HANDOFF, changes, PROJECT, AGENTS, audit.
+
+## 2026-11-07T20:32:01Z | 20261107T200748Z-claude-11 | COMPLETE / P2-05 READY_FOR_REVIEW
+
+- Added docs/custom-dashboards/package.md; updated previews README, PLAN,
+  status, HANDOFF, AGENTS, PROJECT, changes and CURRENT.
+- Evidence used: read-only git only (name-status vs b127988: 48 additions; no
+  dashboard/tests change since 85c523e). Nothing built, tested or generated.
+  Markdown link/whitespace checks also not run (no-test instruction); manual review.
+- Next action: commit/push feature/p2-05-package; await review/merge approval or
+  the final test request.

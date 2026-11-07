@@ -14,6 +14,10 @@ not write new test code, until the user explicitly asks to implement and run
 the tests at the end. Continue documenting every change; record skipped checks
 as DEFERRED BY USER. P2-04 results remain historical evidence only.
 
+**P2-05 (current):** user request "Start P2-05". Packaging only, on
+`feature/p2-05-package`: [package.md](package.md). No tests or generation run;
+inherited-file check done by read-only git (all 48 upstream diffs are additions).
+
 **P2-04 (complete, historical):** user request "Start P2-04, but before make sure you update the documentation, as instructed".
 This is the final testing stage; the testing override below has ended. Done on
 `feature/p2-04-validation`; report in [validation.md](validation.md). Targets are
@@ -87,7 +91,7 @@ git diff --name-only b127988a68c8d690841f4a75d35717ffc01e668e HEAD
 | 2 | 1; user request received | Compact/Extended frame builders and SVG adapter | Implemented with four saved host SVGs; final testing/visual review deferred by user |
 | 3 | 1–2; user request received | Disabled-by-default configuration and suppression behavior | Implemented on host (config.c/manager.c, two CLIs); compiled, tests deferred by user |
 | 4 | 1–3; user request received | Automated tests, host benchmark and regression report | Complete on `feature/p2-04-validation`; dashboard suites/sanitizers pass; upstream results and unavailable checks in [validation.md](validation.md) |
-| 5 | 4 | Reproducible previews, documentation and rollback evidence | Deferred |
+| 5 | 4; user request received | Reproducible previews, documentation and rollback evidence | Documented in [package.md](package.md) on `feature/p2-05-package`; nothing re-executed (no-test instruction) |
 | 6 | 5 plus firmware/surface evidence | Separately reviewed vehicle feasibility decision | Blocked; no vehicle execution authorized |
 
 Each future step should be a reviewable commit. Fix a failed acceptance criterion
@@ -194,6 +198,12 @@ production code to make unavailable tests appear to pass.
 
 Acceptance: a developer can clone the fork, build, test and inspect the
 prototype without vehicle access; documentation makes the integration blocker clear.
+
+P2-05 state: items 1–4 documented in [package.md](package.md). Previews are
+the P2-02 files verified in P2-04 (no code change since). Item 4 verified by
+`git diff --name-status b127988 f7e9fb2`: 48 additions, no modifications or
+deletions. The clone/build/test walkthrough is documented, not re-executed,
+under the user's no-test instruction.
 
 ## 6. Vehicle feasibility investigation — BLOCKED / future Phase 2 work
 

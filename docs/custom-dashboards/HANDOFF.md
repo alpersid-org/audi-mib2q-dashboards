@@ -9,6 +9,11 @@ not write new test code, until the user explicitly asks to implement and run
 the tests at the end. Continue documenting every change; record skipped checks
 as DEFERRED BY USER. P2-04 results remain historical evidence only.
 
+**P2-05 handoff (current):** user request "Start P2-05". Packaging page
+[package.md](package.md) on `feature/p2-05-package`; no tests run. After P2-05
+the remaining Phase 2 step is 6 (vehicle feasibility), which is blocked; the
+user's deferred final test request is pending.
+
 **P2-04 handoff (historical):** the user requested "Start P2-04, but before make sure you update the documentation, as instructed".
 P2-04 is the final testing stage; the no-test instruction below has ended. It is
 complete on `feature/p2-04-validation` (not merged); results in

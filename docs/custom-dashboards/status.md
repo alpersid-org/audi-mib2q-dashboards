@@ -6,6 +6,14 @@ not write new test code, until the user explicitly asks to implement and run
 the tests at the end. Continue documenting every change; record skipped checks
 as DEFERRED BY USER. P2-04 results remain historical evidence only.
 
+## Current work — P2-05 (package the increment)
+
+User request: "Start P2-05". Branch `feature/p2-05-package` from master f7e9fb2.
+Added [package.md](package.md): quick start, artifacts, historical P2-04
+outcomes, limitations and the VC-surface integration blocker, change summary
+vs upstream (48 added paths, no upstream file modified/deleted, by read-only
+git) and rollback. Nothing run (user's no-test instruction). Not merged.
+
 ## Completed — P2-04 (final testing stage)
 
 User request: "Start P2-04, but before make sure you update the documentation, as instructed". Branch `feature/p2-04-validation` from master

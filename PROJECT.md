@@ -42,6 +42,7 @@ adapters are not implemented, and no Android communication is added now.
 | [Current agent checkpoint](docs/custom-dashboards/audit/CURRENT.md) | Active task, partial work, validation and exact next action for cross-agent resume. |
 | [Agent audit trail](docs/custom-dashboards/audit/README.md) | Mandatory checkpoint protocol and append-only event history. |
 | [Host module API and commands](docs/custom-dashboards/module.md) | Implemented P2-01 contracts, units, limits, tests and text demo. |
+| [Reviewable increment package](docs/custom-dashboards/package.md) | P2-05 quick start, artifacts, test outcomes, limitations/blocker, change summary and rollback. |
 | [Host layouts and previews](docs/custom-dashboards/rendering.md) | P2-02 SVGs, API, typography, constraints and deferred final checks. |
 | [Change ledger](docs/custom-dashboards/changes.md) | Per-file record of every P2-02 change. |
 | [Architecture](docs/custom-dashboards/architecture.md) | Modular host prototype design and future integration boundary. |

@@ -13,7 +13,11 @@ within **roadmap Phase 2** of the mib2q-carplay-based project.
 **Testing is deferred again:** after P2-04 the user said "do not run any test, there will be a ask at the end to implement and run the tests".
 No tests or new test code until that final request; see Validation below.
 
-**Last task — P2-04 (complete on `feature/p2-04-validation`, not merged):** the user requested "Start P2-04, but before make sure you update the documentation, as instructed".
+**Current task is P2-05:** the user requested "Start P2-05" (PLAN step 5,
+package the reviewable increment) on `feature/p2-05-package`; documentation only,
+no tests. See [package.md](docs/custom-dashboards/package.md).
+
+**Earlier task — P2-04 (complete; merged to master on request):** the user requested "Start P2-04, but before make sure you update the documentation, as instructed".
 P2-04 is PLAN step 4 (automated validation, benchmark, regression report) and is
 the final testing stage the earlier no-test instruction waited for, so host tests
 are now authorized. Work on `feature/p2-04-validation`. No GEM, master merge,
