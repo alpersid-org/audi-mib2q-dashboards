@@ -14,7 +14,7 @@ Full text and gap table: [requirements.md](../requirements.md#phase-2-scope--rea
 ## Active task and policies
 
 - Task/state: `P2-07` (omit unverified widgets, scope req. 6/8) /
-  `READY_FOR_REVIEW` on `feature/p2-07-verified-widgets`. DOC-SCOPE is on master.
+  `COMPLETE`, merged to master on user request; P2-08 starting.
 - Done: trip/consumption removed; split navigation widgets; Extended redefined;
   Extended previews deleted. `make -C dashboard all` compiled (build only).
 - Known: existing tests are out of date and will fail (list in

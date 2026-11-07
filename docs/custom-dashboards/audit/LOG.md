@@ -644,3 +644,11 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Tests: not run or edited (user instruction); existing suites now out of date,
   listed in widgets-p2-07.md. No link/whitespace checks run; manual review.
 - Next: commit/push branch; await merge approval and step-8 decisions.
+
+## 2026-11-07T20:45:11Z | 20261107T200748Z-claude-16 | PUBLICATION / P2-07 TO MASTER + START P2-08
+
+- User: "merge to master and start step 8". Covers this fast-forward only.
+- Git: origin/master f89a58c is an ancestor; master fast-forwarded to the commit
+  containing this event (1e2cc2b P2-07 + this event). No merge commit.
+- Tests: none run (user instruction); suites remain out of date since P2-07.
+- Next: P2-08 VehicleDataProvider on feature/p2-08-vehicle-provider.
