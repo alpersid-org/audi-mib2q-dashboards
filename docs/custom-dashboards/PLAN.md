@@ -23,6 +23,8 @@ generated previews are included in the documentation release.
 5. Commit and push the documentation-only project to its own Git repository.
 6. Maintain root AGENTS.md and an AI continuation guide; keep tool-specific entry
    files as pointers to the canonical instructions.
+7. Maintain `audit/CURRENT.md` and append-only `audit/LOG.md`; require agents to
+   checkpoint milestones, tests and incomplete work before context/model handoff.
 
 Acceptance: documentation identifies controllable surfaces, source limitations,
 AAWireless model uncertainty and the host-only fallback. The branch contains
@@ -50,6 +52,8 @@ git diff --name-only b127988a68c8d690841f4a75d35717ffc01e668e HEAD
 
 Each future step should be a reviewable commit. Fix a failed acceptance criterion
 before starting dependent work; record unavailable checks with their actual cause.
+Use task IDs `P2-01` through `P2-06` for steps 1–6 in the audit trail; record
+subtasks under the same feature ID. Read the active checkpoint before resuming.
 
 ## 1. Establish the isolated module and provider
 

@@ -17,6 +17,8 @@ Development branch: `feature/custom-dashboards`.
 | --- | --- |
 | [AI agent instructions](AGENTS.md) | Canonical scope, safety, engineering and validation rules for agents. |
 | [AI continuation guide](docs/custom-dashboards/HANDOFF.md) | Restart checklist, next eligible task and reusable prompt. |
+| [Current agent checkpoint](docs/custom-dashboards/audit/CURRENT.md) | Active task, partial work, validation and exact next action for cross-agent resume. |
+| [Agent audit trail](docs/custom-dashboards/audit/README.md) | Mandatory checkpoint protocol and append-only event history. |
 | [Architecture](docs/custom-dashboards/architecture.md) | Modular host prototype design and future integration boundary. |
 | [Repository investigation](docs/custom-dashboards/analysis.md) | Confirmed capabilities, plausible but unverified options, and unknowns with source references. |
 | [Executable Phase 2 plan](docs/custom-dashboards/PLAN.md) | Ordered tasks, commands, acceptance criteria and blocked work. |

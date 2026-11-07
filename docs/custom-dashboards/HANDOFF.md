@@ -3,6 +3,12 @@
 Read the canonical [AGENTS.md](../../AGENTS.md) first. This guide is a restart
 checklist for any agent or coding tool; it is not a second set of project rules.
 
+For live task state, read [audit/CURRENT.md](audit/CURRENT.md) and recent
+[audit/LOG.md](audit/LOG.md) events. The checkpoint below describes the initial
+documentation milestone; a later authorized task recorded in the audit can
+supersede it. Follow [the audit lifecycle](audit/README.md), including writing
+a RESUME event before making changes.
+
 ## Current checkpoint
 
 - The user requested a separate project containing a fork of the original source,
@@ -53,19 +59,22 @@ task; do not silently interpret the old roadmap as permission to code.
 
 ## Suggested prompt for another AI tool
 
-> Read AGENTS.md and docs/custom-dashboards/HANDOFF.md, then inspect PROJECT.md,
-> status, requirements, analysis, architecture and PLAN.md. Verify the current
-> branch and working tree. Continue only the task I request within the current
-> scope. Preserve the safety boundaries, cite source evidence, and distinguish
-> confirmed behavior from unverified proposals. Update status with actual results
-> and remaining blockers. Do not contact or deploy to the vehicle.
+> Resume the active task in docs/custom-dashboards/audit/CURRENT.md. Read
+> AGENTS.md, the audit protocol/recent log and HANDOFF.md first. Verify the branch,
+> commits and working tree against the checkpoint, preserve partial work, and
+> append a RESUME event. Continue from the recorded next action within the
+> existing user-authorized scope; do not restart completed work or expand scope.
+> Read the linked project documents/source as needed. Keep the audit updated at
+> milestones and before context exhaustion, with exact test results and the next
+> action. Do not contact or deploy to the vehicle.
 
 Append the concrete task, for example "review the architecture document" or,
 when implementation is intended, "implement PLAN step 1 on the host."
 
 ## Completion record for future increments
 
-Maintain these facts in [status.md](status.md), not in an agent's private memory:
+Maintain the live facts in [audit/CURRENT.md](audit/CURRENT.md), append history to
+[audit/LOG.md](audit/LOG.md), and summarize milestones in [status.md](status.md):
 
 - Requested scope and implemented/documented acceptance criteria.
 - Changed modules and any architectural decision with its source evidence.

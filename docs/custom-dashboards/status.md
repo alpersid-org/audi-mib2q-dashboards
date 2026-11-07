@@ -15,6 +15,11 @@ Status date: 2026-11-07. Scope: documentation-only, per the user's latest instru
 - Added canonical AGENTS.md instructions, a continuation guide and entry files for
   Claude, Gemini and GitHub Copilot. They preserve the documentation-only scope
   and identify the first host increment for a later implementation request.
+- Added an agent audit protocol, mutable active checkpoint and append-only event
+  log, linked from all agent entry files, for Codex/Claude continuation.
+
+Live task progress is in [audit/CURRENT.md](audit/CURRENT.md); historical agent
+events are in [audit/LOG.md](audit/LOG.md). Consult these before resuming work.
 
 ## Deferred
 

@@ -17,11 +17,22 @@ or standing authorization to execute them. A later request such as "implement
 the next step" authorizes the relevant host-only increment; proceed within that
 scope without asking again about routine engineering decisions.
 
+This is the initial scope checkpoint. On each resume, reconcile it with the
+latest explicit user instruction and the scope recorded in
+[audit/CURRENT.md](docs/custom-dashboards/audit/CURRENT.md). Preserve an already
+authorized host task across agent switches; update stale scope summaries when
+implementation is actually requested. The audit is evidence of work and scope,
+not permission to bypass safety rules or higher-priority instructions.
+
 Act as an embedded engineer familiar with Audi MIB2/MHI2Q, QNX, C/C++, Java,
 graphics and Android Auto. Prefer demonstrated repository behavior over general
 platform assumptions. Do not invent firmware capabilities or compatibility.
 
 ## Read before choosing work
+
+Start with [the active audit checkpoint](docs/custom-dashboards/audit/CURRENT.md)
+and recent [audit events](docs/custom-dashboards/audit/LOG.md). Follow
+[the audit protocol](docs/custom-dashboards/audit/README.md) before editing.
 
 1. [PROJECT.md](PROJECT.md) — project entry point and intended environment.
 2. [Status](docs/custom-dashboards/status.md) — actual completed work and blockers.
@@ -133,11 +144,30 @@ disable sanitizers, relabel failures as skips or assume a sandbox cause. Record
 exact commands, environment adjustments, results and missing prerequisites.
 Java/QNX/macOS-specific checks may need assets/toolchains not supplied here.
 
+## Mandatory agent audit trail
+
+Every agent must use `docs/custom-dashboards/audit/`, including Claude resuming
+Codex work. Append a START/RESUME event, record the active task and authorized
+scope, and reconcile the checkpoint with the real Git tree before editing.
+Update CURRENT.md and append a factual event at meaningful milestones/test
+batches/blockers, before long or disruptive operations, at least every 30 minutes
+of active work, and before stopping, compaction or a model handoff. Reserve
+context for checkpointing; do not wait for token exhaustion.
+
+Record partial files, dirty/untracked work, exact commands/results, pending
+processes, decisions with evidence, blockers and the exact next action. Keep
+LOG.md append-only; correct history with a new event. Do not store secrets or
+private reasoning. Save source changes and checkpoint together; commit/push when
+authorized so another machine can retrieve them. Mark WIP and unverified checks
+honestly. If a previous agent stopped abruptly, append a recovery RESUME event
+after comparing the checkpoint with actual files and commits.
+
 Before ending a work increment:
 
 1. Check the final diff for unrelated changes and forbidden artifacts.
 2. Update status and the plan with actual completed acceptance criteria, test
    evidence, remaining blockers and the next eligible task.
+   Update audit/CURRENT.md and append a COMPLETE or HANDOFF/PAUSE event too.
 3. Keep the handoff accurate when scope or architecture changes; do not copy
    stale permission restrictions over a later explicit user instruction.
 4. Commit/push when requested and verify the remote branch matches the local
