@@ -12,7 +12,8 @@ CLIs. Details: [config.md](config.md).
 Validation: `make -C dashboard all` compiled cleanly with
 `-std=c99 -Wall -Wextra -Werror -pedantic`. No tests, demos, CLIs or sanitizers
 executed (user's final-stage test deferral). No GEM, upstream runtime, Android or
-vehicle code. Not merged or published to master.
+vehicle code. Fast-forwarded to master at the user's request ("merge to master");
+master therefore includes this compiled-but-untested host code.
 
 ## Current publication — PUBLISH-MASTER
 
