@@ -688,3 +688,12 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Not run; no tests written (user instruction). Required tests listed in
   vehicle-provider.md. No link/whitespace checks run; manual review.
 - Next: commit/push branch; await merge approval and step-9 decisions.
+
+## 2026-11-07T20:54:14Z | 20261107T200748Z-claude-19 | PUBLICATION / P2-08 TO MASTER
+
+- User: "1. approved / commit and push" (item 1 = merge P2-08 into master).
+  Covers this fast-forward only; no release, no installation on the unit.
+- Git: origin/master a256758 is an ancestor; master fast-forwarded to the commit
+  containing this event (0d4448c P2-08 + this event). No merge commit.
+- Tests: none run. Step 9 decisions (head-unit drawing code, display surface)
+  remain open; not inferred from this approval.

@@ -101,7 +101,7 @@ git diff --name-only b127988a68c8d690841f4a75d35717ffc01e668e HEAD
 | 5 | 4; user request received | Reproducible previews, documentation and rollback evidence | Documented in [package.md](package.md) on `feature/p2-05-package`; nothing re-executed (no-test instruction) |
 | 6 | 5 plus firmware/surface evidence | Signal and surface feasibility (scope req. 1–2) | Source review partial; on-car evidence and head-unit authorization needed |
 | 7 | 1–5; user request received | Remove unverified widgets and keep mock out of product paths (req. 6, 8) | Implemented on `feature/p2-07-verified-widgets` ([widgets-p2-07.md](widgets-p2-07.md)); compiled; tests out of date, deferred by user |
-| 8 | 6–7; user request received | VehicleDataProvider: real-time binding through existing pipelines (req. 3–4) | Implemented on `feature/p2-08-vehicle-provider` ([vehicle-provider.md](vehicle-provider.md)); C compiled, most Java uncompilable here (stock classes); not run; verification needs the car |
+| 8 | 6–7; user request received | VehicleDataProvider: real-time binding through existing pipelines (req. 3–4) | Implemented on master (merged on approval) ([vehicle-provider.md](vehicle-provider.md)); C compiled, most Java uncompilable here (stock classes); not run; verification needs the car |
 | 9 | 6, 8 | Virtual Cockpit renderer for Compact/Extended (req. 5) | Proposed; needs surface decision and head-unit authorization |
 | 10 | 8–9 | In-car validation by the user (expected outcome) | Proposed; user installs and tests |
 

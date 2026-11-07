@@ -13,8 +13,8 @@ Full text and gap table: [requirements.md](../requirements.md#phase-2-scope--rea
 
 ## Active task and policies
 
-- Task/state: `P2-08` (VehicleDataProvider, scope req. 3–4) / `READY_FOR_REVIEW`
-  on `feature/p2-08-vehicle-provider`. P2-07 is on master.
+- Task/state: `P2-08` (VehicleDataProvider, scope req. 3–4) / `COMPLETE` as code,
+  merged to master on user approval; unverified on the car.
 - Done: HMI DashboardConfig/DashboardModule (DBV1 record), VehicleDataModule AA
   gating + accessor, AaRgState/AaBridge nav accessor, C db_vehicle_read,
   DB_SOURCE_VEHICLE. C compiled; DashboardConfig.java compiled standalone; other
@@ -24,10 +24,10 @@ Full text and gap table: [requirements.md](../requirements.md#phase-2-scope--rea
 
 ## Git state
 
-- Branch `feature/p2-08-vehicle-provider` from master a256758; master unchanged.
+- master contains P2-08 (fast-forward from a256758).
 
 ## Next action
 
-Await the user: merge approval for P2-08; then step 9 needs (1) head-unit code
+Await the user: step 9 needs (1) head-unit code
 authorization and (2) the display surface choice. Step 10 is the user's install
 and on-car check. Audit: [LOG.md](LOG.md).
