@@ -1,6 +1,6 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T20:28:49Z. Agent: Claude Code.
+Updated: 2026-11-07T20:30:01Z. Agent: Claude Code.
 Session: `20261107T200748Z-claude`.
 
 ## Active task and authorization
@@ -11,7 +11,8 @@ Session: `20261107T200748Z-claude`.
   Record skipped checks as DEFERRED BY USER.
 
 - Task/state: `P2-04` (PLAN step 4: automated validation, host benchmark,
-  regression report) / `COMPLETE` on its branch (not merged).
+  regression report) / `COMPLETE`; fast-forwarded to master on user request
+  ("commit and push to master").
 - User request: "Start P2-04, but before make sure you update the documentation,
   as instructed". P2-04 is the final testing stage the P2-02 no-test instruction
   waited for, so host tests are authorized (dashboard suites, sanitizers,
@@ -43,6 +44,6 @@ Session: `20261107T200748Z-claude`.
 
 No WIP or active processes. Build outputs only under ignored `build/`; scratch
 logs/wrapper live outside the repo. Await the user: P2-05 (packaging, previews,
-rollback evidence; no tests) or a request to merge P2-04 into master (needs
-approval). The policy update is committed on this branch.
+rollback evidence; no tests) Further master merges need new approval.
+P2-04 and the no-test policy are on master.
 Audit: [LOG.md](LOG.md).

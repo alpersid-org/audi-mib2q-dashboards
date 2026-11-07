@@ -555,3 +555,14 @@ feature; earlier project history is available in Git and [status.md](../status.m
   update, including the usual Markdown link/whitespace checks (manual review only).
 - Branch: committed on `feature/p2-04-validation` (P2-04 not merged to master).
 - Next action: await the next task; P2-05 is next eligible, without tests.
+
+## 2026-11-07T20:30:01Z | 20261107T200748Z-claude-09 | PUBLICATION / P2-04 TO MASTER
+
+- Authorization: user request "commit and push to master". Covers this
+  fast-forward only; no release/tag, no vehicle action.
+- Git: working tree was clean; origin/master 12cb0b5 is an ancestor of the
+  branch. master fast-forwarded to the commit containing this event (adds 88d68ea
+  docs, 85c523e P2-04 tests/report, 8e49267 no-test policy, this event). No merge
+  commit or rewrite.
+- Tests: none run (active user instruction). P2-04 results remain historical.
+- Next action: push master and feature branch, verify remote SHAs; await task.

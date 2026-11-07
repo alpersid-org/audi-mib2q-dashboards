@@ -21,7 +21,7 @@ stage it was waiting for. Full report: [validation.md](validation.md).
   adjustments 38/39 pass; `hw301_bridge_tests` unavailable (no IPv6 here).
 - Java/stock scripts unavailable (proprietary HMI JAR/JDK 8 absent); native
   maneuver script passes its Linux part, macOS GL link unavailable.
-- Not merged to master. Next eligible step: P2-05 (packaging, previews,
+- Fast-forwarded to master on user request. Next eligible step: P2-05 (packaging, previews,
   rollback evidence) when requested, without tests (user instruction).
 
 ## Completed — P2-03 (host configuration and manager; merged to master)
