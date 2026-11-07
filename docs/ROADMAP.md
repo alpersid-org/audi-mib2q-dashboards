@@ -28,7 +28,7 @@ reports for another car, firmware or adapter do not resolve these unknowns.
 | Roadmap phase | Deliverable | Current state |
 | --- | --- | --- |
 | 1 — Upstream baseline | Install and establish the upstream project as-is through a separately authorized process. | Vehicle installation/success unconfirmed; local source investigation complete. |
-| 2 — Custom dashboards: Real Vehicle Data Integration | Working Compact/Extended dashboards in the Virtual Cockpit showing real data from existing MMI systems; mock only for tests ([scope](custom-dashboards/requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative)). | CURRENT PHASE, **not complete**. Mock-only host foundation done and tested (P2-01..P2-05). Real data binding, VC rendering and in-car validation outstanding; head-unit work awaits user decision. |
+| 2 — Custom dashboards: Real Vehicle Data Integration | Working Compact/Extended dashboards in the Virtual Cockpit showing real data from existing MMI systems; mock only for tests ([scope](custom-dashboards/requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative)). | CURRENT PHASE, **not complete**. Host foundation done (P2-01..P2-05); P2-07 widget cleanup and P2-08 real data binding implemented, unverified on the car, tests deferred. VC rendering and in-car validation outstanding; head-unit work awaits user decision. |
 | 3 — Independent Android app | Standalone app on Galaxy S23 Ultra, usable without MMI. | Future; not implemented. |
 | 4 — Android/MMI communication | Establish a separately validated data connection; introduce AndroidDataProvider as its normalized adapter. | Future; transport unknown and unimplemented. |
 | 5 — Android data in dashboards | Feed AndroidDataProvider into the same manager/widgets alongside VehicleDataProvider. | Future; depends on validated transport/data and safe display integration. |
@@ -65,11 +65,11 @@ The host foundation below (P2-01..P2-05) is a prerequisite, not the deliverable:
 
 - A common Data Provider Interface returns normalized owned snapshots.
 - **VehicleDataProvider** is the Phase 2 adapter role for demonstrated read-only
-  vehicle/existing-system sources. Wire real fields only after their units,
-  meaning, validity, freshness and session availability are verified. It is
-  currently a design target, not an implemented live adapter.
-- **MockDataProvider** supplies explicit development examples; it is the only
-  implemented provider and must not masquerade as live vehicle data.
+  vehicle/existing-system sources. Implemented in P2-08 (HMI record writer + C
+  reader; [vehicle-provider.md](custom-dashboards/vehicle-provider.md)); not yet
+  verified on the car, so its values are badged UNVERIFIED.
+- **MockDataProvider** supplies explicit examples for tests and development only
+  and must not masquerade as live vehicle data.
 - One Dashboard Manager consumes the common contract. Layouts/widgets see
   semantic values, provenance and validity, not provider-specific transport.
 - Compact and Extended layouts reuse the same Widget System and renderer adapter.
@@ -83,9 +83,9 @@ see [dashboard.h](../dashboard/dashboard.h),
 [module guide](custom-dashboards/module.md) and
 [rendering guide](custom-dashboards/rendering.md).
 
-**Not established:** a safe non-critical VC rectangle, real VehicleDataProvider,
-AndroidDataProvider, provider resolver, live MMI data subscriptions or manager
-activation. Existing guidance/map displayables cannot be assumed available for
+**Not established:** a safe non-critical VC rectangle, on-car verification of the
+VehicleDataProvider, AndroidDataProvider, provider resolver or manager activation
+on the unit. Existing guidance/map displayables cannot be assumed available for
 dashboard use. Retain the host fallback if safety cannot be demonstrated.
 
 Exit target: a working dashboard in the Virtual Cockpit showing verified real

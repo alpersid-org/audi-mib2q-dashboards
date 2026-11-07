@@ -30,11 +30,22 @@ import java.io.FileOutputStream;
  *   [16]  temperature 0.1 C i32 (INT_MIN = none)            [20] range m i32 (-1 = none)
  *   [24]  destination m i32 (-1)  [28] destination s i32 (-1)
  *   [32]  temperature ms u64      [40] range ms u64         [48] navigation ms u64
- *   [56]  session owner u8 (0 none, 1 CarPlay, 2 Android Auto), [57..63] zero
+ *   [56]  session owner u8 (0 none, 1 CarPlay, 2 Android Auto), [57..59] zero
+ *   [60]  writer session u32 (non-zero; new for every start and HMI process)
  *   [64..191] destination UTF-8, NUL-terminated, at most 95 bytes
  *   [192..251] zero               [252] FNV-1a u32 over [0..251]
  * All times are System.currentTimeMillis() sample times; 0 = that part is absent.
  * The navigation time is the OLDEST contributing sample (destination name, estimate).
+ * The write time is taken AFTER all sources were read, so no sample is newer than it
+ * (review R1).  Sequence starts at 1 for each writer session and increases by one.
+ *
+ * Lifecycle (review R2): every start() opens a new writer generation.  At most one
+ * publication is in flight at a time; it may only begin for the current generation,
+ * and file I/O happens outside the lock so stop() never waits for I/O.  stop() bumps
+ * the generation and removes the record unless a publication is in flight; that
+ * publication then sees the changed generation after its rename and removes its own
+ * record.  So no record survives stop(), and an old writer cannot replace a newer
+ * generation's record.  Temporary files are per generation.
  *
  * Pure Java 1.4 apart from the module interfaces.
  */
@@ -45,25 +56,38 @@ public final class DashboardModule implements Module {
     static final int MAGIC = 0x44425631;
     private static final long PERIOD_MS = 500L;
 
-    private Thread writer;
-    private volatile boolean running;
-    private int sequence;
+    /* Distinguishes HMI process starts; mixed with the generation into the session id. */
+    private static final int BOOT = (int)(System.currentTimeMillis() ^ (System.currentTimeMillis() >>> 32));
+
+    private Thread writer;                      /* guarded by this */
+    private boolean running;                    /* guarded by this */
+
+    /* Publication coordination (review R2).  Never held during file I/O except the
+     * small deletes in stop()/cleanup, which must be ordered with publication. */
+    private final Object files = new Object();
+    private int generation;                     /* guarded by files */
+    private boolean publishing;                 /* guarded by files */
 
     public String name() { return "dashboard"; }
 
     public synchronized boolean start(FrameworkRef fw) {
         if (running) return true;
         if (!DashboardConfig.enabled()) {
-            remove();
+            synchronized (files) {
+                generation++;                       /* any old in-flight write cleans up */
+                if (!publishing) remove(generation);
+            }
             return true;                       /* disabled by default: nothing to run */
         }
+        final int gen;
+        synchronized (files) { gen = ++generation; }
         running = true;
         writer = new Thread(new Runnable() {
-            public void run() { writeLoop(); }
+            public void run() { writeLoop(gen); }
         }, "carplay-dashboard");
         writer.setDaemon(true);
         writer.start();
-        Log.i(TAG, "dashboard feed enabled: " + PATH);
+        Log.i(TAG, "dashboard feed enabled: " + PATH + " generation " + gen);
         return true;
     }
 
@@ -72,22 +96,41 @@ public final class DashboardModule implements Module {
         Thread t = writer;
         writer = null;
         if (t != null) t.interrupt();
-        remove();
+        synchronized (files) {
+            generation++;
+            /* With a publication in flight, its post-rename check removes the record. */
+            if (!publishing) remove(generation);
+        }
     }
 
-    private void writeLoop() {
+    private boolean current(int gen) {
+        synchronized (files) { return generation == gen; }
+    }
+
+    static int sessionId(int gen) {
+        int id = BOOT ^ (gen * 0x9e3779b9);         /* bijective in gen for one process */
+        return id != 0 ? id : 1;
+    }
+
+    private void writeLoop(int gen) {
         boolean failLogged = false;
-        while (running) {
+        int sequence = 0;
+        int session = sessionId(gen);
+        while (current(gen)) {
             try { Thread.sleep(PERIOD_MS); }
             catch (InterruptedException e) { return; }
-            if (!running) return;
+            if (!current(gen)) return;
             try {
+                /* Read every source first, then take the write time (review R1). */
                 int owner = CarPlayApp.sessionOwner();
                 AaRgState.DashboardNav nav =
                     owner == CarPlayApp.OWNER_ANDROID_AUTO ? AaBridge.dashboardNav() : null;
-                byte[] rec = encode(++sequence, System.currentTimeMillis(), owner,
-                    VehicleDataModule.dashboardVehicle(), nav);
-                if (!publish(rec)) {
+                VehicleDataModule.DashboardVehicle vehicle = VehicleDataModule.dashboardVehicle();
+                long written = System.currentTimeMillis();
+                byte[] rec = encode(++sequence, written, owner, session, vehicle, nav);
+                int result = publish(gen, rec);
+                if (result < 0) return;                 /* generation ended */
+                if (result == 0) {
                     if (!failLogged) { failLogged = true; Log.w(TAG, "record write failed: " + PATH); }
                 } else {
                     failLogged = false;
@@ -98,7 +141,33 @@ public final class DashboardModule implements Module {
         }
     }
 
-    static byte[] encode(int seq, long now, int owner, VehicleDataModule.DashboardVehicle v,
+    /** 1 published, 0 failed or skipped (try again), -1 the generation has ended. */
+    private int publish(int gen, byte[] rec) {
+        synchronized (files) {
+            if (generation != gen) return -1;
+            if (publishing) return 0;              /* an older writer is still finishing */
+            publishing = true;
+        }
+        boolean ok = false;
+        try {
+            ok = writeAndRename(rec, gen);
+        } finally {
+            synchronized (files) {
+                publishing = false;
+                if (generation != gen) {
+                    /* stop()/restart happened during our I/O; no newer publication could
+                     * start meanwhile, so the record on disk is ours: remove it. */
+                    remove(gen);
+                    remove(generation);
+                    ok = false;
+                }
+            }
+        }
+        return ok ? 1 : (current(gen) ? 0 : -1);
+    }
+
+    static byte[] encode(int seq, long now, int owner, int session,
+                         VehicleDataModule.DashboardVehicle v,
                          AaRgState.DashboardNav nav) throws Exception {
         byte[] b = new byte[RECORD_SIZE];
         putInt(b, 0, MAGIC);
@@ -131,6 +200,7 @@ public final class DashboardModule implements Module {
         putLong(b, 48, navMs);
         b[56] = (byte)(owner == CarPlayApp.OWNER_CARPLAY ? 1
                      : owner == CarPlayApp.OWNER_ANDROID_AUTO ? 2 : 0);
+        putInt(b, 60, session);
         System.arraycopy(dest, 0, b, DEST_OFF, dest.length);   /* NUL follows: array is zeroed */
         int hash = 0x811c9dc5;
         for (int i = 0; i < RECORD_SIZE - 4; i++) hash = (hash ^ (b[i] & 255)) * 16777619;
@@ -148,10 +218,11 @@ public final class DashboardModule implements Module {
         return out;
     }
 
-    /* Write a temporary file, then rename it over the record, so a reader never sees a
-     * partial record.  POSIX rename replaces atomically; fall back to delete + rename. */
-    static boolean publish(byte[] rec) {
-        File tmp = new File(PATH + ".tmp"), dst = new File(PATH);
+    /* Write a per-generation temporary file, then rename it over the record, so a reader
+     * never sees a partial record.  POSIX rename replaces atomically; fall back to
+     * delete + rename. */
+    static boolean writeAndRename(byte[] rec, int gen) {
+        File tmp = new File(PATH + ".tmp." + gen), dst = new File(PATH);
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(tmp);
@@ -168,9 +239,10 @@ public final class DashboardModule implements Module {
         }
     }
 
-    private static void remove() {
+    /* Remove the record and generation gen's temporary file (call with files held). */
+    private static void remove(int gen) {
         try { new File(PATH).delete(); } catch (Throwable t) { }
-        try { new File(PATH + ".tmp").delete(); } catch (Throwable t) { }
+        try { new File(PATH + ".tmp." + gen).delete(); } catch (Throwable t) { }
     }
 
     private static void putInt(byte[] b, int p, int v) {

@@ -3,13 +3,16 @@
 Implemented in [dashboard/](../../dashboard/) with tests in
 [dashboard_test.c](../../tests/dashboard_test.c). This page describes PLAN step 1: a library and deterministic text demo.
 P2-02 now adds [host layouts and SVG export](rendering.md). It creates no display window, connects to no
-service, and changes no inherited runtime, install payload or firmware file.
+service, and changes no inherited runtime, install payload or firmware file (true
+for P2-01/P2-02; P2-08 later modified inherited HMI Java, see
+[vehicle-provider.md](vehicle-provider.md)).
 
 ## Testing policy
 
 The P2-02 test deferral ended when the user started P2-04, the final testing
 stage. P2-04 adds config/manager and CLI suites and a benchmark target; results
 are in [validation.md](validation.md). P2-01 historical results remain recorded; see status.md.
+**Current:** Tests are deferred: the user said "do not run any test, there will be a ask at the end to implement and run the tests". The suites are out of date since P2-07/P2-08; run them only at that final request.
 
 ## Build and run
 
@@ -125,8 +128,8 @@ The module is not included in upstream build/release scripts. It has no vehicle 
 switch; the explicit SVG CLI produces host files only. Disabled-by-default
 configuration and rendering suppression are PLAN step 3 acceptance targets.
 There is no performance claim for the head unit and no vehicle compatibility
-claim. Four SVG artifacts now exist under dashboard/previews/; final visual acceptance
-is deferred by the user.
+claim. Two Compact SVG artifacts exist under dashboard/previews/ (Extended removed in
+P2-07); final visual acceptance is deferred by the user.
 
 Rollback is `make -C dashboard clean` to remove outputs and ceasing host demo use;
 no head-unit file restoration is required. Source changes can be reverted with

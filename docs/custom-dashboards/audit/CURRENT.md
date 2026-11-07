@@ -1,69 +1,26 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T21:07:07Z. Agent: Codex.
+Updated: 2026-11-07T21:12:57Z. Agent: Claude Code. Session: `20261107T200748Z-claude`.
 
 ## Task and authorization
 
-- PUBLISH-REVIEW / COMPLETE (report/handoff publication verified). Latest user: "Push and commit". Commit/push
-  review documentation to origin/review/claude-phase2; no master merge, fixes,
-  tests, release or vehicle actions.
-- DOC-REVIEW-HANDOFF / COMPLETE. Latest user requested a Markdown report and
-  AI-agent pickup instructions; both are saved and linked from agent entry points.
-- Earlier REVIEW-CLAUDE / COMPLETE. User: "Claude has implemented lots of steps. Review
-  everything pushed by Claude". No fixes, new feature, publication or vehicle
-  actions requested. No tests/new test code under the latest recorded deferral.
-- Manual source/diff/document review, not runtime verification.
+- FIX-REVIEW-312215A / READY_FOR_REVIEW. User: "check this audit:
+  .../tree/review/claude-phase2 / implement all fixes".
+- Implemented (untested): R1, R2, R3, session invalidation, AA Kombi-only
+  binding, R5 documentation. R4 OPEN: test-harness code, deferred to the final
+  test request by the standing instruction "do not run any test, there will be
+  a ask at the end to implement and run the tests".
+- No builds, tests, test code or automated validation; manual review only.
+- Not authorized: master merge (needs approval), step 9, vehicle actions.
 
-## Git and files
+## Git
 
-- Review branch: review/claude-phase2, tracking origin/review/claude-phase2.
-- Reviewed source: 312215a (origin/master at review fetch).
-- Report/handoff commit: 2acf555c7c2f8dc0b20453aadf4c46f20e6aa70a, pushed;
-  git ls-remote confirmed the exact SHA. This completion checkpoint follows
-  in a documentation-only commit, whose SHA is available from Git history.
-- Range: 574ae26..312215a, 15 Claude commits / 45 changed paths. All fetched origin
-  branches are included in that master revision; no separate unreviewed branch tip.
-- Published documentation: reviews/claude-312215a.md (report),
-  reviews/README.md (pickup guide), AGENTS.md, CLAUDE.md, GEMINI.md, Copilot
-  instructions, HANDOFF.md, status.md, PLAN.md, changes.md, audit/CURRENT.md
-  and append-only audit/LOG.md. Prior review edits preserved.
-- No implementation changes or master merge. Local master remains 574ae26;
-  do not mistake it for the newer reviewed origin/master. No active processes.
+- Branch `fix/review-claude-312215a` from origin/review/claude-phase2 (72b4633,
+  source = 312215a). master/origin/master unchanged at 312215a.
+- Review report unchanged; resolution in reviews/claude-312215a-resolution.md.
 
-## Findings and validation
+## Next action
 
-[Full report](../reviews/claude-312215a.md):
-
-1. R1 P1: Java captures written time before the vehicle accessor timestamps its
-   samples; the C reader rejects newer sample times, dropping valid records.
-2. R2 P2: stop/delete races an already in-flight write, leaving a fresh record
-   after shutdown. Coordinate lifecycle generation and final publication.
-3. R3 P2: reader captures wall time before opening the record, so a new publication
-   can be incorrectly classified as future and rejected.
-4. R4 P2: isolated Java lifecycle build omits new DashboardModule dependency;
-   its stubs and owner assertions also need adaptation at the final test stage.
-5. R5 P2: current project/provider/architecture/package docs contradict new Java
-   shipping changes, implementation state, preview count and active test deferral.
-
-No builds, tests, sanitizer/benchmark/demo runs, preview generation or automated
-validation performed. Findings follow from manual source execution-order review;
-no frequency or on-car behavior claim. P2-04 results are historical and predate
-P2-07/P2-08. Existing dashboard suites are stale; full Java/stock linkage unverified.
-
-## Next action and boundaries
-
-Exact next action: read [the pickup instructions](../reviews/README.md) and
-await/follow the user's next task. The report and guide do not start fixes. Use
-the ordered queue for a host-only corrective increment when requested. Do not advance into vehicle rendering without resolving these defects
-and establishing firmware/ABI/safe-surface evidence. Keep QNX guard/default OFF.
-Session identity/sequence validation, media omission and final test repair remain
-explicit gaps. No Android app/communication or other roadmap phase implemented.
-Publication authorized by "Push and commit" is complete for the report/handoff.
-Finish publishing this completion checkpoint under the same authorization and
-verify final remote HEAD. Future agents should fetch origin and check out
-review/claude-phase2, read reviews/README.md, then follow the next user task.
-No corrective implementation is started.
-Audit: [LOG.md](LOG.md), review events codex-review-claude-01 through -03 and
-documentation events codex-review-handoff-01 through -02.
-
-Publication audit: events codex-publish-review-01 and -02 in LOG.md.
+Await the user: merge approval for the fix branch (it also carries the review
+documents). Later: the final test request (R4, stale suites, new feed cases);
+step 9 needs firmware/ABI and safe-surface evidence. Audit: [LOG.md](LOG.md).

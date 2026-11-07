@@ -28,7 +28,11 @@ input handling. The exact firmware,
 original AAWireless compatibility and successful Phase 1 installation remain
 unknown. Compilation cannot resolve those unknowns.
 
-## Planned project organization
+## Project organization (original plan; see note)
+
+> Current state: since P2-08 `java_patch/` is **not** unchanged: four inherited HMI
+> files are modified and `java_patch/com/luka/carplay/dashboard/` is added; the
+> shipping Java build includes them. See [vehicle-provider.md](vehicle-provider.md).
 
 ```text
 PROJECT.md                         custom dashboard project entry point
@@ -79,7 +83,9 @@ never depend on phone transport, DSI bindings or raw messages.
 
 **Confirmed by code:** the common callback, owned typed values and source quality/
 sample-age fields exist in dashboard.h/provider.c. **Implemented on the host in P2-03 (untested):** a single-provider manager.
-**Planned, not implemented:** concrete Vehicle/Android adapters, resolver, per-provider origin and
+**Implemented in P2-08 (unverified on the car):** the VehicleDataProvider (HMI
+record writer + C reader, with writer session/sequence liveness).
+**Planned, not implemented:** AndroidDataProvider, resolver, general per-provider origin and
 session metadata. MOCK/VERIFIED provenance currently does not identify which
 provider produced a value. Extend metadata deliberately before mixed/live-source
 use; the detailed provider design defines unit/freshness/disconnect rules.
@@ -124,6 +130,8 @@ controls are not intercepted.
 
 ## Validation and rollback
 
+(Original plan text; P2-04 implemented these tests, historical results in
+validation.md; they are out of date since P2-07/P2-08 and deferred by the user.)
 Planned host tests cover configuration, units, age, provenance, layout bounds, SVG
 escaping/clipping, provider failure, clearing and preparation cost. Run upstream
 regression scripts separately and report missing proprietary assets/toolchains.

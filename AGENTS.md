@@ -7,7 +7,14 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
-**Latest handoff — REVIEW-CLAUDE:** the review of all Claude commits through
+**Latest — FIX-REVIEW-312215A:** the user asked to "implement all fixes" from the
+review. R1, R2, R3, R5, session invalidation and the AA subscription gap are
+implemented and untested on `fix/review-claude-312215a`; R4 (test harness) stays
+open for the final test request. See the
+[resolution record](docs/custom-dashboards/reviews/claude-312215a-resolution.md).
+Not merged to master.
+
+**Earlier handoff — REVIEW-CLAUDE:** the review of all Claude commits through
 `312215a` is complete. Read the [review report](docs/custom-dashboards/reviews/claude-312215a.md)
 and [agent pickup instructions](docs/custom-dashboards/reviews/README.md) before
 continuing Phase 2. Five findings remain open, including producer/reader timestamp

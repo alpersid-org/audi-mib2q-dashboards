@@ -103,9 +103,11 @@ public final class VehicleDataModule implements Module {
 
     public synchronized boolean start(FrameworkRef fw) {
         if (running) return true;
-        /* P2-08: Android Auto sessions need these readings only for the dashboard. */
-        if (CarPlayApp.sessionOwner() == CarPlayApp.OWNER_ANDROID_AUTO
-                && !com.luka.carplay.dashboard.DashboardConfig.enabled()) {
+        /* P2-08: Android Auto sessions need these readings only for the dashboard, and the
+         * dashboard uses only temperature and range: bind DSICarKombi alone, run no sender
+         * (review follow-up: no extra general/dynamic subscriptions or iAP2 work). */
+        boolean dashboardOnly = CarPlayApp.sessionOwner() == CarPlayApp.OWNER_ANDROID_AUTO;
+        if (dashboardOnly && !com.luka.carplay.dashboard.DashboardConfig.enabled()) {
             return true;
         }
         if (fw == null || !fw.isReady() || fw.serviceManager() == null) return false;
@@ -125,6 +127,13 @@ public final class VehicleDataModule implements Module {
             kombi = general = dynamic = null;
             if (!linkFailureLogged) { linkFailureLogged = true; Log.w(TAG, "vehicle data disabled: " + t); }
             return true;                                    /* never block the modules before it */
+        }
+        if (dashboardOnly) {
+            if (!kombi.bind(fw)) return false;              /* retried by CarPlayApp */
+            running = true;
+            current = this;
+            Log.i(TAG, "vehicle data (dashboard only): kombi=" + kombi.isBound());
+            return true;
         }
         int bound = 0;
         if (kombi.bind(fw)) bound++;

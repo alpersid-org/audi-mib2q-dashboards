@@ -1,5 +1,20 @@
 # Change ledger
 
+## FIX-REVIEW-312215A — review fixes (2026-11-07)
+
+User: "check this audit ... implement all fixes". Branch `fix/review-claude-312215a`.
+Manual review only; no builds/tests/test code (user instruction). Details:
+[resolution record](reviews/claude-312215a-resolution.md).
+
+| Changed path | Change and purpose |
+| --- | --- |
+| `java_patch/com/luka/carplay/dashboard/DashboardModule.java` | R1 write time after reads; R2 generations, exclusive publication, post-rename cleanup, per-generation temp files; writer session id at bytes 60–63. |
+| `java_patch/com/luka/carplay/core/VehicleDataModule.java` | Android Auto dashboard mode binds only DSICarKombi, no sender thread. |
+| [dashboard/vehicle_provider.c](../../dashboard/vehicle_provider.c), [dashboard/dashboard.h](../../dashboard/dashboard.h) | R3 clock after read; zero session/sequence rejected; stateful liveness (new session, backwards sequence, 2 s timeout). |
+| [PROJECT.md](../../PROJECT.md), [data-providers.md](data-providers.md), [architecture.md](architecture.md), [package.md](package.md), [module.md](module.md), [rendering.md](rendering.md), [ROADMAP.md](../ROADMAP.md), [vehicle-provider.md](vehicle-provider.md) | R5 reconciliation with current source; older claims pinned to their revision. |
+| [reviews/claude-312215a-resolution.md](reviews/claude-312215a-resolution.md), [reviews/README.md](reviews/README.md) | New resolution record and index link; report unchanged. |
+| [AGENTS.md](../../AGENTS.md), [status.md](status.md), [HANDOFF.md](HANDOFF.md), [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | Current task, events and checkpoint. |
+
 ## PUBLISH-REVIEW — authorized report publication (2026-11-07)
 
 User requested "Push and commit". Publish the report, pickup guide, agent entry

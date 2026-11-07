@@ -68,17 +68,34 @@ int db_mock_read(void *context, uint64_t now_ms, db_snapshot *out);
 /* ---- P2-08: VehicleDataProvider (reader of the HMI DashboardModule record) ---- */
 #define DB_VEHICLE_RECORD_SIZE 256
 #define DB_VEHICLE_PATH "/tmp/carplay_dashboard"
-/* wall_ms returns the system clock in ms (same clock as Java currentTimeMillis);
- * NULL path/wall_ms use DB_VEHICLE_PATH / CLOCK_REALTIME. Context for db_vehicle_read. */
-typedef struct { const char *path; uint64_t (*wall_ms)(void); } db_vehicle_source;
-/* Validates a DBV1 record (magic, checksum, zero padding, bounds, record age) and maps
- * each field's system-clock sample time to an age on the caller's now_ms clock.
+/* The writer publishes every 500 ms; a record whose (session, sequence) has not
+ * advanced for this long means the writer stopped (review: session invalidation). */
+#define DB_VEHICLE_WRITER_TIMEOUT_MS UINT64_C(2000)
+/* Context for db_vehicle_read. path/wall_ms are configuration: wall_ms returns the
+ * system clock in ms (same clock as Java currentTimeMillis); NULL path/wall_ms use
+ * DB_VEHICLE_PATH / CLOCK_REALTIME. The remaining fields are reader state; zero-
+ * initialize the struct and keep it for the reader's lifetime. Not thread-safe. */
+typedef struct {
+    const char *path;
+    uint64_t (*wall_ms)(void);
+    uint32_t last_session, last_sequence; /* last accepted record; session 0 = none */
+    uint64_t last_advance_wall;           /* wall time the sequence last advanced */
+} db_vehicle_source;
+/* Validates a DBV1 record (magic, checksum, zero padding, non-zero session and
+ * sequence, bounds, record age) and maps each field's system-clock sample time to an
+ * age on the caller's now_ms clock. Stateless: session/sequence tracking is done by
+ * db_vehicle_read.
  * Fields: temperature, range, navigation group (AA only); media is never supplied.
  * Returns 1 and fills out (source DB_SOURCE_VEHICLE), or 0 for any invalid/stale
  * record. Record older than DB_MAX_AGE_MS or written in the future fails. */
 int db_vehicle_parse(const unsigned char *record, size_t len, uint64_t wall_now_ms,
                      uint64_t now_ms, db_snapshot *out);
-/* db_read_fn: bounded read of the record file, then db_vehicle_parse. */
+/* db_read_fn: bounded read of the record file; wall clock sampled AFTER the read
+ * (review R3); db_vehicle_parse; then writer-liveness checks against the context's
+ * state: a new session is accepted and tracked; within one session the sequence must
+ * not go backwards, and an unchanged sequence older than
+ * DB_VEHICLE_WRITER_TIMEOUT_MS fails. context must be a db_vehicle_source (or NULL
+ * for a stateless read with defaults and no liveness tracking). */
 int db_vehicle_read(void *context, uint64_t now_ms, db_snapshot *out);
 
 /* Only widgets backed by an existing vehicle/MMI pipeline (scope req. 8):

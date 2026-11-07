@@ -748,3 +748,38 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Published: full review, AI pickup guide, agent entry-point links, status/plan/handoff/change ledger and review audit. Findings remain OPEN. No implementation changes, tests, master merge, release or vehicle actions.
 - This completion record and CURRENT.md follow in a documentation-only commit under the same authorization. Verify final remote SHA after push; its own hash is discoverable via Git history.
 - Next: next agent fetches/checks out review/claude-phase2 and follows reviews/README.md plus CURRENT.md. Await the next user task before fixes; no-test policy remains. No active processes or code WIP.
+
+## 2026-11-07T21:09:19Z | 20261107T200748Z-claude-20 | RESUME / FIX-REVIEW-312215A
+
+- Agent/session: Claude Code / `20261107T200748Z-claude`.
+- User request: "check this audit: .../tree/review/claude-phase2 / implement all
+  fixes". Read reviews/README.md and reviews/claude-312215a.md.
+- Git: fetched origin; review/claude-phase2 = 312215a + 2 documentation commits;
+  `git diff 312215a HEAD -- dashboard java_patch` is empty, so every cited
+  function is unchanged and R1–R5 apply as written. Branch
+  `fix/review-claude-312215a` from origin/review/claude-phase2 (72b4633).
+- Scope: implement R1, R2, R3 (in order), session invalidation and the
+  AA-subscription gap the review recommends before a consumer, then R5 docs and
+  a dated resolution record. R4 is test-harness code; under the standing user
+  instruction ("do not run any test, there will be a ask at the end to implement
+  and run the tests") and the review's own queue it stays OPEN for the final
+  test request. No builds, tests, test code or automated validation (handoff
+  policy: do not build as a substitute for testing); manual review only.
+- No master merge (needs approval), no vehicle actions, no step 9.
+
+## 2026-11-07T21:12:57Z | 20261107T200748Z-claude-21 | COMPLETE / FIX-REVIEW-312215A
+
+- R1: DashboardModule reads owner, nav and vehicle before taking `written`.
+- R2: writer generations; exclusive in-flight publication only for the current
+  generation; I/O outside the lock; stop() bumps generation and deletes unless a
+  publication is in flight, which deletes its own record after rename;
+  per-generation temp files. stop() waits on no I/O.
+- R3: db_vehicle_read samples the wall clock after reading the record.
+- Session: writer session id (bytes 60–63), sequence from 1; reader rejects zero
+  values and, with context, backwards sequence or a writer silent > 2 s.
+- AA gap: VehicleDataModule binds only DSICarKombi, no sender, in AA dashboard mode.
+- R5: PROJECT/data-providers/architecture/package/module/rendering/ROADMAP/
+  vehicle-provider reconciled; resolution record added and linked; report kept.
+- R4 OPEN (test-harness code; final test request).
+- Validation: manual review only; no build/test/link checks run.
+- Next: commit/push fix branch; await merge approval.

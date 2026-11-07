@@ -12,10 +12,18 @@ dashboards in the Virtual Cockpit with real MMI data; mock only for tests. See
 
 **History: P2-02, host Compact/Extended layouts and SVG export.**
 P2-01 data/widgets are complete. Step 2 adds bounded frames, a mock preview CLI
-and four saved SVG artifacts. Configuration/activation remains step 3. P2-03 adds
-host config/manager; P2-04 is the final testing stage now in progress.
-Earlier test results are historical evidence, not final validation. Inherited runtime files and the original [upstream README](README.md)
-are unchanged; no vehicle connection, installation or deployment is performed.
+and four saved SVG artifacts (P2-07 later removed the two Extended ones).
+P2-03 added host config/manager; P2-04 ran the host tests (historical results).
+
+**Current state (review fixes on top of 312215a):** P2-07 removed unbacked widgets;
+P2-08 added the VehicleDataProvider. P2-08 **modifies four inherited HMI Java files**
+(`CarPlayApp`, `VehicleDataModule`, `AaRgState`, `AaBridge`) and adds
+`java_patch/com/luka/carplay/dashboard/`. `scripts/build_java.sh` compiles every
+`java_patch` source into the shipping `carplay_hook.jar`, so a normal Java build now
+ships the dashboard feed; it stays inactive unless `/mnt/app/carplay_dashboard.cfg`
+enables it. Native hooks, renderers, installers and the original
+[upstream README](README.md) are unchanged. The C dashboard renderer side remains
+host-only (QNX guard). No vehicle connection, installation or deployment is performed.
 
 Published branch: `master`, tracking the fork's `origin/master`. All dashboard
 steps 1 and 2, roadmap/provider design, agent audit and maintenance work are included.
@@ -90,8 +98,8 @@ host module and maintenance verification. The earlier feature and maintenance
 branches remain available; no history was rewritten.
 
 Build with `make -C dashboard all`; generate mock SVGs with
-`make -C dashboard previews`. Run tests with `make -C dashboard test test-sanitize`
-(P2-04 final testing stage).
+`make -C dashboard previews`. Test commands (`make -C dashboard test test-sanitize`)
+are listed for the final stage only. Tests are deferred: the user said "do not run any test, there will be a ask at the end to implement and run the tests". The suites are out of date since P2-07/P2-08; run them only at that final request.
 
 AI agents should start with AGENTS.md. Claude, Gemini and GitHub Copilot entry
 files point to the same instructions; other tools can load them explicitly.

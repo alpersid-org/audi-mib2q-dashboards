@@ -7,6 +7,13 @@ Five findings remain open, especially P2-08 timestamp ordering and shutdown race
 No implementation changed or tests ran. Older status sections below contain stale
 statements identified by R5; use the audit for current task state.
 
+## Review fixes (2026-11-07)
+
+Codex reviewed 312215a ([report](reviews/claude-312215a.md)). Fixes for R1, R2,
+R3, R5, session invalidation and the AA subscription gap are implemented and
+untested on `fix/review-claude-312215a`; R4 waits for the final test request
+([resolution](reviews/claude-312215a-resolution.md)). Not merged.
+
 ## Phase 2 scope and state (read first)
 
 The user defined Phase 2 as "Real Vehicle Data Integration": working Compact and

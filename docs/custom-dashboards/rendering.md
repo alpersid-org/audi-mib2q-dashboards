@@ -89,7 +89,7 @@ or invalid arguments print usage to stderr with exit 2 and no SVG output. There
 is no startup/config file, persisted enable state, socket or vehicle marker.
 
 `make -C dashboard previews` writes the four reviewable SVG files under
-`dashboard/previews/`. Other build products stay under ignored `build/dashboard/`.
+`dashboard/previews/` (only the two Compact files are committed since P2-07). Other build products stay under ignored `build/dashboard/`.
 Clean removes executable/library/test outputs; it preserves the saved SVGs.
 
 ## Tests prepared for the final stage
@@ -101,7 +101,7 @@ errors. The independent Python suite parses SVG as XML, checks all four profiles
 mock badges, clip references, deterministic bytes, CLI errors and escaped-text
 round trips. When saved previews exist it also checks that they match CLI output.
 
-Commands (run in P2-04, the final testing stage):
+Commands (run in P2-04; historical). Tests are deferred: the user said "do not run any test, there will be a ask at the end to implement and run the tests". The suites are out of date since P2-07/P2-08; run them only at that final request.
 
 ```sh
 make -C dashboard previews
