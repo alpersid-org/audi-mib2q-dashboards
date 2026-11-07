@@ -43,8 +43,8 @@ NAVIGATION           [MOCK] 42.5 km / 38 min | City Centre
 ```
 
 This text output is a data/formatter demonstration, not a dashboard screenshot.
-Host SVG layouts are supplied separately by P2-02. No configuration manager or
-vehicle activation feature exists. Further tests are deferred to the final stage
+Host SVG layouts are supplied separately by P2-02. P2-03 adds a host
+configuration/manager ([config.md](config.md)); no vehicle activation exists. Further tests are deferred to the final stage
 by the user; commands on this page are retained for that stage.
 
 ## Snapshot and provider contract

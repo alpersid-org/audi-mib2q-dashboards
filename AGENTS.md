@@ -10,7 +10,12 @@ instructions to preserve context, not to override them.
 Build the foundation for modular, customizable Audi Virtual Cockpit dashboards
 within **roadmap Phase 2** of the mib2q-carplay-based project.
 
-**Current task is PUBLISH-MASTER:** the user explicitly requested "Push everything
+**Current task is P2-03:** the user requested "Start P2-03 on a dedicated feature
+branch". Implement PLAN step 3 (configuration/suppression/manager) on the host on
+`feature/p2-03-config-manager`; tests stay deferred to the final stage; no GEM,
+master merge, release, vehicle or Android work. See [config.md](docs/custom-dashboards/config.md).
+
+**Completed earlier — PUBLISH-MASTER:** the user explicitly requested "Push everything
 to main/master on my forked project". All Phase 2 work through P2-02, roadmap and
 agent documents, and MAINT-141 verification have been fast-forwarded and pushed
 to the fork's `master`. See the audit checkpoint for publication evidence.

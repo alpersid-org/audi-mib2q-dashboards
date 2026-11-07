@@ -6,7 +6,11 @@ phase. Applicable maintenance/dashboard tests were authorized; see
 everything to the fork's main/master authorized consolidation into `master`.
 P2-01/P2-02, roadmap and maintenance work are now included there. No new features
 or tests were added for publication. Historical feature-test deferral below is
-superseded only for maintenance scope. P2-03 is not started; await a new task.
+superseded only for maintenance scope.
+
+**P2-03 (current):** user request "Start P2-03 on a dedicated feature branch".
+Implemented on `feature/p2-03-config-manager`; see [config.md](config.md).
+Compiled only; tests remain deferred to the final stage. Not merged to master.
 
 This plan subdivides **roadmap Phase 2 only**. Later-phase implementation is
 excluded; designing compatible provider boundaries for those phases is required.
@@ -69,7 +73,7 @@ git diff --name-only b127988a68c8d690841f4a75d35717ffc01e668e HEAD
 | 0 | Repository investigation | Full upstream-derived project plus Markdown documents and Git publication | Documentation complete; destination fork verified as alpersid-org/audi-mib2q-dashboards |
 | 1 | 0; user request received | Host module, typed snapshot contract, mock provider and widget formatters | Implemented; focused host tests pass; see module.md and audit |
 | 2 | 1; user request received | Compact/Extended frame builders and SVG adapter | Implemented with four saved host SVGs; final testing/visual review deferred by user |
-| 3 | 1–2 | Disabled-by-default configuration and suppression behavior | Deferred |
+| 3 | 1–2; user request received | Disabled-by-default configuration and suppression behavior | Implemented on host (config.c/manager.c, two CLIs); compiled, tests deferred by user |
 | 4 | 1–3 | Automated tests, host benchmark and regression report | Deferred |
 | 5 | 4 | Reproducible previews, documentation and rollback evidence | Deferred |
 | 6 | 5 plus firmware/surface evidence | Separately reviewed vehicle feasibility decision | Blocked; no vehicle execution authorized |
@@ -129,6 +133,13 @@ is deferred by user instruction. See [rendering.md](rendering.md) and
 
 Acceptance: no config and malformed config emit no dashboard drawing commands;
 switching layouts does not silently activate the feature. No GEM code is changed.
+
+P2-03 implementation state: items 1–5 implemented in
+[config.c](../../dashboard/config.c), [manager.c](../../dashboard/manager.c),
+`dashboard_config` and `dashboard_manager_preview`; the manager takes any
+`db_provider` and the mock is chosen only by the CLI. No GEM code changed.
+Acceptance is by design and strict compilation only; the listed final-stage
+checks in [config.md](config.md) are deferred by user instruction.
 
 ## 4. Automated validation and performance evidence
 

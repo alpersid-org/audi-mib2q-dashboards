@@ -434,3 +434,43 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Pending work: none. No code WIP or active processes.
 - Next action: commit this audit event on the session branch and push it there
   (not master). Await the user's next task before P2-03 or any publication.
+
+## 2026-11-07T20:10:13Z | 20261107T200748Z-claude-02 | START / P2-03
+
+- Agent/session: Claude Code (cloud) / `20261107T200748Z-claude`.
+- Task/status: `P2-03` (PLAN step 3, configuration and safe suppression) /
+  `IN_PROGRESS`.
+- Authorization: user request "Start P2-03 on a dedicated feature branch".
+  Host-only implementation. Excludes GEM changes, live vehicle provider, Android
+  transport/app, release, master merge/push and any vehicle action.
+- Testing: the P2-02 user deferral ("no tests now; tests are for the final
+  stage") still applies to feature work; MAINT-141's exception was task-specific.
+  No tests, demos or sanitizers will run. Strict C99 compilation (`make all`) is
+  used only as a build step and is recorded as such, not as validation.
+- Branch: `feature/p2-03-config-manager`, created from
+  `claude/custom-dashboards-audit-9qbwft` at 2d4a255 (master 574ae26 + audit event).
+- Acceptance (PLAN step 3): strict versioned config with disabled Compact default;
+  layout selection independent of enablement; host disable/restore-default;
+  clear old frames on invalid config/viewport/provider failure; manager input via
+  generic `db_provider` only (mock chosen by CLI, not hard-coded).
+- Intended files: dashboard/{dashboard.h,config.c,manager.c,dashboard_config.c,
+  manager_preview.c,Makefile}, docs/custom-dashboards/{config.md + status/plan/
+  handoff/changes/module/architecture}, audit. No upstream runtime files.
+
+## 2026-11-07T20:12:46Z | 20261107T200748Z-claude-03 | COMPLETE / P2-03 READY_FOR_REVIEW
+
+- Agent/session: Claude Code / `20261107T200748Z-claude`.
+- Task/status: `P2-03` / `READY_FOR_REVIEW` (implemented; tests deferred).
+- Changes: dashboard.h (config + manager API), new config.c, manager.c,
+  dashboard_config.c, manager_preview.c; Makefile; new config.md; scope/status
+  updates in AGENTS/PLAN/status/HANDOFF/module/architecture/ROADMAP/changes.
+- Decision: manager keeps a sticky `config_error` so a rejected config keeps
+  reporting `invalid-config` (not `disabled`) until a valid config or explicit
+  action; found in self-review before commit. Disabled/invalid never reads the
+  provider. CLIs never write files; stdout redirection chooses the destination.
+- Build: `make -C dashboard all` → exit 0, no warnings (strict C99 -Werror),
+  run twice (before and after the decision above). No binaries executed.
+- Tests: none run, per the user's final-stage deferral; no test files added.
+  Acceptance targets recorded in config.md.
+- Pending: commit and push `feature/p2-03-config-manager` only; verify remote.
+- Next action: await user; P2-04 final testing stage or review/merge request.

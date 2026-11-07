@@ -1,5 +1,19 @@
 # Project status
 
+## Current feature work — P2-03 (host configuration and manager)
+
+User request: "Start P2-03 on a dedicated feature branch". Branch
+`feature/p2-03-config-manager`. Added strict versioned config (disabled Compact
+default, layout selection independent of enablement, enable/disable/restore-default
+actions), a single-provider Dashboard Manager that clears its frame on invalid
+config, disabled state, provider failure or unsupported geometry, and two host
+CLIs. Details: [config.md](config.md).
+
+Validation: `make -C dashboard all` compiled cleanly with
+`-std=c99 -Wall -Wextra -Werror -pedantic`. No tests, demos, CLIs or sanitizers
+executed (user's final-stage test deferral). No GEM, upstream runtime, Android or
+vehicle code. Not merged or published to master.
+
 ## Current publication — PUBLISH-MASTER
 
 User request: "Push everything to main/master on my forked project". The fork's

@@ -113,6 +113,85 @@ int db_frame_valid(const db_frame *frame);
  * Formatting uses integer coordinates, independent of floating-point locale. */
 int db_frame_write_svg(FILE *stream, const db_frame *frame);
 
+/* ---- P2-03: versioned host configuration (disabled by default) ----------- */
+#define DB_CONFIG_VERSION 1
+#define DB_CONFIG_TEXT_CAP 512 /* whole file, bytes; larger input is invalid */
+#define DB_CONFIG_LINE_CAP 64  /* one line, excluding newline */
+
+typedef struct {
+    int version;      /* must equal DB_CONFIG_VERSION */
+    int enabled;      /* 0 or 1; default 0 */
+    db_layout layout; /* default DB_COMPACT; selecting it never enables */
+} db_config;
+
+/* Disabled Compact, current version. NULL is a no-op. */
+void db_config_default(db_config *out);
+/* 1 when every field is in range for the supported version, else 0. */
+int db_config_valid(const db_config *config);
+/* Strict "key=value" text, see docs/custom-dashboards/config.md. The first key
+ * must be version=1; enabled and layout are optional (defaults apply). Unknown
+ * or duplicate keys, whitespace, NUL bytes, oversize input/lines or bad values
+ * are rejected. Returns 1 parsed; 0 invalid with out set to the default.
+ * text may be NULL only with len 0 (empty input is invalid: no version). */
+int db_config_parse(const char *text, size_t len, db_config *out);
+
+typedef enum { DB_CONFIG_INVALID = -1, DB_CONFIG_MISSING = 0, DB_CONFIG_LOADED = 1 } db_config_load;
+/* Host file loader: bounded read, then db_config_parse. Missing file and
+ * invalid content both leave out as the disabled default. */
+db_config_load db_config_load_path(const char *path, db_config *out);
+/* Writes canonical text after validating. Returns 1 success, 0 invalid/error. */
+int db_config_write(FILE *stream, const db_config *config);
+
+/* Host configuration actions (candidate future GEM verbs; no GEM code exists).
+ * Each returns 1 when applied to a valid config, 0 (and restores the default)
+ * otherwise. Layout selection preserves enablement; disable preserves layout. */
+int db_config_enable(db_config *config);
+int db_config_disable(db_config *config);
+int db_config_select_layout(db_config *config, db_layout layout);
+void db_config_restore_default(db_config *config);
+
+/* ---- P2-03: dashboard manager --------------------------------------------- */
+/* Why the manager currently has no frame, or READY. Diagnostics only. */
+typedef enum {
+    DB_MANAGER_OFF_DISABLED, /* valid config with enabled=0 (the default) */
+    DB_MANAGER_OFF_CONFIG,   /* invalid/missing-required config: default applied */
+    DB_MANAGER_OFF_PROVIDER, /* no provider, or provider read failed */
+    DB_MANAGER_OFF_GEOMETRY, /* layout rejected canvas/viewport */
+    DB_MANAGER_READY
+} db_manager_status;
+
+/* Single-threaded, caller-owned state; no allocation, I/O or threads.
+ * The provider is any db_provider (vehicle, mock, future composite); the manager
+ * never selects a data source itself. Fields are private by convention. */
+typedef struct {
+    db_provider provider;
+    db_config config;
+    db_manager_status status;
+    int config_error;     /* last set_config was rejected; cleared by actions */
+    db_snapshot snapshot; /* one immutable snapshot per prepared frame */
+    db_frame frame;       /* zeroed (count 0) whenever status != READY */
+} db_manager;
+
+/* Starts disabled with the default config and an empty frame. NULL provider is
+ * allowed (updates then suppress output). NULL manager is a no-op. */
+void db_manager_init(db_manager *manager, const db_provider *provider);
+/* NULL or invalid config applies the default and records OFF_CONFIG, which
+ * later updates keep reporting until a valid config or an explicit action.
+ * Always clears the current frame; the next update decides output. */
+void db_manager_set_config(db_manager *manager, const db_config *config);
+/* Actions mirror db_config_* and clear the current frame immediately. */
+void db_manager_disable(db_manager *manager);
+void db_manager_restore_default(db_manager *manager);
+void db_manager_select_layout(db_manager *manager, db_layout layout);
+/* Reads the provider once and prepares a frame. Returns 1 READY; 0 suppressed
+ * (frame cleared, snapshot cleared). Disabled config does not read the provider. */
+int db_manager_update(db_manager *manager, uint64_t now_ms,
+                      int width, int height, cr_rect_t area);
+/* Current frame (count 0 when suppressed) or NULL for NULL manager. */
+const db_frame *db_manager_frame(const db_manager *manager);
+db_manager_status db_manager_get_status(const db_manager *manager);
+const char *db_manager_status_name(db_manager_status status);
+
 #ifdef __cplusplus
 }
 #endif

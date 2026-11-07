@@ -6,13 +6,14 @@ PYTHON ?= python3
 CFLAGS ?= -O2 -g
 STRICT = -std=c99 -Wall -Wextra -Werror -pedantic
 OUT = ../build/dashboard
-SOURCES = provider.c mock_provider.c widgets.c layout.c svg.c
+SOURCES = provider.c mock_provider.c widgets.c layout.c svg.c config.c manager.c
 OBJECTS = $(addprefix $(OUT)/,$(SOURCES:.c=.o))
 HEADERS = dashboard.h ../maneuver_render/visible_area.h ../maneuver_render/protocol.h
 SAN = -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer
 
 .PHONY: all test test-sanitize demo previews clean
-all: $(OUT)/libdashboard.a $(OUT)/dashboard_demo $(OUT)/dashboard_preview
+all: $(OUT)/libdashboard.a $(OUT)/dashboard_demo $(OUT)/dashboard_preview \
+	$(OUT)/dashboard_config $(OUT)/dashboard_manager_preview
 
 $(OUT):
 	mkdir -p $@
@@ -28,6 +29,13 @@ $(OUT)/dashboard_demo: demo.c $(OUT)/libdashboard.a $(HEADERS)
 
 $(OUT)/dashboard_preview: preview.c $(OUT)/libdashboard.a $(HEADERS)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) preview.c $(OUT)/libdashboard.a $(LDFLAGS) -o $@
+
+# P2-03 host tools: config actions and manager-gated mock preview (no install).
+$(OUT)/dashboard_config: dashboard_config.c $(OUT)/libdashboard.a $(HEADERS)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) dashboard_config.c $(OUT)/libdashboard.a $(LDFLAGS) -o $@
+
+$(OUT)/dashboard_manager_preview: manager_preview.c $(OUT)/libdashboard.a $(HEADERS)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) manager_preview.c $(OUT)/libdashboard.a $(LDFLAGS) -o $@
 
 $(OUT)/dashboard_test: ../tests/dashboard_test.c $(SOURCES) $(HEADERS) | $(OUT)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -UNDEBUG ../tests/dashboard_test.c $(SOURCES) $(LDFLAGS) -o $@
@@ -64,3 +72,4 @@ previews: $(OUT)/dashboard_preview
 clean:
 	rm -f $(OBJECTS) $(OUT)/libdashboard.a $(OUT)/dashboard_demo $(OUT)/dashboard_test $(OUT)/dashboard_test_sanitize
 	rm -f $(OUT)/dashboard_preview $(OUT)/dashboard_render_test $(OUT)/dashboard_render_test_sanitize $(OUT)/escaped.svg $(OUT)/escaped_sanitize.svg
+	rm -f $(OUT)/dashboard_config $(OUT)/dashboard_manager_preview

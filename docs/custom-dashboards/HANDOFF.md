@@ -3,7 +3,14 @@
 Read the canonical [AGENTS.md](../../AGENTS.md) first. This guide is a restart
 checklist for any agent or coding tool; it is not a second set of project rules.
 
-**Publication handoff:** the user explicitly authorized pushing all work to the
+**P2-03 handoff (current):** the user requested "Start P2-03 on a dedicated
+feature branch". Host configuration and manager are implemented on
+`feature/p2-03-config-manager` ([config.md](config.md)); compiled with strict C99,
+no tests run (final-stage deferral still active). Not merged to master; merge,
+release and vehicle work need separate approval. Next eligible step: P2-04
+(automated validation) when the user requests the final testing stage.
+
+**Publication handoff (historical):** the user explicitly authorized pushing all work to the
 fork's `master`. Source commit f5bd2e7, including both dashboard steps and MAINT-141,
 was fast-forwarded and pushed without conflicts; remote SHA was verified. Read
 [the v1.4.1 report](../maintenance/upstream-v1.4.1.md) and current audit before

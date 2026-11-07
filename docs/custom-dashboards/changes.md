@@ -4,6 +4,25 @@ This ledger describes concrete changes for reviewers and subsequent agents.
 Chronological session evidence remains append-only in [audit/LOG.md](audit/LOG.md).
 Current work state is in [audit/CURRENT.md](audit/CURRENT.md).
 
+## P2-03 — host configuration and dashboard manager (2026-11-07)
+
+User request: "Start P2-03 on a dedicated feature branch". Branch
+`feature/p2-03-config-manager`. Strict C99 compile only; no tests executed
+(final-stage deferral). No GEM, upstream runtime, Android, release or vehicle change.
+
+| Changed path | Change and purpose |
+| --- | --- |
+| [dashboard/dashboard.h](../../dashboard/dashboard.h) | Adds `db_config` (v1), parse/load/write/action API, `db_manager` state, status enum and manager API. Existing P2-01/P2-02 declarations unchanged. |
+| [dashboard/config.c](../../dashboard/config.c) | New strict bounded parser (first key `version=1`, no whitespace/unknown/duplicate keys, 512-byte/64-byte-line caps), file loader distinguishing missing vs invalid, canonical writer, enable/disable/select-layout/restore-default actions. Every failure yields disabled Compact. |
+| [dashboard/manager.c](../../dashboard/manager.c) | New single-provider manager: config gate → one `db_provider` read → layout build. Clears snapshot and frame on invalid config, disabled state, provider failure or geometry rejection, and on every config action. Disabled/invalid states never read the provider. |
+| [dashboard/dashboard_config.c](../../dashboard/dashboard_config.c) | New host CLI applying one action and printing canonical config to stdout; layout actions keep enablement. |
+| [dashboard/manager_preview.c](../../dashboard/manager_preview.c) | New host CLI running the manager with an explicitly chosen MOCK provider; SVG only when READY, else empty stdout and exit 3. |
+| [dashboard/Makefile](../../dashboard/Makefile) | Adds config.c/manager.c to the library and test sources, the two tools to `all`, and their cleanup. |
+| [config.md](config.md) | New P2-03 contract: format, actions, manager order, CLIs, deferred acceptance checks and rollback. |
+| [PLAN.md](PLAN.md), [status.md](status.md), [HANDOFF.md](HANDOFF.md), [module.md](module.md), [architecture.md](architecture.md), [ROADMAP.md](../ROADMAP.md), [AGENTS.md](../../AGENTS.md) | Record P2-03 as implemented-but-untested on its branch and update stale "manager planned" statements. |
+| [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | START, design-fix and handoff events; current checkpoint. |
+| [changes.md](changes.md) | This section. |
+
 ## PUBLISH-MASTER — approved consolidation (2026-11-07)
 
 User authorized pushing everything to the fork's main/master. Master fast-forwarded

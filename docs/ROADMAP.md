@@ -28,7 +28,7 @@ reports for another car, firmware or adapter do not resolve these unknowns.
 | Roadmap phase | Deliverable | Current state |
 | --- | --- | --- |
 | 1 — Upstream baseline | Install and establish the upstream project as-is through a separately authorized process. | Vehicle installation/success unconfirmed; local source investigation complete. |
-| 2 — Custom dashboards | Modular provider interface, VehicleDataProvider role, common manager/widgets, Compact/Extended layouts and safe configuration. | CURRENT PHASE. Mock-only host data/widgets and SVG layouts implemented; manager/config/live vehicle adapter and safe in-car integration outstanding. Final tests deferred by user. |
+| 2 — Custom dashboards | Modular provider interface, VehicleDataProvider role, common manager/widgets, Compact/Extended layouts and safe configuration. | CURRENT PHASE. Mock-only host data/widgets, SVG layouts and P2-03 host manager/config implemented (P2-03 untested); live vehicle adapter and safe in-car integration outstanding. Final tests deferred by user. |
 | 3 — Independent Android app | Standalone app on Galaxy S23 Ultra, usable without MMI. | Future; not implemented. |
 | 4 — Android/MMI communication | Establish a separately validated data connection; introduce AndroidDataProvider as its normalized adapter. | Future; transport unknown and unimplemented. |
 | 5 — Android data in dashboards | Feed AndroidDataProvider into the same manager/widgets alongside VehicleDataProvider. | Future; depends on validated transport/data and safe display integration. |
@@ -67,7 +67,8 @@ providers without rewriting the dashboard manager, layouts or widgets:
   semantic values, provenance and validity, not provider-specific transport.
 - Compact and Extended layouts reuse the same Widget System and renderer adapter.
 - Disabled-by-default configuration, suppression, source selection and rollback
-  preserve the OEM experience. Manager/configuration remain outstanding.
+  preserve the OEM experience. A host single-provider manager and strict config
+  exist since P2-03 (compiled, tests deferred); source selection is outstanding.
 
 **Implemented in code:** the generic `db_provider` callback/context, typed
 `db_snapshot`, mock source, widget formatters, two host layouts and SVG export;
@@ -150,7 +151,7 @@ flowchart LR
     V["VehicleDataProvider / Phase 2 target"] --> I["Common Data Provider Interface"]
     K["MockDataProvider / implemented host source"] --> I
     A["AndroidDataProvider / future Phases 4-5"] -.-> I
-    I --> M["One Dashboard Manager / planned"]
+    I --> M["One Dashboard Manager / host P2-03"]
     M --> S["Normalized selected snapshot"]
     S --> W["Shared Widget System"]
     W --> L["Compact and Extended layouts"]

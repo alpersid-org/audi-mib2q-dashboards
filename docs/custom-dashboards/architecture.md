@@ -2,7 +2,8 @@
 
 Status: P2-01 data/widgets and P2-02 Compact/Extended layouts/SVG export are
 implemented. See [module.md](module.md) and [rendering.md](rendering.md).
-Configuration/activation manager remains future work; no vehicle backend exists.
+P2-03 adds a host Configuration and Dashboard Manager ([config.md](config.md));
+it is compiled but not yet tested. No vehicle backend or activation consumer exists.
 The user has deferred further testing until the final stage. Earlier test results
 are historical evidence, not final graphics acceptance.
 
@@ -57,7 +58,7 @@ flowchart LR
     F --> R[Host SVG renderer]
 ```
 
-The planned **Dashboard Manager** prepares a complete frame on explicit request. It checks
+The host-implemented **Dashboard Manager** (P2-03, untested) prepares a complete frame on explicit request. It checks
 enablement, configuration, viewport and provider success, and clears all previous
 commands on suppression. There is no background loop, animation or polling thread.
 
@@ -77,8 +78,8 @@ snapshot. Selection is explicit per signal/group, not last-writer-wins. Widgets
 never depend on phone transport, DSI bindings or raw messages.
 
 **Confirmed by code:** the common callback, owned typed values and source quality/
-sample-age fields exist in dashboard.h/provider.c. **Planned, not implemented:**
-the manager, concrete Vehicle/Android adapters, resolver, per-provider origin and
+sample-age fields exist in dashboard.h/provider.c. **Implemented on the host in P2-03 (untested):** a single-provider manager.
+**Planned, not implemented:** concrete Vehicle/Android adapters, resolver, per-provider origin and
 session metadata. MOCK/VERIFIED provenance currently does not identify which
 provider produced a value. Extend metadata deliberately before mixed/live-source
 use; the detailed provider design defines unit/freshness/disconnect rules.
@@ -94,7 +95,7 @@ are experiments, not certified VC configurations. The initial prototype will
 reject the known 210x153 and 328x180 maneuver crops as a deliberate design limit;
 readability and fit still need host testing. No dashboard crop is guessed.
 
-The planned **Configuration Manager** accepts a small, strict, versioned text format:
+The host-implemented **Configuration Manager** (P2-03, untested) accepts a small, strict, versioned text format:
 `version=1`, `enabled=0|1`, `layout=compact|extended`. Missing/invalid configuration
 means disabled Compact. Layout selection alone never enables output. Restore
 default uses the same disabled configuration. Paths are supplied explicitly;
