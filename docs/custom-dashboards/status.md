@@ -10,6 +10,8 @@ feed one shared manager/widget path. Phase 3's Galaxy S23 Ultra app initially
 operates independently. No runtime/source code changed, no Android app/transport
 or live adapter added, and no tests or automated checks run for this update.
 P2-02 final validation remains deferred; manager/configuration remains P2-03.
+Roadmap/provider design published in `b4bba59237d062aa06c3f13261a23319bb47d649`,
+with remote source SHA confirmed. This is documentation, not implemented adapters.
 
 ## Active testing policy
 

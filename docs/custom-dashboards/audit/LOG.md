@@ -288,3 +288,25 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Blockers: none for documentation; vehicle and final-test limitations unchanged.
 - Next action: commit/push documentation, record source SHA and preserve roadmap
   reading requirement and no-test policy for the next agent.
+
+## 2026-11-07T19:38:38Z | 20261107T193322Z-codex-03 | COMPLETE
+
+- Agent/session: Codex / `20261107T193322Z-codex`.
+- Task/status: `DOC-ROADMAP` / `COMPLETE`.
+- Authorization: five-phase/provider architecture request in event `-01`.
+- Git: documentation commit `b4bba59237d062aa06c3f13261a23319bb47d649` pushed
+  to origin/feature/custom-dashboards. Push, git ls-remote and git rev-parse HEAD
+  exited 0; remote/local SHA matched. This completion record is a later doc commit.
+- Changes: full docs/ROADMAP.md, common provider design and consistent architecture,
+  plan, project/agent reading order, requirements, handoff, status and change ledger.
+- Decisions/evidence: common callback/snapshot path remains the foundation;
+  manager/resolver and Vehicle/Android live adapters are explicitly unimplemented.
+  Phase 3 app is initially independent; Phase 4 connects; Phase 5 supplies shared
+  widgets. Phase 2 subtask numbering is distinguished from roadmap phase numbering.
+- Validation: manual review/publication only; no tests, builds or automated checks.
+- Pending/dirty work: no code WIP or active processes. Only audit/status completion
+  recording being saved. No transport/app/provider implementation added.
+- Blockers: no documentation blocker; prior final-test/vehicle limitations persist.
+- Next action: save this record. On a later P2-03 request keep manager inputs
+  provider independent and use roadmap/provider docs as context. Do not implement
+  Android communication or run tests until the corresponding user request.
