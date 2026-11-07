@@ -41,6 +41,10 @@ switch must preserve the active implementation scope and the later no-test polic
 P2-01 implementation commit: `0b256c07d736a3f47062c9f4afa751dd5b4a1e20`, pushed and
 verified on `origin/feature/custom-dashboards`.
 
+P2-02 implementation/artifacts commit: `2ad7270bc6d7e2e78332b437ac95e835403fe6e5`,
+pushed and confirmed on the feature branch. Final tests remain deferred; publication
+does not imply validation or vehicle compatibility.
+
 ## Not implemented
 
 Configuration/activation manager, GL/QNX renderer, performance benchmark, GEM

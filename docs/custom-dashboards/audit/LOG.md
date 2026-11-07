@@ -221,3 +221,29 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Blockers: final testing/visual review deferred; no vehicle surface proven.
 - Next action: commit and push the implementation plus checkpoint, verify remote
   publication, record the source SHA in a handoff event; preserve no-test policy.
+
+## 2026-11-07T19:29:10Z | 20261107T191700Z-codex-04 | HANDOFF
+
+- Agent/session: Codex / `20261107T191700Z-codex`.
+- Task/status: `P2-02` / `READY_FOR_REVIEW`; implementation published, final tests
+  and visual review deferred by user. P2-03 not started.
+- Authorization: step 2/push request in event `-01`; no-test override in event `-02`.
+- Git: source/artifact/documentation commit
+  `2ad7270bc6d7e2e78332b437ac95e835403fe6e5` pushed to origin/feature/custom-dashboards.
+  Push exited 0; `git ls-remote origin refs/heads/feature/custom-dashboards` matched
+  `git rev-parse HEAD`. These were publication operations, not test execution.
+- Changes: 29 files in the implementation commit, individually documented in
+  changes.md. Added Compact/Extended layout builder, SVG adapter/validator,
+  explicit mock preview CLI, four SVGs, prepared tests and updated agent policy.
+- Decisions/evidence: host-only path and QNX guard retained; no vehicle routing,
+  live signals, GEM or config manager. Rendering/typography limitations are in
+  rendering.md. No successful screenshot or final-acceptance claim.
+- Validation: NO further tests or automated checks since the user's instruction.
+  Historical results are retained in event `-02` and status.md.
+- Pending/dirty work: no source WIP or active test processes. Only this audit/status
+  publication record is being committed subsequently; find its SHA through Git.
+- Blockers: final testing deferred by user; safe vehicle surface/compatibility
+  and proprietary checks remain unknown/unavailable.
+- Next action: publish this handoff record, then await the next requested increment.
+  For P2-03, add disabled-by-default configuration and suppression on the host,
+  document every change and preserve the no-test policy until final-stage request.

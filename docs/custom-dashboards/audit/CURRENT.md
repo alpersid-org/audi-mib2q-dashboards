@@ -1,6 +1,6 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T19:28:11Z. Agent: Codex.
+Updated: 2026-11-07T19:29:10Z. Agent: Codex.
 Session: `20261107T191700Z-codex`.
 
 ## Active task and authorization
@@ -19,7 +19,10 @@ Session: `20261107T191700Z-codex`.
 
 - Branch: feature/custom-dashboards; starting SHA:
   `69db637e6cef70caba139bfd84913db067fdd3de`; P2-01 already published.
-- P2-02 source/artifacts/docs are currently uncommitted. Publication authorized.
+- P2-02 source/artifacts/docs published in commit
+  `2ad7270bc6d7e2e78332b437ac95e835403fe6e5`; remote SHA matched local HEAD.
+- This subsequent handoff record is a documentation commit; locate its SHA in Git
+  history and compare the remote on resume. No uncommitted source work remains.
 - New source: dashboard/layout.c, svg.c, preview.c. API/Makefile extended.
 - Prepared tests: tests/dashboard_render_test.c, tests/dashboard_svg_test.py.
 - Saved artifacts: dashboard/previews/{compact,extended}-{wide,tall}.svg and README.
@@ -35,7 +38,8 @@ Session: `20261107T191700Z-codex`.
 - [x] Mock export CLI and four saved wide/tall SVGs; reject maneuver crops.
 - [x] Per-file change ledger, API/design/limitations and scope docs updated.
 - [ ] Final tests and visual/font/readability inspection — DEFERRED BY USER.
-- [ ] Commit/push and verify publication of implementation and checkpoint.
+- [x] Implementation/artifacts committed and pushed; remote publication confirmed.
+  This handoff record is saved in a subsequent documentation commit.
 
 ## Evidence and pending work
 
@@ -53,9 +57,9 @@ compatibility/safe vehicle surface remains unproven. No new packages installed.
 
 ## Exact next action
 
-Review the changed file list/documentation, commit/push P2-02 and verify the
-remote SHA (Git publication only, not test execution). Record the published
-source commit in a subsequent audit handoff event. Do not run automated checks.
+P2-02 implementation is published and ready for review; final test gate remains
+deferred. On resume append a RESUME event, inspect the Git state and latest user
+task, and do not repeat P2-02. Do not execute tests or automated checks.
 
 The next implementation task, when requested, is P2-03 configuration and manager
 suppression. Start from existing frame/provider contracts, keep default disabled,
