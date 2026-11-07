@@ -1,10 +1,10 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T21:06:38Z. Agent: Codex.
+Updated: 2026-11-07T21:07:07Z. Agent: Codex.
 
 ## Task and authorization
 
-- PUBLISH-REVIEW / IN_PROGRESS. Latest user: "Push and commit". Commit/push
+- PUBLISH-REVIEW / COMPLETE (report/handoff publication verified). Latest user: "Push and commit". Commit/push
   review documentation to origin/review/claude-phase2; no master merge, fixes,
   tests, release or vehicle actions.
 - DOC-REVIEW-HANDOFF / COMPLETE. Latest user requested a Markdown report and
@@ -16,15 +16,18 @@ Updated: 2026-11-07T21:06:38Z. Agent: Codex.
 
 ## Git and files
 
-- Review branch: review/claude-phase2, source HEAD 312215a (origin/master at fetch).
+- Review branch: review/claude-phase2, tracking origin/review/claude-phase2.
+- Reviewed source: 312215a (origin/master at review fetch).
+- Report/handoff commit: 2acf555c7c2f8dc0b20453aadf4c46f20e6aa70a, pushed;
+  git ls-remote confirmed the exact SHA. This completion checkpoint follows
+  in a documentation-only commit, whose SHA is available from Git history.
 - Range: 574ae26..312215a, 15 Claude commits / 45 changed paths. All fetched origin
   branches are included in that master revision; no separate unreviewed branch tip.
-- Local documentation edits only: reviews/claude-312215a.md (report),
+- Published documentation: reviews/claude-312215a.md (report),
   reviews/README.md (pickup guide), AGENTS.md, CLAUDE.md, GEMINI.md, Copilot
   instructions, HANDOFF.md, status.md, PLAN.md, changes.md, audit/CURRENT.md
   and append-only audit/LOG.md. Prior review edits preserved.
-- No implementation changes. Documentation commit/push is now authorized and
-  pending; no merge. Local master remains 574ae26;
+- No implementation changes or master merge. Local master remains 574ae26;
   do not mistake it for the newer reviewed origin/master. No active processes.
 
 ## Findings and validation
@@ -55,8 +58,12 @@ the ordered queue for a host-only corrective increment when requested. Do not ad
 and establishing firmware/ABI/safe-surface evidence. Keep QNX guard/default OFF.
 Session identity/sequence validation, media omission and final test repair remain
 explicit gaps. No Android app/communication or other roadmap phase implemented.
-Publication is now authorized by "Push and commit". Exact current action: commit
-and push this documentation to origin/review/claude-phase2, verify remote SHA,
-and record completion. Future agents should check out that branch to resume.
+Publication authorized by "Push and commit" is complete for the report/handoff.
+Finish publishing this completion checkpoint under the same authorization and
+verify final remote HEAD. Future agents should fetch origin and check out
+review/claude-phase2, read reviews/README.md, then follow the next user task.
+No corrective implementation is started.
 Audit: [LOG.md](LOG.md), review events codex-review-claude-01 through -03 and
 documentation events codex-review-handoff-01 through -02.
+
+Publication audit: events codex-publish-review-01 and -02 in LOG.md.
