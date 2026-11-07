@@ -1,12 +1,12 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T20:04:19Z. Agent: Codex.
-Session: `20261107T195941Z-codex`.
+Updated: 2026-11-07T20:07:48Z. Agent: Claude Code (resume/verification).
+Session: `20261107T200748Z-claude` (prior: `20261107T195941Z-codex`).
 
 ## Active task and authorization
 
-- Task/state: `PUBLISH-MASTER` / `COMPLETE` (source publication verified;
-  this documentation checkpoint is being committed/pushed with the same approval).
+- Task/state: `PUBLISH-MASTER` / `COMPLETE`. Source and the final Codex
+  documentation checkpoint 574ae26 are both verified on origin/master.
 - Latest user request: "Push everything to main/master on my forked project".
   Supersedes the maintenance local-only/no-merge restriction for this publication.
 - No new feature, release, firmware action or vehicle execution authorized.
@@ -22,8 +22,11 @@ Session: `20261107T195941Z-codex`.
   origin/master. This includes all feature work through 6d5e660 and maintenance.
 - Feature/custom-dashboards and maintenance/upstream-v1.4.1 branches retained.
   Upstream remote untouched. No main branch, release or tag created.
-- This final documentation checkpoint follows the verified source commit; discover
-  its SHA with git log. Verify origin/master against local HEAD after pushing.
+- Final documentation checkpoint 574ae2674ec08a05c8ea233bf516ea2e5f35b450 verified
+  by Claude with git ls-remote: origin/master = 574ae26.
+- maintenance/upstream-v1.4.1 exists only on the Codex machine (not on origin);
+  its commits are in master. Claude's audit-only session branch is
+  claude/custom-dashboards-audit-9qbwft; it is not merged into master.
 
 ## Included work and validation
 
@@ -45,8 +48,7 @@ Earlier feature-test deferral remains for future feature work unless superseded.
 ## Handoff and next action
 
 No code WIP, active processes or pending feature task. No vehicle deployment.
-Finish checkpoint commit/push and verify remote HEAD. After that, await the next
-user task. A future implementation request should use a dedicated feature branch,
+Publication is finished and verified. Await the next user task. A future implementation request should use a dedicated feature branch,
 read ROADMAP/provider/PLAN docs and write an audit RESUME event. Do not duplicate
 upstream fixes or infer publication/release approval for future work.
 
