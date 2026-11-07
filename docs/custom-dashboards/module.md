@@ -36,13 +36,15 @@ The demo header says `HOST PROTOTYPE - MOCK DATA - NO VEHICLE OUTPUT`; examples:
 ```text
 OUTSIDE TEMPERATURE  [MOCK] 12.5 C
 DRIVING RANGE        [MOCK] 620 km | Estimated range
-TRIP DISTANCE        [MOCK] 84.3 km | Trip sample
-AVERAGE CONSUMPTION  [MOCK] 5.6 L/100km | Trip average sample
 NOW PLAYING          [MOCK] Night Drive | Studio Session
 NAVIGATION           [MOCK] 42.5 km / 38 min | City Centre
+DISTANCE TO DESTINATION [MOCK] 42.5 km | Remaining route
+TIME TO DESTINATION  [MOCK] 38 min | Estimated by navigation
+DESTINATION          [MOCK] City Centre
 ```
 
 This text output is a data/formatter demonstration, not a dashboard screenshot.
+The listing reflects the P2-07 widget set as designed; it was not re-executed.
 Host SVG layouts are supplied separately by P2-02. P2-03 adds a host
 configuration/manager ([config.md](config.md)); no vehicle activation exists. Further tests are deferred to the final stage
 by the user; commands on this page are retained for that stage.
@@ -83,17 +85,16 @@ ships. Do not relabel a mock as verified in product code.
 | --- | --- | --- | --- |
 | Temperature | 0.1 degrees C | -1000 through 1000 | One decimal, including `-0.1 C` |
 | Driving range | Meters | 0 through 10,000,000 | Whole km, rounded down |
-| Trip | Meters | 0 through 1,000,000,000 | One decimal km, rounded down |
-| Average consumption | 0.1 L/100km | 0 through 1000 | One decimal L/100km |
 | Media | Title/artist, each 96-byte capacity | Both terminated, nonempty title | Title plus optional artist |
-| Navigation | Final-destination meters, seconds, destination | 0–1,000,000,000 m; 0–31,536,000 s; terminated name | One decimal km, duration rounded up to minutes; optional destination |
+| Navigation | Final-destination meters, seconds, destination | each -1 (not supplied) or 0–1,000,000,000 m / 0–31,536,000 s; terminated name | Supplied parts; duration rounded up to minutes; optional destination |
+| Distance / time to destination, destination (P2-07) | Same navigation sample | As above; empty name = not supplied | See [widgets-p2-07.md](widgets-p2-07.md) |
 
 Bounds are deliberate prototype input guards, not verified firmware/sensor limits.
-Trip/reset semantics and all real signal meanings remain unverified on this car.
+Trip distance and average consumption were removed in P2-07 (no source). All
+real signal meanings remain unverified on this car.
 Navigation is an atomic group: a future adapter must take the oldest contributing
-sample time so fresh destination text cannot revive old estimates. Partial
-navigation estimates currently render as invalid/missing; independent component
-display can be added later with an explicit contract. No ETA clock is inferred.
+sample time so fresh destination text cannot revive old estimates. Since P2-07
+a part the source did not supply (-1 / empty) renders as UNAVAILABLE. No ETA clock is inferred.
 
 `db_widget_format` always replaces the output. Missing data produces `--` and
 `UNAVAILABLE`; invalid values/provenance produce `INVALID`; timestamps after now

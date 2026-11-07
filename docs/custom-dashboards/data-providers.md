@@ -44,7 +44,8 @@ future resolution combines only successful eligible fields.
 
 ## Signal contract
 
-Use the existing temperature, range, trip, consumption, media and navigation
+Use the existing temperature, range, media and navigation (trip/consumption
+removed in P2-07)
 semantics/units described in [module.md](module.md). A provider may supply any
 verified subset; omitted signals are MISSING, never zero-by-default live values.
 Capability information should distinguish unsupported fields from temporary

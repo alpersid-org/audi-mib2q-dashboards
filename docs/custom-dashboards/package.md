@@ -119,7 +119,7 @@ untouched). The added paths:
 | Agent/project entry | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`, `PROJECT.md` |
 | Dashboard source | `dashboard/{Makefile,dashboard.h,provider.c,mock_provider.c,widgets.c,layout.c,svg.c,config.c,manager.c}` |
 | Dashboard tools | `dashboard/{demo.c,preview.c,dashboard_config.c,manager_preview.c,benchmark.c}` |
-| Previews | `dashboard/previews/{README.md,compact-wide.svg,compact-tall.svg,extended-wide.svg,extended-tall.svg}` |
+| Previews | `dashboard/previews/{README.md,compact-wide.svg,compact-tall.svg}` (Extended SVGs removed in P2-07) |
 | Tests | `tests/{dashboard_test.c,dashboard_render_test.c,dashboard_svg_test.py,dashboard_manager_test.c,dashboard_cli_test.py,upstream_v141_test.py}` |
 | Documentation | `docs/ROADMAP.md`, `docs/maintenance/upstream-v1.4.1.md`, and 16 files under `docs/custom-dashboards/` including `audit/` (17 with this page) |
 

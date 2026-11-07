@@ -23,11 +23,25 @@ static const db_sample *sample_for(db_widget w, const db_snapshot *s)
     switch (w) {
     case DB_TEMPERATURE: return &s->temperature.sample;
     case DB_RANGE: return &s->range.sample;
-    case DB_TRIP: return &s->trip.sample;
-    case DB_CONSUMPTION: return &s->consumption.sample;
     case DB_MEDIA: return &s->media.sample;
-    case DB_NAVIGATION: return &s->navigation.sample;
+    case DB_NAVIGATION: case DB_NAV_DISTANCE: case DB_NAV_TIME: case DB_DESTINATION:
+        return &s->navigation.sample;
     default: return NULL;
+    }
+}
+
+/* A split navigation field the source did not supply (-1 / empty name) is
+ * shown as UNAVAILABLE, not INVALID: the route may legitimately lack it. */
+static int not_supplied(db_widget w, const db_snapshot *s)
+{
+    switch (w) {
+    case DB_NAVIGATION:
+        return s->navigation.remaining_meters == -1 && s->navigation.remaining_seconds == -1;
+    case DB_NAV_DISTANCE: return s->navigation.remaining_meters == -1;
+    case DB_NAV_TIME: return s->navigation.remaining_seconds == -1;
+    case DB_DESTINATION:
+        return terminated(s->navigation.destination) && !s->navigation.destination[0];
+    default: return 0;
     }
 }
 
@@ -38,18 +52,24 @@ static int values_valid(db_widget w, const db_snapshot *s)
     case DB_TEMPERATURE:
         return s->temperature.decicelsius >= -1000 && s->temperature.decicelsius <= 1000;
     case DB_RANGE: return s->range.meters >= 0 && s->range.meters <= 10000000;
-    case DB_TRIP: return s->trip.meters >= 0 && s->trip.meters <= 1000000000;
-    case DB_CONSUMPTION:
-        return s->consumption.deciliters_per_100km >= 0 &&
-               s->consumption.deciliters_per_100km <= 1000;
     case DB_MEDIA:
         return terminated(s->media.title) && s->media.title[0] && terminated(s->media.artist);
-    case DB_NAVIGATION:
-        return s->navigation.remaining_meters >= 0 &&
-               s->navigation.remaining_meters <= 1000000000 &&
-               s->navigation.remaining_seconds >= 0 &&
-               s->navigation.remaining_seconds <= 31536000 &&
+    case DB_NAVIGATION: /* each part may be -1 (not supplied); not both */
+        return (s->navigation.remaining_meters == -1 ||
+                (s->navigation.remaining_meters >= 0 &&
+                 s->navigation.remaining_meters <= 1000000000)) &&
+               (s->navigation.remaining_seconds == -1 ||
+                (s->navigation.remaining_seconds >= 0 &&
+                 s->navigation.remaining_seconds <= 31536000)) &&
                terminated(s->navigation.destination);
+    case DB_NAV_DISTANCE:
+        return s->navigation.remaining_meters >= 0 &&
+               s->navigation.remaining_meters <= 1000000000;
+    case DB_NAV_TIME:
+        return s->navigation.remaining_seconds >= 0 &&
+               s->navigation.remaining_seconds <= 31536000;
+    case DB_DESTINATION:
+        return terminated(s->navigation.destination) && s->navigation.destination[0];
     default: return 0;
     }
 }
@@ -57,8 +77,8 @@ static int values_valid(db_widget w, const db_snapshot *s)
 void db_widget_format(db_widget w, const db_snapshot *s, uint64_t now_ms, db_widget_view *out)
 {
     static const char *const labels[] = {
-        "OUTSIDE TEMPERATURE", "DRIVING RANGE", "TRIP DISTANCE",
-        "AVERAGE CONSUMPTION", "NOW PLAYING", "NAVIGATION"
+        "OUTSIDE TEMPERATURE", "DRIVING RANGE", "NOW PLAYING", "NAVIGATION",
+        "DISTANCE TO DESTINATION", "TIME TO DESTINATION", "DESTINATION"
     };
     const db_sample *sample;
     long v;
@@ -76,6 +96,7 @@ void db_widget_format(db_widget w, const db_snapshot *s, uint64_t now_ms, db_wid
     if (sample->source == DB_SOURCE_MOCK || sample->source == DB_SOURCE_VERIFIED)
         out->source = sample->source;
     if (sample->availability == DB_MISSING) return;
+    if (sample->availability == DB_AVAILABLE && not_supplied(w, s)) return;
     if (sample->availability != DB_AVAILABLE || out->source == DB_SOURCE_UNKNOWN ||
         !values_valid(w, s)) {
         out->status = DB_VALUE_INVALID; strcpy(out->badge, "INVALID"); return;
@@ -97,21 +118,30 @@ void db_widget_format(db_widget w, const db_snapshot *s, uint64_t now_ms, db_wid
     case DB_RANGE:
         snprintf(out->value, sizeof(out->value), "%ld km", (long)s->range.meters / 1000);
         strcpy(out->detail, "Estimated range"); break;
-    case DB_TRIP:
-        v = s->trip.meters;
-        snprintf(out->value, sizeof(out->value), "%ld.%ld km", v / 1000, v / 100 % 10);
-        strcpy(out->detail, "Trip sample"); break;
-    case DB_CONSUMPTION:
-        v = s->consumption.deciliters_per_100km;
-        snprintf(out->value, sizeof(out->value), "%ld.%ld L/100km", v / 10, v % 10);
-        strcpy(out->detail, "Trip average sample"); break;
     case DB_MEDIA:
         ascii_copy(out->value, s->media.title); ascii_copy(out->detail, s->media.artist); break;
-    case DB_NAVIGATION:
-        v = s->navigation.remaining_meters;
-        snprintf(out->value, sizeof(out->value), "%ld.%ld km / %ld min", v / 1000,
-                 v / 100 % 10, ((long)s->navigation.remaining_seconds + 59) / 60);
+    case DB_NAVIGATION: {
+        long m = s->navigation.remaining_meters, sec = s->navigation.remaining_seconds;
+        if (m >= 0 && sec >= 0)
+            snprintf(out->value, sizeof(out->value), "%ld.%ld km / %ld min",
+                     m / 1000, m / 100 % 10, (sec + 59) / 60);
+        else if (m >= 0)
+            snprintf(out->value, sizeof(out->value), "%ld.%ld km", m / 1000, m / 100 % 10);
+        else
+            snprintf(out->value, sizeof(out->value), "%ld min", (sec + 59) / 60);
         ascii_copy(out->detail, s->navigation.destination); break;
+    }
+    case DB_NAV_DISTANCE:
+        v = s->navigation.remaining_meters;
+        snprintf(out->value, sizeof(out->value), "%ld.%ld km", v / 1000, v / 100 % 10);
+        strcpy(out->detail, "Remaining route"); break;
+    case DB_NAV_TIME:
+        v = ((long)s->navigation.remaining_seconds + 59) / 60; /* round up, never optimistic */
+        if (v < 60) snprintf(out->value, sizeof(out->value), "%ld min", v);
+        else snprintf(out->value, sizeof(out->value), "%ld h %02ld min", v / 60, v % 60);
+        strcpy(out->detail, "Estimated by navigation"); break;
+    case DB_DESTINATION:
+        ascii_copy(out->value, s->navigation.destination); break;
     default: break;
     }
 }

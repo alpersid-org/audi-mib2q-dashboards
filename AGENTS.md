@@ -19,7 +19,12 @@ to the safety boundary below (open decision recorded in that section).
 **Testing is deferred again:** after P2-04 the user said "do not run any test, there will be a ask at the end to implement and run the tests".
 No tests or new test code until that final request; see Validation below.
 
-**Latest update — DOC-SCOPE:** the user supplied the Phase 2 scope above and
+**Current task — P2-07:** the user said "yes" to starting PLAN step 7 (omit
+unverified widgets). Implemented on `feature/p2-07-verified-widgets`; compiled,
+no tests run or edited; existing tests are out of date. See
+[widgets-p2-07.md](docs/custom-dashboards/widgets-p2-07.md).
+
+**Earlier update — DOC-SCOPE:** the user supplied the Phase 2 scope above and
 asked that the documentation reflect it. Documentation only; no tests.
 
 **Earlier task — P2-05:** the user requested "Start P2-05" (PLAN step 5,

@@ -627,3 +627,20 @@ feature; earlier project history is available in Git and [status.md](../status.m
   containing this event (1ff58d9 scope docs + this event). No merge commit.
 - Next: P2-07 (omit unverified widgets, host-only) on feature/p2-07-verified-widgets.
   Testing policy unchanged: no tests or new test code.
+
+## 2026-11-07T20:44:16Z | 20261107T200748Z-claude-15 | COMPLETE / P2-07 READY_FOR_REVIEW
+
+- Evidence for the widget set: VehicleDataModule reads range, outside temp,
+  speed, reverse gear, standstill and fuel warning; aa_trip_t carries destination,
+  meters, seconds (-1 = not supplied); media via now-playing DSI. No producer of
+  trip distance or average consumption.
+- Code: removed DB_TRIP/DB_CONSUMPTION and their snapshot fields/mock values;
+  added DB_NAV_DISTANCE/DB_NAV_TIME/DB_DESTINATION from the same navigation
+  sample; -1/empty render UNAVAILABLE; Compact navigation shows supplied parts;
+  Extended = temp, range, media, distance, time, destination. Speed/warnings
+  deliberately excluded. Deleted extended-{wide,tall}.svg.
+- Build: make -C dashboard all exit 0, twice (after the Compact navigation
+  correction). Build step only; no binary executed.
+- Tests: not run or edited (user instruction); existing suites now out of date,
+  listed in widgets-p2-07.md. No link/whitespace checks run; manual review.
+- Next: commit/push branch; await merge approval and step-8 decisions.

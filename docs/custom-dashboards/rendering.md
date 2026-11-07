@@ -18,14 +18,13 @@ No successful browser screenshot or visual inspection has been established.
 | Layout | Wide 800x252 | Tall 640x360 |
 | --- | --- | --- |
 | Compact | [SVG](../../dashboard/previews/compact-wide.svg) | [SVG](../../dashboard/previews/compact-tall.svg) |
-| Extended | [SVG](../../dashboard/previews/extended-wide.svg) | [SVG](../../dashboard/previews/extended-tall.svg) |
+| Extended | removed in P2-07; regenerate at the final testing stage | removed |
 
 ![Compact host mock preview](../../dashboard/previews/compact-wide.svg)
 
-![Extended host mock preview](../../dashboard/previews/extended-tall.svg)
-
 The Compact grid is 2x2: temperature, range, media and navigation. Extended is
-3x2: temperature, range, consumption, trip, media and navigation. Dark backgrounds,
+3x2 (since P2-07): temperature, range, now playing, distance to destination,
+time to destination and destination ([widgets-p2-07.md](widgets-p2-07.md)). Dark backgrounds,
 white primary text, muted labels, a restrained red heading accent and blue MOCK
 badges provide a stable theme. Unavailable/stale/invalid fields use placeholders
 and amber state badges. No safety instrumentation is represented or replaced.

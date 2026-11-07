@@ -11,9 +11,9 @@ as DEFERRED BY USER. P2-04 results remain historical evidence only.
 
 **Scope handoff (read first):** Phase 2 is "Real Vehicle Data Integration"
 ([requirements.md](requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative)).
-It is **not complete**: P2-01..P2-05 are a mock-only host foundation. Next
-eligible work: PLAN step 7 (omit unverified widgets) when requested; steps 8–10
-per PLAN. Open user decisions: head-unit code authorization and display surface.
+It is **not complete**: P2-01..P2-05 are a mock-only host foundation; P2-07
+(omit unverified widgets) is implemented on `feature/p2-07-verified-widgets`
+with tests out of date. Next: PLAN step 8 (VehicleDataProvider) when requested. Open user decisions: head-unit code authorization and display surface.
 
 **P2-05 handoff (historical):** user request "Start P2-05". Packaging page
 [package.md](package.md) on `feature/p2-05-package`; no tests run. After P2-05

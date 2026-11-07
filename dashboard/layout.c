@@ -39,7 +39,7 @@ static int card(db_frame *f, db_widget widget, const db_snapshot *s, uint64_t no
     uint32_t badge_color;
     db_widget_format(widget, s, now, &v);
     size = widget == DB_NAVIGATION ? (content < 200 ? 14 : 16) :
-           widget == DB_MEDIA || widget == DB_CONSUMPTION ? 20 : 24;
+           widget == DB_MEDIA || widget == DB_DESTINATION ? 20 : 24;
     badge_w = (int)strlen(v.badge) * 6;
     badge_color = v.status != DB_VALUE_OK ? 0xf0bd70 :
                   v.source == DB_SOURCE_MOCK ? 0x78bde8 : 0xc9d0d8;
@@ -56,7 +56,8 @@ int db_layout_build(db_layout layout, const db_snapshot *snapshot, uint64_t now_
 {
     static const db_widget compact[] = { DB_TEMPERATURE, DB_RANGE, DB_MEDIA, DB_NAVIGATION };
     static const db_widget extended[] = {
-        DB_TEMPERATURE, DB_RANGE, DB_CONSUMPTION, DB_TRIP, DB_MEDIA, DB_NAVIGATION
+        /* P2-07: same verified signal groups as Compact, in more detail. */
+        DB_TEMPERATURE, DB_RANGE, DB_MEDIA, DB_NAV_DISTANCE, DB_NAV_TIME, DB_DESTINATION
     };
     const db_widget *widgets = layout == DB_COMPACT ? compact : extended;
     int cols = layout == DB_COMPACT ? 2 : 3;

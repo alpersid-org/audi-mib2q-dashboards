@@ -84,8 +84,10 @@ session metadata. MOCK/VERIFIED provenance currently does not identify which
 provider produced a value. Extend metadata deliberately before mixed/live-source
 use; the detailed provider design defines unit/freshness/disconnect rules.
 
-The implemented **Widget System** formats temperature, range, media, final-destination
-distance/duration, trip distance and average consumption. All initial values are
+The implemented **Widget System** formats temperature, range, media and the
+final-destination navigation group (combined, or split into distance, time and
+destination for Extended). Trip distance and average consumption were removed in
+P2-07 because no existing pipeline supplies them. All initial values are
 explicitly labeled MOCK. No speed, warning, braking, steering or ADAS widget is
 planned. ETA must not be derived from an unverified clock.
 

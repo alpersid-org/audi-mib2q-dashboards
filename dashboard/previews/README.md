@@ -9,11 +9,13 @@ readability review on a real cluster has not been done. Package overview:
 | Layout | 800x252 | 640x360 |
 | --- | --- | --- |
 | Compact | [Wide](compact-wide.svg) | [Tall](compact-tall.svg) |
-| Extended | [Wide](extended-wide.svg) | [Tall](extended-tall.svg) |
+| Extended | removed in P2-07 | removed in P2-07 |
 
 ![Compact](compact-wide.svg)
 
-![Extended](extended-wide.svg)
+The Extended previews showed trip distance and average consumption, which P2-07
+removed (no verified source). They will be regenerated at the final testing
+stage; see [widgets-p2-07.md](../../docs/custom-dashboards/widgets-p2-07.md).
 
 Generation command from the repository root: `make -C dashboard previews`.
 The saved artifacts were generated in P2-02 and verified byte-identical to CLI

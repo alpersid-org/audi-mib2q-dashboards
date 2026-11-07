@@ -1,5 +1,9 @@
 # P2-04: host validation and regression report
 
+> **Historical:** these results predate P2-07, which removed the trip and
+> consumption widgets and changed Extended. The suites have not been updated or
+> rerun since (user's no-test instruction); see [widgets-p2-07.md](widgets-p2-07.md).
+
 PLAN step 4, the final testing stage. User request: "Start P2-04, but before make
 sure you update the documentation, as instructed". The documentation/scope update
 was committed (88d68ea) before any test ran. Run date 2026-11-07 on branch

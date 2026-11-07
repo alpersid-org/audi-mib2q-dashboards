@@ -100,7 +100,7 @@ git diff --name-only b127988a68c8d690841f4a75d35717ffc01e668e HEAD
 | 4 | 1–3; user request received | Automated tests, host benchmark and regression report | Complete on `feature/p2-04-validation`; dashboard suites/sanitizers pass; upstream results and unavailable checks in [validation.md](validation.md) |
 | 5 | 4; user request received | Reproducible previews, documentation and rollback evidence | Documented in [package.md](package.md) on `feature/p2-05-package`; nothing re-executed (no-test instruction) |
 | 6 | 5 plus firmware/surface evidence | Signal and surface feasibility (scope req. 1–2) | Source review partial; on-car evidence and head-unit authorization needed |
-| 7 | 1–5 | Remove unverified widgets and keep mock out of product paths (req. 6, 8) | Proposed; host-only, can start now |
+| 7 | 1–5; user request received | Remove unverified widgets and keep mock out of product paths (req. 6, 8) | Implemented on `feature/p2-07-verified-widgets` ([widgets-p2-07.md](widgets-p2-07.md)); compiled; tests out of date, deferred by user |
 | 8 | 6–7 | VehicleDataProvider: real-time binding through existing pipelines (req. 3–4) | Proposed; code can be written on the host, verification needs the car |
 | 9 | 6, 8 | Virtual Cockpit renderer for Compact/Extended (req. 5) | Proposed; needs surface decision and head-unit authorization |
 | 10 | 8–9 | In-car validation by the user (expected outcome) | Proposed; user installs and tests |
@@ -242,6 +242,9 @@ Added after the user's Phase 2 scope. Not started; each needs its own request.
 7. **Omit unverified widgets (host).** Remove trip distance and average
    consumption from Extended (no source found; req. 8) and redefine Extended
    around verified signals. Keep `db_mock_read` for tests/development only.
+   *State:* implemented; see [widgets-p2-07.md](widgets-p2-07.md). Existing
+   tests are out of date and the Extended previews were removed; both are for
+   the final testing stage.
 8. **VehicleDataProvider (req. 3–4).** Reuse existing pipelines: the
    `VehicleDataModule` DSICarKombi readings (outside temperature, range), the
    Android Auto trip feed (final-destination distance/time) and existing

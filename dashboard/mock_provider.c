@@ -12,12 +12,11 @@ int db_mock_read(void *context, uint64_t now_ms, db_snapshot *out)
     sample.availability = DB_AVAILABLE;
     sample.source = DB_SOURCE_MOCK;
     sample.sampled_ms = now_ms;
-    out->temperature.sample = out->range.sample = out->trip.sample = sample;
-    out->consumption.sample = out->media.sample = out->navigation.sample = sample;
+    /* Mock is for automated tests and development only (scope req. 6). */
+    out->temperature.sample = out->range.sample = sample;
+    out->media.sample = out->navigation.sample = sample;
     out->temperature.decicelsius = 125;
     out->range.meters = 620000;
-    out->trip.meters = 84300;
-    out->consumption.deciliters_per_100km = 56;
     strcpy(out->media.title, "Night Drive");
     strcpy(out->media.artist, "Studio Session");
     out->navigation.remaining_meters = 42500;

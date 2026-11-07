@@ -30,14 +30,17 @@ typedef struct {
 
 typedef struct { db_sample sample; int32_t decicelsius; } db_temperature;
 typedef struct { db_sample sample; int32_t meters; } db_distance;
-typedef struct { db_sample sample; int32_t deciliters_per_100km; } db_consumption;
+/* P2-07 (scope req. 8): trip distance and average consumption were removed. No
+ * existing pipeline supplies them; re-add only with a verified source. */
 typedef struct {
     db_sample sample;
     char title[DB_TEXT_CAP], artist[DB_TEXT_CAP];
 } db_media;
 /* Atomic group: all three fields must describe the same destination/estimate.
  * Future adapters must use the OLDEST contributing sample time, never refresh
- * old estimates just because a new destination string arrived. */
+ * old estimates just because a new destination string arrived.
+ * remaining_meters/remaining_seconds may be -1 = not supplied by the source
+ * (matches aa_hook/aa_trip.h); an empty destination means not supplied. */
 typedef struct {
     db_sample sample;
     int32_t remaining_meters, remaining_seconds;
@@ -45,8 +48,7 @@ typedef struct {
 } db_navigation;
 typedef struct {
     db_temperature temperature;
-    db_distance range, trip;
-    db_consumption consumption;
+    db_distance range;
     db_media media;
     db_navigation navigation;
 } db_snapshot;
@@ -61,8 +63,14 @@ typedef struct { db_read_fn read; void *context; } db_provider;
 int db_snapshot_read(const db_provider *provider, uint64_t now_ms, db_snapshot *out);
 int db_mock_read(void *context, uint64_t now_ms, db_snapshot *out);
 
+/* Only widgets backed by an existing vehicle/MMI pipeline (scope req. 8):
+ * temperature/range (VehicleDataModule, DSICarKombi), media (now-playing DSI),
+ * navigation group (AA trip feed / CarPlay RGD). NAVIGATION is the combined
+ * Compact card; NAV_DISTANCE, NAV_TIME and DESTINATION split the same atomic
+ * navigation sample for Extended. No speed, warning or control widgets. */
 typedef enum {
-    DB_TEMPERATURE, DB_RANGE, DB_TRIP, DB_CONSUMPTION, DB_MEDIA, DB_NAVIGATION,
+    DB_TEMPERATURE, DB_RANGE, DB_MEDIA, DB_NAVIGATION,
+    DB_NAV_DISTANCE, DB_NAV_TIME, DB_DESTINATION,
     DB_WIDGET_COUNT
 } db_widget;
 typedef enum {

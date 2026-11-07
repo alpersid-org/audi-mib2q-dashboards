@@ -7,8 +7,9 @@ Extended dashboards inside the Virtual Cockpit showing real MMI data, mock only
 for tests ([scope and gap table](requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative)).
 **Phase 2 is not complete.** Steps P2-01..P2-05 delivered and tested a mock-only
 host foundation. Real data binding, VC rendering and in-car validation are
-outstanding (PLAN steps 6–10). Extended's mock trip/consumption widgets violate
-scope requirement 8 and must be removed. Head-unit work needs the user's
+outstanding (PLAN steps 6, 8–10). P2-07 removed the unbacked trip/consumption
+widgets and redefined Extended ([widgets-p2-07.md](widgets-p2-07.md)); the
+existing tests are now out of date (deferred by user). Head-unit work needs the user's
 decision on the safety boundary and display surface.
 
 **Active testing policy (latest user instruction, after P2-04):** "do not run any test, there will be a ask at the end to implement and run the tests".

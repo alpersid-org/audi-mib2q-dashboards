@@ -54,7 +54,7 @@ Phase 2 deliverable.
 | 5 | Compact and Extended layouts | Host only (SVG); no Virtual Cockpit renderer. |
 | 6 | Mock only for tests/dev | Not met: mock is the only data path. |
 | 7 | Simulated ≠ deliverable | Hence incomplete. |
-| 8 | Omit unverified widgets | Violated: Extended shows mock trip distance and average consumption, for which no source was found. They must be removed (and the Extended layout redefined around verified signals). |
+| 8 | Omit unverified widgets | Addressed in P2-07 ([widgets-p2-07.md](widgets-p2-07.md)): trip distance and average consumption removed; Extended redefined around the existing signal groups. Remaining widgets still need on-car verification. |
 
 ### Open decisions required from the user
 
@@ -95,7 +95,7 @@ Documenting these boundaries is required; implementing them early is not.
 | --- | --- |
 | Modular foundation | Dashboard manager, typed provider snapshots, widgets, config, layouts and renderer adapter have explicit boundaries. |
 | Compact layout | Temperature, range, media and navigation candidates fit an explicit host viewport at readable sizes. |
-| Extended layout | Earlier: adds trip and average consumption. **Superseded by scope req. 8:** omit them until a verified source exists; redefine Extended around verified signals. |
+| Extended layout | Earlier: adds trip and average consumption. **Superseded (P2-07):** temperature, range, now playing, distance to destination, time to destination, destination. |
 | Data honesty | Mock values are visibly MOCK and confined to tests/development (scope req. 6); unavailable, stale and invalid values cannot look like live zeros. |
 | Existing sources only | A real adapter may use a demonstrated source only after units, validity, ownership and vehicle-specific meaning are verified. |
 | Disabled default | Missing/invalid config and restore-default yield disabled Compact; selecting a layout alone never enables it. |

@@ -4,6 +4,23 @@ This ledger describes concrete changes for reviewers and subsequent agents.
 Chronological session evidence remains append-only in [audit/LOG.md](audit/LOG.md).
 Current work state is in [audit/CURRENT.md](audit/CURRENT.md).
 
+## P2-07 — verified-source widgets only (2026-11-07)
+
+User "yes" to starting PLAN step 7. Branch `feature/p2-07-verified-widgets`.
+Compiled only; no tests run or edited (user instruction). Existing tests are now
+out of date; list in [widgets-p2-07.md](widgets-p2-07.md).
+
+| Changed path | Change and purpose |
+| --- | --- |
+| [dashboard/dashboard.h](../../dashboard/dashboard.h) | Removes trip/consumption types, fields and widgets; adds `DB_NAV_DISTANCE`, `DB_NAV_TIME`, `DB_DESTINATION`; documents -1/empty "not supplied". |
+| [dashboard/widgets.c](../../dashboard/widgets.c) | Formatters for the split navigation widgets; not-supplied parts render UNAVAILABLE; Compact navigation shows supplied parts. |
+| [dashboard/layout.c](../../dashboard/layout.c) | Extended = temperature, range, now playing, distance, time, destination. |
+| [dashboard/mock_provider.c](../../dashboard/mock_provider.c) | Drops trip/consumption values; marks mock as tests/development only. |
+| `dashboard/previews/extended-{wide,tall}.svg` | Deleted (showed removed widgets); regenerate at final testing stage. |
+| [widgets-p2-07.md](widgets-p2-07.md) | New: rationale, widget contract, signals deliberately not shown, out-of-date tests. |
+| [requirements.md](requirements.md), [PLAN.md](PLAN.md), [status.md](status.md), [HANDOFF.md](HANDOFF.md), [module.md](module.md), [rendering.md](rendering.md), [architecture.md](architecture.md), [data-providers.md](data-providers.md), [package.md](package.md), [previews README](../../dashboard/previews/README.md) | Reflect the new widget set and step-7 state. |
+| [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | Checkpoint and events. |
+
 ## DOC-SCOPE — Phase 2 "Real Vehicle Data Integration" scope (2026-11-07)
 
 The user supplied the authoritative Phase 2 scope and noted the docs should

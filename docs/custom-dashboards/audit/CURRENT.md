@@ -1,6 +1,6 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T20:39:53Z. Agent: Claude Code.
+Updated: 2026-11-07T20:44:16Z. Agent: Claude Code.
 Session: `20261107T200748Z-claude`.
 
 ## Phase 2 scope (authoritative)
@@ -13,8 +13,12 @@ Full text and gap table: [requirements.md](../requirements.md#phase-2-scope--rea
 
 ## Active task and policies
 
-- Task/state: `DOC-SCOPE` / `COMPLETE`, merged to master on user "yes";
-  next task P2-07 (omit unverified widgets).
+- Task/state: `P2-07` (omit unverified widgets, scope req. 6/8) /
+  `READY_FOR_REVIEW` on `feature/p2-07-verified-widgets`. DOC-SCOPE is on master.
+- Done: trip/consumption removed; split navigation widgets; Extended redefined;
+  Extended previews deleted. `make -C dashboard all` compiled (build only).
+- Known: existing tests are out of date and will fail (list in
+  widgets-p2-07.md); fix and rerun at the user's final test request.
 - Testing policy (user): "do not run any test, there will be a ask at the end to
   implement and run the tests". No tests or new test code until then.
 - Open user decisions: (1) authorize head-unit code (safety boundary currently
@@ -23,10 +27,10 @@ Full text and gap table: [requirements.md](../requirements.md#phase-2-scope--rea
 
 ## Git state
 
-- Branch `docs/phase2-vehicle-scope` from master 492b84a; master unchanged.
+- Branch `feature/p2-07-verified-widgets` from master f89a58c; master unchanged.
 
 ## Next action
 
-Await the user: merge approval for this docs branch, and a decision on PLAN
-step 7 (omit unverified widgets, host-only) and the open decisions for 8–10.
+Await the user: merge approval for P2-07, then PLAN step 8 (VehicleDataProvider)
+and the open decisions (head-unit code, display surface, vehicle evidence).
 Audit: [LOG.md](LOG.md).
