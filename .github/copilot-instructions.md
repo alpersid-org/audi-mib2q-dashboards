@@ -24,7 +24,7 @@ AGENTS.md and the active checkpoint define scope. The user authorized publishing
 all existing work to the fork's master, including P2-01/P2-02 and MAINT-141.
 That consolidation is published; retain its test evidence and audit trail.
 P2-03 was later merged to master on request. P2-04, the final
-testing stage, now complete. The user then said: do not run any test (or write
-test code) until the final request to implement and run tests (see AGENTS.md).
+testing stage, now complete. The later no-test instruction ended when the user started the
+final Phase 2 host testing stage (P2-FINAL; see AGENTS.md). Host tests only.
 Merges/publication need their own approval. No release, vehicle action or
 Android communication is authorized. Preserve the roadmap and dashboards.

@@ -1,25 +1,26 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T21:12:57Z. Agent: Claude Code. Session: `20261107T200748Z-claude`.
+Updated: 2026-11-07T21:17:30Z. Agent: Claude Code. Session: `20261107T200748Z-claude`.
 
 ## Task and authorization
 
-- FIX-REVIEW-312215A / COMPLETE (untested); merged to master on "merge to master and push". User: "check this audit:
-  .../tree/review/claude-phase2 / implement all fixes".
-- Implemented (untested): R1, R2, R3, session invalidation, AA Kombi-only
-  binding, R5 documentation. R4 OPEN: test-harness code, deferred to the final
-  test request by the standing instruction "do not run any test, there will be
-  a ask at the end to implement and run the tests".
-- No builds, tests, test code or automated validation; manual review only.
-- Not authorized: further merges without approval, step 9, vehicle actions.
+- P2-FINAL (final Phase 2 host testing stage) / IN_PROGRESS on
+  `feature/p2-final-testing` from master 8d7ead6.
+- Authorized: recheck R1–R5, repair the Java lifecycle harness (R4) and stale
+  suites, add vehicle-record, Java/C and lifecycle tests, run host regressions,
+  regenerate previews. Record PASSED / FAILED / UNAVAILABLE.
+- Not authorized: any vehicle deployment/installation/flashing/execution; step 9
+  stays blocked; master merge needs approval.
 
-## Git
+## Checklist
 
-- master fast-forwarded from 312215a to include the review docs and fixes
-  (branch `fix/review-claude-312215a`).
-- Review report unchanged; resolution in reviews/claude-312215a-resolution.md.
+- [x] Documentation updated before testing.
+- [ ] Recheck R1–R5 against current code.
+- [ ] Repair stale dashboard suites (P2-07/P2-08 changes).
+- [ ] Vehicle-record (C) tests; Java tests; Java->C fixture; lifecycle tests.
+- [ ] R4 harness repair.
+- [ ] Regenerate Extended previews.
+- [ ] Run dashboard suites, sanitizers, benchmark, inherited host regressions.
+- [ ] Report (validation-final.md), status/PLAN/resolution updates.
 
-## Next action
-
-Await the user. Next: the final test request (R4, stale suites, new feed cases);
-step 9 needs firmware/ABI and safe-surface evidence. Audit: [LOG.md](LOG.md).
+Audit: [LOG.md](LOG.md).

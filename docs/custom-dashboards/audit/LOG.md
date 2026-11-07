@@ -793,3 +793,17 @@ feature; earlier project history is available in Git and [status.md](../status.m
   event). No merge commit or rewrite.
 - Findings: R1, R2, R3, R5, session invalidation, AA gap IMPLEMENTED / UNTESTED;
   R4 OPEN for the final test request. No tests or builds run.
+
+## 2026-11-07T21:17:30Z | 20261107T200748Z-claude-23 | START / P2-FINAL host testing stage
+
+- User: "Start the final Phase 2 host testing stage. Recheck R1–R5 against the
+  current code, repair the harness and outdated suites, add the missing
+  vehicle-record, Java/C and lifecycle tests, and run applicable host
+  regressions. Document every change and distinguish passed, failed and
+  unavailable checks. Do not deploy, install, flash or execute anything on the
+  vehicle. Keep step 9 blocked pending firmware and safe-surface evidence."
+- Effect: ends the post-P2-04 no-test instruction. Tests, test code, harness
+  repair, sanitizers, benchmark and preview regeneration authorized on the host.
+- Docs updated first (before any test): AGENTS, CLAUDE/GEMINI/Copilot pointers,
+  audit README, PLAN, HANDOFF, status, reviews/README.
+- Git: master = origin/master = 8d7ead6; branch feature/p2-final-testing.

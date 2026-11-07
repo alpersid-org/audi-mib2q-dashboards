@@ -75,6 +75,10 @@ specific phone session.
 
 ## Validation policy and completion evidence
 
+**Current:** the user started the final Phase 2 host testing stage (P2-FINAL), which
+authorizes tests and test code on the host, including the R4 repair. The deferral
+text below is historical.
+
 The latest recorded user instruction is: "do not run any test, there will be a
 ask at the end to implement and run the tests". Until explicitly superseded,
 do not write test code or execute tests, sanitizers, benchmarks, demos, preview

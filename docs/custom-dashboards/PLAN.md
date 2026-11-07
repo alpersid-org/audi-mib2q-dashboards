@@ -15,7 +15,15 @@ P2-01/P2-02, roadmap and maintenance work are now included there. No new feature
 or tests were added for publication. Historical feature-test deferral below is
 superseded only for maintenance scope.
 
-**Active testing policy (latest user instruction, after P2-04):** "do not run any test, there will be a ask at the end to implement and run the tests".
+**Final Phase 2 host testing stage (current, P2-FINAL):** the user requested
+"Start the final Phase 2 host testing stage. Recheck R1–R5 against the current code, repair the harness and outdated suites, add the missing vehicle-record, Java/C and lifecycle tests, and run applicable host regressions. Document every change and distinguish passed, failed and unavailable checks. Do not deploy, install, flash or execute anything on the vehicle. Keep step 9 blocked pending firmware and safe-surface evidence."
+This is the final request the earlier no-test instruction waited for: host tests,
+new test code, harness repair, sanitizers, benchmarks and preview regeneration are
+authorized on the host. Record exact commands and results as PASSED, FAILED or
+UNAVAILABLE (missing prerequisite). No vehicle deployment, installation, flashing
+or execution; step 9 stays blocked pending firmware and safe-surface evidence.
+
+**Testing policy after P2-04 (historical, ended by P2-FINAL):** "do not run any test, there will be a ask at the end to implement and run the tests".
 Do not run any test, sanitizer, benchmark, demo or automated validation, and do
 not write new test code, until the user explicitly asks to implement and run
 the tests at the end. Continue documenting every change; record skipped checks
