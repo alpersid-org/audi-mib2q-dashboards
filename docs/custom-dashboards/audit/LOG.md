@@ -618,3 +618,12 @@ feature; earlier project history is available in Git and [status.md](../status.m
   decision). No code change, no tests or checks run.
 - Branch `docs/phase2-vehicle-scope` from 492b84a. Next: push; await merge
   approval and decisions.
+
+## 2026-11-07T20:41:37Z | 20261107T200748Z-claude-14 | PUBLICATION / DOC-SCOPE TO MASTER + START P2-07
+
+- User answered "yes" to: merge docs/phase2-vehicle-scope into master, and start
+  PLAN step 7. Covers this fast-forward only.
+- Git: origin/master 492b84a is an ancestor; master fast-forwarded to the commit
+  containing this event (1ff58d9 scope docs + this event). No merge commit.
+- Next: P2-07 (omit unverified widgets, host-only) on feature/p2-07-verified-widgets.
+  Testing policy unchanged: no tests or new test code.

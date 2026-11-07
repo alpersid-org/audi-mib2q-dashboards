@@ -13,8 +13,8 @@ Full text and gap table: [requirements.md](../requirements.md#phase-2-scope--rea
 
 ## Active task and policies
 
-- Task/state: `DOC-SCOPE` / `READY_FOR_REVIEW` on `docs/phase2-vehicle-scope`
-  (documentation only). Not merged to master.
+- Task/state: `DOC-SCOPE` / `COMPLETE`, merged to master on user "yes";
+  next task P2-07 (omit unverified widgets).
 - Testing policy (user): "do not run any test, there will be a ask at the end to
   implement and run the tests". No tests or new test code until then.
 - Open user decisions: (1) authorize head-unit code (safety boundary currently
