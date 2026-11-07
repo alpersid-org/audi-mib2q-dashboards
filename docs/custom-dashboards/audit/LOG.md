@@ -591,3 +591,14 @@ feature; earlier project history is available in Git and [status.md](../status.m
   Markdown link/whitespace checks also not run (no-test instruction); manual review.
 - Next action: commit/push feature/p2-05-package; await review/merge approval or
   the final test request.
+
+## 2026-11-07T20:34:00Z | 20261107T200748Z-claude-12 | PUBLICATION / P2-05 TO MASTER
+
+- User: "go ahead with the next steps", after the agent listed (1) merging P2-05
+  into master and (2) the user's final test request. Interpreted as approval for
+  (1) only; tests stay deferred because the standing instruction says the user
+  will ask explicitly. Step 6 remains blocked.
+- Git: clean tree; origin/master f7e9fb2 is an ancestor. master fast-forwarded to
+  the commit containing this event (0102e71 P2-05 + this event). No merge commit.
+- Tests: none run.
+- Next action: push master and branch, verify SHAs; await final test request.
