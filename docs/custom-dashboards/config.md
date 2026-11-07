@@ -7,8 +7,8 @@ the API section of [dashboard.h](../../dashboard/dashboard.h). Two host CLIs:
 [manager_preview.c](../../dashboard/manager_preview.c).
 
 **Validation state:** strict C99 compilation (`make -C dashboard all`) succeeded.
-No tests, demos, CLIs or sanitizers were executed: the user deferred testing to
-the final stage. Behavior below is the implemented design, not verified behavior.
+P2-03 itself ran no tests (user deferral). P2-04, the final testing stage,
+tests this behavior; until its results are recorded, treat it as unverified.
 No GEM, upstream runtime, install payload or vehicle code was changed.
 
 ## Configuration format (version 1)
@@ -99,7 +99,7 @@ writes nothing to stdout, prints the suppression reason and exits 3. Output stil
 carries MOCK badges and the host-only banner. `dashboard_preview` (P2-02) stays a
 config-independent preview tool.
 
-## Final-stage acceptance targets (deferred, not run)
+## Final-stage acceptance targets (tested in P2-04)
 
 - No config file and every malformed variant (empty, wrong/missing/late version,
   unknown/duplicate key, whitespace, bad value, NUL, >64-byte line, >512 bytes)

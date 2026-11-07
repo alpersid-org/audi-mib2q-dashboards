@@ -4,8 +4,8 @@ Status: P2-01 data/widgets and P2-02 Compact/Extended layouts/SVG export are
 implemented. See [module.md](module.md) and [rendering.md](rendering.md).
 P2-03 adds a host Configuration and Dashboard Manager ([config.md](config.md));
 it is compiled but not yet tested. No vehicle backend or activation consumer exists.
-The user has deferred further testing until the final stage. Earlier test results
-are historical evidence, not final graphics acceptance.
+P2-04 (final testing stage) is in progress. Earlier test results are historical
+evidence, not final graphics acceptance.
 
 The [five-phase roadmap](../ROADMAP.md) is mandatory context. Phase 2 must keep a
 shared Data Provider Interface so VehicleDataProvider now and AndroidDataProvider

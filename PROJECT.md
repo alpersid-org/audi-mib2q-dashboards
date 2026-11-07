@@ -7,8 +7,8 @@ commit `b127988a68c8d690841f4a75d35717ffc01e668e` (1.4.1).
 
 **Current increment: P2-02, host Compact/Extended layouts and SVG export.**
 P2-01 data/widgets are complete. Step 2 adds bounded frames, a mock preview CLI
-and four saved SVG artifacts. Configuration/activation remains step 3. The user
-has deferred all further testing until the final stage; each change is documented.
+and four saved SVG artifacts. Configuration/activation remains step 3. P2-03 adds
+host config/manager; P2-04 is the final testing stage now in progress.
 Earlier test results are historical evidence, not final validation. Inherited runtime files and the original [upstream README](README.md)
 are unchanged; no vehicle connection, installation or deployment is performed.
 
@@ -84,8 +84,8 @@ host module and maintenance verification. The earlier feature and maintenance
 branches remain available; no history was rewritten.
 
 Build with `make -C dashboard all`; generate mock SVGs with
-`make -C dashboard previews`. Tests are reserved for the final stage under the
-current user instruction; do not run the test targets now.
+`make -C dashboard previews`. Run tests with `make -C dashboard test test-sanitize`
+(P2-04 final testing stage).
 
 AI agents should start with AGENTS.md. Claude, Gemini and GitHub Copilot entry
 files point to the same instructions; other tools can load them explicitly.

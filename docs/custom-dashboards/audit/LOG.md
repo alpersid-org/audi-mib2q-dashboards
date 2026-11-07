@@ -485,3 +485,20 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Validation: no tests run (user's final-stage deferral). Master now contains
   P2-03 code that is compiled but untested; recorded in CURRENT.md/status.md.
 - Next action: push master and feature branch; verify both remote SHAs.
+
+## 2026-11-07T20:23:11Z | 20261107T200748Z-claude-05 | START / P2-04
+
+- Agent/session: Claude Code / `20261107T200748Z-claude`.
+- Task/status: `P2-04` / `IN_PROGRESS`.
+- Authorization: user request "Start P2-04, but before make sure you update the
+  documentation, as instructed". P2-04 is the final testing stage named by the
+  P2-02 override ("testele sunt pentru final"), which therefore ends now. Host
+  tests authorized; vehicle, release, master merge, GEM and Android excluded.
+- Git: master = origin/master = 12cb0b5; new branch `feature/p2-04-validation`.
+- Documentation first (as requested): replaced active "tests deferred" statements
+  with the P2-04 scope in AGENTS.md, CLAUDE.md, GEMINI.md, Copilot instructions,
+  PROJECT.md, PLAN.md, HANDOFF.md, status.md, audit/README.md, module.md,
+  rendering.md, config.md, architecture.md, requirements.md, data-providers.md,
+  ROADMAP.md and previews/README.md. Historical sections were relabelled, not
+  deleted. No tests run yet.
+- Next action: commit/push docs to the feature branch, then add P2-03 tests.

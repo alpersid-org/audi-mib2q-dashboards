@@ -5,9 +5,8 @@ widget formatter and fixed draw-list contracts. They export host SVG artifacts
 only. There is no QNX window, vehicle display routing, live provider, configuration
 manager, GEM action or automatic rendering loop.
 
-**Testing policy:** during this increment the user requested that further tests
-be deferred until the final stage. No further tests or automated checks are to
-run under the current instruction. Earlier results are recorded separately in
+**Testing policy:** tests were deferred during P2-02 until the final stage;
+P2-04 has started that stage and runs them. Earlier results are recorded separately in
 the audit/status; final validation and visual inspection are outstanding.
 
 ## Previews
@@ -103,7 +102,7 @@ errors. The independent Python suite parses SVG as XML, checks all four profiles
 mock badges, clip references, deterministic bytes, CLI errors and escaped-text
 round trips. When saved previews exist it also checks that they match CLI output.
 
-Commands, to run only when final testing is authorized:
+Commands (run in P2-04, the final testing stage):
 
 ```sh
 make -C dashboard previews

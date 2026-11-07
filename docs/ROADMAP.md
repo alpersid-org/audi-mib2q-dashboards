@@ -28,7 +28,7 @@ reports for another car, firmware or adapter do not resolve these unknowns.
 | Roadmap phase | Deliverable | Current state |
 | --- | --- | --- |
 | 1 — Upstream baseline | Install and establish the upstream project as-is through a separately authorized process. | Vehicle installation/success unconfirmed; local source investigation complete. |
-| 2 — Custom dashboards | Modular provider interface, VehicleDataProvider role, common manager/widgets, Compact/Extended layouts and safe configuration. | CURRENT PHASE. Mock-only host data/widgets, SVG layouts and P2-03 host manager/config implemented (P2-03 untested); live vehicle adapter and safe in-car integration outstanding. Final tests deferred by user. |
+| 2 — Custom dashboards | Modular provider interface, VehicleDataProvider role, common manager/widgets, Compact/Extended layouts and safe configuration. | CURRENT PHASE. Mock-only host data/widgets, SVG layouts and P2-03 host manager/config implemented (P2-03 untested); live vehicle adapter and safe in-car integration outstanding. Final host testing (P2-04) in progress. |
 | 3 — Independent Android app | Standalone app on Galaxy S23 Ultra, usable without MMI. | Future; not implemented. |
 | 4 — Android/MMI communication | Establish a separately validated data connection; introduce AndroidDataProvider as its normalized adapter. | Future; transport unknown and unimplemented. |
 | 5 — Android data in dashboards | Feed AndroidDataProvider into the same manager/widgets alongside VehicleDataProvider. | Future; depends on validated transport/data and safe display integration. |
@@ -83,8 +83,8 @@ dashboard use. Retain the host fallback if safety cannot be demonstrated.
 
 Exit targets: completed host MVP and explicit data/renderer/config contracts,
 documented provider semantics, appropriate final-stage validation and a separate
-vehicle feasibility decision. Current user policy defers further tests until the
-final stage; targets here do not authorize running them now.
+vehicle feasibility decision. P2-04 started the final testing stage on the host;
+this does not authorize vehicle testing.
 
 ## Phase 3 — standalone Android application
 
@@ -177,6 +177,6 @@ safety-critical control interception, destructive stock-file edits, unproven
 hooks or DPF monitoring. Dashboard functionality stays disabled by default.
 
 Roadmap goals do not grant deployment permission. Current work remains host-only;
-no head-unit commands, flashing, installation or vehicle deployment. Tests remain
-deferred under the user's active instruction. Document every change, update the
+no head-unit commands, flashing, installation or vehicle deployment. Host tests run in
+P2-04, the final testing stage. Document every change, update the
 audit before handoffs, and use the latest explicit user task to select work.

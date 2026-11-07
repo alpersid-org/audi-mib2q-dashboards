@@ -1,6 +1,13 @@
 # Project status
 
-## Current feature work — P2-03 (host configuration and manager)
+## Current work — P2-04 (final testing stage)
+
+User request: "Start P2-04, but before make sure you update the documentation, as instructed". Branch `feature/p2-04-validation` from master
+12cb0b5. The P2-02 test deferral ended when the user started P2-04, the final testing
+stage it was waiting for. Results will be recorded here and in
+the audit as they are produced. Not merged to master.
+
+## Completed — P2-03 (host configuration and manager; merged to master)
 
 User request: "Start P2-03 on a dedicated feature branch". Branch
 `feature/p2-03-config-manager`. Added strict versioned config (disabled Compact
@@ -12,7 +19,7 @@ CLIs. Details: [config.md](config.md).
 Validation: `make -C dashboard all` compiled cleanly with
 `-std=c99 -Wall -Wextra -Werror -pedantic`. No tests, demos, CLIs or sanitizers
 executed (user's final-stage test deferral). No GEM, upstream runtime, Android or
-vehicle code. Fast-forwarded to master at the user's request ("merge to master");
+vehicle code (P2-04 now tests it). Fast-forwarded to master at the user's request ("merge to master");
 master therefore includes this compiled-but-untested host code.
 
 ## Current publication — PUBLISH-MASTER
@@ -64,7 +71,7 @@ P2-02 final validation remains deferred; manager/configuration remains P2-03.
 Roadmap/provider design published in `b4bba59237d062aa06c3f13261a23319bb47d649`,
 with remote source SHA confirmed. This is documentation, not implemented adapters.
 
-## Active testing policy
+## Testing policy during P2-02 (historical, ended by P2-04)
 
 During P2-02 the user instructed: "Sa nu executi teste momentan, testele sunt
 pentru final, mergem inainte fara teste. Doar sa documentezi fiecare schimbare."

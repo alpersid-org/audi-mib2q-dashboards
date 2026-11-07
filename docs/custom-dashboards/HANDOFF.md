@@ -3,7 +3,11 @@
 Read the canonical [AGENTS.md](../../AGENTS.md) first. This guide is a restart
 checklist for any agent or coding tool; it is not a second set of project rules.
 
-**P2-03 handoff (current):** the user requested "Start P2-03 on a dedicated
+**P2-04 handoff (current):** the user requested "Start P2-04, but before make sure you update the documentation, as instructed".
+P2-04 is the final testing stage; the no-test instruction below has ended. Work is
+on `feature/p2-04-validation`; read the audit checkpoint for progress.
+
+**P2-03 handoff (historical; merged to master on request):** the user requested "Start P2-03 on a dedicated
 feature branch". Host configuration and manager are implemented on
 `feature/p2-03-config-manager` ([config.md](config.md)); compiled with strict C99,
 no tests run (final-stage deferral still active). Not merged to master; merge,
@@ -40,7 +44,7 @@ making changes.
   agent instructions and the host data/widget module.
 - P2-01 is complete. User authorized P2-02 with "Okay, push, commit and let's go
   with step 2." Both host layouts, SVG export/CLI and saved previews now exist.
-- Latest steering: no more tests now; tests are for the final stage. Document
+- Historical steering (ended by P2-04): no more tests now; tests are for the final stage. Document
   every change. This overrides earlier run-test instructions across model handoffs.
 - Vehicle firmware/compatibility, original AAWireless behavior, Phase 1 success
   and a safe dashboard surface remain unconfirmed.
@@ -72,7 +76,7 @@ P2-01 is complete and P2-02 is implemented. Read [module.md](module.md) and
 [rendering.md](rendering.md) for the existing contracts. Follow the active
 checkpoint for remaining publication/documentation work. The next implementation
 task is step 3 (disabled-by-default configuration and suppression), when requested.
-Do not execute tests until the user requests the final testing stage.
+Tests were deferred until the final testing stage; P2-04 has started it.
 Do not start with QNX window creation, context routing, Java lifecycle changes,
 GEM buttons, live vehicle feeds or Android communication.
 
@@ -94,7 +98,7 @@ silently interpret the old roadmap as permission to code.
 > VehicleDataProvider and future AndroidDataProvider must share manager/widgets.
 > Read the linked project documents/source as needed. Keep the audit updated at
 > milestones and before context exhaustion, with changes, historical test results
-> and the next action. Do not run tests until the final stage is requested.
+> and the next action. P2-04 (final testing stage) authorizes host tests only.
 > Do not contact or deploy to the vehicle.
 
 Append the concrete task, for example "review the architecture document" or,

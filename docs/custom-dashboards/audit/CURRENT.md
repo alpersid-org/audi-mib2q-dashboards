@@ -1,52 +1,38 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T20:14:14Z. Agent: Claude Code.
+Updated: 2026-11-07T20:23:11Z. Agent: Claude Code.
 Session: `20261107T200748Z-claude`.
 
 ## Active task and authorization
 
-- Task/state: `P2-03` (PLAN step 3: configuration and safe suppression) /
-  `READY_FOR_REVIEW` — implemented and compiled; tests deferred by user.
-- User requests: "Start P2-03 on a dedicated feature branch"; then "merge to
-  master" (explicit approval to fast-forward master to the P2-03 branch).
-- Excluded: GEM changes, live VehicleDataProvider, Android app/transport,
-  release/tag, any head-unit/vehicle action. Merge approval covers this one
-  fast-forward only, not future merges.
-- Testing: the P2-02 user deferral (tests only at the final stage) applies.
-  MAINT-141's test authorization was task-specific and does not carry over.
+- Task/state: `P2-04` (PLAN step 4: automated validation, host benchmark,
+  regression report) / `IN_PROGRESS`.
+- User request: "Start P2-04, but before make sure you update the documentation,
+  as instructed". P2-04 is the final testing stage the P2-02 no-test instruction
+  waited for, so host tests are authorized (dashboard suites, sanitizers,
+  benchmark, inherited host scripts from PLAN step 4 after inspection).
+- Excluded: master merge/push, release/tag, GEM changes, vehicle/head-unit
+  actions, Android app/transport, live providers.
 
 ## Git state
 
-- Origin: https://github.com/alpersid-org/audi-mib2q-dashboards.git.
-- Branch: `feature/p2-03-config-manager`, from 2d4a255 (= master 574ae26 plus
-  the Claude resume audit event on `claude/custom-dashboards-audit-9qbwft`).
-- P2-03 source commit 72d3df5 (pushed and verified on the feature branch).
-- master fast-forwarded 574ae26 → this audit commit (contains 2d4a255, 72d3df5);
-  no merge commit, no rewrite. Verify origin/master = local HEAD with git ls-remote.
+- Branch `feature/p2-04-validation` from master 12cb0b5 (P2-03 merged).
+- First commit on the branch: documentation/scope update only (done before any
+  test, as the user asked). master/origin/master stay at 12cb0b5.
 
-## Acceptance checklist (PLAN step 3)
+## Acceptance checklist (PLAN step 4)
 
-Implemented (by design; not tested):
-1. Strict v1 config, disabled Compact default — `dashboard/config.c`.
-2. Layout selection independent of enablement — `db_config_select_layout`,
-   `db_manager_select_layout`, `dashboard_config compact|extended`.
-3. Host disable and restore-default — config and manager actions + CLI.
-4. Frame cleared on invalid config, disabled state, provider failure, geometry
-   rejection and every config action — `dashboard/manager.c`.
-5. Manager input only via `db_provider`; mock chosen in `manager_preview.c`.
-No GEM code changed.
+- [x] Scope documents updated: AGENTS, CLAUDE/GEMINI/Copilot pointers, PROJECT,
+      PLAN, HANDOFF, status, audit README, module, rendering, config,
+      architecture, requirements, data-providers, ROADMAP, previews README.
+- [ ] Config/manager C tests (P2-03 targets in config.md).
+- [ ] CLI tests for dashboard_config and dashboard_manager_preview.
+- [ ] Existing dashboard C/Python suites and ASan/UBSan.
+- [ ] Bounded host benchmark target.
+- [ ] Inherited upstream host scripts; record passes/failures/unavailable.
+- [ ] Regression report and status/PLAN update.
 
-Verified: `make -C dashboard all` compiles cleanly with strict C99 flags.
-Unverified / deferred: every behavioral check listed in
-[config.md](../config.md#final-stage-acceptance-targets-deferred-not-run); no
-tests, demos, CLIs or sanitizers were executed. No new test files were written.
+## Next action
 
-## Handoff and next action
-
-No WIP, no active processes. Build outputs live under ignored `build/`.
-Next eligible step: P2-04 (automated validation, including the deferred P2-02 and
-P2-03 checks) when the user requests the final testing stage. P2-03 is on master
-while still untested; master therefore contains unvalidated host code.
-
-Rollback: `make -C dashboard clean`; revert the P2-03 commit. Nothing installed.
-Audit: [LOG.md](LOG.md). Contract: [config.md](../config.md).
+Commit and push the documentation update, then write the P2-03 tests.
+Audit: [LOG.md](LOG.md).

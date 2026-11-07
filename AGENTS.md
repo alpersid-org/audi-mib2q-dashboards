@@ -10,10 +10,12 @@ instructions to preserve context, not to override them.
 Build the foundation for modular, customizable Audi Virtual Cockpit dashboards
 within **roadmap Phase 2** of the mib2q-carplay-based project.
 
-**Current task is P2-03:** the user requested "Start P2-03 on a dedicated feature
-branch". Implement PLAN step 3 (configuration/suppression/manager) on the host on
-`feature/p2-03-config-manager`; tests stay deferred to the final stage; no GEM,
-master merge, release, vehicle or Android work. See [config.md](docs/custom-dashboards/config.md).
+**Current task is P2-04:** the user requested "Start P2-04, but before make sure you update the documentation, as instructed".
+P2-04 is PLAN step 4 (automated validation, benchmark, regression report) and is
+the final testing stage the earlier no-test instruction waited for, so host tests
+are now authorized. Work on `feature/p2-04-validation`. No GEM, master merge,
+release, vehicle or Android work. P2-03 (config/manager) is complete on master
+but was untested until P2-04; see [config.md](docs/custom-dashboards/config.md).
 
 **Completed earlier — PUBLISH-MASTER:** the user explicitly requested "Push everything
 to main/master on my forked project". All Phase 2 work through P2-02, roadmap and
@@ -151,7 +153,14 @@ Run those host checks and report missing assets/toolchains separately. This
 supersedes the older deferral below for this task only; it does not authorize
 vehicle execution, publication or unrelated feature development.
 
-**User override during P2-02:** "Sa nu executi teste momentan, testele sunt
+**P2-04 final testing stage (current):** "Start P2-04, but before make sure you update the documentation, as instructed"
+ends the P2-02 override below. Run the dashboard suites, sanitizers, the host
+benchmark and the inherited host scripts listed in PLAN step 4 (inspect each
+first; isolated host fixtures only). Record exact commands and outcomes; report
+missing assets/toolchains as unavailable, never as passes. Vehicle execution,
+publication to master and releases remain unauthorized.
+
+**User override during P2-02 (historical, ended by P2-04):** "Sa nu executi teste momentan, testele sunt
 pentru final, mergem inainte fara teste. Doar sa documentezi fiecare schimbare."
 Do not execute further unit, integration, sanitizer, browser/visual or automated
 validation tests until the user requests the final testing stage. Continue

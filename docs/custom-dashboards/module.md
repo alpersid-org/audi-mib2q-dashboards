@@ -5,11 +5,10 @@ Implemented in [dashboard/](../../dashboard/) with tests in
 P2-02 now adds [host layouts and SVG export](rendering.md). It creates no display window, connects to no
 service, and changes no inherited runtime, install payload or firmware file.
 
-## Testing policy during P2-02
+## Testing policy
 
-The user has deferred further tests until the final stage. Commands containing
-`test` below are retained as reference and must not be executed under the current
-instruction. P2-01 historical results remain recorded; see status.md.
+The P2-02 test deferral ended when the user started P2-04, the final testing
+stage. The commands below are run as part of P2-04. P2-01 historical results remain recorded; see status.md.
 
 ## Build and run
 

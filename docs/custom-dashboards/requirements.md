@@ -17,8 +17,8 @@ A separate Git project containing source-backed investigation, proposed
 architecture, requirements and an ordered implementation plan, now extended by
 user-authorized P2-01 data/widgets and P2-02 Compact/Extended host layouts,
 SVG export and four mock previews. Configuration/activation remains later work.
-The user has deferred further testing to the final stage and requires every
-change to be documented; see changes.md and the audit.
+Testing was deferred to the final stage, which P2-04 has started; every change
+must still be documented; see changes.md and the audit.
 
 ## Future MVP acceptance criteria
 

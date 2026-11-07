@@ -15,7 +15,7 @@ has been established. Final visual/readability testing is deferred by the user.
 
 Generation command from the repository root: `make -C dashboard previews`.
 The saved artifacts were generated before the user's testing-deferral instruction.
-No more tests or automated checks should be run until final testing is requested.
+The final testing stage (P2-04) re-checks them against CLI output.
 See [rendering.md](../../docs/custom-dashboards/rendering.md) for the API, design
 limits and commands, and [changes.md](../../docs/custom-dashboards/changes.md)
 for the per-file change record. No screenshot or font-fit claim is made.

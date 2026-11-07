@@ -6,7 +6,7 @@ and Widget System**. The future Android app runs independently on the Galaxy S23
 Ultra in Phase 3 before MMI communication is introduced. See [ROADMAP](../ROADMAP.md).
 
 This document defines the target design. It adds no adapter or transport code.
-The user's no-test-until-final instruction remains active.
+The no-test instruction ended with P2-04, the final testing stage.
 
 ## What exists and what is planned
 
@@ -154,5 +154,5 @@ the Phase 2 host configuration step.
 At the final testing stage, when explicitly requested, verify provider-independent
 widget behavior, mixed source selection, partial provider failure, stale/unknown
 age, reset/disconnect/session generation, capacity and units. Until then document
-these acceptance targets without executing tests. The user's test deferral and
-all host-only/vehicle safety boundaries remain in force.
+these acceptance targets without executing tests. P2-04 now runs the host
+checks that exist for the single-provider path. All host-only/vehicle safety boundaries remain in force.

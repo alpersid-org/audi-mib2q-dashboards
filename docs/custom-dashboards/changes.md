@@ -4,6 +4,20 @@ This ledger describes concrete changes for reviewers and subsequent agents.
 Chronological session evidence remains append-only in [audit/LOG.md](audit/LOG.md).
 Current work state is in [audit/CURRENT.md](audit/CURRENT.md).
 
+## P2-04 — final testing stage (2026-11-07, in progress)
+
+User request: "Start P2-04, but before make sure you update the documentation,
+as instructed". Branch `feature/p2-04-validation`.
+
+Documentation update (first commit, before any test):
+
+| Changed path | Change and purpose |
+| --- | --- |
+| [AGENTS.md](../../AGENTS.md), [CLAUDE.md](../../CLAUDE.md), [GEMINI.md](../../GEMINI.md), [Copilot instructions](../../.github/copilot-instructions.md) | Current task P2-04; P2-02 no-test override marked historical/ended; tests authorized on the host only. |
+| [PROJECT.md](../../PROJECT.md), [PLAN.md](PLAN.md), [HANDOFF.md](HANDOFF.md), [status.md](status.md) | P2-04 scope, branch and step-4 state; P2-03 marked complete/merged. |
+| [audit/README.md](audit/README.md), [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | Scope change recorded; START event and checklist. |
+| [module.md](module.md), [rendering.md](rendering.md), [config.md](config.md), [architecture.md](architecture.md), [requirements.md](requirements.md), [data-providers.md](data-providers.md), [ROADMAP.md](../ROADMAP.md), [previews README](../../dashboard/previews/README.md) | Active "do not run tests" statements replaced with the P2-04 testing state. |
+
 ## P2-03 — host configuration and dashboard manager (2026-11-07)
 
 User request: "Start P2-03 on a dedicated feature branch". Branch

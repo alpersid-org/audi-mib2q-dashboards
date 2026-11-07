@@ -55,7 +55,10 @@ all work is consolidated on `master`. This authorization covers that publication
 not a new feature, future release or vehicle action. Read CURRENT.md for task scope;
 preserve historical authorization events and append updates rather than editing them.
 
-Current user override recorded during P2-02: no more tests now; testing is for the
+P2-04 (user: "Start P2-04, but before make sure you update the documentation, as instructed") is the final testing stage; it ends the
+P2-02 override below. Record real commands and outcomes; never invent results.
+
+Historical user override recorded during P2-02 (ended by P2-04): no more tests now; testing is for the
 final stage. Continue implementation and document each change. Do not run tests
 or automated validation to fill audit fields; record checks as DEFERRED BY USER.
 Earlier test evidence remains historical. Consult AGENTS.md and CURRENT.md for
