@@ -101,7 +101,7 @@ git diff --name-only b127988a68c8d690841f4a75d35717ffc01e668e HEAD
 | 5 | 4; user request received | Reproducible previews, documentation and rollback evidence | Documented in [package.md](package.md) on `feature/p2-05-package`; nothing re-executed (no-test instruction) |
 | 6 | 5 plus firmware/surface evidence | Signal and surface feasibility (scope req. 1–2) | Source review partial; on-car evidence and head-unit authorization needed |
 | 7 | 1–5; user request received | Remove unverified widgets and keep mock out of product paths (req. 6, 8) | Implemented on `feature/p2-07-verified-widgets` ([widgets-p2-07.md](widgets-p2-07.md)); compiled; tests out of date, deferred by user |
-| 8 | 6–7 | VehicleDataProvider: real-time binding through existing pipelines (req. 3–4) | Proposed; code can be written on the host, verification needs the car |
+| 8 | 6–7; user request received | VehicleDataProvider: real-time binding through existing pipelines (req. 3–4) | Implemented on `feature/p2-08-vehicle-provider` ([vehicle-provider.md](vehicle-provider.md)); C compiled, most Java uncompilable here (stock classes); not run; verification needs the car |
 | 9 | 6, 8 | Virtual Cockpit renderer for Compact/Extended (req. 5) | Proposed; needs surface decision and head-unit authorization |
 | 10 | 8–9 | In-car validation by the user (expected outcome) | Proposed; user installs and tests |
 
@@ -253,6 +253,9 @@ Added after the user's Phase 2 scope. Not started; each needs its own request.
    existing bus; convert to `db_snapshot` with real provenance, units, validity
    and sample age. Missing signals stay MISSING. No new DSI/CAN queries, no
    vehicle control.
+   *State:* implemented; see [vehicle-provider.md](vehicle-provider.md). Media
+   is not supplied (no verified AA source in the repo); CarPlay navigation is
+   not wired; nothing consumes the record until step 9.
 9. **Virtual Cockpit renderer (req. 5).** Port `db_frame` drawing onto the
    existing cluster GLES path, on a surface chosen by the user and validated on
    the car; it must yield to speed, warnings and navigation and stay disabled

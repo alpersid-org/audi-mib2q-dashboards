@@ -20,8 +20,10 @@ extern "C" {
 #define DB_MAX_AGE_MS UINT64_C(30000)
 
 typedef enum { DB_MISSING, DB_AVAILABLE, DB_INVALID } db_availability;
-/* VERIFIED is reserved for a future independently validated source; none ships. */
-typedef enum { DB_SOURCE_UNKNOWN, DB_SOURCE_MOCK, DB_SOURCE_VERIFIED } db_source;
+/* VERIFIED is reserved for a source validated on this car (PLAN step 10); none ships.
+ * VEHICLE (P2-08): live data from an existing MMI pipeline, not yet validated on this
+ * car; widgets badge it UNVERIFIED. MOCK is for automated tests/development only. */
+typedef enum { DB_SOURCE_UNKNOWN, DB_SOURCE_MOCK, DB_SOURCE_VERIFIED, DB_SOURCE_VEHICLE } db_source;
 typedef struct {
     db_availability availability;
     db_source source;
@@ -62,6 +64,22 @@ typedef struct { db_read_fn read; void *context; } db_provider;
  * Returns 1 success, 0 failure. NULL arguments fail safely. */
 int db_snapshot_read(const db_provider *provider, uint64_t now_ms, db_snapshot *out);
 int db_mock_read(void *context, uint64_t now_ms, db_snapshot *out);
+
+/* ---- P2-08: VehicleDataProvider (reader of the HMI DashboardModule record) ---- */
+#define DB_VEHICLE_RECORD_SIZE 256
+#define DB_VEHICLE_PATH "/tmp/carplay_dashboard"
+/* wall_ms returns the system clock in ms (same clock as Java currentTimeMillis);
+ * NULL path/wall_ms use DB_VEHICLE_PATH / CLOCK_REALTIME. Context for db_vehicle_read. */
+typedef struct { const char *path; uint64_t (*wall_ms)(void); } db_vehicle_source;
+/* Validates a DBV1 record (magic, checksum, zero padding, bounds, record age) and maps
+ * each field's system-clock sample time to an age on the caller's now_ms clock.
+ * Fields: temperature, range, navigation group (AA only); media is never supplied.
+ * Returns 1 and fills out (source DB_SOURCE_VEHICLE), or 0 for any invalid/stale
+ * record. Record older than DB_MAX_AGE_MS or written in the future fails. */
+int db_vehicle_parse(const unsigned char *record, size_t len, uint64_t wall_now_ms,
+                     uint64_t now_ms, db_snapshot *out);
+/* db_read_fn: bounded read of the record file, then db_vehicle_parse. */
+int db_vehicle_read(void *context, uint64_t now_ms, db_snapshot *out);
 
 /* Only widgets backed by an existing vehicle/MMI pipeline (scope req. 8):
  * temperature/range (VehicleDataModule, DSICarKombi), media (now-playing DSI),

@@ -9,7 +9,10 @@ for tests ([scope and gap table](requirements.md#phase-2-scope--real-vehicle-dat
 host foundation. Real data binding, VC rendering and in-car validation are
 outstanding (PLAN steps 6, 8–10). P2-07 removed the unbacked trip/consumption
 widgets and redefined Extended ([widgets-p2-07.md](widgets-p2-07.md)); the
-existing tests are now out of date (deferred by user). Head-unit work needs the user's
+existing tests are now out of date (deferred by user). P2-08 adds the real
+VehicleDataProvider on `feature/p2-08-vehicle-provider`
+([vehicle-provider.md](vehicle-provider.md)): HMI-side publisher plus C reader;
+not compiled in full (stock classes absent), not run, unverified on the car. Head-unit work needs the user's
 decision on the safety boundary and display surface.
 
 **Active testing policy (latest user instruction, after P2-04):** "do not run any test, there will be a ask at the end to implement and run the tests".

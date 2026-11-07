@@ -47,14 +47,16 @@ public final class CarPlayApp {
      * AltScreen or the Android Auto cluster display; one renderer serves both). */
     private static final Module[] MODULES = new Module[] {
         new ScreenModule(), new AltScreenModule(), new RgdModule(), new SteeringWheelInputModule(),
-        new VehicleDataModule()
+        new VehicleDataModule(), new com.luka.carplay.dashboard.DashboardModule()
     };
     /* Sessions each module runs for, parallel to MODULES.  The roller-press module runs for
      * both: the patched CarPlay and Android Auto key controllers swallow the collapsed
      * DDS_SELECT that the same press also produces.  Vehicle data goes to the iPhone through
-     * the CarPlay hook (iAP2), so it is CarPlay-only. */
+     * the CarPlay hook (iAP2) only in CarPlay sessions; P2-08 also starts it for Android
+     * Auto, where it binds only while the custom dashboard is enabled (DashboardConfig).
+     * DashboardModule is a no-op unless the dashboard is enabled. */
     private static final int[] MODULE_OWNERS = new int[] {
-        OWNER_ANY, OWNER_ANY, OWNER_ANY, OWNER_ANY, OWNER_CARPLAY
+        OWNER_ANY, OWNER_ANY, OWNER_ANY, OWNER_ANY, OWNER_ANY, OWNER_ANY
     };
 
     private static final Object lock = new Object();

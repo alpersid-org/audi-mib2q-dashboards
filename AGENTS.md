@@ -19,9 +19,14 @@ to the safety boundary below (open decision recorded in that section).
 **Testing is deferred again:** after P2-04 the user said "do not run any test, there will be a ask at the end to implement and run the tests".
 No tests or new test code until that final request; see Validation below.
 
-**Current task — P2-07:** the user said "yes" to starting PLAN step 7 (omit
-unverified widgets). Implemented on `feature/p2-07-verified-widgets`; compiled,
-no tests run or edited; existing tests are out of date. See
+**Current task — P2-08:** the user said "merge to master and start step 8".
+VehicleDataProvider implemented on `feature/p2-08-vehicle-provider`, including
+minimal edits to inherited HMI Java (CarPlayApp, VehicleDataModule, AaRgState,
+AaBridge) that the step requires. Writing this code does not authorize
+installing or running it on the unit; the user does that in step 10. See
+[vehicle-provider.md](docs/custom-dashboards/vehicle-provider.md).
+
+**Earlier task — P2-07 (merged):** omit unverified widgets; see
 [widgets-p2-07.md](docs/custom-dashboards/widgets-p2-07.md).
 
 **Earlier update — DOC-SCOPE:** the user supplied the Phase 2 scope above and

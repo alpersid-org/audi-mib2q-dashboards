@@ -1,6 +1,6 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T20:44:16Z. Agent: Claude Code.
+Updated: 2026-11-07T20:51:08Z. Agent: Claude Code.
 Session: `20261107T200748Z-claude`.
 
 ## Phase 2 scope (authoritative)
@@ -13,24 +13,21 @@ Full text and gap table: [requirements.md](../requirements.md#phase-2-scope--rea
 
 ## Active task and policies
 
-- Task/state: `P2-07` (omit unverified widgets, scope req. 6/8) /
-  `COMPLETE`, merged to master on user request; P2-08 starting.
-- Done: trip/consumption removed; split navigation widgets; Extended redefined;
-  Extended previews deleted. `make -C dashboard all` compiled (build only).
-- Known: existing tests are out of date and will fail (list in
-  widgets-p2-07.md); fix and rerun at the user's final test request.
-- Testing policy (user): "do not run any test, there will be a ask at the end to
-  implement and run the tests". No tests or new test code until then.
-- Open user decisions: (1) authorize head-unit code (safety boundary currently
-  forbids it); (2) choose the display surface; (3) supply/confirm vehicle
-  evidence (firmware, adapter behaviour, signal availability during AA).
+- Task/state: `P2-08` (VehicleDataProvider, scope req. 3–4) / `READY_FOR_REVIEW`
+  on `feature/p2-08-vehicle-provider`. P2-07 is on master.
+- Done: HMI DashboardConfig/DashboardModule (DBV1 record), VehicleDataModule AA
+  gating + accessor, AaRgState/AaBridge nav accessor, C db_vehicle_read,
+  DB_SOURCE_VEHICLE. C compiled; DashboardConfig.java compiled standalone; other
+  Java NOT compilable here (stock classes absent). Nothing run anywhere.
+- Known gaps: media not supplied; CarPlay nav not wired; data only in phone
+  sessions; no consumer until step 9; tests out of date / not written.
 
 ## Git state
 
-- Branch `feature/p2-07-verified-widgets` from master f89a58c; master unchanged.
+- Branch `feature/p2-08-vehicle-provider` from master a256758; master unchanged.
 
 ## Next action
 
-Await the user: merge approval for P2-07, then PLAN step 8 (VehicleDataProvider)
-and the open decisions (head-unit code, display surface, vehicle evidence).
-Audit: [LOG.md](LOG.md).
+Await the user: merge approval for P2-08; then step 9 needs (1) head-unit code
+authorization and (2) the display surface choice. Step 10 is the user's install
+and on-car check. Audit: [LOG.md](LOG.md).

@@ -93,7 +93,8 @@ void db_widget_format(db_widget w, const db_snapshot *s, uint64_t now_ms, db_wid
     strcpy(out->label, labels[w]);
     if (!s) return;
     sample = sample_for(w, s);
-    if (sample->source == DB_SOURCE_MOCK || sample->source == DB_SOURCE_VERIFIED)
+    if (sample->source == DB_SOURCE_MOCK || sample->source == DB_SOURCE_VERIFIED ||
+        sample->source == DB_SOURCE_VEHICLE)
         out->source = sample->source;
     if (sample->availability == DB_MISSING) return;
     if (sample->availability == DB_AVAILABLE && not_supplied(w, s)) return;
@@ -108,7 +109,8 @@ void db_widget_format(db_widget w, const db_snapshot *s, uint64_t now_ms, db_wid
         out->status = DB_VALUE_STALE; strcpy(out->badge, "STALE"); return;
     }
     out->status = DB_VALUE_OK;
-    strcpy(out->badge, out->source == DB_SOURCE_MOCK ? "MOCK" : "VERIFIED");
+    strcpy(out->badge, out->source == DB_SOURCE_MOCK ? "MOCK" :
+                       out->source == DB_SOURCE_VEHICLE ? "UNVERIFIED" : "VERIFIED");
     switch (w) {
     case DB_TEMPERATURE:
         v = s->temperature.decicelsius;

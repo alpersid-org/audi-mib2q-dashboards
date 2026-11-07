@@ -68,6 +68,15 @@ public final class AaBridge extends DSIAndroidAuto2DefaultListener implements IA
         this.context = context;
     }
 
+    /** P2-08 custom dashboard: resolved AA final-destination data, or null without an
+     *  attached bridge or active route.  Read-only; never throws. */
+    public static AaRgState.DashboardNav dashboardNav() {
+        AaBridge b;
+        synchronized (AaBridge.class) { b = instance; }
+        try { return b == null ? null : b.rg.dashboardNav(); }
+        catch (Throwable t) { return null; }
+    }
+
     static boolean disabled() {
         for (int i = 0; i < DISABLE_MARKERS.length; i++) {
             try { if (new File(DISABLE_MARKERS[i]).exists()) return true; }

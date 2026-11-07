@@ -652,3 +652,39 @@ feature; earlier project history is available in Git and [status.md](../status.m
   containing this event (1e2cc2b P2-07 + this event). No merge commit.
 - Tests: none run (user instruction); suites remain out of date since P2-07.
 - Next: P2-08 VehicleDataProvider on feature/p2-08-vehicle-provider.
+
+## 2026-11-07T20:47:17Z | 20261107T200748Z-claude-17 | START / P2-08 VehicleDataProvider
+
+- Authorization: user "merge to master and start step 8". PLAN step 8: real-time
+  binding through existing pipelines (scope req. 3–4). This authorizes writing
+  the code, including minimal edits to inherited Java (HMI) files that step 8
+  inherently needs. It does not authorize installing, deploying or executing
+  anything on the head unit; the user installs/tests (step 10). Testing policy
+  unchanged: no tests or new test code.
+- Evidence: VehicleDataModule (CarPlay-only via MODULE_OWNERS) holds DSICarKombi
+  temperature/range; AaRgState.onTrip resolves AA destination (stateMs) and
+  distance/time (positionMs) with route-start and 30 s freshness guards; media
+  during AA is only reachable via stock DSIAndroidAuto2 classes absent from the
+  repo (cannot be written without guessing signatures) -> not supplied (req. 8).
+- Design: HMI-side DashboardModule (gated by /mnt/app/carplay_dashboard.cfg with
+  enabled=1, same v1 format) writes a checksummed 256-byte DBV1 record to
+  /tmp/carplay_dashboard every 500 ms (temp+range from VehicleDataModule, AA nav
+  from AaRgState). VehicleDataModule runs for any session but binds during AA
+  only when the dashboard is enabled; CMD_VEHICLE still goes to the CarPlay hook
+  only in CarPlay sessions. C db_vehicle_read parses the record into db_snapshot
+  with new provenance DB_SOURCE_VEHICLE (badge UNVERIFIED until step 10),
+  mapping system-clock sample times to ages. No new DSI/CAN queries, sockets or
+  renderer protocol changes.
+- Branch feature/p2-08-vehicle-provider from master a256758.
+
+## 2026-11-07T20:51:08Z | 20261107T200748Z-claude-18 | COMPLETE / P2-08 READY_FOR_REVIEW
+
+- Code as designed in event -17. Correction during review: DSI reports
+  temperature/range on change, so per-notification timestamps would go stale
+  after 30 s; switched to the existing CarPlay rule (valid while bound, stamped
+  at read time); writer death is caught by record age. Also fixed Log import.
+- Build: make -C dashboard all exit 0 (build only). javac --release 8 of
+  DashboardConfig.java alone exit 0. Other Java not compiled (needs stock JAR).
+- Not run; no tests written (user instruction). Required tests listed in
+  vehicle-provider.md. No link/whitespace checks run; manual review.
+- Next: commit/push branch; await merge approval and step-9 decisions.

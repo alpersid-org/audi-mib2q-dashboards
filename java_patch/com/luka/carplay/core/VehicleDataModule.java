@@ -17,6 +17,12 @@
  * is sent as valid only while DSI says so and, for speed, while it is fresher than 1 s.
  * Each DSI is optional: what is missing on a car is logged once and left out.
  *
+ * P2-08 custom dashboard: CarPlayApp also starts this module for Android Auto sessions,
+ * but during Android Auto it binds only when the dashboard is enabled
+ * (DashboardConfig) and never sends CMD_VEHICLE (that goes to the CarPlay hook only in
+ * CarPlay sessions).  dashboardVehicle() exposes outside temperature and range with
+ * their system-clock sample times to DashboardModule; read-only, no new DSI attributes.
+ *
  * Copyright (c) 2026 LuKa (@LuKa_dev)
  */
 package com.luka.carplay.core;
@@ -79,6 +85,8 @@ public final class VehicleDataModule implements Module {
     private int rangeKmTotal = -1, rangeKm1 = -1;
     private int tempDc = Integer.MIN_VALUE;
     private int fuelWarning = -1;
+    /* P2-08: the running instance, for the dashboard accessor. */
+    private static volatile VehicleDataModule current;
 
     /* Built in start(), never in the constructor: CarPlayApp creates every module in its static
      * initializer, and a class that fails to link there (2026-10-10: a stock adapter missing at
@@ -95,6 +103,11 @@ public final class VehicleDataModule implements Module {
 
     public synchronized boolean start(FrameworkRef fw) {
         if (running) return true;
+        /* P2-08: Android Auto sessions need these readings only for the dashboard. */
+        if (CarPlayApp.sessionOwner() == CarPlayApp.OWNER_ANDROID_AUTO
+                && !com.luka.carplay.dashboard.DashboardConfig.enabled()) {
+            return true;
+        }
         if (fw == null || !fw.isReady() || fw.serviceManager() == null) return false;
         try {
             if (kombi == null) {
@@ -124,12 +137,14 @@ public final class VehicleDataModule implements Module {
         }, "carplay-vehicle");
         sender.setDaemon(true);
         sender.start();
+        current = this;
         Log.i(TAG, "vehicle data: kombi=" + kombi.isBound() + " general=" + general.isBound()
             + " dynamic=" + dynamic.isBound());
         return true;
     }
 
     public synchronized void stop() {
+        if (current == this) current = null;
         running = false;
         Thread t = sender;
         sender = null;
@@ -140,6 +155,37 @@ public final class VehicleDataModule implements Module {
         synchronized (state) {
             speedCms = -1; reverse = -1; standstill = false; rangeKmTotal = -1; rangeKm1 = -1;
             tempDc = Integer.MIN_VALUE; fuelWarning = -1;
+        }
+    }
+
+    /** P2-08 dashboard reading: outside temperature (0.1 C) and range (km).  DSI reports
+     *  these attributes on change, so a valid value is current while the subscription is
+     *  bound (same rule as snapshot(), which sends them without an age limit).  The time
+     *  is therefore the read time for a valid value, 0 for an absent one. */
+    public static final class DashboardVehicle {
+        public final int tempDc, rangeKm;
+        public final long tempMs, rangeMs;
+
+        DashboardVehicle(int tempDc, long tempMs, int rangeKm, long rangeMs) {
+            this.tempDc = tempDc; this.tempMs = tempMs;
+            this.rangeKm = rangeKm; this.rangeMs = rangeMs;
+        }
+    }
+
+    /** Latest readings of the running module, or null when it is not running. */
+    public static DashboardVehicle dashboardVehicle() {
+        VehicleDataModule m = current;
+        return m == null ? null : m.readDashboard();
+    }
+
+    private DashboardVehicle readDashboard() {
+        long now = System.currentTimeMillis();
+        synchronized (state) {
+            int t = kombi != null && kombi.isBound() ? tempDc : Integer.MIN_VALUE;
+            /* same preference as snapshot(): total range, else range 1 */
+            int r = kombi == null || !kombi.isBound() ? -1
+                  : rangeKmTotal >= 0 ? rangeKmTotal : rangeKm1;
+            return new DashboardVehicle(t, t != Integer.MIN_VALUE ? now : 0, r, r >= 0 ? now : 0);
         }
     }
 
@@ -161,6 +207,8 @@ public final class VehicleDataModule implements Module {
                     + " range=" + ((p[5] & 0xFF) | (p[6] & 0xFF) << 8)
                     + " temp=" + (short)((p[7] & 0xFF) | (p[8] & 0xFF) << 8) + " warn=" + p[9]);
             }
+            /* P2-08: the iAP2 vehicle snapshot is for an iPhone only. */
+            if (CarPlayApp.sessionOwner() != CarPlayApp.OWNER_CARPLAY) continue;
             CarplayBus bus = CarplayBus.getInstance();
             if (bus.isConnected()) bus.sendBinary(CarplayBus.CMD_VEHICLE, p);
         }

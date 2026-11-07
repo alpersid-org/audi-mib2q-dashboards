@@ -4,6 +4,25 @@ This ledger describes concrete changes for reviewers and subsequent agents.
 Chronological session evidence remains append-only in [audit/LOG.md](audit/LOG.md).
 Current work state is in [audit/CURRENT.md](audit/CURRENT.md).
 
+## P2-08 — VehicleDataProvider (2026-11-07)
+
+User: "merge to master and start step 8". Branch `feature/p2-08-vehicle-provider`.
+C compiled; `DashboardConfig.java` compiled standalone; other Java not compilable
+here (stock classes absent). Nothing run; no tests written (user instruction).
+
+| Changed path | Change and purpose |
+| --- | --- |
+| `java_patch/com/luka/carplay/dashboard/DashboardConfig.java` | New: strict v1 config gate (`/mnt/app/carplay_dashboard.cfg`), disabled unless `enabled=1`. |
+| `java_patch/com/luka/carplay/dashboard/DashboardModule.java` | New: publishes the DBV1 record every 500 ms while enabled; deletes it when disabled/stopped. |
+| `java_patch/com/luka/carplay/core/VehicleDataModule.java` | Runs for any session; binds in AA only if enabled; `CMD_VEHICLE` CarPlay-only; read-only `dashboardVehicle()`. |
+| `java_patch/com/luka/carplay/core/CarPlayApp.java` | VehicleDataModule owner -> any; `DashboardModule` added. |
+| `java_patch/com/luka/carplay/aa/AaRgState.java`, `AaBridge.java` | Read-only `dashboardNav()` with destination sample time. |
+| [dashboard/vehicle_provider.c](../../dashboard/vehicle_provider.c) | New: DBV1 reader/validator with clock mapping. |
+| [dashboard/dashboard.h](../../dashboard/dashboard.h), [widgets.c](../../dashboard/widgets.c), [Makefile](../../dashboard/Makefile) | `DB_SOURCE_VEHICLE` + UNVERIFIED badge; vehicle provider API; build wiring. |
+| [vehicle-provider.md](vehicle-provider.md) | New: data path, signals, time rules, record layout, limitations, tests needed. |
+| [requirements.md](requirements.md), [PLAN.md](PLAN.md), [status.md](status.md), [HANDOFF.md](HANDOFF.md), [data-providers.md](data-providers.md), [AGENTS.md](../../AGENTS.md) | Step-8 state. |
+| [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | Events and checkpoint. |
+
 ## P2-07 — verified-source widgets only (2026-11-07)
 
 User "yes" to starting PLAN step 7. Branch `feature/p2-07-verified-widgets`.

@@ -17,7 +17,7 @@ The no-test instruction ended with P2-04, the final testing stage.
 | Snapshot read boundary | **Confirmed by code:** [provider.c](../../dashboard/provider.c) initializes candidate data and clears output on callback failure. |
 | MockDataProvider role | **Confirmed by code:** [mock_provider.c](../../dashboard/mock_provider.c), exposed as `db_mock_read`. It is not a live VehicleDataProvider. |
 | Existing widgets/layouts | **Confirmed by code:** [widgets.c](../../dashboard/widgets.c) and [layout.c](../../dashboard/layout.c) consume normalized snapshots without knowing the producer. |
-| VehicleDataProvider | **Phase 2 design target, unimplemented:** adapter for already demonstrated read-only sources, subject to vehicle/session/source validation. |
+| VehicleDataProvider | **Implemented in P2-08, unverified on the car:** HMI `DashboardModule` record + C `db_vehicle_read` ([vehicle-provider.md](vehicle-provider.md)). Provenance `DB_SOURCE_VEHICLE` (badge UNVERIFIED). |
 | Dashboard Manager / provider resolution | **Planned:** not implemented by the current layout builder. Manager/config work remains P2-03; multi-provider resolution can stay absent until needed. |
 | AndroidDataProvider | **Future, unimplemented:** normalized adapter over a validated received-data cache, introduced with Phases 4–5. No transport selected. |
 | Provider identity, session generation and configurable selection | **Design extensions, unimplemented:** current `db_source` says MOCK/VERIFIED, not vehicle/Android identity. Do not claim these fields exist. |

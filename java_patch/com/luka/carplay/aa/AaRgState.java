@@ -76,6 +76,8 @@ public final class AaRgState {
     private String destination = "";
     private int tripMeters = -1, tripSeconds = -1;
     private long tripEta = -1, tripPositionMs;
+    /* P2-08 dashboard: system-clock time of the destination sample used (0 = none). */
+    private long tripStateMs;
     /* counters for the log / tests */
     private int nStarts, nEnds, nManeuvers;
     private String lastAction = "";
@@ -112,9 +114,12 @@ public final class AaRgState {
         if (sample != null) trip = sample;
         String name = "";
         int meters = -1, seconds = -1;
-        long eta = -1, position = 0;
+        long eta = -1, position = 0, stateMs = 0;
         if (trip != null) {
-            if (AaTripFeed.fresh(trip.stateMs, systemMs, tripAfterMs)) name = trip.destination;
+            if (AaTripFeed.fresh(trip.stateMs, systemMs, tripAfterMs)) {
+                name = trip.destination;
+                stateMs = trip.stateMs;
+            }
             if (AaTripFeed.fresh(trip.positionMs, systemMs, tripAfterMs)) {
                 meters = trip.meters;
                 seconds = trip.seconds;
@@ -132,7 +137,34 @@ public final class AaRgState {
         tripSeconds = seconds;
         tripEta = eta;
         tripPositionMs = position;
+        tripStateMs = stateMs;
         return changed;
+    }
+
+    /**
+     * P2-08 custom dashboard: read-only copy of the resolved final-destination data, or
+     * null without an active route.  Values already passed onTrip's route-start and
+     * freshness guards.  meters/seconds are -1 when not supplied, destination "" when not
+     * supplied; *Ms are system-clock sample times (0 = that part is absent).  Never
+     * changes route state.
+     */
+    public synchronized DashboardNav dashboardNav() {
+        if (!routeActive) return null;
+        return new DashboardNav(destination, tripMeters, tripSeconds, tripStateMs, tripPositionMs);
+    }
+
+    public static final class DashboardNav {
+        public final String destination;
+        public final int meters, seconds;
+        public final long destinationMs, estimateMs;
+
+        DashboardNav(String destination, int meters, int seconds, long destinationMs, long estimateMs) {
+            this.destination = destination;
+            this.meters = meters;
+            this.seconds = seconds;
+            this.destinationMs = destinationMs;
+            this.estimateMs = estimateMs;
+        }
     }
 
     private void clearTrip() {
@@ -141,6 +173,7 @@ public final class AaRgState {
         tripMeters = tripSeconds = -1;
         tripEta = -1;
         tripPositionMs = 0;
+        tripStateMs = 0;
         // Even an unread file from the previous route/session is now too old.
         tripAfterMs = System.currentTimeMillis();
     }

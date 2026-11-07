@@ -49,10 +49,10 @@ Phase 2 deliverable.
 | --- | --- | --- |
 | 1 | Investigate acquisition mechanisms | Partial: source-level review in [analysis.md](analysis.md); nothing verified on this car. |
 | 2 | Identify safe, reliable signals | Candidates only: outside temperature and range via `VehicleDataModule` (DSICarKombi; started for CarPlay sessions only), navigation distance/time via the AA trip feed / CarPlay RGD, media via existing now-playing DSI events. None verified on this A4 during Android Auto. |
-| 3 | Reuse existing pipelines | Not done: no adapter connects to them. |
-| 4 | Real-time binding | Not done: `db_mock_read` is the only provider. |
+| 3 | Reuse existing pipelines | P2-08 ([vehicle-provider.md](vehicle-provider.md)): VehicleDataModule (DSICarKombi) and the AA trip feed via AaRgState; no new DSI/CAN access. Not run on the car. |
+| 4 | Real-time binding | P2-08: HMI publishes a DBV1 record every 500 ms; `db_vehicle_read` maps it to snapshots (badge UNVERIFIED). Media not supplied; CarPlay navigation not wired; no renderer consumes it yet (step 9). Unverified on the car. |
 | 5 | Compact and Extended layouts | Host only (SVG); no Virtual Cockpit renderer. |
-| 6 | Mock only for tests/dev | Not met: mock is the only data path. |
+| 6 | Mock only for tests/dev | Partly: a real provider now exists (P2-08); the host preview tools still use mock by design (development). |
 | 7 | Simulated ≠ deliverable | Hence incomplete. |
 | 8 | Omit unverified widgets | Addressed in P2-07 ([widgets-p2-07.md](widgets-p2-07.md)): trip distance and average consumption removed; Extended redefined around the existing signal groups. Remaining widgets still need on-car verification. |
 

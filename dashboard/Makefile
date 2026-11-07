@@ -6,7 +6,7 @@ PYTHON ?= python3
 CFLAGS ?= -O2 -g
 STRICT = -std=c99 -Wall -Wextra -Werror -pedantic
 OUT = ../build/dashboard
-SOURCES = provider.c mock_provider.c widgets.c layout.c svg.c config.c manager.c
+SOURCES = provider.c mock_provider.c widgets.c layout.c svg.c config.c manager.c vehicle_provider.c
 OBJECTS = $(addprefix $(OUT)/,$(SOURCES:.c=.o))
 HEADERS = dashboard.h ../maneuver_render/visible_area.h ../maneuver_render/protocol.h
 SAN = -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer
