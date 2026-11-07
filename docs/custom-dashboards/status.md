@@ -3,6 +3,14 @@
 Status date: 2026-11-07. Scope: user-authorized P2-02 / PLAN step 2, host only.
 Further tests are deferred until the final stage by explicit user instruction.
 
+Current update: DOC-ROADMAP, documentation/design only. Added the complete
+[five-phase roadmap](../ROADMAP.md) and [provider design](data-providers.md).
+VehicleDataProvider (Phase 2) and future AndroidDataProvider (Phases 4–5) must
+feed one shared manager/widget path. Phase 3's Galaxy S23 Ultra app initially
+operates independently. No runtime/source code changed, no Android app/transport
+or live adapter added, and no tests or automated checks run for this update.
+P2-02 final validation remains deferred; manager/configuration remains P2-03.
+
 ## Active testing policy
 
 During P2-02 the user instructed: "Sa nu executi teste momentan, testele sunt

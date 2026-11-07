@@ -22,6 +22,13 @@ change to be documented; see changes.md and the audit.
 
 ## Future MVP acceptance criteria
 
+Phase 2 is designed within the complete [five-phase roadmap](../ROADMAP.md).
+The required common [Data Provider Interface](data-providers.md) must support
+Phase 2 VehicleDataProvider and later AndroidDataProvider through the same
+Dashboard Manager and Widget System. The standalone Galaxy S23 Ultra app belongs
+to Phase 3; communication belongs to Phase 4, dashboard consumption to Phase 5.
+Documenting these boundaries is required; implementing them early is not.
+
 | Requirement | Acceptance evidence |
 | --- | --- |
 | Modular foundation | Dashboard manager, typed provider snapshots, widgets, config, layouts and renderer adapter have explicit boundaries. |
@@ -34,6 +41,7 @@ change to be documented; see changes.md and the audit.
 | Audi-inspired UI | Dark palette, high contrast, restrained accents, stable labels and no unnecessary animations. |
 | Host validation | Unit/config/layout/rendering/fallback tests and a bounded performance measurement; reproducible previews. |
 | Maintainability | Full upstream history, isolated changes and no unnecessary framework or dependency. |
+| Provider evolution | Generic callback/normalized snapshots; transport-independent widgets; explicit source identity, freshness and selection when live/multiple providers are introduced. |
 
 ## Non-negotiable boundaries
 

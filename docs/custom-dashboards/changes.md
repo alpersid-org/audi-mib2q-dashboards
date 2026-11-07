@@ -4,6 +4,32 @@ This ledger describes concrete changes for reviewers and subsequent agents.
 Chronological session evidence remains append-only in [audit/LOG.md](audit/LOG.md).
 Current work state is in [audit/CURRENT.md](audit/CURRENT.md).
 
+## DOC-ROADMAP — five-phase context and shared providers (2026-11-07)
+
+Documentation-only update requested by the user. No application, adapter,
+communication, runtime or preview code changed. No tests or automated checks run;
+the final-stage-only policy remains active.
+
+| Changed path | Change and purpose |
+| --- | --- |
+| [docs/ROADMAP.md](../ROADMAP.md) | Complete five-phase project context, current status, deliverables, boundaries and common provider flow; distinguishes P2-03 configuration from roadmap Phase 3 app work. |
+| [data-providers.md](data-providers.md) | Maps the existing callback/snapshot contract to Phase 2 VehicleDataProvider and future AndroidDataProvider; documents shared manager/widgets, identity/quality separation, normalization, clock/session handling and source selection. Clearly marks unimplemented adapters/manager/extensions. |
+| [architecture.md](architecture.md) | Updates target wiring to show vehicle/mock/Android through the same interface and manager; separates implemented API from planned source resolution. |
+| [PLAN.md](PLAN.md) | Links the complete roadmap, keeps phase implementation boundaries and requires P2-03 manager inputs to remain provider independent. No new implementation started. |
+| [requirements.md](requirements.md) | Adds common provider evolution as an acceptance target and records standalone-app/communication/dashboard phases separately. |
+| [module.md](module.md) | Links future adapters to the existing in-process contract and identifies missing provider identity/session metadata. |
+| [PROJECT.md](../../PROJECT.md) | Adds the complete long-term context and links the roadmap/provider design from the project entry point. |
+| [AGENTS.md](../../AGENTS.md) | Makes roadmap and provider design mandatory agent reading; permits future-phase planning while continuing to prohibit premature Android implementation and vehicle actions. |
+| [CLAUDE.md](../../CLAUDE.md), [GEMINI.md](../../GEMINI.md), [Copilot instructions](../../.github/copilot-instructions.md) | Point all supported agent entry files at the same five-phase context and shared provider architecture. |
+| [HANDOFF.md](HANDOFF.md) | Adds roadmap/provider reading to the resume prompt and highlights phase/subtask numbering. |
+| [status.md](status.md) | Records documentation scope, unimplemented live adapters and no test execution. |
+| [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | Record user architecture requirement, source evidence, documentation progress and publication handoff. |
+| [changes.md](changes.md) | Records this per-file change map for future sessions. |
+
+The Phase 2 VehicleDataProvider role is required by design, not relabeled mock
+data. Current code still ships only db_mock_read. Android communication remains
+unimplemented, and provider identity/resolver/manager work is explicitly future.
+
 ## P2-02 — layouts and host SVG (2026-11-07)
 
 User authorized step 2 and committing/pushing. During work, the user instructed:

@@ -14,10 +14,19 @@ are unchanged; no vehicle connection, installation or deployment is performed.
 
 Development branch: `feature/custom-dashboards`.
 
+**Long-term context:** follow the [five-phase roadmap](docs/ROADMAP.md). The future
+Galaxy S23 Ultra app starts independently in Phase 3, communicates with MMI in
+Phase 4 and supplies existing widgets in Phase 5. Phase 2's VehicleDataProvider
+role and future AndroidDataProvider share one normalized interface/manager/widget
+system; see [provider design](docs/custom-dashboards/data-providers.md). Named live
+adapters are not implemented, and no Android communication is added now.
+
 ## Documents
 
 | Document | Purpose |
 | --- | --- |
+| [Five-phase roadmap](docs/ROADMAP.md) | Persistent full-project context, phase boundaries and acceptance targets. |
+| [Data Provider Interface design](docs/custom-dashboards/data-providers.md) | Vehicle/Android adapter roles, shared manager/widgets and future metadata/selection rules. |
 | [AI agent instructions](AGENTS.md) | Canonical scope, safety, engineering and validation rules for agents. |
 | [AI continuation guide](docs/custom-dashboards/HANDOFF.md) | Restart checklist, next eligible task and reusable prompt. |
 | [Current agent checkpoint](docs/custom-dashboards/audit/CURRENT.md) | Active task, partial work, validation and exact next action for cross-agent resume. |

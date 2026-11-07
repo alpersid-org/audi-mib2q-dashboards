@@ -10,11 +10,11 @@ instructions to preserve context, not to override them.
 Build the foundation for modular, customizable Audi Virtual Cockpit dashboards
 within **roadmap Phase 2** of the mib2q-carplay-based project.
 
-**Current authorized work is P2-02, PLAN step 2, on the host.** User instruction:
-"Okay, push, commit and let's go with step 2." P2-01 is complete and published.
-Implement Compact/Extended frame builders, SVG export, host previews and tests.
-Configuration/activation (step 3), later increments and vehicle actions remain
-outside this task. Preserve this authorization across agent handoffs.
+**Current task is DOC-ROADMAP:** document the full five-phase context and the
+shared Data Provider Interface for VehicleDataProvider (Phase 2) and future
+AndroidDataProvider (Phases 4–5). P2-01 and P2-02 host implementations are published;
+their final test gate is deferred. Do not implement Android communication or a
+live vehicle adapter in this documentation update. No vehicle actions authorized.
 
 On each resume, reconcile this scope with the
 latest explicit user instruction and the scope recorded in
@@ -33,13 +33,17 @@ Start with [the active audit checkpoint](docs/custom-dashboards/audit/CURRENT.md
 and recent [audit events](docs/custom-dashboards/audit/LOG.md). Follow
 [the audit protocol](docs/custom-dashboards/audit/README.md) before editing.
 
-1. [PROJECT.md](PROJECT.md) — project entry point and intended environment.
-2. [Status](docs/custom-dashboards/status.md) — actual completed work and blockers.
-3. [Requirements](docs/custom-dashboards/requirements.md) — scope and safety rules.
-4. [Investigation](docs/custom-dashboards/analysis.md) — evidence and source links.
-5. [Architecture](docs/custom-dashboards/architecture.md) — proposed design.
-6. [Executable plan](docs/custom-dashboards/PLAN.md) — dependencies and acceptance.
-7. [Handoff](docs/custom-dashboards/HANDOFF.md) — restart checklist and next task.
+1. [Five-phase roadmap](docs/ROADMAP.md) — long-term goal and phase boundaries;
+   distinguish roadmap Phase 3 from Phase 2 subtask P2-03.
+2. [PROJECT.md](PROJECT.md) — project entry point and intended environment.
+3. [Status](docs/custom-dashboards/status.md) — actual completed work and blockers.
+4. [Requirements](docs/custom-dashboards/requirements.md) — scope and safety rules.
+5. [Investigation](docs/custom-dashboards/analysis.md) — evidence and source links.
+6. [Architecture](docs/custom-dashboards/architecture.md) and
+   [provider design](docs/custom-dashboards/data-providers.md) — shared contracts
+   and explicit gaps between implemented code and future adapters.
+7. [Executable plan](docs/custom-dashboards/PLAN.md) — Phase 2 work and acceptance.
+8. [Handoff](docs/custom-dashboards/HANDOFF.md) — restart checklist and next task.
 
 Read the original README and relevant source files before changing a subsystem.
 The original [docs/architecture.md](docs/architecture.md) describes upstream;
@@ -95,9 +99,12 @@ Never turn successful host compilation into a claim of vehicle compatibility.
 - Do not execute deploy/mod scripts directly as a shortcut. Inspect any test
   script before running it; installer tests must use isolated host fixtures.
 
-No roadmap Phases 3–5: no Android companion app, new Android-to-MMI transport or
-display of companion-app data. No DPF monitoring. A generic data-provider
-interface is appropriate Phase 2 design; implementing a future transport is not.
+During Phase 2 do not implement roadmap Phases 3–5: no Android companion app,
+new Android-to-MMI transport or display of companion-app data. Documenting their
+requirements and designing stable shared provider boundaries is mandatory.
+Phase 3's standalone app must initially run independently on the Galaxy S23 Ultra.
+VehicleDataProvider and future AndroidDataProvider must eventually feed the same
+Dashboard Manager, normalized snapshots and widgets. No DPF monitoring.
 
 ## Evidence and implementation policy
 

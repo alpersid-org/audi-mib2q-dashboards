@@ -49,6 +49,12 @@ by the user; commands on this page are retained for that stage.
 
 ## Snapshot and provider contract
 
+See [data-providers.md](data-providers.md) for VehicleDataProvider (Phase 2) and
+future AndroidDataProvider (Phases 4–5). Both target this same callback/snapshot
+boundary and common manager/widgets. Only db_mock_read is implemented today.
+Provider identity/session metadata and multi-source selection are planned
+extensions; current MOCK/VERIFIED provenance is not vehicle/Android identity.
+
 [dashboard.h](../../dashboard/dashboard.h) exposes C types and a C-compatible
 function interface. Snapshots own their fixed arrays; no heap allocations or
 borrowed string pointers are used. They are in-process structs, not a network

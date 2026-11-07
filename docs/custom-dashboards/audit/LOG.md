@@ -247,3 +247,44 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Next action: publish this handoff record, then await the next requested increment.
   For P2-03, add disabled-by-default configuration and suppression on the host,
   document every change and preserve the no-test policy until final-stage request.
+
+## 2026-11-07T19:33:22Z | 20261107T193322Z-codex-01 | START
+
+- Agent/session: Codex / `20261107T193322Z-codex`.
+- Task/status: `DOC-ROADMAP` / `IN_PROGRESS`.
+- Authorization: user requires five-phase context in docs/ROADMAP.md and a modular
+  interface where Phase 2 VehicleDataProvider and future AndroidDataProvider feed
+  the same Dashboard Manager/widgets. Explicitly no Android communication now.
+- Git: clean feature/custom-dashboards, source SHA
+  `bac1779d735d6e9409114a7a3f77acdf49323959`, previously pushed.
+- Changes: instructions and checkpoint being updated; roadmap/provider docs next.
+- Decisions/evidence: existing db_provider/read/context and typed snapshots are
+  implemented; named live adapters, manager/resolver and provider identity metadata
+  are not. Document those gaps, not invented functionality.
+- Validation: read-only Git and source/document inspection only. No tests or
+  automated checks; final-stage-only testing instruction remains active.
+- Pending/dirty work: documentation/instructions/audit only; no active processes.
+- Blockers: no documentation blocker; vehicle compatibility/safe surface unknown.
+- Next action: write complete roadmap and provider contract/selection/time policy,
+  link agent entry points and update status/change ledger, then commit/push docs.
+
+## 2026-11-07T19:37:34Z | 20261107T193322Z-codex-02 | CHECKPOINT
+
+- Agent/session: Codex / `20261107T193322Z-codex`.
+- Task/status: `DOC-ROADMAP` / `READY_FOR_REVIEW`; documentation prepared.
+- Authorization: five-phase context/common-provider requirement in event `-01`.
+- Git: feature branch based on `bac1779`; documentation changes uncommitted.
+- Changes: docs/ROADMAP.md defines phases 1–5, independent Galaxy S23 Ultra app,
+  later communication/data display and current unknowns. data-providers.md maps
+  required Vehicle/Android adapters onto the existing callback and shared manager/
+  widgets, with source, time, cache/session and resolver rules. Updated architecture,
+  project/agent entry points, requirements/plan/module/handoff/status and change ledger.
+- Decisions/evidence: do not rename mock data as VehicleDataProvider. Existing
+  MOCK/VERIFIED is quality, not provider identity. Named live providers, manager,
+  resolver and identity/session metadata remain explicit design targets. No Android
+  communication implementation, selected transport or source-code changes.
+- Validation: manual source/document/Git review only; no tests or automated checks.
+- Pending/dirty work: docs/instructions/audit only; no active processes.
+- Blockers: none for documentation; vehicle and final-test limitations unchanged.
+- Next action: commit/push documentation, record source SHA and preserve roadmap
+  reading requirement and no-test policy for the next agent.

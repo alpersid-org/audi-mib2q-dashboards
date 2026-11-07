@@ -1,6 +1,10 @@
 # Executable Phase 2 plan
 
-This plan subdivides **roadmap Phase 2 only**. Later roadmap phases are excluded.
+This plan subdivides **roadmap Phase 2 only**. Later-phase implementation is
+excluded; designing compatible provider boundaries for those phases is required.
+Read the complete [five-phase roadmap](../ROADMAP.md) and
+[provider design](data-providers.md). P2-03 configuration is not roadmap Phase 3's
+standalone Android app.
 Run commands from this project's root (the directory containing PROJECT.md).
 Steps marked blocked require new evidence;
 they are not authorization to contact, install on or deploy to the vehicle.
@@ -14,6 +18,10 @@ vehicle step 6 remains blocked.
 should run now; testing is for the final stage. Continue implementation and
 document every change. Test commands below are retained for that final stage,
 not permission to execute them now. Earlier results remain in the audit.
+
+Current documentation update: DOC-ROADMAP defines the complete roadmap and common
+VehicleDataProvider/AndroidDataProvider architecture. It does not start P2-03,
+implement a live provider or implement any Android communication.
 
 Actual step 1 commands: `make -C dashboard all test demo` and
 `make -C dashboard test-sanitize`; see [module.md](module.md). The bare `make`
@@ -105,6 +113,11 @@ is deferred by user instruction. See [rendering.md](rendering.md) and
 2. Make CLI layout selection independent of enablement.
 3. Implement host disable and restore-default actions.
 4. Clear old frames on invalid config/viewport or provider failure.
+5. Keep the manager's input behind the generic `db_provider` boundary. Vehicle
+   and future Android adapters must share that path; the host preview may remain
+   explicitly mock-only. Do not hard-code mock acquisition into widgets/manager.
+   Multi-provider resolution and origin metadata follow the provider design when
+   needed; no Android transport or live vehicle subscription is part of P2-03.
 
 Acceptance: no config and malformed config emit no dashboard drawing commands;
 switching layouts does not silently activate the feature. No GEM code is changed.

@@ -6,6 +6,13 @@ Configuration/activation manager remains future work; no vehicle backend exists.
 The user has deferred further testing until the final stage. Earlier test results
 are historical evidence, not final graphics acceptance.
 
+The [five-phase roadmap](../ROADMAP.md) is mandatory context. Phase 2 must keep a
+shared Data Provider Interface so VehicleDataProvider now and AndroidDataProvider
+in Phases 4–5 can feed the same manager and widgets. The Android app initially
+operates independently in roadmap Phase 3. Full contracts and implementation gaps
+are documented in [data-providers.md](data-providers.md); no Android communication
+or live adapter is implemented by this design update.
+
 ## Decision
 
 Build a standalone C99 host prototype first. Upstream has demonstrated graphics
@@ -39,11 +46,14 @@ build/                             existing ignored host build output
 ```mermaid
 flowchart LR
     C[Strict configuration] --> M[Dashboard Manager]
-    P[Mock provider] --> S[Owned typed snapshot]
-    S --> W[Widget formatting]
-    W --> M
+    V["VehicleDataProvider / Phase 2 target"] --> I["Data Provider Interface"]
+    P["MockDataProvider / implemented"] --> I
+    A["AndroidDataProvider / future Phases 4-5"] -.-> I
+    I --> M
+    M --> S["Selected owned snapshot"]
+    S --> W["Shared widgets"]
     L[Layout Manager] --> M
-    M --> F[Bounded source-pixel frame]
+    W --> F[Bounded source-pixel frame]
     F --> R[Host SVG renderer]
 ```
 
@@ -57,6 +67,21 @@ Only a deterministic mock provider ships in P2-01. Missing or invalid data must 
 zero; stale samples lose their displayed values. Future validated read-only
 providers can fill this contract without changing layouts or widgets. This is an
 interface boundary, not implementation of roadmap Phases 3–5.
+
+VehicleDataProvider is the required Phase 2 adapter role for verified read-only
+sources; it is not the current mock implementation and has not yet been connected
+to real vehicle data. AndroidDataProvider is a future adapter over validated
+received data, not a second manager or widget system. For multiple sources, a
+small resolver can implement the existing callback and publish one selected
+snapshot. Selection is explicit per signal/group, not last-writer-wins. Widgets
+never depend on phone transport, DSI bindings or raw messages.
+
+**Confirmed by code:** the common callback, owned typed values and source quality/
+sample-age fields exist in dashboard.h/provider.c. **Planned, not implemented:**
+the manager, concrete Vehicle/Android adapters, resolver, per-provider origin and
+session metadata. MOCK/VERIFIED provenance currently does not identify which
+provider produced a value. Extend metadata deliberately before mixed/live-source
+use; the detailed provider design defines unit/freshness/disconnect rules.
 
 The implemented **Widget System** formats temperature, range, media, final-destination
 distance/duration, trip distance and average consumption. All initial values are

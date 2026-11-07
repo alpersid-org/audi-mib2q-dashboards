@@ -3,6 +3,12 @@
 Read the canonical [AGENTS.md](../../AGENTS.md) first. This guide is a restart
 checklist for any agent or coding tool; it is not a second set of project rules.
 
+Read [docs/ROADMAP.md](../ROADMAP.md) for all five phases and
+[data-providers.md](data-providers.md) for the shared provider architecture.
+Current DOC-ROADMAP work is documentation only: no Android communication or live
+vehicle provider. Never confuse P2-03 configuration with roadmap Phase 3's
+standalone Galaxy S23 Ultra application.
+
 For live task state, read [audit/CURRENT.md](audit/CURRENT.md) and recent
 [audit/LOG.md](audit/LOG.md) events. The checkpoint below describes P2-02; the
 active audit records exact progress and supersedes stale summaries. Follow
@@ -69,6 +75,8 @@ silently interpret the old roadmap as permission to code.
 > commits and working tree against the checkpoint, preserve partial work, and
 > append a RESUME event. Continue from the recorded next action within the
 > existing user-authorized scope; do not restart completed work or expand scope.
+> Read docs/ROADMAP.md and the provider design before changing architecture;
+> VehicleDataProvider and future AndroidDataProvider must share manager/widgets.
 > Read the linked project documents/source as needed. Keep the audit updated at
 > milestones and before context exhaustion, with changes, historical test results
 > and the next action. Do not run tests until the final stage is requested.
