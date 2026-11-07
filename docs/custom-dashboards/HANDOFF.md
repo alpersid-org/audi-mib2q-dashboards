@@ -17,7 +17,7 @@ as DEFERRED BY USER. P2-04 results remain historical evidence only.
 
 **Review-fix handoff:** see
 [reviews/claude-312215a-resolution.md](reviews/claude-312215a-resolution.md);
-branch `fix/review-claude-312215a`, not merged. R4 and stale suites wait for the
+branch `fix/review-claude-312215a`, merged to master. R4 and stale suites wait for the
 final test request.
 
 **Scope handoff (read first):** Phase 2 is "Real Vehicle Data Integration"

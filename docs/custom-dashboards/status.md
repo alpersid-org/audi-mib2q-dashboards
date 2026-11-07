@@ -12,7 +12,7 @@ statements identified by R5; use the audit for current task state.
 Codex reviewed 312215a ([report](reviews/claude-312215a.md)). Fixes for R1, R2,
 R3, R5, session invalidation and the AA subscription gap are implemented and
 untested on `fix/review-claude-312215a`; R4 waits for the final test request
-([resolution](reviews/claude-312215a-resolution.md)). Not merged.
+([resolution](reviews/claude-312215a-resolution.md)). Merged to master.
 
 ## Phase 2 scope and state (read first)
 

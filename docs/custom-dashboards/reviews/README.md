@@ -8,7 +8,7 @@ It applies to Codex, Claude, Gemini, Copilot and agents using other tools.
 - [Review report: Claude's work through 312215a](claude-312215a.md).
 - [Resolution record (2026-11-07)](claude-312215a-resolution.md): R1, R2, R3,
   R5, session invalidation and the AA subscription gap IMPLEMENTED / UNTESTED
-  on `fix/review-claude-312215a`; R4 OPEN for the final test request.
+  on `fix/review-claude-312215a` (merged to master); R4 OPEN for the final test request.
 - [Live checkpoint](../audit/CURRENT.md) and [append-only history](../audit/LOG.md).
 - Reviewed range: `574ae26..312215a`, 15 commits and 45 changed paths.
 - Five findings remain OPEN. They are source-review findings, not reproduced

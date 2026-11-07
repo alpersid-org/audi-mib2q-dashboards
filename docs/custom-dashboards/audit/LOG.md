@@ -783,3 +783,13 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - R4 OPEN (test-harness code; final test request).
 - Validation: manual review only; no build/test/link checks run.
 - Next: commit/push fix branch; await merge approval.
+
+## 2026-11-07T21:13:52Z | 20261107T200748Z-claude-22 | PUBLICATION / REVIEW + FIXES TO MASTER
+
+- User: "merge to master and push". Covers this fast-forward only; no release,
+  no installation, no step 9.
+- Git: origin/master 312215a is an ancestor; master fast-forwarded to the commit
+  containing this event (2acf555 + 72b4633 Codex review docs, 9187a88 fixes, this
+  event). No merge commit or rewrite.
+- Findings: R1, R2, R3, R5, session invalidation, AA gap IMPLEMENTED / UNTESTED;
+  R4 OPEN for the final test request. No tests or builds run.
