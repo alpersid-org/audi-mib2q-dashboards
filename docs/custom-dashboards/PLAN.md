@@ -21,6 +21,8 @@ generated previews are included in the documentation release.
    before any future implementation in this project.
 4. Add requirements, a safety boundary and a truthful status record.
 5. Commit and push the documentation-only project to its own Git repository.
+6. Maintain root AGENTS.md and an AI continuation guide; keep tool-specific entry
+   files as pointers to the canonical instructions.
 
 Acceptance: documentation identifies controllable surfaces, source limitations,
 AAWireless model uncertainty and the host-only fallback. The branch contains

@@ -12,6 +12,9 @@ Status date: 2026-11-07. Scope: documentation-only, per the user's latest instru
 - Recorded confirmed, plausible/unverified and unknown conclusions with source links.
 - Designed the modular host-only fallback and documented its safety boundary.
 - Created an ordered implementation plan with commands, acceptance criteria and blockers.
+- Added canonical AGENTS.md instructions, a continuation guide and entry files for
+  Claude, Gemini and GitHub Copilot. They preserve the documentation-only scope
+  and identify the first host increment for a later implementation request.
 
 ## Deferred
 
@@ -38,6 +41,11 @@ The upstream URL remains `https://github.com/kamgurgul/mib2q-carplay.git`; push
 project changes only to the user-owned fork.
 
 ## Existing-test observations from investigation
+
+The AI instruction update passed `git diff --check` and a host Python check of
+relative links, heading anchors and code fences across all eight changed Markdown
+documents (28 local links). Tool entry files all reference AGENTS.md. No runtime
+regression tests were rerun for this documentation-only update.
 
 These are preliminary environment observations, not a completed regression report:
 

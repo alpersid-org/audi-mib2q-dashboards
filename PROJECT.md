@@ -15,6 +15,8 @@ Development branch: `feature/custom-dashboards`.
 
 | Document | Purpose |
 | --- | --- |
+| [AI agent instructions](AGENTS.md) | Canonical scope, safety, engineering and validation rules for agents. |
+| [AI continuation guide](docs/custom-dashboards/HANDOFF.md) | Restart checklist, next eligible task and reusable prompt. |
 | [Architecture](docs/custom-dashboards/architecture.md) | Modular host prototype design and future integration boundary. |
 | [Repository investigation](docs/custom-dashboards/analysis.md) | Confirmed capabilities, plausible but unverified options, and unknowns with source references. |
 | [Executable Phase 2 plan](docs/custom-dashboards/PLAN.md) | Ordered tasks, commands, acceptance criteria and blocked work. |
@@ -51,3 +53,6 @@ cd audi-mib2q-dashboards
 
 The fork's `master` branch retains the inherited upstream baseline. The
 `feature/custom-dashboards` branch contains the project documentation.
+
+AI agents should start with AGENTS.md. Claude, Gemini and GitHub Copilot entry
+files point to the same instructions; other tools can load them explicitly.
