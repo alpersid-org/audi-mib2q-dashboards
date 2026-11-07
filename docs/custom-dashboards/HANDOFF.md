@@ -4,9 +4,8 @@ Read the canonical [AGENTS.md](../../AGENTS.md) first. This guide is a restart
 checklist for any agent or coding tool; it is not a second set of project rules.
 
 For live task state, read [audit/CURRENT.md](audit/CURRENT.md) and recent
-[audit/LOG.md](audit/LOG.md) events. The checkpoint below describes the initial
-documentation milestone; a later authorized task recorded in the audit can
-supersede it. Follow [the audit lifecycle](audit/README.md), including writing
+[audit/LOG.md](audit/LOG.md) events. The checkpoint below describes P2-01; the active audit records exact
+progress and supersedes stale summaries. Follow [the audit lifecycle](audit/README.md), including writing
 a RESUME event before making changes.
 
 ## Current checkpoint
@@ -15,9 +14,11 @@ a RESUME event before making changes.
   Markdown architecture/analysis, a phased executable plan and AI instructions.
 - The GitHub fork is `alpersid-org/audi-mib2q-dashboards`; use
   `feature/custom-dashboards` for project work.
-- The fork contains full upstream history/source. Custom work adds documents
-  and agent instruction files; it adds no dashboard implementation.
-- Current scope is documentation only. Implementation was explicitly deferred.
+- The fork contains full upstream history/source. Custom work adds documents,
+  agent instructions and the host data/widget module.
+- User authorized P2-01 with "Okay, go ahead with the first part." Host module,
+  mock source and formatters now exist; do not restart them or request the same
+  authorization again. Layout/rendering work is a later step.
 - Vehicle firmware/compatibility, original AAWireless behavior, Phase 1 success
   and a safe dashboard surface remain unconfirmed.
 - The proposed first implementation is a standalone host renderer with mock
@@ -44,18 +45,18 @@ choosing work. Do not discard edits or assume a clean tree.
 
 If asked for more documentation, keep the change within documentation.
 
-If later explicitly asked to implement or start the MVP, begin with
-[PLAN step 1](PLAN.md#1-establish-the-isolated-module-and-provider): define the
-isolated host module and owned snapshot/provider contract, implement a deterministic
-mock source and widget formatting, and verify missing/invalid/stale data behavior.
+For the already authorized [PLAN step 1](PLAN.md#1-establish-the-isolated-module-and-provider),
+resume any unfinished acceptance item recorded in audit/CURRENT.md. Read
+[module.md](module.md) for the implemented API and test commands. Once complete,
+the next eligible task is step 2 (Compact/Extended frame builders and host SVG
+adapter), when requested by the user.
 Do not start with QNX window creation, context routing, Java lifecycle changes,
 GEM buttons, live vehicle feeds or Android communication.
 
 Follow steps 2–5 after their dependencies pass. Vehicle integration remains
 blocked under [step 6](PLAN.md#6-vehicle-feasibility-investigation--blocked--future-phase-2-work).
-If the user asks to continue without specifying implementation, apply the
-current documentation-only scope and explain the next eligible implementation
-task; do not silently interpret the old roadmap as permission to code.
+If the user asks to continue without specifying implementation, use the
+latest recorded scope/checkpoint and explain the next eligible task; do not silently interpret the old roadmap as permission to code.
 
 ## Suggested prompt for another AI tool
 

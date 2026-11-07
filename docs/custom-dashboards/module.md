@@ -1,0 +1,117 @@
+# P2-01: host data and widget module
+
+Implemented in [dashboard/](../../dashboard/) with tests in
+[dashboard_test.c](../../tests/dashboard_test.c). This is PLAN step 1 only: a
+library and deterministic text demo. It creates no display window, connects to no
+service, and changes no inherited runtime, install payload or firmware file.
+
+## Build and run
+
+From the repository root, using a host C compiler, `ar` and make:
+
+```sh
+make -C dashboard all test demo
+make -C dashboard test-sanitize
+```
+
+The first command compiles strict C99 (`-Wall -Wextra -Werror -pedantic`), creates
+`build/dashboard/libdashboard.a`, runs the tests, and prints the six mock widgets.
+The second runs the same tests with AddressSanitizer and UndefinedBehaviorSanitizer
+(including default leak detection). No SDK, HMI jar or new package is needed.
+Build files are ignored by Git. `make -C dashboard clean` removes only this
+module's generated outputs. Sanitizer availability depends on the host compiler.
+
+In this managed environment LeakSanitizer fails under the process-traced sandbox.
+The same sanitizer command passed outside that sandbox without disabling any
+sanitizer check. Do not interpret the sandboxed invocation as a passing test.
+
+The demo header says `HOST PROTOTYPE - MOCK DATA - NO VEHICLE OUTPUT`; examples:
+
+```text
+OUTSIDE TEMPERATURE  [MOCK] 12.5 C
+DRIVING RANGE        [MOCK] 620 km | Estimated range
+TRIP DISTANCE        [MOCK] 84.3 km | Trip sample
+AVERAGE CONSUMPTION  [MOCK] 5.6 L/100km | Trip average sample
+NOW PLAYING          [MOCK] Night Drive | Studio Session
+NAVIGATION           [MOCK] 42.5 km / 38 min | City Centre
+```
+
+This is a data/formatter demonstration, not a dashboard screenshot. No layout,
+renderer, configuration manager or activation feature is supplied in this step.
+
+## Snapshot and provider contract
+
+[dashboard.h](../../dashboard/dashboard.h) exposes C types and a C-compatible
+function interface. Snapshots own their fixed arrays; no heap allocations or
+borrowed string pointers are used. They are in-process structs, not a network
+format, stable binary ABI, firmware adapter or protection from malicious callbacks.
+
+Each widget datum has availability (`MISSING`, `AVAILABLE`, `INVALID`), source
+provenance and a caller-supplied monotonic sample time in milliseconds. Zero is a
+valid clock epoch. Every caller/provider must use the same clock domain. UTC or
+system wall time must not be substituted without explicit adapter conversion.
+
+`db_snapshot_read` initializes a candidate snapshot and calls a synchronous
+provider. Exactly `1` means success; any other result, missing provider or missing
+callback clears previous caller data. Partial successful snapshots leave omitted
+fields missing. It does not poll or spawn threads. A provider must return promptly
+and synchronize its own source; there is no callback timeout in this increment.
+
+`db_mock_read` fills deterministic example values, all marked MOCK, stamped at the
+supplied `now_ms`. Time changes affect sample metadata only. These are fresh
+synthetic values on each call, not evidence of actual sensor freshness.
+`DB_SOURCE_VERIFIED` is reserved for a later validated source; no such provider
+ships. Do not relabel a mock as verified in product code.
+
+## Widget formatting contract
+
+| Widget | Canonical input | Host validation bounds | Display policy |
+| --- | --- | --- | --- |
+| Temperature | 0.1 degrees C | -1000 through 1000 | One decimal, including `-0.1 C` |
+| Driving range | Meters | 0 through 10,000,000 | Whole km, rounded down |
+| Trip | Meters | 0 through 1,000,000,000 | One decimal km, rounded down |
+| Average consumption | 0.1 L/100km | 0 through 1000 | One decimal L/100km |
+| Media | Title/artist, each 96-byte capacity | Both terminated, nonempty title | Title plus optional artist |
+| Navigation | Final-destination meters, seconds, destination | 0–1,000,000,000 m; 0–31,536,000 s; terminated name | One decimal km, duration rounded up to minutes; optional destination |
+
+Bounds are deliberate prototype input guards, not verified firmware/sensor limits.
+Trip/reset semantics and all real signal meanings remain unverified on this car.
+Navigation is an atomic group: a future adapter must take the oldest contributing
+sample time so fresh destination text cannot revive old estimates. Partial
+navigation estimates currently render as invalid/missing; independent component
+display can be added later with an explicit contract. No ETA clock is inferred.
+
+`db_widget_format` always replaces the output. Missing data produces `--` and
+`UNAVAILABLE`; invalid values/provenance produce `INVALID`; timestamps after now
+produce `INVALID TIME`; age greater than 30,000 ms produces `STALE`. Exactly
+30,000 ms is accepted. The threshold is a host policy, not a verified source rate.
+Failure outputs have empty detail strings, preventing stale text from surviving.
+Available zero is valid; a zeroed snapshot is missing and cannot imply live zero.
+
+Output has fixed-capacity label/value/detail/badge arrays, a machine-readable
+status and provenance. Source labels are MOCK/VERIFIED only for valid values;
+error badges describe the failure while the source field retains known provenance.
+Unknown availability/source enum values fail closed.
+
+The prototype text contract is ASCII. Control/non-ASCII bytes become `?`; all
+input arrays must contain a terminator within their capacity. A future renderer
+must escape output for its destination (for example XML for SVG). This formatter
+does not perform markup escaping, font shaping or production Unicode support.
+
+## Future integration points and limits
+
+The header reserves a 48-command rectangle/text frame using upstream `cr_rect_t`
+from [visible_area.h](../../maneuver_render/visible_area.h). No upstream crop
+fallback is called. Zeroed frames contain no drawing commands. No frame builder
+or graphics backend is implemented. The header rejects QNX compilation until a
+separate safe-surface decision authorizes a vehicle backend.
+
+The module is not included in upstream build/release scripts. It has no enable
+switch because there is no display output to activate. Disabled-by-default
+configuration and rendering suppression are PLAN step 3 acceptance targets.
+There is no performance claim for the head unit and no vehicle compatibility
+claim. Layout/rendering previews are step 2; no preview artifacts exist yet.
+
+Rollback is `make -C dashboard clean` to remove outputs and ceasing host demo use;
+no head-unit file restoration is required. Source changes can be reverted with
+their feature commit, preserving unrelated work.

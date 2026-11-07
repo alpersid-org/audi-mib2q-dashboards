@@ -6,7 +6,8 @@ The workspace was empty; upstream was cloned for investigation. Work now lives
 in the separate `audi-mib2q-dashboards` project on `feature/custom-dashboards`,
 which inherits the full upstream source and Git history. Inherited implementation
 files remain unchanged. No vehicle connection or installation was performed.
-This investigation is published as documentation; new implementation is deferred.
+This investigation preceded implementation. P2-01 now supplies the isolated
+host provider/widget module; graphics and vehicle integration remain deferred.
 Source evidence below establishes what this checkout does, not what this
 particular A4 supports.
 
@@ -70,7 +71,7 @@ No GEM buttons or vehicle markers are added now: they would advertise a function
 which has no validated vehicle backend. No controller or steering-wheel key is
 intercepted or repurposed.
 
-## Proposed smallest feasible increment (not implemented)
+## Smallest feasible increment (P2-01 data/widgets implemented; rendering deferred)
 
 Safe VC rendering cannot be established from this checkout alone. Use the
 explicitly permitted standalone renderer fallback. Implement an isolated host C99

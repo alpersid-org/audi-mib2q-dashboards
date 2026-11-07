@@ -67,3 +67,66 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Next action: save this completion record, then follow the next user task. If
   host feature 1 is requested, record its authorization, set `P2-01` IN_PROGRESS
   and start the isolated module/mock-provider contract from PLAN step 1.
+
+## 2026-11-07T19:02:17Z | 20261107T190217Z-codex-01 | START
+
+- Agent/session: Codex / `20261107T190217Z-codex`.
+- Task/status: `P2-01` / `IN_PROGRESS`.
+- Authorization: user said "Okay, go ahead with the first part" after the ordered
+  dashboard plan. Host step 1 is authorized; old documentation-only scope is superseded.
+- Git: clean `feature/custom-dashboards`, source SHA
+  `64fd3295924badb8346c58cefeedd7aa878bd031`, tracking origin.
+- Changes: updated instructions and active checkpoint; implementation next.
+- Decisions/evidence: typed widget snapshots, bounded storage, mock-only source;
+  frame type will reuse `cr_rect_t` without linking graphics. No runtime integration.
+- Validation: Git status/log/remotes and required document inspection exited 0;
+  C compiler and make available. No new tests run yet.
+- Pending/dirty work: instructions and audit update; no live processes.
+- Blockers: none for host module. No safe vehicle surface/compatibility established.
+- Next action: implement isolated C99 provider/snapshot/widget contracts and tests.
+
+## 2026-11-07T19:08:07Z | 20261107T190217Z-codex-02 | CHECKPOINT
+
+- Agent/session: Codex / `20261107T190217Z-codex`.
+- Task/status: `P2-01` / `IN_PROGRESS`; code and focused tests complete, docs underway.
+- Authorization: user request recorded in event `-01`.
+- Git: source SHA `64fd329`; implementation is uncommitted on the feature branch.
+- Changes: dashboard header/provider/mock/widgets/Makefile/text demo, focused C
+  tests and API documentation. No inherited runtime changes.
+- Decisions/evidence: typed widget fields; 30s host freshness policy, navigation
+  group uses oldest sample time; bounded ASCII and explicit mock provenance.
+- Validation: `make -C dashboard all test demo` exited 0. Initial
+  `make -C dashboard test-sanitize` failed because LeakSanitizer cannot run under
+  ptrace; identical command outside the sandbox exited 0 with defaults unchanged.
+  `sh scripts/run_tests.sh` hit the same sandbox restriction. Outside the sandbox
+  it passed through bus transport and 41 protocol constants, then exited 1 because
+  `build/carplay_hook.jar` is absent. No source/test workaround applied.
+- Pending/dirty work: code/tests/docs and instruction/audit edits; regression
+  retry using upstream's documented SKIP_JAR_CHECK=1 is underway. Inspect latest
+  process/log state before rerunning; logs are local `/tmp/mib2q-p2-01-*` only.
+- Blockers: missing proprietary HMI assets prevent Java shipping checks; not a
+  blocker to isolated C99 module. No vehicle surface/compatibility proven.
+- Next action: collect limited regression result, update stale scope summaries,
+  validate final docs/diff and commit/push P2-01 with a complete checkpoint.
+
+## 2026-11-07T19:10:38Z | 20261107T190217Z-codex-03 | CHECKPOINT
+
+- Agent/session: Codex / `20261107T190217Z-codex`.
+- Task/status: `P2-01` / `READY_FOR_REVIEW`; acceptance code/tests implemented.
+- Authorization: user request in event `-01`; limited to host PLAN step 1.
+- Git: source SHA `64fd329`, uncommitted feature branch changes.
+- Changes: seven new module/test files and module API guide; scope summaries,
+  plan, status, instructions and checkpoint updated for authorized implementation.
+- Decisions/evidence: reuse only upstream rectangle header; reserve frame types
+  without adding graphics. Existing runtime/deploy paths are unchanged. Text demo
+  displays all six candidate values with MOCK labels.
+- Validation: `SKIP_JAR_CHECK=1 sh scripts/run_tests.sh` outside the sandbox exited 0.
+  This explicitly skips shipping JAR validation only; sanitizers remained enabled.
+  Bus transport passed there. `bash scripts/test_route_info.sh` exited 2 without
+  diagnostic; proprietary HMI/JCL and stock JDK absent. Focused tests/sanitizers
+  passed as recorded in event `-02` and status.md. `git diff --check` exited 0.
+- Pending/dirty work: module/test/API docs and planning/instruction/audit updates;
+  no active processes. Generated binaries are ignored in build/dashboard.
+- Blockers: no host increment blocker; unavailable Java/vehicle validation remains.
+- Next action: validate all docs, inspect final diff for upstream/runtime changes,
+  commit/push P2-01, verify remote SHA and publish completion checkpoint.

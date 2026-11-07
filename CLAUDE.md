@@ -5,5 +5,6 @@ Use [the continuation guide](docs/custom-dashboards/HANDOFF.md) to recover conte
 Read [the current checkpoint](docs/custom-dashboards/audit/CURRENT.md) and recent
 [audit events](docs/custom-dashboards/audit/LOG.md); follow the audit protocol to
 record your RESUME event, milestones and handoff before context exhaustion.
-AGENTS.md is the canonical project instruction source; current scope is
-documentation only unless a later user instruction requests implementation.
+AGENTS.md is the canonical project instruction source. P2-01 host implementation
+is authorized; consult the checkpoint for progress. Later steps and vehicle
+actions are outside the current increment.

@@ -1,7 +1,8 @@
 # Dashboard architecture
 
-Status: proposed design. This iteration publishes documentation only. The
-components and behavior below are acceptance targets, not implemented features.
+Status: P2-01 data snapshots, provider/mock and widget formatting are implemented
+and host-tested; see [module.md](module.md). Managers, layouts, configuration and
+rendering remain proposed acceptance targets. No vehicle backend exists.
 
 ## Decision
 
@@ -26,8 +27,8 @@ docs/custom-dashboards/             architecture, investigation, plan, requireme
 maneuver_render/ altscreen_render/  inherited renderers, unchanged
 common/ aa_hook/ java_patch/        inherited common code/hooks/HMI patch, unchanged
 deploy/ mods/ scripts/ tests/       inherited tooling and tests, unchanged
-dashboard/                         FUTURE host-only module and configuration
-tests/dashboard_*                  FUTURE tests for new dashboard functionality
+dashboard/                         IMPLEMENTED data/widget library, Makefile, text demo
+tests/dashboard_test.c             IMPLEMENTED host contract and formatter tests
 build/                             existing ignored host build output
 ```
 
@@ -48,15 +49,15 @@ The planned **Dashboard Manager** prepares a complete frame on explicit request.
 enablement, configuration, viewport and provider success, and clears all previous
 commands on suppression. There is no background loop, animation or polling thread.
 
-The proposed **Data Provider Interface** is a callback returning an owned snapshot. Each
+The implemented **Data Provider Interface** is a callback returning an owned snapshot. Each
 field includes availability, provenance, canonical units and monotonic sample time.
-Only a deterministic mock provider is planned initially. Missing or invalid data must never become
+Only a deterministic mock provider ships in P2-01. Missing or invalid data must never become
 zero; stale samples lose their displayed values. Future validated read-only
 providers can fill this contract without changing layouts or widgets. This is an
 interface boundary, not implementation of roadmap Phases 3–5.
 
-The planned **Widget System** formats temperature, range, media, final-destination
-distance/duration, trip distance and average consumption. All initial values will be
+The implemented **Widget System** formats temperature, range, media, final-destination
+distance/duration, trip distance and average consumption. All initial values are
 explicitly labeled MOCK. No speed, warning, braking, steering or ADAS widget is
 planned. ETA must not be derived from an unverified clock.
 
@@ -97,6 +98,7 @@ Planned host tests cover configuration, units, age, provenance, layout bounds, S
 escaping/clipping, provider failure, clearing and preparation cost. Run upstream
 regression scripts separately and report missing proprietary assets/toolchains.
 
-The planned host prototype will support disabled/default configuration. For the
-documentation-only iteration, rollback means removing this project or reverting
-its documentation commit. No car files need restoration because none are changed.
+The planned host prototype will support disabled/default configuration. For
+P2-01, `make -C dashboard clean` removes generated outputs; no runtime integration
+exists to disable. Source work can be reverted by its feature commit. No car
+files need restoration because none are changed.

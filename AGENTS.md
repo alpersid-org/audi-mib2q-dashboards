@@ -10,14 +10,13 @@ instructions to preserve context, not to override them.
 Build the foundation for modular, customizable Audi Virtual Cockpit dashboards
 within **roadmap Phase 2** of the mib2q-carplay-based project.
 
-**Current authorized work is documentation only.** The user explicitly deferred
-implementation. Adding AI instructions does not authorize starting the MVP.
-The implementation steps in PLAN.md are future work, not completed functionality
-or standing authorization to execute them. A later request such as "implement
-the next step" authorizes the relevant host-only increment; proceed within that
-scope without asking again about routine engineering decisions.
+**Current authorized work is P2-01, PLAN step 1, on the host.** After reviewing
+the plan the user instructed: "Okay, go ahead with the first part." Implement
+the isolated module, typed snapshots, deterministic mock provider and widget
+formatters with meaningful tests. Steps 2–6 remain later work; no vehicle actions
+are authorized. Preserve this authorization across agent handoffs.
 
-This is the initial scope checkpoint. On each resume, reconcile it with the
+On each resume, reconcile this scope with the
 latest explicit user instruction and the scope recorded in
 [audit/CURRENT.md](docs/custom-dashboards/audit/CURRENT.md). Preserve an already
 authorized host task across agent switches; update stale scope summaries when
@@ -134,14 +133,18 @@ whitespace and change scope. Do not run full firmware builds for a text edit.
 
 For future implementation, run meaningful widget, mock-provider, config, layout,
 rendering, fallback and bounded performance checks, plus appropriate inherited
-regression scripts listed in PLAN.md. Inspect prerequisites first. Planned
-`make` targets do not currently exist; do not report them as tested or available.
+regression scripts listed in PLAN.md. Inspect prerequisites first. P2-01 uses
+`make -C dashboard all test demo` and `make -C dashboard test-sanitize`.
+Root `make`/preview/benchmark targets in later PLAN steps do not yet exist.
 
 The recorded upstream baseline is not a clean test pass: LeakSanitizer was
 blocked by tracing restrictions; a retry with leak detection disabled later
 failed `bus_transport_test` at line 84. Its cause is unresolved. Do not silently
 disable sanitizers, relabel failures as skips or assume a sandbox cause. Record
 exact commands, environment adjustments, results and missing prerequisites.
+P2-01 later passed the full C suite outside the traced sandbox with the documented
+`SKIP_JAR_CHECK=1` option (shipping JAR absent). Bus transport passed there; do not
+claim its old failure proves a code defect or that missing-JAR checks passed.
 Java/QNX/macOS-specific checks may need assets/toolchains not supplied here.
 
 ## Mandatory agent audit trail

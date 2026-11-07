@@ -14,8 +14,9 @@ establish compatibility with this particular vehicle/phone/adapter combination.
 ## Current deliverable
 
 A separate Git project containing source-backed investigation, proposed
-architecture, requirements and an ordered implementation plan. Implementation,
-previews and new automated tests are deferred at the user's request.
+architecture, requirements and an ordered implementation plan, now extended by
+user-authorized P2-01 host data/widgets, a mock provider, focused tests and text
+demo. Layouts, renderer, configuration and graphics previews remain later work.
 
 ## Future MVP acceptance criteria
 
@@ -59,7 +60,8 @@ Enable, Disable, Compact, Extended and Restore Default.
 
 ## Rollback
 
-Documentation-only release: remove the local project or revert its documentation
-commit. No head-unit rollback is necessary. A future host prototype must support
+P2-01 host release: `make -C dashboard clean` removes generated outputs; stop
+using the text demo. Source changes can be reverted by their feature commit. No
+head-unit rollback is necessary. A future host prototype must support
 disabled configuration and must not become part of upstream's installation payload
 without a separately reviewed integration increment.

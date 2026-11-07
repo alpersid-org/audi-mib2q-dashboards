@@ -1,76 +1,87 @@
 # Project status
 
-Status date: 2026-11-07. Scope: documentation-only, per the user's latest instruction.
+Status date: 2026-11-07. Scope: user-authorized P2-01 / PLAN step 1, host only.
 
 ## Completed
 
-- Created a separate local project on `feature/custom-dashboards`, inheriting
-  upstream's full code and Git history rather than using a reference submodule.
-- Inspected upstream master at `b127988a68c8d690841f4a75d35717ffc01e668e`.
-- Investigated maneuver/map renderers, common managed surfaces, AA hooks, Java
-  lifecycle and data sources, deploy/mod scripts, GEM generation and host tests.
-- Recorded confirmed, plausible/unverified and unknown conclusions with source links.
-- Designed the modular host-only fallback and documented its safety boundary.
-- Created an ordered implementation plan with commands, acceptance criteria and blockers.
-- Added canonical AGENTS.md instructions, a continuation guide and entry files for
-  Claude, Gemini and GitHub Copilot. They preserve the documentation-only scope
-  and identify the first host increment for a later implementation request.
-- Added an agent audit protocol, mutable active checkpoint and append-only event
-  log, linked from all agent entry files, for Codex/Claude continuation.
+- Created the full upstream-derived fork and documented architecture, evidence,
+  requirements, plan, agent instructions and persistent audit/handoff protocol.
+- Implemented P2-01 in `dashboard/`: bounded typed snapshots, provider callback,
+  deterministic mock source, six widget formatters, reserved frame command types,
+  independent host Makefile/library and text demo.
+- Added `tests/dashboard_test.c`: units, negative fractional temperature, valid
+  zeros, metadata/provenance, age boundary, extreme/future timestamps, numeric
+  bounds, invalid enums, unterminated/control text, partial snapshot behavior,
+  provider failure clearing and deterministic mock values.
+- Documented the API, units, host policy limits and commands in [module.md](module.md).
+- Preserved inherited runtime/source, upstream README and installation payloads.
+  No vehicle connection or actions performed; all demo values are explicitly MOCK.
 
-Live task progress is in [audit/CURRENT.md](audit/CURRENT.md); historical agent
-events are in [audit/LOG.md](audit/LOG.md). Consult these before resuming work.
+Live progress: [audit/CURRENT.md](audit/CURRENT.md). History:
+[audit/LOG.md](audit/LOG.md). Scope was authorized by the user's instruction
+"Okay, go ahead with the first part" following the ordered plan; an agent switch
+must not reimpose the previous documentation-only scope on P2-01.
 
-## Deferred
+## Not implemented
 
-All new implementation code, renderer adapters, widget/data/config logic, previews,
-new automated tests and performance checks. No dashboard runtime is supplied.
-No changes were made to inherited upstream implementation files or to any vehicle.
+Compact/Extended layouts, SVG/GL renderer, configuration/activation manager,
+graphics previews, performance benchmark, GEM controls, live data adapters or
+vehicle backend. Root `make` targets in later PLAN steps remain planned; actual
+commands currently use `make -C dashboard`. No vehicle compatibility is claimed.
 
-## Git repository
-
-The user supplied [alpersid-org/audi-mib2q-dashboards](https://github.com/alpersid-org/audi-mib2q-dashboards).
-GitHub metadata confirms it is a fork of `kamgurgul/mib2q-carplay`. The inherited
-`master` branch matches the investigated upstream baseline. Project documents
-are maintained on `feature/custom-dashboards`; the original implementation and
-README remain unchanged.
-
-To retrieve the project:
+## Reproduce the implemented increment
 
 ```sh
-git clone --branch feature/custom-dashboards https://github.com/alpersid-org/audi-mib2q-dashboards.git
-cd audi-mib2q-dashboards
+make -C dashboard all test demo
+make -C dashboard test-sanitize
 ```
 
-The upstream URL remains `https://github.com/kamgurgul/mib2q-carplay.git`; push
-project changes only to the user-owned fork.
+No new packages, firmware files, QNX SDK or HMI jar are needed for these targets.
+Generated files stay under ignored `build/dashboard/`.
 
-## Existing-test observations from investigation
+## P2-01 validation evidence
 
-The AI instruction update passed `git diff --check` and a host Python check of
-relative links, heading anchors and code fences across all eight changed Markdown
-documents (28 local links). Tool entry files all reference AGENTS.md. No runtime
-regression tests were rerun for this documentation-only update.
+| Command / environment | Actual result |
+| --- | --- |
+| `make -C dashboard all test demo` | PASS (exit 0), strict C99 warnings as errors; library, unit tests and labeled text demo. |
+| `make -C dashboard test-sanitize`, traced sandbox | Failed: LeakSanitizer fatal error under ptrace. This invocation is not a pass. |
+| Same sanitizer command outside sandbox | PASS (exit 0), AddressSanitizer/UndefinedBehaviorSanitizer and default leak detection unchanged. |
+| `sh scripts/run_tests.sh`, traced sandbox | First five named tests passed; stopped at LeakSanitizer restriction in rgd_lane_cache. |
+| Same upstream command outside sandbox | Passed through bus transport and 41 protocol constants, then exit 1: shipping `build/carplay_hook.jar` missing. |
+| `SKIP_JAR_CHECK=1 sh scripts/run_tests.sh`, outside sandbox | PASS (exit 0), using upstream's documented CI option; shipping JAR check explicitly skipped. Sanitizers remained enabled. Expected dummy LD_PRELOAD fixture warnings occurred; corresponding test passed. |
+| `bash scripts/test_route_info.sh` | Exit 2 with no diagnostic. Stock HMI jar/JCL and stock JDK are absent, so Java validation is unavailable; no passing Java result claimed. |
 
-These are preliminary environment observations, not a completed regression report:
+Original investigation recorded a bus transport assertion in a sandboxed retry
+with leak detection disabled. It passed on the current outside-sandbox regression
+runs. No upstream source was changed to obtain that result; the exact earlier
+failure cause was not established. Do not convert this into a universal claim
+about sandbox behavior.
 
-- The upstream C suite was attempted before scope changed to documentation-only.
-  Its first five named tests passed, then LeakSanitizer stopped at `rgd_lane_cache`
-  because it could not operate under the environment's process tracing restrictions.
-- A diagnostic retry with `ASAN_OPTIONS=detect_leaks=0` progressed through
-  `signal_guard_test`, then failed an assertion in `bus_transport_test` at line 84.
-  The cause was not established; this must not be presented as a dashboard defect,
-  a passing regression suite or a confirmed sandbox socket failure.
-- No new dashboard tests exist. Other Java/GL/QNX tests were not run after the user
-  narrowed scope. Proprietary HMI assets and the project's stock JDK are absent.
+Other Java linkage suites, native macOS GL rendering and QNX cross/vehicle builds
+were not run for this isolated module. The proprietary assets/toolchains/platform
+prerequisites are unavailable here. No host graphics renderer exists yet to test.
+Local `/tmp/mib2q-p2-01-*.log` files contain these run outputs but are not portable
+or committed; this document and the audit preserve the results.
 
-## Open blockers for future vehicle work
+## Repository and rollback
 
-1. Exact firmware/hardware and Phase 1 status are unconfirmed.
-2. Original AAWireless compatibility is unknown; TWO+ evidence cannot be substituted.
-3. A safe dashboard rectangle and ownership policy are not demonstrated.
-4. Real signals during AA require verified availability, units and sample semantics.
-5. Upstream bus-test failure needs reproduction/diagnosis before claiming a clean baseline.
+Fork: [alpersid-org/audi-mib2q-dashboards](https://github.com/alpersid-org/audi-mib2q-dashboards).
+Branch: `feature/custom-dashboards`; upstream baseline:
+`b127988a68c8d690841f4a75d35717ffc01e668e`. Master remains inherited upstream.
+Push project changes to the fork, never upstream.
 
-The next implementation action, if separately requested, is PLAN step 1: the
-isolated host module and mock snapshot contract. No vehicle integration is authorized.
+`make -C dashboard clean` removes module outputs. The host library/demo is not
+integrated into installation or startup, so no head-unit rollback is necessary.
+Source changes can be reverted by their feature commit without discarding other work.
+
+## Remaining blockers and next step
+
+1. Exact firmware/hardware and Phase 1 success remain unconfirmed.
+2. Original AAWireless compatibility is unknown; TWO+ evidence is insufficient.
+3. No safe dashboard rectangle/ownership policy has been demonstrated.
+4. Real data semantics, validity and availability during AA require validation.
+5. Shipping-JAR/Java and vehicle checks remain unavailable, not passed.
+
+P2-01 acceptance is complete. Next eligible task, when requested, is P2-02:
+Compact/Extended frame builders and a host SVG adapter using the module contracts.
+No vehicle integration or roadmap Phases 3–5 are authorized.

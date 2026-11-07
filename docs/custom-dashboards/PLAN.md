@@ -5,11 +5,14 @@ Run commands from this project's root (the directory containing PROJECT.md).
 Steps marked blocked require new evidence;
 they are not authorization to contact, install on or deploy to the vehicle.
 
-**Current authorized scope:** complete step 0 and publish documentation to Git.
-Steps 1–5 are a future executable implementation plan; their commands become
-available when the corresponding source, Makefile and tests are implemented.
-Step 6 remains blocked by vehicle-specific evidence. No implementation code or
-generated previews are included in the documentation release.
+**Current authorized scope:** P2-01 / step 1 on the host, per the user
+instruction "Okay, go ahead with the first part." Step 0 is complete. Step 1
+provides data/widgets and tests; steps 2–5 remain future work. No graphics previews
+exist yet. Step 6 remains blocked by vehicle-specific evidence.
+
+Actual step 1 commands: `make -C dashboard all test demo` and
+`make -C dashboard test-sanitize`; see [module.md](module.md). The bare `make`
+commands in later steps describe targets to implement, not available root targets.
 
 ## 0. Create the project and document decisions
 
@@ -43,7 +46,7 @@ git diff --name-only b127988a68c8d690841f4a75d35717ffc01e668e HEAD
 | Step | Depends on | Deliverable | Current state |
 | --- | --- | --- | --- |
 | 0 | Repository investigation | Full upstream-derived project plus Markdown documents and Git publication | Documentation complete; destination fork verified as alpersid-org/audi-mib2q-dashboards |
-| 1 | 0; separate implementation request | Host module, typed snapshot contract, mock provider and widget formatters | Deferred |
+| 1 | 0; user request received | Host module, typed snapshot contract, mock provider and widget formatters | Implemented; focused host tests pass; see module.md and audit |
 | 2 | 1 | Compact/Extended frame builders and SVG adapter | Deferred |
 | 3 | 1–2 | Disabled-by-default configuration and suppression behavior | Deferred |
 | 4 | 1–3 | Automated tests, host benchmark and regression report | Deferred |
@@ -64,6 +67,12 @@ subtasks under the same feature ID. Read the active checkpoint before resuming.
 
 Acceptance: host C99 compilation needs no QNX SDK, stock HMI jar or new package;
 all candidate values are mock, with no connection to vehicle or phone data.
+
+P2-01 acceptance completed: bounded typed snapshots and frame command types,
+deterministic mock callback, formatter units/provenance, validity/freshness guards,
+provider failure clearing and focused tests. Commands and constraints are in
+[module.md](module.md); results are in [status.md](status.md). No layouts,
+renderer or configuration manager are claimed by this increment.
 
 ## 2. Implement the two layouts and host renderer
 
