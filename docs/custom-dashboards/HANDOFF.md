@@ -9,7 +9,13 @@ not write new test code, until the user explicitly asks to implement and run
 the tests at the end. Continue documenting every change; record skipped checks
 as DEFERRED BY USER. P2-04 results remain historical evidence only.
 
-**P2-05 handoff (current):** user request "Start P2-05". Packaging page
+**Scope handoff (read first):** Phase 2 is "Real Vehicle Data Integration"
+([requirements.md](requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative)).
+It is **not complete**: P2-01..P2-05 are a mock-only host foundation. Next
+eligible work: PLAN step 7 (omit unverified widgets) when requested; steps 8–10
+per PLAN. Open user decisions: head-unit code authorization and display surface.
+
+**P2-05 handoff (historical):** user request "Start P2-05". Packaging page
 [package.md](package.md) on `feature/p2-05-package`; no tests run. After P2-05
 the remaining Phase 2 step is 6 (vehicle feasibility), which is blocked; the
 user's deferred final test request is pending.

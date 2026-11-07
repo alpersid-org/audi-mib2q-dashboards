@@ -4,6 +4,20 @@ This ledger describes concrete changes for reviewers and subsequent agents.
 Chronological session evidence remains append-only in [audit/LOG.md](audit/LOG.md).
 Current work state is in [audit/CURRENT.md](audit/CURRENT.md).
 
+## DOC-SCOPE — Phase 2 "Real Vehicle Data Integration" scope (2026-11-07)
+
+The user supplied the authoritative Phase 2 scope and noted the docs should
+already reflect it; they did not. Documentation only; no tests or code changes.
+
+| Changed path | Change and purpose |
+| --- | --- |
+| [requirements.md](requirements.md) | Adds the verbatim scope, a per-requirement gap table (Phase 2 not complete), and open user decisions; marks the earlier MVP definition superseded where it conflicts; Extended trip/consumption superseded by req. 8. |
+| [ROADMAP.md](../ROADMAP.md) | Phase 2 renamed and redefined; status "not complete"; exit target is in-car real data. Fixes stale "P2-04 in progress". |
+| [PLAN.md](PLAN.md) | Steps 1–5 marked foundation; step 6 broadened; proposed steps 7–10 (omit unverified widgets, VehicleDataProvider, VC renderer, in-car validation). |
+| [AGENTS.md](../../AGENTS.md), [CLAUDE.md](../../CLAUDE.md), [GEMINI.md](../../GEMINI.md), [Copilot instructions](../../.github/copilot-instructions.md), [PROJECT.md](../../PROJECT.md) | Goal replaced with the scope; Phase 2 not complete; host fallback is a blocked Phase 2, not a completion. Safety boundary unchanged pending user decision. |
+| [status.md](status.md), [HANDOFF.md](HANDOFF.md), [package.md](package.md) | Scope-first summaries and next eligible step. |
+| [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | Scope event and checkpoint. |
+
 ## P2-05 — reviewable increment package (2026-11-07)
 
 User request: "Start P2-05". Branch `feature/p2-05-package`. Documentation only;

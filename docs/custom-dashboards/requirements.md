@@ -11,7 +11,69 @@ Exact MHI2Q firmware, hardware compatibility and successful upstream Phase 1
 installation are unknown. The repository's reported vehicle results do not
 establish compatibility with this particular vehicle/phone/adapter combination.
 
-## Current deliverable
+## Phase 2 scope — Real Vehicle Data Integration (authoritative)
+
+User-defined scope, recorded 2026-11-07. It supersedes the earlier host-only,
+mock-data MVP definition below wherever they conflict.
+
+> The primary goal is to build fully functional custom dashboards displaying
+> real data available from the vehicle's existing MMI systems.
+>
+> Requirements:
+>
+> 1. Investigate existing vehicle data acquisition mechanisms.
+> 2. Identify which signals can be accessed safely and reliably.
+> 3. Reuse existing data pipelines wherever possible.
+> 4. Implement real-time data binding between available vehicle signals and
+>    dashboard widgets.
+> 5. Implement two functional dashboard layouts: Compact and Extended.
+> 6. Use mock data only for automated testing and development.
+> 7. Do not consider a dashboard displaying simulated data a completed Phase 2
+>    deliverable.
+> 8. If a particular vehicle signal is unavailable, document the limitation and
+>    omit that widget until a verified data source becomes available.
+>
+> Do not introduce dependencies on a future Android companion application.
+>
+> The expected outcome is a working custom dashboard displaying actual vehicle
+> information inside the Virtual Cockpit.
+
+### Status against this scope (2026-11-07)
+
+**Phase 2 is not complete.** P2-01..P2-05 delivered a host-only foundation
+(provider interface, widgets, layouts rendered to SVG, config/manager, tests,
+package) that runs only with mock data. Under requirement 7 that is not a
+Phase 2 deliverable.
+
+| # | Requirement | State |
+| --- | --- | --- |
+| 1 | Investigate acquisition mechanisms | Partial: source-level review in [analysis.md](analysis.md); nothing verified on this car. |
+| 2 | Identify safe, reliable signals | Candidates only: outside temperature and range via `VehicleDataModule` (DSICarKombi; started for CarPlay sessions only), navigation distance/time via the AA trip feed / CarPlay RGD, media via existing now-playing DSI events. None verified on this A4 during Android Auto. |
+| 3 | Reuse existing pipelines | Not done: no adapter connects to them. |
+| 4 | Real-time binding | Not done: `db_mock_read` is the only provider. |
+| 5 | Compact and Extended layouts | Host only (SVG); no Virtual Cockpit renderer. |
+| 6 | Mock only for tests/dev | Not met: mock is the only data path. |
+| 7 | Simulated ≠ deliverable | Hence incomplete. |
+| 8 | Omit unverified widgets | Violated: Extended shows mock trip distance and average consumption, for which no source was found. They must be removed (and the Extended layout redefined around verified signals). |
+
+### Open decisions required from the user
+
+1. **Head-unit code.** The expected outcome needs code that runs on the MMI and
+   draws in the Virtual Cockpit. The current safety boundary (host only; no
+   head-unit execution, installation or new hooks) forbids that. It stays in
+   force until the user explicitly changes it. The user, not an agent, would
+   install and test on the car.
+2. **Display surface.** Only display layer 98 (maneuver graphics) and layer 99
+   (phone map video) are proven paths into the cluster. A dashboard area must
+   be chosen and validated on the car, never covering speed, warnings or
+   navigation guidance.
+3. **Vehicle evidence.** Exact MHI2Q firmware/hardware, original AAWireless
+   behaviour and per-signal availability/units while Android Auto runs.
+
+If no safe surface can be demonstrated, the host foundation remains useful,
+but it must be reported as a blocked Phase 2, not a completed one.
+
+## Earlier deliverable definition (superseded where it conflicts)
 
 A separate Git project containing source-backed investigation, proposed
 architecture, requirements and an ordered implementation plan, now extended by
@@ -20,7 +82,7 @@ SVG export and four mock previews. Configuration/activation remains later work.
 Testing was deferred to the final stage, which P2-04 has started; every change
 must still be documented; see changes.md and the audit.
 
-## Future MVP acceptance criteria
+## Host-foundation acceptance criteria (earlier MVP; still apply to the foundation)
 
 Phase 2 is designed within the complete [five-phase roadmap](../ROADMAP.md).
 The required common [Data Provider Interface](data-providers.md) must support
@@ -33,8 +95,8 @@ Documenting these boundaries is required; implementing them early is not.
 | --- | --- |
 | Modular foundation | Dashboard manager, typed provider snapshots, widgets, config, layouts and renderer adapter have explicit boundaries. |
 | Compact layout | Temperature, range, media and navigation candidates fit an explicit host viewport at readable sizes. |
-| Extended layout | Adds trip and average consumption candidates without crowding or truncating units. |
-| Data honesty | All initial values are visibly MOCK; unavailable, stale and invalid values cannot look like live zeros. |
+| Extended layout | Earlier: adds trip and average consumption. **Superseded by scope req. 8:** omit them until a verified source exists; redefine Extended around verified signals. |
+| Data honesty | Mock values are visibly MOCK and confined to tests/development (scope req. 6); unavailable, stale and invalid values cannot look like live zeros. |
 | Existing sources only | A real adapter may use a demonstrated source only after units, validity, ownership and vehicle-specific meaning are verified. |
 | Disabled default | Missing/invalid config and restore-default yield disabled Compact; selecting a layout alone never enables it. |
 | Safe fallback | Provider failure, invalid geometry and unsupported layouts clear the dashboard frame. |

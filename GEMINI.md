@@ -5,6 +5,9 @@ Read [the five-phase roadmap](docs/ROADMAP.md) and
 [shared provider design](docs/custom-dashboards/data-providers.md) before making
 architectural changes. Document future Android integration; do not implement its
 communication in Phase 2. Vehicle and future Android providers share manager/widgets.
+Phase 2 scope is "Real Vehicle Data Integration": real MMI data in the Virtual
+Cockpit; mock data only for tests. See [requirements](docs/custom-dashboards/requirements.md).
+Phase 2 is not complete; the existing work is a mock-only host foundation.
 Use [the continuation guide](docs/custom-dashboards/HANDOFF.md) to recover context.
 Read [the current checkpoint](docs/custom-dashboards/audit/CURRENT.md) and recent
 [audit events](docs/custom-dashboards/audit/LOG.md); follow the audit protocol to

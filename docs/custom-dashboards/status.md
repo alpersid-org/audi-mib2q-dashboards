@@ -1,5 +1,16 @@
 # Project status
 
+## Phase 2 scope and state (read first)
+
+The user defined Phase 2 as "Real Vehicle Data Integration": working Compact and
+Extended dashboards inside the Virtual Cockpit showing real MMI data, mock only
+for tests ([scope and gap table](requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative)).
+**Phase 2 is not complete.** Steps P2-01..P2-05 delivered and tested a mock-only
+host foundation. Real data binding, VC rendering and in-car validation are
+outstanding (PLAN steps 6–10). Extended's mock trip/consumption widgets violate
+scope requirement 8 and must be removed. Head-unit work needs the user's
+decision on the safety boundary and display surface.
+
 **Active testing policy (latest user instruction, after P2-04):** "do not run any test, there will be a ask at the end to implement and run the tests".
 Do not run any test, sanitizer, benchmark, demo or automated validation, and do
 not write new test code, until the user explicitly asks to implement and run

@@ -7,13 +7,22 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
-Build the foundation for modular, customizable Audi Virtual Cockpit dashboards
-within **roadmap Phase 2** of the mib2q-carplay-based project.
+**Phase 2 goal (authoritative, user-defined):** "Real Vehicle Data Integration" —
+fully functional custom dashboards showing real data from the vehicle's existing
+MMI systems inside the Virtual Cockpit, Compact and Extended layouts, mock data
+only for tests/development, unverified signals omitted, no dependency on the
+future Android app. Read the full text and gap table in
+[Phase 2 scope](docs/custom-dashboards/requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative). **Phase 2 is not complete:** P2-01..P2-05 are a
+mock-only host foundation. Head-unit work still needs the user's explicit change
+to the safety boundary below (open decision recorded in that section).
 
 **Testing is deferred again:** after P2-04 the user said "do not run any test, there will be a ask at the end to implement and run the tests".
 No tests or new test code until that final request; see Validation below.
 
-**Current task is P2-05:** the user requested "Start P2-05" (PLAN step 5,
+**Latest update — DOC-SCOPE:** the user supplied the Phase 2 scope above and
+asked that the documentation reflect it. Documentation only; no tests.
+
+**Earlier task — P2-05:** the user requested "Start P2-05" (PLAN step 5,
 package the reviewable increment) on `feature/p2-05-package`; documentation only,
 no tests. See [package.md](docs/custom-dashboards/package.md).
 
@@ -114,7 +123,8 @@ Never turn successful host compilation into a claim of vehicle compatibility.
 - Keep future dashboard functionality disabled by default. Missing/invalid config,
   failed providers and unsupported geometry must suppress output safely.
 - If safe rendering cannot be established, retain a standalone host prototype.
-  Report the integration blocker instead of forcing a vehicle implementation.
+  Report the integration blocker instead of forcing a vehicle implementation;
+  under the Phase 2 scope that is a blocked Phase 2, never a completed one.
 - Do not execute deploy/mod scripts directly as a shortcut. Inspect any test
   script before running it; installer tests must use isolated host fixtures.
 

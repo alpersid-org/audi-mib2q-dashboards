@@ -1,5 +1,9 @@
 # P2-05: reviewable Phase 2 host increment
 
+> **Scope note:** under the user's Phase 2 scope ("Real Vehicle Data
+> Integration", [requirements.md](requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative))
+> this package is a mock-only foundation, **not** the Phase 2 deliverable.
+
 PLAN step 5. This page is the entry point for a reviewer or developer who wants
 to clone the fork, build the host prototype, run its tests and inspect the
 previews **without any vehicle access**. It packages P2-01 to P2-04.

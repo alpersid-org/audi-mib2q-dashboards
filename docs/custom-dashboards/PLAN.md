@@ -28,6 +28,13 @@ Not merged to master.
 Implemented on `feature/p2-03-config-manager`; see [config.md](config.md).
 Compiled only; tests remain deferred to the final stage. Not merged to master.
 
+**Scope update (authoritative):** Phase 2 is "Real Vehicle Data Integration";
+see [requirements.md](requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative).
+Steps 1–5 below built a mock-only host foundation and are complete; they do not
+complete Phase 2. The remaining work is the expanded step 6 and the proposed
+steps 7–10 at the end of this plan. Steps that run on the head unit need the
+user's explicit change to the safety boundary first.
+
 This plan subdivides **roadmap Phase 2 only**. Later-phase implementation is
 excluded; designing compatible provider boundaries for those phases is required.
 Read the complete [five-phase roadmap](../ROADMAP.md) and
@@ -92,7 +99,11 @@ git diff --name-only b127988a68c8d690841f4a75d35717ffc01e668e HEAD
 | 3 | 1–2; user request received | Disabled-by-default configuration and suppression behavior | Implemented on host (config.c/manager.c, two CLIs); compiled, tests deferred by user |
 | 4 | 1–3; user request received | Automated tests, host benchmark and regression report | Complete on `feature/p2-04-validation`; dashboard suites/sanitizers pass; upstream results and unavailable checks in [validation.md](validation.md) |
 | 5 | 4; user request received | Reproducible previews, documentation and rollback evidence | Documented in [package.md](package.md) on `feature/p2-05-package`; nothing re-executed (no-test instruction) |
-| 6 | 5 plus firmware/surface evidence | Separately reviewed vehicle feasibility decision | Blocked; no vehicle execution authorized |
+| 6 | 5 plus firmware/surface evidence | Signal and surface feasibility (scope req. 1–2) | Source review partial; on-car evidence and head-unit authorization needed |
+| 7 | 1–5 | Remove unverified widgets and keep mock out of product paths (req. 6, 8) | Proposed; host-only, can start now |
+| 8 | 6–7 | VehicleDataProvider: real-time binding through existing pipelines (req. 3–4) | Proposed; code can be written on the host, verification needs the car |
+| 9 | 6, 8 | Virtual Cockpit renderer for Compact/Extended (req. 5) | Proposed; needs surface decision and head-unit authorization |
+| 10 | 8–9 | In-car validation by the user (expected outcome) | Proposed; user installs and tests |
 
 Each future step should be a reviewable commit. Fix a failed acceptance criterion
 before starting dependent work; record unavailable checks with their actual cause.
@@ -223,3 +234,25 @@ Only after these gates could a separate increment implement a renderer adapter
 and then GEM controls. If the surface cannot be demonstrated, retain the host
 prototype. No invasive hook, vehicle-control change, stock-file destruction,
 flashing, installation, deployment or head-unit execution is permitted here.
+
+## 7–10. Real Vehicle Data Integration — proposed (scope update)
+
+Added after the user's Phase 2 scope. Not started; each needs its own request.
+
+7. **Omit unverified widgets (host).** Remove trip distance and average
+   consumption from Extended (no source found; req. 8) and redefine Extended
+   around verified signals. Keep `db_mock_read` for tests/development only.
+8. **VehicleDataProvider (req. 3–4).** Reuse existing pipelines: the
+   `VehicleDataModule` DSICarKombi readings (outside temperature, range), the
+   Android Auto trip feed (final-destination distance/time) and existing
+   now-playing events, made available during Android Auto sessions without
+   breaking CarPlay. Publish read-only snapshots to the dashboard over the
+   existing bus; convert to `db_snapshot` with real provenance, units, validity
+   and sample age. Missing signals stay MISSING. No new DSI/CAN queries, no
+   vehicle control.
+9. **Virtual Cockpit renderer (req. 5).** Port `db_frame` drawing onto the
+   existing cluster GLES path, on a surface chosen by the user and validated on
+   the car; it must yield to speed, warnings and navigation and stay disabled
+   by default.
+10. **In-car validation.** The user installs and confirms real values and safe
+    composition on this A4. Only then is Phase 2 complete.

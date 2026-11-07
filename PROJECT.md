@@ -5,7 +5,12 @@ a GitHub fork of the original project. It includes the full source and Git histo
 [kamgurgul/mib2q-carplay](https://github.com/kamgurgul/mib2q-carplay), inspected at
 commit `b127988a68c8d690841f4a75d35717ffc01e668e` (1.4.1).
 
-**Current increment: P2-02, host Compact/Extended layouts and SVG export.**
+**Phase 2 scope: Real Vehicle Data Integration** — working Compact/Extended
+dashboards in the Virtual Cockpit with real MMI data; mock only for tests. See
+[requirements](docs/custom-dashboards/requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative).
+**Not complete:** P2-01..P2-05 below are a mock-only host foundation.
+
+**History: P2-02, host Compact/Extended layouts and SVG export.**
 P2-01 data/widgets are complete. Step 2 adds bounded frames, a mock preview CLI
 and four saved SVG artifacts. Configuration/activation remains step 3. P2-03 adds
 host config/manager; P2-04 is the final testing stage now in progress.

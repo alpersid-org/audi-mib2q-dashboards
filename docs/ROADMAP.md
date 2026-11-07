@@ -28,7 +28,7 @@ reports for another car, firmware or adapter do not resolve these unknowns.
 | Roadmap phase | Deliverable | Current state |
 | --- | --- | --- |
 | 1 — Upstream baseline | Install and establish the upstream project as-is through a separately authorized process. | Vehicle installation/success unconfirmed; local source investigation complete. |
-| 2 — Custom dashboards | Modular provider interface, VehicleDataProvider role, common manager/widgets, Compact/Extended layouts and safe configuration. | CURRENT PHASE. Mock-only host data/widgets, SVG layouts and P2-03 host manager/config implemented (P2-03 untested); live vehicle adapter and safe in-car integration outstanding. Final host testing (P2-04) in progress. |
+| 2 — Custom dashboards: Real Vehicle Data Integration | Working Compact/Extended dashboards in the Virtual Cockpit showing real data from existing MMI systems; mock only for tests ([scope](custom-dashboards/requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative)). | CURRENT PHASE, **not complete**. Mock-only host foundation done and tested (P2-01..P2-05). Real data binding, VC rendering and in-car validation outstanding; head-unit work awaits user decision. |
 | 3 — Independent Android app | Standalone app on Galaxy S23 Ultra, usable without MMI. | Future; not implemented. |
 | 4 — Android/MMI communication | Establish a separately validated data connection; introduce AndroidDataProvider as its normalized adapter. | Future; transport unknown and unimplemented. |
 | 5 — Android data in dashboards | Feed AndroidDataProvider into the same manager/widgets alongside VehicleDataProvider. | Future; depends on validated transport/data and safe display integration. |
@@ -51,10 +51,17 @@ modification or head-unit execution is authorized in the current work session.
 Missing Phase 1 confirmation does not prevent independent host-only Phase 2 work;
 it does block claims that the vehicle integration is ready.
 
-## Phase 2 — modular custom dashboards (current)
+## Phase 2 — Real Vehicle Data Integration (current)
 
-Build a small host-first dashboard foundation that can later accept additional
-providers without rewriting the dashboard manager, layouts or widgets:
+**Scope (authoritative):** build fully functional custom dashboards displaying
+real data from the vehicle's existing MMI systems, with Compact and Extended
+layouts, inside the Virtual Cockpit. Mock data only for automated tests and
+development; a dashboard showing simulated data is not a Phase 2 deliverable;
+unavailable signals are documented and their widgets omitted; no dependency on
+the future Android app. Full text, gap table and open decisions:
+[requirements.md](custom-dashboards/requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative).
+
+The host foundation below (P2-01..P2-05) is a prerequisite, not the deliverable:
 
 - A common Data Provider Interface returns normalized owned snapshots.
 - **VehicleDataProvider** is the Phase 2 adapter role for demonstrated read-only
@@ -81,10 +88,9 @@ AndroidDataProvider, provider resolver, live MMI data subscriptions or manager
 activation. Existing guidance/map displayables cannot be assumed available for
 dashboard use. Retain the host fallback if safety cannot be demonstrated.
 
-Exit targets: completed host MVP and explicit data/renderer/config contracts,
-documented provider semantics, appropriate final-stage validation and a separate
-vehicle feasibility decision. P2-04 started the final testing stage on the host;
-this does not authorize vehicle testing.
+Exit target: a working dashboard in the Virtual Cockpit showing verified real
+vehicle data, validated on this car. The host foundation (contracts, tests,
+package) is done; host results never authorize vehicle testing by themselves.
 
 ## Phase 3 — standalone Android application
 

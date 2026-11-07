@@ -1,38 +1,32 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T20:34:00Z. Agent: Claude Code.
+Updated: 2026-11-07T20:39:53Z. Agent: Claude Code.
 Session: `20261107T200748Z-claude`.
 
-## Active task and authorization
+## Phase 2 scope (authoritative)
 
-- **Active testing policy (latest user instruction):** "do not run any test,
-  there will be a ask at the end to implement and run the tests". No tests,
-  sanitizers, benchmarks, demos, preview generation or new test code until that
-  final request. Record skipped checks as DEFERRED BY USER.
-- Task/state: `P2-05` (PLAN step 5: package the reviewable increment) /
-  `COMPLETE`; fast-forwarded to master after the user said "go ahead with the
-  next steps" (the listed next step was merging P2-05).
-- User request: "Start P2-05". Excluded: master merge (needs approval), release,
-  GEM, vehicle/head-unit actions, Android work.
+"Real Vehicle Data Integration": working Compact/Extended dashboards inside the
+Virtual Cockpit showing real data from existing MMI systems; mock data only for
+tests/development; unverified signals omitted; no Android-app dependency.
+Full text and gap table: [requirements.md](../requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative).
+**Phase 2 is not complete.** P2-01..P2-05 (on master) are a mock-only host foundation.
+
+## Active task and policies
+
+- Task/state: `DOC-SCOPE` / `READY_FOR_REVIEW` on `docs/phase2-vehicle-scope`
+  (documentation only). Not merged to master.
+- Testing policy (user): "do not run any test, there will be a ask at the end to
+  implement and run the tests". No tests or new test code until then.
+- Open user decisions: (1) authorize head-unit code (safety boundary currently
+  forbids it); (2) choose the display surface; (3) supply/confirm vehicle
+  evidence (firmware, adapter behaviour, signal availability during AA).
 
 ## Git state
 
-- Branch `feature/p2-05-package` from master f7e9fb2 (P2-01..P2-04 merged).
-- master fast-forwarded from f7e9fb2 to the commit with this checkpoint.
-
-## Acceptance (PLAN step 5)
-
-- [x] Previews in dashboard/previews/: P2-02 files, verified in P2-04, no code
-      change since (git diff 85c523e..f7e9fb2 on dashboard/ tests/ empty).
-- [x] Reproduction commands, historical outcomes, limitations: package.md.
-- [x] Changed files and rollback summarized: package.md.
-- [x] Inherited files unchanged vs b127988: read-only git, 48 paths all added.
-- [ ] Clone/build/test walkthrough re-executed: DEFERRED BY USER.
+- Branch `docs/phase2-vehicle-scope` from master 492b84a; master unchanged.
 
 ## Next action
 
-No WIP or processes. Phase 2 host steps 1–5 are on master. Remaining:
-the user's explicit final request to implement and run tests (not inferred from
-"go ahead"), and blocked step 6. PLAN step 6 (vehicle feasibility)
-stays blocked on firmware/surface evidence.
-Audit: [LOG.md](LOG.md). Package: [package.md](../package.md).
+Await the user: merge approval for this docs branch, and a decision on PLAN
+step 7 (omit unverified widgets, host-only) and the open decisions for 8–10.
+Audit: [LOG.md](LOG.md).

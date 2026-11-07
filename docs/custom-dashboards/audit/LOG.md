@@ -602,3 +602,19 @@ feature; earlier project history is available in Git and [status.md](../status.m
   the commit containing this event (0102e71 P2-05 + this event). No merge commit.
 - Tests: none run.
 - Next action: push master and branch, verify SHAs; await final test request.
+
+## 2026-11-07T20:39:53Z | 20261107T200748Z-claude-13 | DOC-SCOPE / Phase 2 scope recorded
+
+- User supplied the Phase 2 scope ("Real Vehicle Data Integration", 8
+  requirements, no Android-app dependency, expected outcome: working dashboard
+  with actual vehicle data in the Virtual Cockpit) and said the docs should
+  already contain it.
+- Finding: git grep on master and all branches found no trace of it; docs still
+  described the host-only mock MVP. Agent had earlier reported steps 1–5 as
+  complete without stating that this does not complete Phase 2 under the scope.
+- Change: verbatim scope + gap table + open decisions in requirements.md; Phase 2
+  redefined in ROADMAP/PLAN (proposed steps 7–10)/AGENTS/pointers/PROJECT/status/
+  HANDOFF/package/changes. Safety boundary not changed (needs explicit user
+  decision). No code change, no tests or checks run.
+- Branch `docs/phase2-vehicle-scope` from 492b84a. Next: push; await merge
+  approval and decisions.
