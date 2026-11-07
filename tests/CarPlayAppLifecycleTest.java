@@ -105,16 +105,20 @@ public final class CarPlayAppLifecycleTest {
             CarPlayApp.onActivate(context); settled();
             check(LifecycleTestModule.count(1) == 1, "worker failed to recover after exception");
         } else if (scenario.equals("owners")) {
-            /* CarPlay session: every module, CarPlay-only vehicle data included. */
+            /* CarPlay session: every module, vehicle data and the dashboard feed included. */
             CarPlayApp.onActivate(context); settled();
             check(CarPlayApp.isActive() && !CarPlayApp.isAndroidAutoActive(), "CarPlay owner");
             check(CarPlayApp.sessionOwner() == CarPlayApp.OWNER_CARPLAY, "CarPlay owner id");
             check(LifecycleTestModule.count(0) == 1 && LifecycleTestModule.count(2) == 1
                 && LifecycleTestModule.count(4) == 1, "CarPlay modules");
+            check(com.luka.carplay.dashboard.DashboardModule.startCount() == 1, "dashboard feed for CarPlay");
             /* Phone swap straight to Android Auto: shared modules restart (the wheel-roller
              * input included: Android Auto's patched key controller drops its collapsed Select
-             * too), CarPlay-only vehicle data does not, CarPlay callers see no CarPlay session,
-             * and CarPlay's OPS presentation is released although no deactivate came in between. */
+             * too).  Since P2-08 vehicle data and the dashboard feed also start for Android Auto;
+             * whether they bind/publish is decided inside the real modules (dashboard config;
+             * see VehicleDataGatingTest / DashboardModuleTest).  CarPlay callers see no CarPlay
+             * session, and CarPlay's OPS presentation is released although no deactivate came
+             * in between. */
             IContext aa = new IContext() { };
             CarPlayApp.onActivateAndroidAuto(aa); settled();
             check(!CarPlayApp.isActive() && CarPlayApp.isAndroidAutoActive() && CarPlayApp.isSessionActive(),
@@ -122,7 +126,9 @@ public final class CarPlayAppLifecycleTest {
             check(LifecycleTestModule.count(0) == 2 && LifecycleTestModule.count(1) == 2
                 && LifecycleTestModule.count(3) == 2, "shared modules not restarted for Android Auto");
             check(LifecycleTestModule.count(2) == 2, "wheel-roller input not started for Android Auto");
-            check(LifecycleTestModule.count(4) == 1, "CarPlay-only vehicle data started for Android Auto");
+            check(LifecycleTestModule.count(4) == 2, "vehicle data module not started for Android Auto (P2-08)");
+            check(com.luka.carplay.dashboard.DashboardModule.startCount() == 2,
+                "dashboard feed not started for Android Auto");
             check(com.luka.carplay.pdc.PdcSmallStageGuard.disconnects == 1, "OPS not released on hand-over");
             /* A late CarPlay disconnect must not end the Android Auto session. */
             CarPlayApp.onDeactivate(); Thread.sleep(500); settled();
@@ -140,10 +146,12 @@ public final class CarPlayAppLifecycleTest {
             CarPlayApp.onDeactivate(); Thread.sleep(25); CarPlayApp.onActivate(context); settled();
             for (int i = 0; i < 5; ++i)
                 check(LifecycleTestModule.count(i) == 2, "existing debounce restart behavior changed");
+            check(com.luka.carplay.dashboard.DashboardModule.startCount() == 2, "dashboard debounce restart");
         } else throw new AssertionError("unknown scenario");
         CarPlayApp.onDeactivateAndWait(); settled();
         check(!CarPlayApp.isActive(), "disconnect remained active");
         check(!LifecycleTestModule.badLockOrder, "module ran under small state lock");
+        check(!com.luka.carplay.dashboard.DashboardModule.badLockOrder, "dashboard module ran under state lock");
         System.out.println("CarPlayAppLifecycleTest: " + scenario + " PASS");
     }
 }

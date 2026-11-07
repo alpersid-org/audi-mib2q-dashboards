@@ -807,3 +807,34 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Docs updated first (before any test): AGENTS, CLAUDE/GEMINI/Copilot pointers,
   audit README, PLAN, HANDOFF, status, reviews/README.
 - Git: master = origin/master = 8d7ead6; branch feature/p2-final-testing.
+
+## 2026-11-07T21:25:59Z | 20261107T200748Z-claude-24 | CHECKPOINT / P2-FINAL tests written
+
+- R4 reproduced FAILED (isolated javac: package com.luka.carplay.dashboard does not
+  exist), then repaired: public stub FrameworkRef, dashboard-package lifecycle
+  fixture, owners/bounce assertions for OWNER_ANY vehicle data + dashboard; new
+  scripts/test_app_lifecycle.sh (host JDK 21; stock JDK 8 absent) -> 6/6 PASS.
+- Baseline before suite repair: dashboard_test.c did not compile (DB_TRIP etc.);
+  render test failed at "42.5 km / 38 min"; manager test failed at "84.3 km".
+- Updated dashboard_test.c, dashboard_render_test.c, dashboard_svg_test.py,
+  dashboard_manager_test.c for the P2-07/P2-08 widget set; regenerated previews
+  (Compact byte-identical; Extended pair recreated).
+- New: tests/dashboard_vehicle_test.c, tests/DashboardConfigTest.java,
+  tests/DashboardModuleTest.java, tests/AaRgStateDashboardTest.java, stubs under
+  tests/stubs/dashboard-feed, scripts/test_dashboard_java.sh, make test-java.
+- Production testability change: package-private DashboardConfig.path and
+  DashboardModule.recordPath defaulting to the real constants.
+- Mutation checks: reintroducing R1, R2 (no post-rename cleanup), R3 (clock before
+  read) and removing the writer timeout each made the intended test fail;
+  sources restored (git diff shows only the testability change).
+- Next: full clean runs (test, test-sanitize, benchmark, test-java, lifecycle) and
+  inherited regressions; then report.
+
+## 2026-11-07T21:28:02Z | 20261107T200748Z-claude-25 | PAUSE / P2-FINAL committed early
+
+- Clean runs: make -C dashboard all test test-sanitize test-java exit 0
+  (ASAN_OPTIONS unset); test-java 5/5 repeats PASS; test_app_lifecycle.sh 6/6
+  PASS (JDK 21); benchmark completed.
+- User asked to commit and push to master before inherited regressions ran:
+  run_tests.sh, upstream_v141_test.py, test_maneuver_native.sh NOT RUN.
+- Report docs/custom-dashboards/validation-final.md. Master fast-forward per user.

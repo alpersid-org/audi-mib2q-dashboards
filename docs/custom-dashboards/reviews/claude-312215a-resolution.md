@@ -39,3 +39,7 @@ testing. Nothing below is verified by execution; nothing ran on the car.
   wired; layouts still allocate a media card (step 9 decision).
 - Step 9 still needs firmware/ABI evidence and a proven non-critical surface,
   not only a surface name. This record authorizes no deployment.
+
+## P2-FINAL update
+
+R1, R2, R3 and session liveness: VERIFIED BY HOST TESTS (mutation checks). R4: repaired, isolated harness PASSED on JDK 21; full stock-JAR script UNAVAILABLE. AA Kombi-only binding: UNAVAILABLE (stock DSI). See [validation-final.md](../validation-final.md).

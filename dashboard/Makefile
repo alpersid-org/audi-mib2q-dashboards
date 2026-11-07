@@ -11,7 +11,7 @@ OBJECTS = $(addprefix $(OUT)/,$(SOURCES:.c=.o))
 HEADERS = dashboard.h ../maneuver_render/visible_area.h ../maneuver_render/protocol.h
 SAN = -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer
 
-.PHONY: all test test-sanitize demo previews benchmark clean
+.PHONY: all test test-sanitize test-java demo previews benchmark clean
 all: $(OUT)/libdashboard.a $(OUT)/dashboard_demo $(OUT)/dashboard_preview \
 	$(OUT)/dashboard_config $(OUT)/dashboard_manager_preview
 
@@ -37,6 +37,12 @@ $(OUT)/dashboard_config: dashboard_config.c $(OUT)/libdashboard.a $(HEADERS)
 $(OUT)/dashboard_manager_preview: manager_preview.c $(OUT)/libdashboard.a $(HEADERS)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) manager_preview.c $(OUT)/libdashboard.a $(LDFLAGS) -o $@
 
+$(OUT)/dashboard_vehicle_test: ../tests/dashboard_vehicle_test.c $(SOURCES) $(HEADERS) | $(OUT)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -UNDEBUG ../tests/dashboard_vehicle_test.c $(SOURCES) $(LDFLAGS) -o $@
+
+$(OUT)/dashboard_vehicle_test_sanitize: ../tests/dashboard_vehicle_test.c $(SOURCES) $(HEADERS) | $(OUT)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -O1 -UNDEBUG $(SAN) ../tests/dashboard_vehicle_test.c $(SOURCES) $(LDFLAGS) -o $@
+
 $(OUT)/dashboard_manager_test: ../tests/dashboard_manager_test.c $(SOURCES) $(HEADERS) | $(OUT)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -UNDEBUG ../tests/dashboard_manager_test.c $(SOURCES) $(LDFLAGS) -o $@
 
@@ -60,20 +66,27 @@ $(OUT)/dashboard_render_test_sanitize: ../tests/dashboard_render_test.c $(SOURCE
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -O1 -UNDEBUG $(SAN) ../tests/dashboard_render_test.c $(SOURCES) $(LDFLAGS) -o $@
 
 test: $(OUT)/dashboard_test $(OUT)/dashboard_render_test $(OUT)/dashboard_preview \
-	$(OUT)/dashboard_manager_test $(OUT)/dashboard_config $(OUT)/dashboard_manager_preview
+	$(OUT)/dashboard_manager_test $(OUT)/dashboard_config $(OUT)/dashboard_manager_preview \
+	$(OUT)/dashboard_vehicle_test
 	$(OUT)/dashboard_test
 	$(OUT)/dashboard_render_test $(OUT)/escaped.svg
 	$(PYTHON) ../tests/dashboard_svg_test.py $(OUT)/dashboard_preview $(OUT)/escaped.svg
 	mkdir -p $(OUT)/fixtures
 	$(OUT)/dashboard_manager_test $(OUT)/fixtures
 	$(PYTHON) ../tests/dashboard_cli_test.py $(OUT)/dashboard_config $(OUT)/dashboard_manager_preview
+	$(OUT)/dashboard_vehicle_test $(OUT)/fixtures
 
 test-sanitize: $(OUT)/dashboard_test_sanitize $(OUT)/dashboard_render_test_sanitize \
-	$(OUT)/dashboard_manager_test_sanitize
+	$(OUT)/dashboard_manager_test_sanitize $(OUT)/dashboard_vehicle_test_sanitize
 	$(OUT)/dashboard_test_sanitize
 	$(OUT)/dashboard_render_test_sanitize $(OUT)/escaped_sanitize.svg
 	mkdir -p $(OUT)/fixtures
 	$(OUT)/dashboard_manager_test_sanitize $(OUT)/fixtures
+	$(OUT)/dashboard_vehicle_test_sanitize $(OUT)/fixtures
+
+# Java feed/config/AaRgState tests + Java->C fixture (host JDK; no stock JAR needed).
+test-java: $(OUT)/dashboard_vehicle_test
+	bash ../scripts/test_dashboard_java.sh $(OUT)
 
 benchmark: $(OUT)/dashboard_benchmark
 	$(OUT)/dashboard_benchmark
@@ -94,4 +107,5 @@ clean:
 	rm -f $(OUT)/dashboard_preview $(OUT)/dashboard_render_test $(OUT)/dashboard_render_test_sanitize $(OUT)/escaped.svg $(OUT)/escaped_sanitize.svg
 	rm -f $(OUT)/dashboard_config $(OUT)/dashboard_manager_preview $(OUT)/dashboard_benchmark
 	rm -f $(OUT)/dashboard_manager_test $(OUT)/dashboard_manager_test_sanitize
+	rm -f $(OUT)/dashboard_vehicle_test $(OUT)/dashboard_vehicle_test_sanitize
 	rm -rf $(OUT)/fixtures

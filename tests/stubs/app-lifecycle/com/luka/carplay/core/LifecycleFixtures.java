@@ -55,11 +55,5 @@ final class AltScreenModule extends LifecycleTestModule { AltScreenModule() { su
 final class RgdModule extends LifecycleTestModule { RgdModule() { super(1); } public String name() { return "rgd"; } }
 final class SteeringWheelInputModule extends LifecycleTestModule { SteeringWheelInputModule() { super(2); } }
 final class VehicleDataModule extends LifecycleTestModule { VehicleDataModule() { super(4); } }
-final class FrameworkRef {
-    static volatile boolean failNext;
-    FrameworkRef(IContext context) {
-        if (failNext) { failNext = false; throw new IllegalStateException("injected framework failure"); }
-    }
-    boolean isReady() { return true; }
-    IFrameworkAccess framework() { return null; }
-}
+/* FrameworkRef moved to FrameworkRef.java (public) so the dashboard-package fixture
+ * can implement Module.start(FrameworkRef) (review R4 repair). */

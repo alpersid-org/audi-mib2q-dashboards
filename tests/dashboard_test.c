@@ -10,10 +10,9 @@ static db_sample *sample_for(db_snapshot *s, db_widget w)
     switch (w) {
     case DB_TEMPERATURE: return &s->temperature.sample;
     case DB_RANGE: return &s->range.sample;
-    case DB_TRIP: return &s->trip.sample;
-    case DB_CONSUMPTION: return &s->consumption.sample;
     case DB_MEDIA: return &s->media.sample;
-    case DB_NAVIGATION: return &s->navigation.sample;
+    case DB_NAVIGATION: case DB_NAV_DISTANCE: case DB_NAV_TIME: case DB_DESTINATION:
+        return &s->navigation.sample;
     default: assert(0); return NULL;
     }
 }
@@ -39,10 +38,15 @@ static void formatting(void)
     assert(db_mock_read(NULL, 100, &s));
     expect(DB_TEMPERATURE, &s, 100, DB_VALUE_OK, "12.5 C", "MOCK");
     expect(DB_RANGE, &s, 100, DB_VALUE_OK, "620 km", "MOCK");
-    expect(DB_TRIP, &s, 100, DB_VALUE_OK, "84.3 km", "MOCK");
-    expect(DB_CONSUMPTION, &s, 100, DB_VALUE_OK, "5.6 L/100km", "MOCK");
     expect(DB_MEDIA, &s, 100, DB_VALUE_OK, "Night Drive", "MOCK");
     expect(DB_NAVIGATION, &s, 100, DB_VALUE_OK, "42.5 km / 38 min", "MOCK");
+    expect(DB_NAV_DISTANCE, &s, 100, DB_VALUE_OK, "42.5 km", "MOCK");
+    expect(DB_NAV_TIME, &s, 100, DB_VALUE_OK, "38 min", "MOCK");
+    expect(DB_DESTINATION, &s, 100, DB_VALUE_OK, "City Centre", "MOCK");
+    db_widget_format(DB_NAVIGATION, &s, 100, &view);
+    assert(!strcmp(view.detail, "City Centre"));
+    db_widget_format(DB_NAV_DISTANCE, &s, 100, &view);
+    assert(!strcmp(view.detail, "Remaining route") && !strcmp(view.label, "DISTANCE TO DESTINATION"));
     db_widget_format(DB_MEDIA, &s, 100, &view);
     assert(!strcmp(view.detail, "Studio Session"));
     assert(view.source == DB_SOURCE_MOCK);
@@ -53,21 +57,74 @@ static void formatting(void)
     s.temperature.decicelsius = 1000;
     expect(DB_TEMPERATURE, &s, 100, DB_VALUE_OK, "100.0 C", "MOCK");
     s.temperature.decicelsius = 0;
-    s.range.meters = s.trip.meters = 0;
-    s.consumption.deciliters_per_100km = 0;
+    s.range.meters = 0;
     s.navigation.remaining_meters = s.navigation.remaining_seconds = 0;
     expect(DB_TEMPERATURE, &s, 100, DB_VALUE_OK, "0.0 C", "MOCK");
     expect(DB_RANGE, &s, 100, DB_VALUE_OK, "0 km", "MOCK");
-    expect(DB_TRIP, &s, 100, DB_VALUE_OK, "0.0 km", "MOCK");
-    expect(DB_CONSUMPTION, &s, 100, DB_VALUE_OK, "0.0 L/100km", "MOCK");
     expect(DB_NAVIGATION, &s, 100, DB_VALUE_OK, "0.0 km / 0 min", "MOCK");
-    s.range.meters = 999; s.trip.meters = 1999;
+    expect(DB_NAV_DISTANCE, &s, 100, DB_VALUE_OK, "0.0 km", "MOCK");
+    expect(DB_NAV_TIME, &s, 100, DB_VALUE_OK, "0 min", "MOCK");
+    s.range.meters = 999; s.navigation.remaining_meters = 1999;
     expect(DB_RANGE, &s, 100, DB_VALUE_OK, "0 km", "MOCK"); /* floor, not optimism */
-    expect(DB_TRIP, &s, 100, DB_VALUE_OK, "1.9 km", "MOCK");
+    expect(DB_NAV_DISTANCE, &s, 100, DB_VALUE_OK, "1.9 km", "MOCK");
+    s.navigation.remaining_meters = 0;
     s.navigation.remaining_seconds = 1;
     expect(DB_NAVIGATION, &s, 100, DB_VALUE_OK, "0.0 km / 1 min", "MOCK");
+    expect(DB_NAV_TIME, &s, 100, DB_VALUE_OK, "1 min", "MOCK"); /* rounded up */
     s.navigation.remaining_seconds = 61;
     expect(DB_NAVIGATION, &s, 100, DB_VALUE_OK, "0.0 km / 2 min", "MOCK");
+    s.navigation.remaining_seconds = 3540;                       /* 59 min */
+    expect(DB_NAV_TIME, &s, 100, DB_VALUE_OK, "59 min", "MOCK");
+    s.navigation.remaining_seconds = 3541;                       /* rounds to 60 */
+    expect(DB_NAV_TIME, &s, 100, DB_VALUE_OK, "1 h 00 min", "MOCK");
+    s.navigation.remaining_seconds = 3900;
+    expect(DB_NAV_TIME, &s, 100, DB_VALUE_OK, "1 h 05 min", "MOCK");
+    s.navigation.remaining_seconds = 31536000;                  /* upper bound: 525600 min */
+    expect(DB_NAV_TIME, &s, 100, DB_VALUE_OK, "8760 h 00 min", "MOCK");
+}
+
+/* -1 / empty = not supplied by the source (aa_trip semantics, P2-07). */
+static void not_supplied(void)
+{
+    db_snapshot s;
+    assert(db_mock_read(NULL, 100, &s));
+    s.navigation.remaining_seconds = -1;
+    expect(DB_NAVIGATION, &s, 100, DB_VALUE_OK, "42.5 km", "MOCK");
+    expect(DB_NAV_DISTANCE, &s, 100, DB_VALUE_OK, "42.5 km", "MOCK");
+    expect(DB_NAV_TIME, &s, 100, DB_VALUE_MISSING, "--", "UNAVAILABLE");
+    s.navigation.remaining_seconds = 2280; s.navigation.remaining_meters = -1;
+    expect(DB_NAVIGATION, &s, 100, DB_VALUE_OK, "38 min", "MOCK");
+    expect(DB_NAV_DISTANCE, &s, 100, DB_VALUE_MISSING, "--", "UNAVAILABLE");
+    expect(DB_NAV_TIME, &s, 100, DB_VALUE_OK, "38 min", "MOCK");
+    s.navigation.remaining_seconds = -1;
+    expect(DB_NAVIGATION, &s, 100, DB_VALUE_MISSING, "--", "UNAVAILABLE");
+    expect(DB_DESTINATION, &s, 100, DB_VALUE_OK, "City Centre", "MOCK");
+    s.navigation.destination[0] = 0;
+    expect(DB_DESTINATION, &s, 100, DB_VALUE_MISSING, "--", "UNAVAILABLE");
+    /* not-supplied applies only to an otherwise valid sample */
+    s.navigation.sample.availability = DB_INVALID;
+    expect(DB_NAV_TIME, &s, 100, DB_VALUE_INVALID, "--", "INVALID");
+    /* -2 is not "not supplied": invalid */
+    assert(db_mock_read(NULL, 100, &s));
+    s.navigation.remaining_meters = -2;
+    expect(DB_NAVIGATION, &s, 100, DB_VALUE_INVALID, "--", "INVALID");
+    expect(DB_NAV_DISTANCE, &s, 100, DB_VALUE_INVALID, "--", "INVALID");
+    expect(DB_NAV_TIME, &s, 100, DB_VALUE_OK, "38 min", "MOCK"); /* own field only */
+}
+
+/* P2-08 provenance: live vehicle data is badged UNVERIFIED until on-car validation. */
+static void vehicle_provenance(void)
+{
+    db_snapshot s;
+    db_widget_view view;
+    int i;
+    assert(db_mock_read(NULL, 100, &s));
+    for (i = 0; i < DB_WIDGET_COUNT; ++i) {
+        sample_for(&s, (db_widget)i)->source = DB_SOURCE_VEHICLE;
+        db_widget_format((db_widget)i, &s, 100, &view);
+        assert(view.status == DB_VALUE_OK && view.source == DB_SOURCE_VEHICLE);
+        assert(!strcmp(view.badge, "UNVERIFIED"));
+    }
 }
 
 static void sample_states(void)
@@ -115,14 +172,15 @@ static void invalid_values(void)
 {
     db_snapshot s;
     int32_t *numbers[6];
-    const db_widget widgets[] = { DB_TEMPERATURE, DB_RANGE, DB_TRIP,
-                                  DB_CONSUMPTION, DB_NAVIGATION, DB_NAVIGATION };
-    const int32_t lower[] = { -1000, 0, 0, 0, 0, 0 };
-    const int32_t upper[] = { 1000, 10000000, 1000000000, 1000, 1000000000, 31536000 };
+    const db_widget widgets[] = { DB_TEMPERATURE, DB_RANGE, DB_NAVIGATION,
+                                  DB_NAVIGATION, DB_NAV_DISTANCE, DB_NAV_TIME };
+    /* navigation parts: -1 means not supplied, so the first invalid value is -2 */
+    const int32_t lower[] = { -1000, 0, -1, -1, -1, -1 };
+    const int32_t upper[] = { 1000, 10000000, 1000000000, 31536000, 1000000000, 31536000 };
     size_t i, j;
     assert(db_mock_read(NULL, 0, &s));
     numbers[0] = &s.temperature.decicelsius; numbers[1] = &s.range.meters;
-    numbers[2] = &s.trip.meters; numbers[3] = &s.consumption.deciliters_per_100km;
+    numbers[2] = &s.navigation.remaining_meters; numbers[3] = &s.navigation.remaining_seconds;
     numbers[4] = &s.navigation.remaining_meters; numbers[5] = &s.navigation.remaining_seconds;
     for (i = 0; i < 6; ++i) {
         int32_t original = *numbers[i];
@@ -133,7 +191,10 @@ static void invalid_values(void)
             expect(widgets[i], &s, 0, DB_VALUE_INVALID, "--", "INVALID");
         }
         *numbers[i] = lower[i];
-        db_widget_format(widgets[i], &s, 0, &view); assert(view.status == DB_VALUE_OK);
+        db_widget_format(widgets[i], &s, 0, &view);
+        /* -1 renders as the other part (NAVIGATION) or UNAVAILABLE (split cards) */
+        assert(view.status == (lower[i] == -1 && widgets[i] != DB_NAVIGATION
+                               ? DB_VALUE_MISSING : DB_VALUE_OK));
         *numbers[i] = upper[i];
         db_widget_format(widgets[i], &s, 0, &view); assert(view.status == DB_VALUE_OK);
         *numbers[i] = original;
@@ -170,6 +231,9 @@ static void text_bounds(void)
     assert(view.status == DB_VALUE_OK && !view.detail[0]);
     db_widget_format(DB_NAVIGATION, &s, 0, &view);
     assert(view.status == DB_VALUE_OK && !view.detail[0]);
+    expect(DB_DESTINATION, &s, 0, DB_VALUE_MISSING, "--", "UNAVAILABLE");
+    memset(s.navigation.destination, 'D', DB_TEXT_CAP);              /* unterminated */
+    expect(DB_DESTINATION, &s, 0, DB_VALUE_INVALID, "--", "INVALID");
 }
 
 static int partial_read(void *context, uint64_t now, db_snapshot *out)
@@ -222,7 +286,8 @@ int main(void)
 {
     db_frame empty = {0};
     assert(empty.count == 0);
-    formatting(); sample_states(); invalid_values(); text_bounds(); providers();
-    puts("dashboard_test: units/zero, validity/provenance, freshness, bounds, text, provider clearing and mock determinism PASS");
+    formatting(); not_supplied(); vehicle_provenance(); sample_states(); invalid_values();
+    text_bounds(); providers();
+    puts("dashboard_test: units/zero, not-supplied nav parts, H/MM time, VEHICLE provenance, validity, freshness, bounds, text, provider clearing and mock determinism PASS");
     return 0;
 }

@@ -1,26 +1,19 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T21:17:30Z. Agent: Claude Code. Session: `20261107T200748Z-claude`.
+Updated: 2026-11-07T21:28:02Z. Agent: Claude Code. Session: `20261107T200748Z-claude`.
 
-## Task and authorization
+## Task
 
-- P2-FINAL (final Phase 2 host testing stage) / IN_PROGRESS on
-  `feature/p2-final-testing` from master 8d7ead6.
-- Authorized: recheck R1–R5, repair the Java lifecycle harness (R4) and stale
-  suites, add vehicle-record, Java/C and lifecycle tests, run host regressions,
-  regenerate previews. Record PASSED / FAILED / UNAVAILABLE.
-- Not authorized: any vehicle deployment/installation/flashing/execution; step 9
-  stays blocked; master merge needs approval.
+- P2-FINAL / PAUSED (user: "commit and push to master, you're running out of
+  tokens"). Report: [validation-final.md](../validation-final.md).
+- Done and PASSED: dashboard suites, sanitizers, Java feed tests + Java->C
+  fixture, repaired R4 lifecycle harness, benchmark; R1/R2/R3/liveness verified
+  with mutation checks.
+- NOT RUN: inherited run_tests.sh, upstream_v141_test.py, test_maneuver_native.sh.
+- UNAVAILABLE: stock-JAR Java scripts, VehicleDataModule DSI gating test.
+- Step 9 blocked; no vehicle actions.
 
-## Checklist
+## Next action
 
-- [x] Documentation updated before testing.
-- [ ] Recheck R1–R5 against current code.
-- [ ] Repair stale dashboard suites (P2-07/P2-08 changes).
-- [ ] Vehicle-record (C) tests; Java tests; Java->C fixture; lifecycle tests.
-- [ ] R4 harness repair.
-- [ ] Regenerate Extended previews.
-- [ ] Run dashboard suites, sanitizers, benchmark, inherited host regressions.
-- [ ] Report (validation-final.md), status/PLAN/resolution updates.
-
-Audit: [LOG.md](LOG.md).
+Run the three inherited regressions above and record results in
+validation-final.md. Audit: [LOG.md](LOG.md).

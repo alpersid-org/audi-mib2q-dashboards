@@ -1,5 +1,9 @@
 # Project status
 
+## P2-FINAL host testing (partial)
+
+Dashboard, sanitizer, Java feed, Java->C and lifecycle tests PASSED; inherited upstream regressions NOT RUN yet. See [validation-final.md](validation-final.md).
+
 ## Review at 312215a (Codex, 2026-11-07)
 
 Manual review of all Claude commits is recorded in [the review](reviews/claude-312215a.md).

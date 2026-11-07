@@ -55,6 +55,8 @@ public final class DashboardModule implements Module {
     static final int RECORD_SIZE = 256, DEST_OFF = 64, DEST_MAX = 95;
     static final int MAGIC = 0x44425631;
     private static final long PERIOD_MS = 500L;
+    /* Host tests point this at a temporary directory; production always uses PATH. */
+    static volatile String recordPath = PATH;
 
     /* Distinguishes HMI process starts; mixed with the generation into the session id. */
     private static final int BOOT = (int)(System.currentTimeMillis() ^ (System.currentTimeMillis() >>> 32));
@@ -87,7 +89,7 @@ public final class DashboardModule implements Module {
         }, "carplay-dashboard");
         writer.setDaemon(true);
         writer.start();
-        Log.i(TAG, "dashboard feed enabled: " + PATH + " generation " + gen);
+        Log.i(TAG, "dashboard feed enabled: " + recordPath + " generation " + gen);
         return true;
     }
 
@@ -131,7 +133,7 @@ public final class DashboardModule implements Module {
                 int result = publish(gen, rec);
                 if (result < 0) return;                 /* generation ended */
                 if (result == 0) {
-                    if (!failLogged) { failLogged = true; Log.w(TAG, "record write failed: " + PATH); }
+                    if (!failLogged) { failLogged = true; Log.w(TAG, "record write failed: " + recordPath); }
                 } else {
                     failLogged = false;
                 }
@@ -222,7 +224,7 @@ public final class DashboardModule implements Module {
      * never sees a partial record.  POSIX rename replaces atomically; fall back to
      * delete + rename. */
     static boolean writeAndRename(byte[] rec, int gen) {
-        File tmp = new File(PATH + ".tmp." + gen), dst = new File(PATH);
+        File tmp = new File(recordPath + ".tmp." + gen), dst = new File(recordPath);
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(tmp);
@@ -241,8 +243,8 @@ public final class DashboardModule implements Module {
 
     /* Remove the record and generation gen's temporary file (call with files held). */
     private static void remove(int gen) {
-        try { new File(PATH).delete(); } catch (Throwable t) { }
-        try { new File(PATH + ".tmp." + gen).delete(); } catch (Throwable t) { }
+        try { new File(recordPath).delete(); } catch (Throwable t) { }
+        try { new File(recordPath + ".tmp." + gen).delete(); } catch (Throwable t) { }
     }
 
     private static void putInt(byte[] b, int p, int v) {

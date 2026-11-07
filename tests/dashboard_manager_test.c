@@ -192,7 +192,8 @@ static void ready(db_manager *m, db_layout expect)
     assert(db_manager_update(m, 1000, 800, 252, WIDE));
     assert(db_manager_get_status(m) == DB_MANAGER_READY);
     assert(db_frame_valid(db_manager_frame(m)));
-    assert(has_text(db_manager_frame(m), "84.3 km") == (expect == DB_EXTENDED));
+    /* P2-07: Extended has the split "TIME TO DESTINATION" card; Compact does not. */
+    assert(has_text(db_manager_frame(m), "TIME TO DESTINATION") == (expect == DB_EXTENDED));
     assert(has_text(db_manager_frame(m), "12.5 C"));
 }
 

@@ -37,7 +37,13 @@ def main():
             data = subprocess.check_output(args)
             assert data == subprocess.check_output(args), "nondeterministic SVG"
             root = check_svg(data, count, size)
-            assert any(t.text == "42.5 km / 38 min" for t in root.iter(SVG + "text"))
+            texts = [t.text for t in root.iter(SVG + "text")]
+            if layout == "compact":
+                assert "42.5 km / 38 min" in texts
+            else:  # P2-07: split navigation cards, no trip/consumption
+                assert "42.5 km" in texts and "38 min" in texts and "City Centre" in texts
+                assert "42.5 km / 38 min" not in texts
+            assert "84.3 km" not in texts and "5.6 L/100km" not in texts
             saved = binary.parents[2] / "dashboard" / "previews" / f"{layout}-{profile}.svg"
             if saved.exists():
                 assert saved.read_bytes() == data, f"stale saved preview: {saved}"

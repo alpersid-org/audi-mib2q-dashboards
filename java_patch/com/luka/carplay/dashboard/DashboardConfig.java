@@ -13,12 +13,14 @@ import java.io.FileInputStream;
 public final class DashboardConfig {
     public static final String PATH = "/mnt/app/carplay_dashboard.cfg";
     static final int TEXT_CAP = 512, LINE_CAP = 64;
+    /* Host tests point this at a temporary file; production always uses PATH. */
+    static volatile String path = PATH;
 
     private DashboardConfig() { }
 
     /** True only for a valid file at PATH with enabled=1.  Never throws. */
     public static boolean enabled() {
-        return enabled(read(PATH));
+        return enabled(read(path));
     }
 
     static byte[] read(String path) {

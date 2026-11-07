@@ -31,9 +31,16 @@ static void layouts(void)
             assert(cr_rect_equal(f.clip, clip));
             assert(has_text(&f, "HOST PREVIEW - NO VEHICLE OUTPUT"));
             assert(has_text(&f, "12.5 C") && has_text(&f, "620 km") && has_text(&f, "Night Drive"));
-            assert(has_text(&f, "42.5 km / 38 min"));
-            assert(has_text(&f, "5.6 L/100km") == (mode == DB_EXTENDED));
-            assert(has_text(&f, "84.3 km") == (mode == DB_EXTENDED));
+            /* Compact: combined navigation card. Extended (P2-07): split cards from the
+             * same navigation sample; no trip distance or consumption anywhere. */
+            assert(has_text(&f, "42.5 km / 38 min") == (mode == DB_COMPACT));
+            assert(has_text(&f, "42.5 km") == (mode == DB_EXTENDED));
+            assert(has_text(&f, "38 min") == (mode == DB_EXTENDED));
+            assert(has_text(&f, "City Centre"));
+            assert(has_text(&f, "DISTANCE TO DESTINATION") == (mode == DB_EXTENDED));
+            assert(has_text(&f, "TIME TO DESTINATION") == (mode == DB_EXTENDED));
+            assert(!has_text(&f, "5.6 L/100km") && !has_text(&f, "84.3 km"));
+            assert(!has_text(&f, "TRIP DISTANCE") && !has_text(&f, "AVERAGE CONSUMPTION"));
             for (j = 0; j < f.count; ++j) {
                 const db_draw_command *c = &f.commands[j];
                 assert(c->box.x >= clip.x && c->box.y >= clip.y);
