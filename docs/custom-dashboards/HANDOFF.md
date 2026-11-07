@@ -3,6 +3,12 @@
 Read the canonical [AGENTS.md](../../AGENTS.md) first. This guide is a restart
 checklist for any agent or coding tool; it is not a second set of project rules.
 
+**Latest review handoff:** read [the report at 312215a](reviews/claude-312215a.md)
+and [the agent pickup instructions](reviews/README.md) before choosing work.
+R1–R5 are open. This handoff documents an authorized review; it does not start
+fixes or step 9. Keep the test deferral and vehicle boundaries below. The report
+and instructions are local until Git history confirms later publication.
+
 **Active testing policy (latest user instruction, after P2-04):** "do not run any test, there will be a ask at the end to implement and run the tests".
 Do not run any test, sanitizer, benchmark, demo or automated validation, and do
 not write new test code, until the user explicitly asks to implement and run

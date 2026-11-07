@@ -7,6 +7,15 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
+**Latest handoff — REVIEW-CLAUDE:** the review of all Claude commits through
+`312215a` is complete. Read the [review report](docs/custom-dashboards/reviews/claude-312215a.md)
+and [agent pickup instructions](docs/custom-dashboards/reviews/README.md) before
+continuing Phase 2. Five findings remain open, including producer/reader timestamp
+ordering and writer shutdown. The user has now requested "Push and commit": publish these review documents
+on `review/claude-phase2`. No corrective implementation, tests, master merge or
+release is part of that request.
+Use the live checkpoint and latest user instruction to determine the next task.
+
 **Phase 2 goal (authoritative, user-defined):** "Real Vehicle Data Integration" —
 fully functional custom dashboards showing real data from the vehicle's existing
 MMI systems inside the Virtual Cockpit, Compact and Extended layouts, mock data
@@ -19,7 +28,7 @@ to the safety boundary below (open decision recorded in that section).
 **Testing is deferred again:** after P2-04 the user said "do not run any test, there will be a ask at the end to implement and run the tests".
 No tests or new test code until that final request; see Validation below.
 
-**Current task — P2-08:** the user said "merge to master and start step 8".
+**Earlier task — P2-08 (merged; reviewed with open findings):** the user said "merge to master and start step 8".
 VehicleDataProvider implemented on `feature/p2-08-vehicle-provider`, including
 minimal edits to inherited HMI Java (CarPlayApp, VehicleDataModule, AaRgState,
 AaBridge) that the step requires. Writing this code does not authorize
@@ -67,6 +76,8 @@ platform assumptions. Do not invent firmware capabilities or compatibility.
 Start with [the active audit checkpoint](docs/custom-dashboards/audit/CURRENT.md)
 and recent [audit events](docs/custom-dashboards/audit/LOG.md). Follow
 [the audit protocol](docs/custom-dashboards/audit/README.md) before editing.
+Then read the [current review handoff](docs/custom-dashboards/reviews/README.md)
+and its linked report; reconcile findings with newer source before applying fixes.
 
 1. [Five-phase roadmap](docs/ROADMAP.md) — long-term goal and phase boundaries;
    distinguish roadmap Phase 3 from Phase 2 subtask P2-03.

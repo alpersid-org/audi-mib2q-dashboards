@@ -1,5 +1,39 @@
 # Change ledger
 
+## PUBLISH-REVIEW — authorized report publication (2026-11-07)
+
+User requested "Push and commit". Publish the report, pickup guide, agent entry
+points, status/plan/handoff/change ledger and audit on review/claude-phase2 to
+the fork. Updated AGENTS/review publication notes and current audit to supersede
+the older local-only state. No implementation changes, tests, master merge, release
+or vehicle actions; publication evidence follows in the audit.
+
+## DOC-REVIEW-HANDOFF — AI pickup instructions (2026-11-07)
+
+User requested a Markdown report and instructions for AI agents to pick it up.
+The report already existed; its five findings remain unchanged and unresolved.
+
+| Changed path | Change and purpose |
+| --- | --- |
+| [reviews/claude-312215a.md](reviews/claude-312215a.md) | Adds links to the agent pickup guide/checkpoint and explicitly marks findings open. |
+| [reviews/README.md](reviews/README.md) | New: resumption procedure, ordered R1–R5 queue, acceptance evidence, separate implementation/verification states, no-test policy, safety boundaries and copyable next-agent prompt. |
+| [AGENTS.md](../../AGENTS.md), [CLAUDE.md](../../CLAUDE.md), [GEMINI.md](../../GEMINI.md), [Copilot instructions](../../.github/copilot-instructions.md) | Makes the review and pickup instructions discoverable; marks the old P2-08 task historical. |
+| [HANDOFF.md](HANDOFF.md) | Adds the latest review handoff ahead of older feature milestones. |
+| [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | Records documentation-only scope, local publication state and exact next action. |
+| [changes.md](changes.md) | Records this handoff change map. |
+
+No implementation/test code changed or executed. No commit, push, merge, release
+or vehicle actions. Earlier local review/report/audit edits are preserved.
+
+## REVIEW-CLAUDE — source review at 312215a (2026-11-07)
+
+User requested review of everything pushed by Claude. Added
+[the review report](reviews/claude-312215a.md), status/plan review notices, and
+updated audit/CURRENT.md plus append-only audit/LOG.md. Five source/documentation
+findings and known validation/vehicle gaps are recorded. No implementation or
+test code changed; no builds/tests/automated validation, commit/push or vehicle
+actions. These review documents remain local on review/claude-phase2.
+
 This ledger describes concrete changes for reviewers and subsequent agents.
 Chronological session evidence remains append-only in [audit/LOG.md](audit/LOG.md).
 Current work state is in [audit/CURRENT.md](audit/CURRENT.md).

@@ -1,5 +1,12 @@
 # Executable Phase 2 plan
 
+## Review gate at 312215a (2026-11-07)
+
+[Manual review](reviews/claude-312215a.md) records five open findings. Before
+connecting the step-9 consumer, resolve producer/reader clock ordering and writer
+shutdown/session invalidation. Repair/execute tests only at the user-requested
+final stage. This review did not start implementation or authorize publication.
+
 MAINT-141 is completed upstream maintenance verification, not a plan step or new
 phase. Applicable maintenance/dashboard tests were authorized; see
 [the report](../maintenance/upstream-v1.4.1.md). The subsequent user request to push

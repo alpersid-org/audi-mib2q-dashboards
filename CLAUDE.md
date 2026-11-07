@@ -12,6 +12,14 @@ Use [the continuation guide](docs/custom-dashboards/HANDOFF.md) to recover conte
 Read [the current checkpoint](docs/custom-dashboards/audit/CURRENT.md) and recent
 [audit events](docs/custom-dashboards/audit/LOG.md); follow the audit protocol to
 record your RESUME event, milestones and handoff before context exhaustion.
+
+Before continuing Phase 2, read [the latest source review](docs/custom-dashboards/reviews/claude-312215a.md)
+and [agent pickup instructions](docs/custom-dashboards/reviews/README.md).
+Five findings remain open; reconcile them against current source and follow
+the latest user task. Documentation handoff does not authorize fixes, tests
+or publication. Record implemented-but-untested changes separately from
+verified fixes and preserve the test deferral and vehicle boundary.
+
 AGENTS.md and the active checkpoint define scope. The user authorized publishing
 all existing work to the fork's master, including P2-01/P2-02 and MAINT-141.
 That consolidation is published; retain its test evidence and audit trail.

@@ -697,3 +697,47 @@ feature; earlier project history is available in Git and [status.md](../status.m
   containing this event (0d4448c P2-08 + this event). No merge commit.
 - Tests: none run. Step 9 decisions (head-unit drawing code, display surface)
   remain open; not inferred from this approval.
+
+## 2026-11-07T20:56:50Z | codex-review-claude-01 | START
+
+- Task: REVIEW-CLAUDE / IN_PROGRESS. User: "Claude has implemented lots of steps. Review everything pushed by Claude".
+- Git: fetched origin; reviewing 15 commits 574ae26..312215a on local review/claude-phase2, all other pushed branches are ancestors of origin/master. No merge/push or code fixes requested.
+- Scope: manual source/documentation review of all 45 changed paths, especially config/manager, widget contract and Java/C vehicle provider. Active no-tests/no-new-tests policy retained; no tests, demos, benchmarks or automated validation will run.
+- Pending: inspect runtime lifecycle, data semantics and safety/failure cases, produce prioritized findings and checkpoint. Only local audit/report edits planned. No vehicle actions.
+
+## 2026-11-07T21:01:05Z | codex-review-claude-02 | CHECKPOINT
+
+- Task: REVIEW-CLAUDE / findings documented. Reviewed 15 commits / 45 changed paths through origin/master 312215a, including upstream Java lifecycle/build consumers.
+- Report: docs/custom-dashboards/reviews/claude-312215a.md. R1 P1 producer sample/write timestamp ordering; R2 P2 publication after stop; R3 P2 reader clock-before-file race; R4 P2 isolated Java lifecycle fixture/dependency mismatch; R5 P2 stale current-state/policy/package docs. All source review, no runtime reproduction claimed.
+- Additional gaps: session generation/sequence validation, stale tests/deleted Extended previews, unsupported media, no safe VC surface or full shipping Java validation.
+- No code changes, builds, tests/new test code, demos, benchmarks, automated validation, publication or vehicle actions. Only local review/audit docs changed.
+- Next: final manual report review and handoff; report findings without changing implementation or pushing.
+
+## 2026-11-07T21:01:56Z | codex-review-claude-03 | COMPLETE
+
+- REVIEW-CLAUDE complete at 312215a. Full report: docs/custom-dashboards/reviews/claude-312215a.md; five prioritized findings, stage/commit assessment, known gaps and next gates.
+- Documentation changes: new report; status/PLAN review notices; per-change ledger; mutable checkpoint and appended audit events. Earlier implementation docs/audit history were not rewritten to hide findings.
+- Review method: manual source/diff/read-only Git inspection only. No builds, tests/new test code, demos, benchmarks, preview generation or automated validation; no compatibility claim.
+- Git: local review/claude-phase2, source HEAD 312215a. Review documentation is uncommitted/local only; origin/master was not changed. No active processes, code fixes or vehicle actions.
+- Next: user reviews findings; any corrective work or report publication needs its own request. Retain no-test policy until explicitly superseded.
+
+## 2026-11-07T21:04:36Z | codex-review-handoff-01 | START
+
+- Task: DOC-REVIEW-HANDOFF / IN_PROGRESS. User: "Write the report in a md file, and provide instructions for AI agents to pick it up".
+- Existing report already saved in reviews/claude-312215a.md; preserve its findings and all local review/audit edits. Source HEAD 312215a on review/claude-phase2.
+- Scope: add an actionable agent handoff/index, link canonical and tool-specific agent entry points, update checkpoint/change ledger. Documentation only; no fixes, tests/new test code, commit/push or vehicle actions requested.
+- Next: write resumption order, finding priorities/acceptance, validation deferral and evidence rules, then finish audit handoff.
+
+## 2026-11-07T21:05:14Z | codex-review-handoff-02 | COMPLETE
+
+- DOC-REVIEW-HANDOFF complete. Existing Markdown report retained; new reviews/README.md provides resumption order, R1-R5 priorities/acceptance, evidence states, deferred test queue and copyable next-agent prompt.
+- Discovery: linked report/guide from AGENTS.md, CLAUDE.md, GEMINI.md, .github/copilot-instructions.md and HANDOFF.md. Report links back; CURRENT.md and per-file changes ledger updated. Existing review/status/PLAN/audit edits preserved.
+- Validation: manual document review only, no builds/tests/new test code/demos/benchmarks/automated checks. Findings remain OPEN; nothing represented as fixed or verified.
+- Git: local review/claude-phase2 at source 312215a; documentation remains uncommitted and unpushed. No implementation changes or vehicle actions; no active processes.
+- Next: next agent reads AGENTS/CURRENT/reviews/README and the report, reconciles source revision, appends RESUME and follows the latest user task. Corrective implementation/publication not started by this documentation request.
+
+## 2026-11-07T21:06:38Z | codex-publish-review-01 | START
+
+- Task: PUBLISH-REVIEW / IN_PROGRESS. User request: "Push and commit". Publish the existing review report, AI pickup guide and associated documentation on review/claude-phase2 to origin. No master merge, fixes, tests, release or vehicle actions.
+- Git: fetched origin successfully; reviewed source remains 312215a. Existing dirty documentation preserved; no implementation edits.
+- Next: commit documentation, push explicit review branch, verify remote SHA, then save the publication checkpoint.

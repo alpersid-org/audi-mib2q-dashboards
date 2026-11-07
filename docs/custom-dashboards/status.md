@@ -1,5 +1,12 @@
 # Project status
 
+## Review at 312215a (Codex, 2026-11-07)
+
+Manual review of all Claude commits is recorded in [the review](reviews/claude-312215a.md).
+Five findings remain open, especially P2-08 timestamp ordering and shutdown races.
+No implementation changed or tests ran. Older status sections below contain stale
+statements identified by R5; use the audit for current task state.
+
 ## Phase 2 scope and state (read first)
 
 The user defined Phase 2 as "Real Vehicle Data Integration": working Compact and
