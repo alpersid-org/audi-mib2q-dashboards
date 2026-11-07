@@ -3,7 +3,13 @@
 Read the canonical [AGENTS.md](../../AGENTS.md) first. This guide is a restart
 checklist for any agent or coding tool; it is not a second set of project rules.
 
-**P2-04 handoff (current):** the user requested "Start P2-04, but before make sure you update the documentation, as instructed".
+**Active testing policy (latest user instruction, after P2-04):** "do not run any test, there will be a ask at the end to implement and run the tests".
+Do not run any test, sanitizer, benchmark, demo or automated validation, and do
+not write new test code, until the user explicitly asks to implement and run
+the tests at the end. Continue documenting every change; record skipped checks
+as DEFERRED BY USER. P2-04 results remain historical evidence only.
+
+**P2-04 handoff (historical):** the user requested "Start P2-04, but before make sure you update the documentation, as instructed".
 P2-04 is the final testing stage; the no-test instruction below has ended. It is
 complete on `feature/p2-04-validation` (not merged); results in
 [validation.md](validation.md). Next eligible step: P2-05 when requested.
@@ -99,7 +105,8 @@ silently interpret the old roadmap as permission to code.
 > VehicleDataProvider and future AndroidDataProvider must share manager/widgets.
 > Read the linked project documents/source as needed. Keep the audit updated at
 > milestones and before context exhaustion, with changes, historical test results
-> and the next action. P2-04 (final testing stage) authorizes host tests only.
+> and the next action. Do not run tests or write test code until the user asks
+> to implement and run them at the end.
 > Do not contact or deploy to the vehicle.
 
 Append the concrete task, for example "review the architecture document" or,

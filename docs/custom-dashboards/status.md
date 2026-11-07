@@ -1,6 +1,12 @@
 # Project status
 
-## Current work — P2-04 (final testing stage)
+**Active testing policy (latest user instruction, after P2-04):** "do not run any test, there will be a ask at the end to implement and run the tests".
+Do not run any test, sanitizer, benchmark, demo or automated validation, and do
+not write new test code, until the user explicitly asks to implement and run
+the tests at the end. Continue documenting every change; record skipped checks
+as DEFERRED BY USER. P2-04 results remain historical evidence only.
+
+## Completed — P2-04 (final testing stage)
 
 User request: "Start P2-04, but before make sure you update the documentation, as instructed". Branch `feature/p2-04-validation` from master
 12cb0b5. The P2-02 test deferral ended when the user started P2-04, the final testing
@@ -16,7 +22,7 @@ stage it was waiting for. Full report: [validation.md](validation.md).
 - Java/stock scripts unavailable (proprietary HMI JAR/JDK 8 absent); native
   maneuver script passes its Linux part, macOS GL link unavailable.
 - Not merged to master. Next eligible step: P2-05 (packaging, previews,
-  rollback evidence) when requested.
+  rollback evidence) when requested, without tests (user instruction).
 
 ## Completed — P2-03 (host configuration and manager; merged to master)
 

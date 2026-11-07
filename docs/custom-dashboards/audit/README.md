@@ -55,6 +55,12 @@ all work is consolidated on `master`. This authorization covers that publication
 not a new feature, future release or vehicle action. Read CURRENT.md for task scope;
 preserve historical authorization events and append updates rather than editing them.
 
+**Active testing policy (latest user instruction, after P2-04):** "do not run any test, there will be a ask at the end to implement and run the tests".
+Do not run any test, sanitizer, benchmark, demo or automated validation, and do
+not write new test code, until the user explicitly asks to implement and run
+the tests at the end. Continue documenting every change; record skipped checks
+as DEFERRED BY USER. P2-04 results remain historical evidence only.
+
 P2-04 (user: "Start P2-04, but before make sure you update the documentation, as instructed") is the final testing stage; it ends the
 P2-02 override below. Record real commands and outcomes; never invent results.
 

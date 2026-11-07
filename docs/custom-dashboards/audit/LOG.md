@@ -542,3 +542,16 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Report: docs/custom-dashboards/validation.md; status/PLAN/HANDOFF/config/
   module/changes/CURRENT updated. git diff --check and link check before commit.
 - Next action: commit/push feature branch; await P2-05 or merge approval.
+
+## 2026-11-07T20:28:49Z | 20261107T200748Z-claude-08 | DECISION / testing deferred again
+
+- User instruction after P2-04: "do not run any test, there will be a ask at the
+  end to implement and run the tests".
+- Effect: no tests, sanitizers, benchmarks, demos or automated validation, and no
+  new test code, until the user's final request. Applies across agent handoffs.
+  P2-04 results (validation.md) stay as historical evidence.
+- Recorded in AGENTS.md, CLAUDE.md, GEMINI.md, Copilot instructions, PLAN.md,
+  HANDOFF.md, status.md, audit/README.md and CURRENT.md. Nothing was run for this
+  update, including the usual Markdown link/whitespace checks (manual review only).
+- Branch: committed on `feature/p2-04-validation` (P2-04 not merged to master).
+- Next action: await the next task; P2-05 is next eligible, without tests.

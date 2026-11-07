@@ -10,7 +10,10 @@ instructions to preserve context, not to override them.
 Build the foundation for modular, customizable Audi Virtual Cockpit dashboards
 within **roadmap Phase 2** of the mib2q-carplay-based project.
 
-**Current task is P2-04:** the user requested "Start P2-04, but before make sure you update the documentation, as instructed".
+**Testing is deferred again:** after P2-04 the user said "do not run any test, there will be a ask at the end to implement and run the tests".
+No tests or new test code until that final request; see Validation below.
+
+**Last task — P2-04 (complete on `feature/p2-04-validation`, not merged):** the user requested "Start P2-04, but before make sure you update the documentation, as instructed".
 P2-04 is PLAN step 4 (automated validation, benchmark, regression report) and is
 the final testing stage the earlier no-test instruction waited for, so host tests
 are now authorized. Work on `feature/p2-04-validation`. No GEM, master merge,
@@ -153,7 +156,13 @@ Run those host checks and report missing assets/toolchains separately. This
 supersedes the older deferral below for this task only; it does not authorize
 vehicle execution, publication or unrelated feature development.
 
-**P2-04 final testing stage (current):** "Start P2-04, but before make sure you update the documentation, as instructed"
+**Active testing policy (latest user instruction, after P2-04):** "do not run any test, there will be a ask at the end to implement and run the tests".
+Do not run any test, sanitizer, benchmark, demo or automated validation, and do
+not write new test code, until the user explicitly asks to implement and run
+the tests at the end. Continue documenting every change; record skipped checks
+as DEFERRED BY USER. P2-04 results remain historical evidence only.
+
+**P2-04 final testing stage (completed, historical):** "Start P2-04, but before make sure you update the documentation, as instructed"
 ends the P2-02 override below. Run the dashboard suites, sanitizers, the host
 benchmark and the inherited host scripts listed in PLAN step 4 (inspect each
 first; isolated host fixtures only). Record exact commands and outcomes; report

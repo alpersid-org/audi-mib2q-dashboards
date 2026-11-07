@@ -12,7 +12,8 @@ record your RESUME event, milestones and handoff before context exhaustion.
 AGENTS.md and the active checkpoint define scope. The user authorized publishing
 all existing work to the fork's master, including P2-01/P2-02 and MAINT-141.
 That consolidation is published; retain its test evidence and audit trail.
-P2-03 was later merged to master on request. Current task: P2-04, the final
-testing stage, which ends the earlier no-test instruction (see AGENTS.md).
+P2-03 was later merged to master on request. P2-04, the final
+testing stage, now complete. The user then said: do not run any test (or write
+test code) until the final request to implement and run tests (see AGENTS.md).
 Merges/publication need their own approval. No release, vehicle action or
 Android communication is authorized. Preserve the roadmap and dashboards.

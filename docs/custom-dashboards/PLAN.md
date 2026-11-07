@@ -8,7 +8,13 @@ P2-01/P2-02, roadmap and maintenance work are now included there. No new feature
 or tests were added for publication. Historical feature-test deferral below is
 superseded only for maintenance scope.
 
-**P2-04 (current):** user request "Start P2-04, but before make sure you update the documentation, as instructed".
+**Active testing policy (latest user instruction, after P2-04):** "do not run any test, there will be a ask at the end to implement and run the tests".
+Do not run any test, sanitizer, benchmark, demo or automated validation, and do
+not write new test code, until the user explicitly asks to implement and run
+the tests at the end. Continue documenting every change; record skipped checks
+as DEFERRED BY USER. P2-04 results remain historical evidence only.
+
+**P2-04 (complete, historical):** user request "Start P2-04, but before make sure you update the documentation, as instructed".
 This is the final testing stage; the testing override below has ended. Done on
 `feature/p2-04-validation`; report in [validation.md](validation.md). Targets are
 `make -C dashboard test|test-sanitize|benchmark` (no root Makefile; see report).

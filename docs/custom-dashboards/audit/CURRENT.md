@@ -1,9 +1,14 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T20:28:08Z. Agent: Claude Code.
+Updated: 2026-11-07T20:28:49Z. Agent: Claude Code.
 Session: `20261107T200748Z-claude`.
 
 ## Active task and authorization
+
+- **Active testing policy (latest user instruction):** "do not run any test,
+  there will be a ask at the end to implement and run the tests". No tests,
+  sanitizers, benchmarks, demos or new test code until that final request.
+  Record skipped checks as DEFERRED BY USER.
 
 - Task/state: `P2-04` (PLAN step 4: automated validation, host benchmark,
   regression report) / `COMPLETE` on its branch (not merged).
@@ -38,5 +43,6 @@ Session: `20261107T200748Z-claude`.
 
 No WIP or active processes. Build outputs only under ignored `build/`; scratch
 logs/wrapper live outside the repo. Await the user: P2-05 (packaging, previews,
-rollback evidence) or a request to merge P2-04 into master (needs approval).
+rollback evidence; no tests) or a request to merge P2-04 into master (needs
+approval). The policy update is committed on this branch.
 Audit: [LOG.md](LOG.md).
