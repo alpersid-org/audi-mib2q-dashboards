@@ -1,13 +1,13 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T19:10:38Z. Agent: Codex.
+Updated: 2026-11-07T19:11:52Z. Agent: Codex.
 Session: `20261107T190217Z-codex`.
 
 ## Active task and authorization
 
 - Task: `P2-01` — isolated host module, typed snapshots, mock provider and widget
   formatters ([PLAN step 1](../PLAN.md#1-establish-the-isolated-module-and-provider)).
-- State: `READY_FOR_REVIEW` (P2-01 implemented and tested; final docs/publication pending).
+- State: `COMPLETE` (P2-01 implemented, tested, published and verified).
 - User instruction: "Okay, go ahead with the first part", following the ordered
   dashboard plan. This supersedes documentation-only scope for step 1. Existing
   publication authorization continues on the feature branch.
@@ -23,7 +23,11 @@ Session: `20261107T190217Z-codex`.
   `tests/dashboard_test.c`, `docs/custom-dashboards/module.md`.
 - Update scope/status/plan/instructions/audit; leave upstream runtime unchanged.
 - Build outputs: ignored `build/dashboard/`. No new dependencies or firmware assets.
-- Checkpoint commit: `git log -1 -- docs/custom-dashboards/audit/CURRENT.md`.
+- Verified implementation commit: `0b256c07d736a3f47062c9f4afa751dd5b4a1e20`,
+  pushed to origin; remote SHA matched local HEAD.
+- This completion checkpoint commit: inspect
+  `git log -1 -- docs/custom-dashboards/audit/CURRENT.md`; compare it with the
+  remote on resume rather than embedding its own unknown hash.
 
 ## Acceptance checklist
 
@@ -33,7 +37,7 @@ Session: `20261107T190217Z-codex`.
 - [x] Missing/invalid/future/stale rejection and clearing on provider failure.
 - [x] Strict host tests, sanitizer run and appropriate upstream regression attempt.
 - [x] API docs, updated scope/status/plan; 16 Markdown files and 111 links validated.
-- [ ] Commit/push and verify publication.
+- [x] Commit/push and verify publication.
 
 ## Decisions, validation and pending work
 
@@ -45,12 +49,16 @@ Validation: focused build/tests/demo pass. ASan/UBSan with default leak detectio
 pass outside the traced sandbox (sandboxed invocation failed at LeakSanitizer).
 Upstream host suite passed outside sandbox with documented SKIP_JAR_CHECK=1;
 shipping JAR/Java unavailable. Full results/commands are in [status.md](../status.md).
-No running processes remain. New source/tests/docs are uncommitted; outputs are
-ignored under build/dashboard. No runtime files were modified. Vehicle unknowns remain.
+No running processes remain. All implementation sources/tests/docs are committed
+and published. Only audit/status completion recording is being saved now;
+no unfinished source work. Outputs remain ignored under build/dashboard. No
+inherited runtime files were modified. Vehicle unknowns remain.
 
 ## Exact next action
 
-Final docs and Git diff/scope checks passed. Commit/push P2-01 and verify the
-remote. Mark the task COMPLETE with publication
-evidence; do not start P2-02 without a user request.
+P2-01 is COMPLETE; do not reimplement it. On resume append a RESUME event and
+read the latest user task. The next eligible increment is P2-02 (Compact/Extended
+frame builders and host SVG export), when requested. Start from dashboard.h and
+module.md contracts, run the existing dashboard tests as a baseline and keep
+all output host-only. Vehicle integration remains blocked.
 Audit session: `20261107T190217Z-codex` in [LOG.md](LOG.md).

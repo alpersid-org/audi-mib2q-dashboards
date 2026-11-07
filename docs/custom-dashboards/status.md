@@ -22,6 +22,9 @@ Live progress: [audit/CURRENT.md](audit/CURRENT.md). History:
 "Okay, go ahead with the first part" following the ordered plan; an agent switch
 must not reimpose the previous documentation-only scope on P2-01.
 
+Implementation commit: `0b256c07d736a3f47062c9f4afa751dd5b4a1e20`, pushed and
+verified on `origin/feature/custom-dashboards`.
+
 ## Not implemented
 
 Compact/Extended layouts, SVG/GL renderer, configuration/activation manager,

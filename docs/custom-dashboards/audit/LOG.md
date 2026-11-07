@@ -130,3 +130,28 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Blockers: no host increment blocker; unavailable Java/vehicle validation remains.
 - Next action: validate all docs, inspect final diff for upstream/runtime changes,
   commit/push P2-01, verify remote SHA and publish completion checkpoint.
+
+## 2026-11-07T19:11:52Z | 20261107T190217Z-codex-04 | COMPLETE
+
+- Agent/session: Codex / `20261107T190217Z-codex`.
+- Task/status: `P2-01` / `COMPLETE`; P2-02 not started.
+- Authorization: "Okay, go ahead with the first part", recorded in event `-01`.
+- Git: implementation `0b256c07d736a3f47062c9f4afa751dd5b4a1e20` pushed on
+  `feature/custom-dashboards`. `git ls-remote origin refs/heads/feature/custom-dashboards`
+  matched `git rev-parse HEAD`; both commands and push exited 0.
+- Changes: isolated C99 library/mock/formatters/frame types, deterministic text
+  demo, focused tests, Makefile/API guide and consistent scope/plan/status docs.
+  Original runtime/renderers/hooks/deploy/README unchanged. No vehicle actions.
+- Decisions/evidence: mock-only contract and host limits documented in module.md;
+  layouts, configuration and real data remain later increments. No graphics preview.
+- Validation: focused build/tests/demo and unchanged-default ASan/UBSan pass;
+  full upstream host script passes outside traced sandbox with documented shipping
+  JAR check skipped. Java prerequisites absent. Earlier failed/unavailable checks
+  remain recorded in status.md and events `-02`/`-03`. Final doc validator passed:
+  16 Markdown files, 111 local links and heading/fence checks; `git diff --check`
+  and staged checks exited 0. Generated outputs confirmed ignored by Git.
+- Pending/dirty work: no source WIP or live processes. This audit/status completion
+  record is a subsequent documentation commit; locate its SHA through Git history.
+- Blockers: no P2-01 blocker; missing shipping/Java/vehicle validation is explicit.
+- Next action: save/publish completion record. For a later request, resume P2-02
+  from existing data/widget contracts; do not repeat P2-01 or infer a vehicle slot.
