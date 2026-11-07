@@ -5,7 +5,13 @@ step 8". This step connects the dashboard to data the HMI **already receives**,
 through existing pipelines. It adds no new DSI attributes, CAN access, sockets or
 renderer commands, and it never controls the vehicle.
 
-**Review fixes (2026-11-07).** Codex's review of 312215a found R1–R5; R1, R2, R3,
+**Current validation (P2-FINAL, 2026-11-07).** Host C, sanitizer, Java feed,
+Java-to-C and isolated lifecycle checks pass. A remaining R2 blocked-second-write
+shutdown defect was reproduced and fixed during resume; see
+[validation-final.md](validation-final.md). Full stock Java/DSI/QNX and vehicle
+behavior remain unverified. The following early validation notes are historical.
+
+**Review fixes at 9187a88 (historical).** Codex's review of 312215a found R1–R5; R1, R2, R3,
 session invalidation, the Android Auto subscription gap and R5 are implemented
 and untested; R4 (Java test harness) waits for the final test request. See the
 [resolution record](reviews/claude-312215a-resolution.md).
@@ -86,15 +92,19 @@ record leaves the navigation group empty there.
 ## Writer lifecycle (review R2)
 
 - `start()` opens a new generation; the writer thread is bound to it.
-- At most one publication is in flight. It may begin only for the current
-  generation; file I/O runs outside the lock, so `stop()` never waits for I/O.
-- `stop()` bumps the generation and removes the record, unless a publication is
-  in flight. That publication re-checks after its rename, sees the ended
-  generation and removes its own record. No newer generation can publish in the
-  meantime, so an old writer never replaces a newer generation's record.
-- Temporary files are per generation (`/tmp/carplay_dashboard.tmp.<gen>`).
-- The only file operations under the lock are the small deletes that must be
-  ordered with publication.
+- At most one publication stages data at a time. Bulk file open/write/close runs
+  outside the coordination lock, so stop does not wait for that work.
+- The final generation check and rename share the lock with stop's generation
+  invalidation and deletion. A cancelled old generation cannot commit afterwards.
+- `stop()` always removes the published record, including the previous successful
+  one when a subsequent write is blocked. The old post-rename cleanup scheme at
+  9187a88 missed this case; the final regression reproduced it before correction.
+- Temporary files are per generation (`/tmp/carplay_dashboard.tmp.<gen>`) and
+  cleaned by their owning writer. An in-flight blocked open retains its temp
+  path until it finishes; a restart cannot publish until that staging ends.
+- Only short metadata operations (rename/delete) run under the lock. Actual QNX
+  filesystem behavior and failure modes remain unverified; no hard real-time
+  timing guarantee follows from the host test.
 
 ## DBV1 record (256 bytes, big-endian)
 
@@ -138,7 +148,7 @@ backwards sequence or a writer silent for more than 2 s.
 - **CarPlay behaviour change to check:** VehicleDataModule now starts in Android
   Auto sessions (no-op unless enabled). CarPlay output is unchanged by design.
 
-## Tests needed at the final stage (none written; user instruction)
+## Test targets (implemented in P2-FINAL; target-only gaps remain)
 
 - `db_vehicle_parse`: valid record, every rejection rule, INT32_MIN/-1 absent
   parts, clock mapping (future sample, age beyond the clock epoch, 30 s
@@ -154,8 +164,10 @@ Additional cases from the review: a clock tick between source reads and the
 write time (R1); stop during collection, write and rename, and immediate restart
 (R2); a publication between file open and clock sample (R3); session change,
 backwards sequence and the 2 s writer timeout; Kombi-only binding in Android Auto.
-The Java lifecycle harness also needs the R4 repair (isolated `DashboardModule`
-fixture and owner/gating assertions).
+The Java lifecycle harness has the R4 repair (isolated `DashboardModule` fixture
+and owner/gating assertions) and passes. Pure feed/config tests use real Java
+classes with external-service fixtures; real VehicleDataModule DSI gating and
+shipping Java 1.4 linkage still require proprietary assets. See the final report.
 
 Rollback: revert the P2-08 and review-fix commits. On the unit, a missing config
 file keeps the feature off. Deleting `/mnt/app/carplay_dashboard.cfg` disables it

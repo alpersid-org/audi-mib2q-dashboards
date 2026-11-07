@@ -3,7 +3,15 @@
 Read the canonical [AGENTS.md](../../AGENTS.md) first. This guide is a restart
 checklist for any agent or coding tool; it is not a second set of project rules.
 
-**Latest review handoff:** read [the report at 312215a](reviews/claude-312215a.md)
+**Current handoff — available host checks complete:** read
+[validation-final.md](validation-final.md), [CURRENT.md](audit/CURRENT.md) and
+recent audit events first. R4 and stale suites are repaired; R1/R3 and the current
+shutdown fix pass host checks. Inherited regressions are complete with documented
+platform/asset gaps. The user authorized publication to the fork's master. Do not
+restart the old queue or reapply the ended test deferral. Step 9 remains blocked
+by missing firmware/ABI and safe-surface evidence; no vehicle execution.
+
+**Earlier review handoff (historical):** read [the report at 312215a](reviews/claude-312215a.md)
 and [the agent pickup instructions](reviews/README.md) before choosing work.
 R1–R5 are open. This handoff documents an authorized review; it does not start
 fixes or step 9. Keep the test deferral and vehicle boundaries below. The report

@@ -6,7 +6,8 @@ and Widget System**. The future Android app runs independently on the Galaxy S23
 Ultra in Phase 3 before MMI communication is introduced. See [ROADMAP](../ROADMAP.md).
 
 This document defines the target design. It adds no adapter or transport code.
-The no-test instruction ended with P2-04, the final testing stage.
+The later no-test instruction ended with P2-FINAL; current host results and
+remaining stock/vehicle gaps are in [validation-final.md](validation-final.md).
 
 ## What exists and what is planned
 
@@ -78,8 +79,9 @@ Any later wire schema needs explicit version/capability handling and decoding.
 
 Use already demonstrated read-only data paths where verified, not new vehicle
 control commands or native hooks. [VehicleDataModule](../../java_patch/com/luka/carplay/core/VehicleDataModule.java)
-demonstrates temperature/range DSI readings and unit conversion; it currently
-runs for **CarPlay only** in
+demonstrates temperature/range DSI readings and unit conversion. In the original
+baseline it ran for CarPlay only; P2-08 adds config-gated Android Auto Kombi-only
+binding. See
 [CarPlayApp](../../java_patch/com/luka/carplay/core/CarPlayApp.java). Its existing
 bus message goes toward the CarPlay hook, not a dashboard subscription API.
 

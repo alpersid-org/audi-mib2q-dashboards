@@ -4,12 +4,14 @@
 > Integration", [requirements.md](requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative))
 > this package is a mock-only foundation, **not** the Phase 2 deliverable.
 >
-> **Current state (after P2-07/P2-08 and the 312215a review fixes):** this page is
-> pinned to the P2-05 base f7e9fb2. Since then P2-07 changed the widgets and removed
-> both Extended previews (two Compact SVGs remain), and P2-08 modified four inherited
-> HMI Java files that the shipping Java build includes. Tests are deferred: the user said "do not run any test, there will be a ask at the end to implement and run the tests". The suites are out of date since P2-07/P2-08; run them only at that final request.
-> Statements below about "four previews", "no code changed since P2-04" and
-> "inherited implementation unchanged" are true only for f7e9fb2.
+> **Current state (P2-FINAL):** the historical P2-05 package below is pinned to
+> f7e9fb2. The widget suites and R4 harness are now repaired; four Compact/Extended
+> previews are restored and checked. The VehicleDataProvider changes the shipping
+> Java but stays disabled by default. Available host tests pass; stock Java/DSI,
+> QNX and safe vehicle composition remain unverified. Current evidence and the
+> resumed shutdown correction: [validation-final.md](validation-final.md).
+> The earlier no-test policy has ended. Statements below describing the
+> P2-05 mock foundation are historical, not the current implementation state.
 
 PLAN step 5. This page is the entry point for a reviewer or developer who wants
 to clone the fork, build the host prototype, run its tests and inspect the
@@ -45,7 +47,7 @@ git clone https://github.com/alpersid-org/audi-mib2q-dashboards.git
 cd audi-mib2q-dashboards
 make -C dashboard all          # library, demo, preview and config/manager tools
 make -C dashboard demo         # text demo of the six mock widgets
-make -C dashboard previews     # regenerates all four SVGs; only the two Compact ones are saved now
+make -C dashboard previews     # regenerates the four saved Compact/Extended SVGs
 ```
 
 Config and manager tools ([config.md](config.md)):
@@ -57,12 +59,12 @@ build/dashboard/dashboard_manager_preview ext.cfg wide > frame.svg
 build/dashboard/dashboard_manager_preview missing.cfg wide # exit 3, no output (disabled)
 ```
 
-Tests (run them only when the user asks for the final testing stage; out of date
-since P2-07/P2-08):
+Tests (authorized and repaired in P2-FINAL):
 
 ```sh
-make -C dashboard test           # five suites
-make -C dashboard test-sanitize  # ASan/UBSan
+make -C dashboard test           # six suites
+make -C dashboard test-sanitize  # four C suites, ASan/UBSan
+make -C dashboard test-java      # host JDK, feed and Java-to-C fixture
 make -C dashboard benchmark      # host timing only
 SKIP_JAR_CHECK=1 sh scripts/run_tests.sh   # inherited upstream host checks
 ```
@@ -73,7 +75,7 @@ SKIP_JAR_CHECK=1 sh scripts/run_tests.sh   # inherited upstream host checks
 
 | Artifact | Location | State |
 | --- | --- | --- |
-| Compact previews, 800x252 and 640x360 | [dashboard/previews/](../../dashboard/previews/) | Saved in Git; verified in P2-04. The Extended pair was removed in P2-07 and must be regenerated at the final test stage. (At f7e9fb2: four SVGs, unchanged since 85c523e.) |
+| Compact previews, 800x252 and 640x360 | [dashboard/previews/](../../dashboard/previews/) | Saved in Git; verified in P2-04. The Extended pair was removed in P2-07 and restored in P2-FINAL; all four now match current CLI output. (At f7e9fb2: four SVGs, unchanged since 85c523e.) |
 | Manager-gated preview | `dashboard_manager_preview` output | Not saved; generated on demand from a config file. |
 | Regression report | [validation.md](validation.md) | P2-04 results and unavailable checks. |
 
@@ -147,7 +149,7 @@ Per-file change history: [changes.md](changes.md). Session evidence:
 
 | Criterion | State |
 | --- | --- |
-| Previews saved in `dashboard/previews/` | Met at f7e9fb2 (four SVGs). Now two (Extended removed in P2-07). |
+| Previews saved in `dashboard/previews/` | Met at f7e9fb2 (four SVGs). Now four (Extended restored in P2-FINAL). |
 | Reproduction commands, test outcomes, limitations documented | Met (this page, validation.md) |
 | Changed files and rollback summarized | Met (sections above) |
 | Inherited implementation unchanged vs b127988 | Met at f7e9fb2 (no M/D entries). **No longer true since P2-08:** four inherited HMI Java files modified. |

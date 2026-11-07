@@ -28,7 +28,7 @@ reports for another car, firmware or adapter do not resolve these unknowns.
 | Roadmap phase | Deliverable | Current state |
 | --- | --- | --- |
 | 1 — Upstream baseline | Install and establish the upstream project as-is through a separately authorized process. | Vehicle installation/success unconfirmed; local source investigation complete. |
-| 2 — Custom dashboards: Real Vehicle Data Integration | Working Compact/Extended dashboards in the Virtual Cockpit showing real data from existing MMI systems; mock only for tests ([scope](custom-dashboards/requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative)). | CURRENT PHASE, **not complete**. Host foundation done (P2-01..P2-05); P2-07 widget cleanup and P2-08 real data binding implemented, unverified on the car, tests deferred. VC rendering and in-car validation outstanding; head-unit work awaits user decision. |
+| 2 — Custom dashboards: Real Vehicle Data Integration | Working Compact/Extended dashboards in the Virtual Cockpit showing real data from existing MMI systems; mock only for tests ([scope](custom-dashboards/requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative)). | CURRENT PHASE, **not complete**. Host foundation done (P2-01..P2-05); P2-07 widget cleanup and P2-08 real data binding implemented, host feed tests pass, unverified on the car ([final validation](custom-dashboards/validation-final.md)). VC rendering and in-car validation outstanding; head-unit work awaits user decision. |
 | 3 — Independent Android app | Standalone app on Galaxy S23 Ultra, usable without MMI. | Future; not implemented. |
 | 4 — Android/MMI communication | Establish a separately validated data connection; introduce AndroidDataProvider as its normalized adapter. | Future; transport unknown and unimplemented. |
 | 5 — Android data in dashboards | Feed AndroidDataProvider into the same manager/widgets alongside VehicleDataProvider. | Future; depends on validated transport/data and safe display integration. |
@@ -75,7 +75,7 @@ The host foundation below (P2-01..P2-05) is a prerequisite, not the deliverable:
 - Compact and Extended layouts reuse the same Widget System and renderer adapter.
 - Disabled-by-default configuration, suppression, source selection and rollback
   preserve the OEM experience. A host single-provider manager and strict config
-  exist since P2-03 (compiled, tests deferred); source selection is outstanding.
+  exist since P2-03 (host checks pass in P2-FINAL); source selection is outstanding.
 
 **Implemented in code:** the generic `db_provider` callback/context, typed
 `db_snapshot`, mock source, widget formatters, two host layouts and SVG export;

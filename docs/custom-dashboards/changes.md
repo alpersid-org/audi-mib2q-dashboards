@@ -1,5 +1,30 @@
 # Change ledger
 
+## P2-FINAL resume — remaining regressions and shutdown correction (2026-11-07)
+
+Resumed b180e36 from Claude's checkpoint. User subsequently requested completing
+remaining work and committing/pushing to master. Available host work is complete;
+vehicle rendering remains blocked by the original firmware/safe-surface gate.
+
+| Changed path | Change and purpose |
+| --- | --- |
+| `java_patch/com/luka/carplay/dashboard/DashboardModule.java` | Always remove the previously published record at stop; stage bulk writes outside the lock, commit generation-check/rename under the stop lock; clean per-generation temp files in their owner. Fixes the reproduced blocked-second-write case left by the earlier R2 correction. |
+| `tests/DashboardModuleTest.java` | First publish successfully, block the next write, require immediate clearing on stop, restart while old I/O is pending, verify new session remains. Observes the publication gate instead of a fixed scheduling sleep. RED before runtime correction, GREEN after. |
+| `tests/upstream_v141_test.py` | Pins original dashboard/roadmap preservation to the actual f5bd2e7 maintenance commit and checks its ancestry. Current functional tests cover subsequent features; exact release blobs, decoder policy and real installer fixtures remain unchanged. |
+| [validation-final.md](validation-final.md) | Complete current commands, passes, reproduced failures, unavailable checks, performance, logs and step-9 prerequisites; preserves Claude's stage history. |
+| [vehicle-provider.md](vehicle-provider.md), [review resolution](reviews/claude-312215a-resolution.md), [review index](reviews/README.md) | Update lifecycle contract, residual R2 evidence, current finding states and fulfilled final-test queue. Original pinned review remains unchanged. |
+| [PROJECT.md](../../PROJECT.md), [ROADMAP.md](../ROADMAP.md), [status.md](status.md), [PLAN.md](PLAN.md), [HANDOFF.md](HANDOFF.md) | Distinguish completed available host work from blocked vehicle work and record master publication authorization. |
+| [module.md](module.md), [rendering.md](rendering.md), [architecture.md](architecture.md), [data-providers.md](data-providers.md), [package.md](package.md), [preview index](../../dashboard/previews/README.md) | Reconcile final-stage testing, implemented provider/manager and all four restored previews; retain historical package evidence. No SVG regenerated during resume. |
+| [AGENTS.md](../../AGENTS.md), [CLAUDE.md](../../CLAUDE.md), [GEMINI.md](../../GEMINI.md), [Copilot instructions](../../.github/copilot-instructions.md) | Point agents to current validation and publication scope; retain safety/roadmap boundaries. |
+| [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | Resume, RED/GREEN evidence, test outcomes, boundaries and publication checkpoint. |
+| [changes.md](changes.md) | Per-file record of this increment. |
+
+No native renderer/hook, installer, deploy, firmware or Android code changed.
+No package installation, vehicle access or release. Host tests do not establish
+vehicle compatibility. Undo this increment by a reviewed revert, preserving
+later work; never reset/force-push master. No on-car rollback is needed because
+nothing was installed. Keep dashboard disabled until separate vehicle gates pass.
+
 ## FIX-REVIEW-312215A — review fixes (2026-11-07)
 
 User: "check this audit ... implement all fixes". Branch `fix/review-claude-312215a`.

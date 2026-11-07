@@ -7,7 +7,16 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
-**Latest — FIX-REVIEW-312215A:** the user asked to "implement all fixes" from the
+**Current — P2-FINAL host work complete:** Codex resumed from b180e36, completed
+available inherited regressions and reproduced/fixed an additional R2 blocked-
+second-write shutdown defect. Available C/sanitizer/Java/feed/lifecycle/upstream
+checks pass; stock Java/DSI/QNX/macOS GL and vehicle gaps remain explicit. Read
+[validation-final.md](docs/custom-dashboards/validation-final.md) and CURRENT.md.
+The latest user request authorizes committing/pushing this completion to the fork's
+master. No release or vehicle action. Step 9 stays blocked pending firmware/ABI
+and proven safe-surface evidence; Phase 2 is not a completed vehicle feature.
+
+**Earlier — FIX-REVIEW-312215A (see final validation for later test evidence):** the user asked to "implement all fixes" from the
 review. R1, R2, R3, R5, session invalidation and the AA subscription gap are
 implemented and untested on `fix/review-claude-312215a`; R4 (test harness) stays
 open for the final test request. See the

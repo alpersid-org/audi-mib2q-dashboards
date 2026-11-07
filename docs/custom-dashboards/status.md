@@ -1,8 +1,17 @@
 # Project status
 
-## P2-FINAL host testing (partial)
+## P2-FINAL host testing — available checks complete
 
-Dashboard, sanitizer, Java feed, Java->C and lifecycle tests PASSED; inherited upstream regressions NOT RUN yet. See [validation-final.md](validation-final.md).
+Dashboard C/XML/CLI, ASan/UBSan, Java feed/Java-to-C, six lifecycle scenarios,
+all 39 upstream host checks and all four maintenance methods pass. A remaining
+blocked-second-write shutdown defect was reproduced and corrected. Renderer
+FIN/RST and PID identity checks pass. Stock Java/DSI/QNX and macOS GL checks remain
+unavailable on this host; native script's lane portion passes. Full evidence,
+failures before correction and commands: [validation-final.md](validation-final.md).
+The user authorized committing/pushing this increment to master. No release or
+vehicle action; Phase 2 remains incomplete and step 9 blocked.
+
+The milestone notes below are historical; use the final report for current state.
 
 ## Review at 312215a (Codex, 2026-11-07)
 
@@ -27,7 +36,7 @@ for tests ([scope and gap table](requirements.md#phase-2-scope--real-vehicle-dat
 host foundation. Real data binding, VC rendering and in-car validation are
 outstanding (PLAN steps 6, 8–10). P2-07 removed the unbacked trip/consumption
 widgets and redefined Extended ([widgets-p2-07.md](widgets-p2-07.md)); the
-existing tests are now out of date (deferred by user). P2-08 adds the real
+existing tests were repaired in P2-FINAL and the four previews checked. P2-08 adds the real
 VehicleDataProvider on `feature/p2-08-vehicle-provider`
 ([vehicle-provider.md](vehicle-provider.md)): HMI-side publisher plus C reader;
 not compiled in full (stock classes absent), not run, unverified on the car. Head-unit work needs the user's
@@ -47,7 +56,7 @@ not write new test code, until the user explicitly asks to implement and run
 the tests at the end. Continue documenting every change; record skipped checks
 as DEFERRED BY USER. P2-04 results remain historical evidence only.
 
-## Current work — P2-05 (package the increment)
+## Historical work — P2-05 (package the increment)
 
 User request: "Start P2-05". Branch `feature/p2-05-package` from master f7e9fb2.
 Added [package.md](package.md): quick start, artifacts, historical P2-04

@@ -9,19 +9,18 @@ readability review on a real cluster has not been done. Package overview:
 | Layout | 800x252 | 640x360 |
 | --- | --- | --- |
 | Compact | [Wide](compact-wide.svg) | [Tall](compact-tall.svg) |
-| Extended | removed in P2-07 | removed in P2-07 |
+| Extended | [Wide](extended-wide.svg) | [Tall](extended-tall.svg) |
 
 ![Compact](compact-wide.svg)
 
-The Extended previews showed trip distance and average consumption, which P2-07
-removed (no verified source). They will be regenerated at the final testing
-stage; see [widgets-p2-07.md](../../docs/custom-dashboards/widgets-p2-07.md).
+The old Extended previews showed trip/consumption widgets removed in P2-07.
+P2-FINAL restored both artifacts using the new destination distance/time/name
+widgets. All four SVGs match current CLI output; see
+[final validation](../../docs/custom-dashboards/validation-final.md).
 
 Generation command from the repository root: `make -C dashboard previews`.
-The saved artifacts were generated in P2-02 and verified byte-identical to CLI
-output in P2-04. No dashboard code changed afterwards, so P2-05 did not
-regenerate them. A manager-gated preview can be produced on demand with
-`dashboard_manager_preview` (see config.md); it is not saved.
+Manager-gated output remains available through `dashboard_manager_preview`;
+it is not saved. The previews remain MOCK and do not prove an on-car layout.
 See [rendering.md](../../docs/custom-dashboards/rendering.md) for the API, design
 limits and commands, and [changes.md](../../docs/custom-dashboards/changes.md)
 for the per-file change record. No screenshot or font-fit claim is made.

@@ -8,7 +8,10 @@ commit `b127988a68c8d690841f4a75d35717ffc01e668e` (1.4.1).
 **Phase 2 scope: Real Vehicle Data Integration** — working Compact/Extended
 dashboards in the Virtual Cockpit with real MMI data; mock only for tests. See
 [requirements](docs/custom-dashboards/requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative).
-**Not complete:** P2-01..P2-05 below are a mock-only host foundation.
+**Phase 2 is not complete.** Available final host checks pass, including the
+vehicle-feed/Java-C and corrected shutdown regressions; see
+[final validation](docs/custom-dashboards/validation-final.md). Full stock linkage,
+firmware/ABI, safe VC rendering and actual vehicle validation remain outstanding.
 
 **History: P2-02, host Compact/Extended layouts and SVG export.**
 P2-01 data/widgets are complete. Step 2 adds bounded frames, a mock preview CLI
@@ -40,8 +43,9 @@ start another implementation task or authorize a release or vehicle action.
 Galaxy S23 Ultra app starts independently in Phase 3, communicates with MMI in
 Phase 4 and supplies existing widgets in Phase 5. Phase 2's VehicleDataProvider
 role and future AndroidDataProvider share one normalized interface/manager/widget
-system; see [provider design](docs/custom-dashboards/data-providers.md). Named live
-adapters are not implemented, and no Android communication is added now.
+system; see [provider design](docs/custom-dashboards/data-providers.md).
+VehicleDataProvider is implemented with UNVERIFIED provenance and host checks;
+AndroidDataProvider and Android communication remain unimplemented.
 
 ## Documents
 

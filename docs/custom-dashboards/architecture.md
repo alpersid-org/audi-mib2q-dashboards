@@ -62,7 +62,7 @@ flowchart LR
     F --> R[Host SVG renderer]
 ```
 
-The host-implemented **Dashboard Manager** (P2-03, untested) prepares a complete frame on explicit request. It checks
+The host-implemented **Dashboard Manager** (P2-03; host-validated in P2-FINAL) prepares a complete frame on explicit request. It checks
 enablement, configuration, viewport and provider success, and clears all previous
 commands on suppression. There is no background loop, animation or polling thread.
 
@@ -82,7 +82,7 @@ snapshot. Selection is explicit per signal/group, not last-writer-wins. Widgets
 never depend on phone transport, DSI bindings or raw messages.
 
 **Confirmed by code:** the common callback, owned typed values and source quality/
-sample-age fields exist in dashboard.h/provider.c. **Implemented on the host in P2-03 (untested):** a single-provider manager.
+sample-age fields exist in dashboard.h/provider.c. **Implemented on the host in P2-03; validated in P2-FINAL:** a single-provider manager.
 **Implemented in P2-08 (unverified on the car):** the VehicleDataProvider (HMI
 record writer + C reader, with writer session/sequence liveness).
 **Planned, not implemented:** AndroidDataProvider, resolver, general per-provider origin and
@@ -103,7 +103,7 @@ are experiments, not certified VC configurations. The initial prototype will
 reject the known 210x153 and 328x180 maneuver crops as a deliberate design limit;
 readability and fit still need host testing. No dashboard crop is guessed.
 
-The host-implemented **Configuration Manager** (P2-03, untested) accepts a small, strict, versioned text format:
+The host-implemented **Configuration Manager** (P2-03; host-validated in P2-FINAL) accepts a small, strict, versioned text format:
 `version=1`, `enabled=0|1`, `layout=compact|extended`. Missing/invalid configuration
 means disabled Compact. Layout selection alone never enables output. Restore
 default uses the same disabled configuration. Paths are supplied explicitly;

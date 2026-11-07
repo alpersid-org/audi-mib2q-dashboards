@@ -18,7 +18,10 @@ and [agent pickup instructions](../docs/custom-dashboards/reviews/README.md).
 Five findings remain open; reconcile them against current source and follow
 the latest user task. Documentation handoff does not authorize fixes, tests
 or publication. Record implemented-but-untested changes separately from
-verified fixes and preserve the test deferral and vehicle boundary.
+verified fixes and preserve the vehicle boundary. The later P2-FINAL request
+ended test deferral; read [current final validation](../docs/custom-dashboards/validation-final.md)
+and the checkpoint. Available host checks are complete; stock/vehicle gaps remain.
+The user authorized committing/pushing the completion to the fork master.
 
 AGENTS.md and the active checkpoint define scope. The user authorized publishing
 all existing work to the fork's master, including P2-01/P2-02 and MAINT-141.

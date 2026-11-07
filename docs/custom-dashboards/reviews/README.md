@@ -5,24 +5,19 @@ It applies to Codex, Claude, Gemini, Copilot and agents using other tools.
 
 ## Report and current state
 
-- [Review report: Claude's work through 312215a](claude-312215a.md).
-- [Resolution record (2026-11-07)](claude-312215a-resolution.md): R1, R2, R3,
-  R5, session invalidation and the AA subscription gap IMPLEMENTED / UNTESTED
-  on `fix/review-claude-312215a` (merged to master); R4 OPEN for the final test request.
-- [Live checkpoint](../audit/CURRENT.md) and [append-only history](../audit/LOG.md).
-- Reviewed range: `574ae26..312215a`, 15 commits and 45 changed paths.
-- Five findings remain OPEN. They are source-review findings, not reproduced
-  runtime failures. No implementation fixes have been made.
-- The report and this handoff were prepared locally on `review/claude-phase2`.
-  Read Git status/history to determine whether a later session has published them.
-  Another machine needs the documentation commits or a copy of the files first.
-
-The original request authorized this documentation handoff. The subsequent user
-request "Push and commit" authorizes publishing it on `review/claude-phase2` to
-the fork. It does not start corrective implementation, tests, a master merge or
-a release.
-Follow a subsequent explicit task when it arrives; do not request approval again
-for work the user has already authorized in that session.
+- [Original review at 312215a](claude-312215a.md) remains revision-pinned.
+- [Resolution history](claude-312215a-resolution.md) and
+  [final host validation](../validation-final.md) describe current evidence.
+- R1/R3, the R4 harness and current dashboard/feed tests pass on the host. A
+  remaining R2 shutdown defect was reproduced and corrected during resume; the
+  strengthened blocked-second-write/restart test passes. R5 guides are updated.
+- Full stock Java/DSI/QNX linkage and vehicle behavior remain unverified. Host
+  results do not establish safe VC composition; step 9 stays blocked.
+- Use [CURRENT.md](../audit/CURRENT.md), Git and recent [events](../audit/LOG.md)
+  for branch/publication status. The user requested finishing remaining host
+  work and committing/pushing to the fork's master; no release/vehicle actions.
+- On resume, reconcile newer source with the reviewed/fixed revisions. Never
+  replay the old OPEN queue or reinstate an obsolete no-test policy blindly.
 
 ## Resume procedure
 
@@ -56,7 +51,7 @@ git log -8 --oneline
 git diff --name-status 312215a HEAD
 ```
 
-## Corrective work queue (requires an implementation request)
+## Original corrective queue (historical; use final results above)
 
 | Order | Finding | Intended change | Acceptance evidence to record |
 | --- | --- | --- | --- |
@@ -79,11 +74,11 @@ specific phone session.
 authorizes tests and test code on the host, including the R4 repair. The deferral
 text below is historical.
 
-The latest recorded user instruction is: "do not run any test, there will be a
-ask at the end to implement and run the tests". Until explicitly superseded,
-do not write test code or execute tests, sanitizers, benchmarks, demos, preview
-generation or automated validation. Do not build as a substitute for testing.
-Use manual source/document review and clearly record DEFERRED BY USER.
+The explicit P2-FINAL testing request superseded the earlier no-test policy.
+Host tests, test code, harness repair and checks for affected changes are
+permitted. Available host validation is complete; repeat only for new changes,
+failures or unresolved concerns. Record missing prerequisites as UNAVAILABLE,
+not passes. Firmware/surface evidence and vehicle actions remain separate gates.
 
 Track each finding separately as OPEN, IMPLEMENTED / UNTESTED, VERIFIED BY HOST
 TESTS, or DISPUTED WITH EVIDENCE. Record implementation commit/path, manual
@@ -117,8 +112,8 @@ changes and tests cannot establish compatibility or safety on this Audi.
 > docs/custom-dashboards/reviews/README.md and the linked review report first.
 > Reconcile the reviewed revision 312215a with the current branch and source.
 > Preserve all existing edits and append an audit RESUME event. Follow my current
-> task; the handoff itself does not authorize implementation or publication.
-> Keep tests and new test code deferred until I explicitly request them. For an
-> authorized corrective task, address R1, R2, R3 and R5 in that order, documenting
-> each change; retain R4 and the stale suites for the final test stage. Do not
-> start the vehicle renderer, deploy, or implement roadmap Phases 3–5.
+> task and current final validation report. The old test deferral is superseded;
+> host tests are authorized, and R4/stale suites have been repaired. Preserve
+> prior source and test evidence; do not restart resolved work from the historical
+> queue. Record each new change and its checks. Do not start the vehicle renderer
+> without proven firmware/surface prerequisites, deploy, or implement Phases 3–5.

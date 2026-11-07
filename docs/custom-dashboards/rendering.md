@@ -2,8 +2,8 @@
 
 Compact and Extended frames are now implemented on top of the P2-01 snapshot,
 widget formatter and fixed draw-list contracts. They export host SVG artifacts
-only. There is no QNX window, vehicle display routing, live provider, configuration
-manager, GEM action or automatic rendering loop.
+only. The host manager and VehicleDataProvider were added later; there is still
+no QNX window, vehicle display routing, GEM action or vehicle rendering loop.
 
 **Testing policy:** tests were deferred during P2-02 until the final stage;
 P2-04 has started that stage and runs them. Earlier results are recorded separately in
@@ -11,14 +11,15 @@ the audit/status; final validation and visual inspection are outstanding.
 
 ## Previews
 
-These SVGs were generated before the test-deferral instruction. They use mock
+Compact SVGs date to P2-02; Extended SVGs were regenerated in P2-FINAL.
+All four match current deterministic CLI output ([validation-final.md](validation-final.md)). They use mock
 values and host fonts; their dimensions are not verified Virtual Cockpit layouts.
 No successful browser screenshot or visual inspection has been established.
 
 | Layout | Wide 800x252 | Tall 640x360 |
 | --- | --- | --- |
 | Compact | [SVG](../../dashboard/previews/compact-wide.svg) | [SVG](../../dashboard/previews/compact-tall.svg) |
-| Extended | removed in P2-07; regenerate at the final testing stage | removed |
+| Extended | [SVG](../../dashboard/previews/extended-wide.svg) | [SVG](../../dashboard/previews/extended-tall.svg) |
 
 ![Compact host mock preview](../../dashboard/previews/compact-wide.svg)
 

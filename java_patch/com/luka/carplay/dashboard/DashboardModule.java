@@ -39,13 +39,13 @@ import java.io.FileOutputStream;
  * The write time is taken AFTER all sources were read, so no sample is newer than it
  * (review R1).  Sequence starts at 1 for each writer session and increases by one.
  *
- * Lifecycle (review R2): every start() opens a new writer generation.  At most one
- * publication is in flight at a time; it may only begin for the current generation,
- * and file I/O happens outside the lock so stop() never waits for I/O.  stop() bumps
- * the generation and removes the record unless a publication is in flight; that
- * publication then sees the changed generation after its rename and removes its own
- * record.  So no record survives stop(), and an old writer cannot replace a newer
- * generation's record.  Temporary files are per generation.
+ * Lifecycle (review R2): every start() opens a new writer generation. At most one
+ * publication stages its data at a time. File open/write/close run outside the
+ * coordination lock; the final generation check and rename run under it. stop()
+ * invalidates the generation and deletes the published record under that same lock.
+ * A blocked or cancelled old writer therefore cannot commit after stop, or replace a
+ * newer generation's record. stop() does not wait for bulk file I/O. Temporary files
+ * are per generation and cleaned by their owning writer.
  *
  * Pure Java 1.4 apart from the module interfaces.
  */
@@ -64,8 +64,8 @@ public final class DashboardModule implements Module {
     private Thread writer;                      /* guarded by this */
     private boolean running;                    /* guarded by this */
 
-    /* Publication coordination (review R2).  Never held during file I/O except the
-     * small deletes in stop()/cleanup, which must be ordered with publication. */
+    /* Publication coordination (review R2). Bulk file I/O stays outside; the small
+     * rename/delete metadata operations must be ordered with generation changes. */
     private final Object files = new Object();
     private int generation;                     /* guarded by files */
     private boolean publishing;                 /* guarded by files */
@@ -76,8 +76,8 @@ public final class DashboardModule implements Module {
         if (running) return true;
         if (!DashboardConfig.enabled()) {
             synchronized (files) {
-                generation++;                       /* any old in-flight write cleans up */
-                if (!publishing) remove(generation);
+                generation++;                       /* old writers cannot commit */
+                removeRecord();
             }
             return true;                       /* disabled by default: nothing to run */
         }
@@ -100,8 +100,8 @@ public final class DashboardModule implements Module {
         if (t != null) t.interrupt();
         synchronized (files) {
             generation++;
-            /* With a publication in flight, its post-rename check removes the record. */
-            if (!publishing) remove(generation);
+            /* Clear the last successful publication even if staging I/O is blocked. */
+            removeRecord();
         }
     }
 
@@ -156,13 +156,7 @@ public final class DashboardModule implements Module {
         } finally {
             synchronized (files) {
                 publishing = false;
-                if (generation != gen) {
-                    /* stop()/restart happened during our I/O; no newer publication could
-                     * start meanwhile, so the record on disk is ours: remove it. */
-                    remove(gen);
-                    remove(generation);
-                    ok = false;
-                }
+                if (generation != gen) ok = false;
             }
         }
         return ok ? 1 : (current(gen) ? 0 : -1);
@@ -220,10 +214,9 @@ public final class DashboardModule implements Module {
         return out;
     }
 
-    /* Write a per-generation temporary file, then rename it over the record, so a reader
-     * never sees a partial record.  POSIX rename replaces atomically; fall back to
-     * delete + rename. */
-    static boolean writeAndRename(byte[] rec, int gen) {
+    /* Stage outside the lock; commit only while this generation is still current.
+     * POSIX rename replaces atomically; the fallback may briefly leave no record. */
+    private boolean writeAndRename(byte[] rec, int gen) {
         File tmp = new File(recordPath + ".tmp." + gen), dst = new File(recordPath);
         FileOutputStream out = null;
         try {
@@ -231,20 +224,24 @@ public final class DashboardModule implements Module {
             out.write(rec);
             out.close();
             out = null;
-            if (tmp.renameTo(dst)) return true;
-            dst.delete();
-            return tmp.renameTo(dst);
+            synchronized (files) {
+                if (generation != gen) return false;
+                if (tmp.renameTo(dst)) return true;
+                dst.delete();
+                return tmp.renameTo(dst);
+            }
         } catch (Throwable t) {
             return false;
         } finally {
             if (out != null) try { out.close(); } catch (Throwable t) { }
+            try { tmp.delete(); } catch (Throwable t) { }
         }
     }
 
-    /* Remove the record and generation gen's temporary file (call with files held). */
-    private static void remove(int gen) {
+    /* Remove only the published record (call with files held). In-flight writers
+     * own their temporary files, including a blocked open that stop must not await. */
+    private static void removeRecord() {
         try { new File(recordPath).delete(); } catch (Throwable t) { }
-        try { new File(recordPath + ".tmp." + gen).delete(); } catch (Throwable t) { }
     }
 
     private static void putInt(byte[] b, int p, int v) {

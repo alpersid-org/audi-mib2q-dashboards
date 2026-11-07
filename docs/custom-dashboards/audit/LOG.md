@@ -838,3 +838,34 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - User asked to commit and push to master before inherited regressions ran:
   run_tests.sh, upstream_v141_test.py, test_maneuver_native.sh NOT RUN.
 - Report docs/custom-dashboards/validation-final.md. Master fast-forward per user.
+
+## 2026-11-07T21:31:33Z | codex-p2-final-resume-01 | RESUME
+
+- P2-FINAL / IN_PROGRESS. User: "No more tokens on Claude, could you please resume?", continuing the final host testing task after the quoted Claude handoff. Existing final-stage authorization recorded in Claude event -23 supersedes prior test deferral.
+- Fetched origin; clean source b180e367e18f55bafab1ea51f014a0cca262c81c on feature/p2-final-testing tracking its origin branch. Claude already implemented R1-R5 and new tests; no need to restart completed milestones.
+- Remaining: run inherited run_tests.sh, upstream_v141_test.py and test_maneuver_native.sh; review failures and current corrections, repeat affected host checks on this executor as needed, document evidence and limitations. No master merge/push inferred; no vehicle actions or step 9.
+- Prerequisites: cc present; default javac unavailable here (different host from Claude). Inspect alternate toolchains or install host dependency if needed.
+- Next: inspect scripts/prerequisites, run isolated host regressions with logs, update report and checkpoint.
+
+## 2026-11-07T21:34:51Z | codex-p2-final-resume-02 | CHECKPOINT / reproduced residual R2
+
+- Inherited regressions: SKIP_JAR_CHECK=1 sh scripts/run_tests.sh exit 0 (AA tee/SIGPIPE/yield included); upstream_v141_test.py exit 1 solely at frozen dashboard/tree equality, other three methods passed; native script exit 1 at Linux unsupported -framework after lane PASS. Logs /tmp/mib2q-p2-final-codex.
+- Java compiler executable absent, but existing JRE includes jdk.compiler 21.0.13. Temporary javac launcher calls the real compiler module; no package installation needed.
+- New regression: begin a valid publication, block the next file open using the existing FIFO fixture, then stop. test-java now fails: "earlier published record survived stop during blocked write". Existing R2 fix skipped final-record removal whenever publishing=true.
+- Next: always remove final record at stop, gate final rename by generation under the same lock (bulk writes remain outside); strengthen restart regression and repair maintenance audit to compare its pinned historical integration revision, not prohibit all later feature changes.
+
+## 2026-11-07T21:39:12Z | codex-p2-final-resume-03 | CHECKPOINT / host runs complete
+
+- User steering: "Implement everything remaining, push and commit to master" authorizes completing host work and publishing to the fork master. Step 9 still blocked by missing firmware/ABI/safe surface; original no-unproven-hook/no-vehicle boundary retained.
+- Results: C/dashboard all+test+ASan/UBSan+benchmark exit 0; Java feed/Java-C exit 0 after residual R2 fix; isolated app lifecycle all 6 PASS; historical maintenance suite all 4 PASS. Upstream suite already exit 0 all 39 including SIGPIPE/yield. Direct sanitized FIN/RST and PID identity tests pass.
+- Limits: native lane PASS, full macOS link exits 1 on Linux; no-skip protocol exits 1 after 41 constants (shipping JAR missing); stock Java exits 2 in absent JCL glob/pipefail before compile. Stock JDK8/HMI/JCL/QNX/real DSI/hardware checks unavailable. No sanitizer disabled, no packages installed.
+- Source change: DashboardModule serializes final generation check+rename with stop, always removes prior record, cleans temp in owning writer. Regression was RED before and GREEN after. Maintenance historical preservation assertion now pins f5bd2e7 (current behavior covered by functional suites).
+- Report updated: validation-final.md. Next: reconcile remaining current-state docs, final diff/link review, commit and fast-forward/push master with remote SHA verification. No active processes.
+
+## 2026-11-07T21:42:18Z | codex-p2-final-resume-04 | COMPLETE / READY TO PUBLISH
+
+- Available P2-FINAL host work complete, current report and agent/project/plan/status/provider/preview docs reconciled. Phase 2 vehicle delivery still blocked; prerequisites explicit in validation-final.md.
+- Final scope review: only DashboardModule runtime, its Java regression, historical maintenance assertion and documentation changed. No native hooks/renderers/installer/deploy files or SVG content changed. All modified files are source/text; no proprietary assets/generated binaries.
+- Documentation checks PASS: 22 modified Markdown files, 466 relative file links (all exist), balanced code fences; git diff --check PASS. Source unchanged since passing test batches; no redundant reruns.
+- Origin fetched immediately before publication; both origin/master and origin/feature/p2-final-testing remain b180e36, no new remote commits.
+- Next: commit validated increment on feature/p2-final-testing, fast-forward local master, push both fork branches, verify remote SHAs, append publication evidence. No force-push/release/vehicle actions.

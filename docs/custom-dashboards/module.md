@@ -12,7 +12,10 @@ for P2-01/P2-02; P2-08 later modified inherited HMI Java, see
 The P2-02 test deferral ended when the user started P2-04, the final testing
 stage. P2-04 adds config/manager and CLI suites and a benchmark target; results
 are in [validation.md](validation.md). P2-01 historical results remain recorded; see status.md.
-**Current:** Tests are deferred: the user said "do not run any test, there will be a ask at the end to implement and run the tests". The suites are out of date since P2-07/P2-08; run them only at that final request.
+**Current P2-FINAL:** the final test request superseded that deferral. Suites
+are repaired and pass; see [validation-final.md](validation-final.md). The Java
+feed has host tests with external-service fixtures; stock/vehicle checks remain
+unavailable. There are seven widget formatters in the current demo API.
 
 ## Build and run
 

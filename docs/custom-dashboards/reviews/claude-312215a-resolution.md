@@ -1,5 +1,14 @@
 # Resolution of the 312215a review
 
+**Final host validation (supersedes the historical states below):** see
+[validation-final.md](../validation-final.md). R1/R3 and the repaired R4 harness
+pass host checks. Codex reproduced a residual R2 defect with a prior successful
+record and a blocked second write, then fixed it by ordering final rename with
+stop and always removing the prior record. Its strengthened regression passes.
+R5 current guides and four previews are reconciled. Stock Java/DSI/QNX and VC
+safety remain unverified; Phase 2 is not complete. The earlier resolution table
+records the original implementation at 9187a88, not current validation status.
+
 Resolution record for [the review of 312215a](claude-312215a.md), which stays
 pinned and unchanged. Implemented by Claude Code on 2026-11-07, branch
 `fix/review-claude-312215a` (from `review/claude-phase2`, source identical to

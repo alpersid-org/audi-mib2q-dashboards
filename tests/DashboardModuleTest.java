@@ -110,6 +110,21 @@ public final class DashboardModuleTest {
         }
     }
 
+    /* Observe the publication gate without a scheduling-dependent fixed sleep. */
+    static void waitPublishing(DashboardModule m) throws Exception {
+        java.lang.reflect.Field filesField = DashboardModule.class.getDeclaredField("files");
+        java.lang.reflect.Field publishingField = DashboardModule.class.getDeclaredField("publishing");
+        filesField.setAccessible(true);
+        publishingField.setAccessible(true);
+        Object lock = filesField.get(m);
+        long end = System.currentTimeMillis() + 3000;
+        while (System.currentTimeMillis() < end) {
+            synchronized (lock) { if (publishingField.getBoolean(m)) return; }
+            Thread.sleep(10);
+        }
+        throw new AssertionError("writer never entered blocked publication");
+    }
+
     static void lifecycle(File dir) throws Exception {
         File cfg = new File(dir, "carplay_dashboard.cfg"), rec = new File(dir, "carplay_dashboard");
         DashboardConfig.path = cfg.getPath();
@@ -196,24 +211,38 @@ public final class DashboardModuleTest {
          * generation of a fresh module is 1; its temp file is a FIFO, so the writer's
          * FileOutputStream open blocks until a reader appears. */
         VehicleDataModule.source = null;
+        DashboardModule w = new DashboardModule();
+        w.start(null);
+        b = waitRecord(rec, 3000);                           /* first publication succeeds */
+        check(b != null, "no earlier record before blocked write");
+        int blockedSession = u32(b, 60);
         File fifo = new File(rec.getPath() + ".tmp.1");
         fifo.delete();
         Process p = Runtime.getRuntime().exec(new String[] { "mkfifo", fifo.getPath() });
         check(p.waitFor() == 0 && fifo.exists(), "mkfifo");
-        DashboardModule w = new DashboardModule();
-        w.start(null);
-        Thread.sleep(900);                                   /* writer now blocked in open */
-        check(!rec.exists(), "record before FIFO opened");
+        waitPublishing(w);                                  /* next publication blocks in open */
+        check(rec.exists(), "earlier record missing before stop");
         t0 = System.currentTimeMillis();
         w.stop();
         check(System.currentTimeMillis() - t0 < 200, "stop waited for blocked file I/O");
+        check(!rec.exists(), "earlier published record survived stop during blocked write");
+        w.start(null);                                      /* restart while old I/O is pending */
         FileInputStream drain = new FileInputStream(fifo);  /* unblocks the writer */
         byte[] sink = new byte[512];
         int got = 0, r;
         while ((r = drain.read(sink)) > 0) got += r;
         drain.close();
         check(got == 256, "writer finished its record into the FIFO");
-        absentFor(rec, 1300, "in-flight write left a record after stop");
+        b = waitRecord(rec, 3000);
+        check(b != null && u32(b, 60) != blockedSession, "restart kept blocked writer session");
+        int recoveredSession = u32(b, 60);
+        for (int i = 0; i < 4; i++) {
+            Thread.sleep(300);
+            b = read(rec);
+            check(b != null && u32(b, 60) == recoveredSession, "old writer replaced restart");
+        }
+        w.stop();
+        absentFor(rec, 700, "in-flight write left a record after stop");
         check(!fifo.exists(), "per-generation temp left behind");
 
         /* Disabled config: start removes a stale record and publishes nothing. */

@@ -1,5 +1,15 @@
 # Executable Phase 2 plan
 
+## Current final-stage acceptance
+
+Available host checks and the strengthened shutdown regression pass; see
+[validation-final.md](validation-final.md). R4, obsolete widget suites and the
+maintenance preservation check are repaired; all four SVG previews are present.
+Stock Java/DSI/QNX and macOS GL prerequisites remain unavailable. Commit/push to
+the fork master is authorized. Steps 6/9/10 are not completed: firmware/ABI, safe
+surface and actual vehicle validation remain mandatory. No unproven hook or
+head-unit action is authorized.
+
 ## Review gate at 312215a (2026-11-07)
 
 [Manual review](reviews/claude-312215a.md) records five open findings. Before
