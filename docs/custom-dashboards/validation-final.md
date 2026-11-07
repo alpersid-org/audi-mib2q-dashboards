@@ -124,3 +124,10 @@ OFF and retain the standalone host renderer until those prerequisites are met.
 Media omission/capability handling and CarPlay navigation remain explicit gaps
 before a real vehicle dashboard can be considered complete. Roadmap Phases 3–5
 remain unimplemented; no Android companion or new transport was added.
+
+## Publication
+
+Validated source commit `f1cb7d9322839bdc28557f6346d4201c0a9eb486` was pushed to
+the fork master and feature/p2-final-testing; remote SHAs were verified. A final
+audit/report documentation checkpoint follows that commit and is discoverable
+through Git history. No release or vehicle deployment was performed.

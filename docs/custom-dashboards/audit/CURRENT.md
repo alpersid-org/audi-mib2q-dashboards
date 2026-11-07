@@ -1,10 +1,10 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T21:41:31Z. Agent: Codex.
+Updated: 2026-11-07T21:42:53Z. Agent: Codex.
 
 ## Task and authorization
 
-- P2-FINAL / READY_FOR_PUBLICATION; available host work complete.
+- P2-FINAL / COMPLETE (available host work and source publication verified).
 - User requested resuming Claude's final stage, then: "Implement everything
   remaining, push and commit to master". Commit completion on the working branch,
   fast-forward/push the fork master and verify remote SHA. No force-push/release.
@@ -42,12 +42,15 @@ Updated: 2026-11-07T21:41:31Z. Agent: Codex.
 
 ## Next action
 
-Review final documentation diff/links, make the authorized completion commit,
-fetch origin and fast-forward/push master without overwriting newer work. Record
-and verify publication. All available host checks are complete; repeat only for
+Source commit f1cb7d9322839bdc28557f6346d4201c0a9eb486 was pushed to both
+origin/master and origin/feature/p2-final-testing; git ls-remote verified both
+exact SHAs. No merge conflicts, force-push or history rewrite. Local master now
+tracks origin/master. The final audit/report checkpoint follows in a documentation
+commit, discoverable through Git history; verify remote HEAD after its push.
+No further host source work or processes remain. All available host checks are complete; repeat only for
 new source changes, failures or unresolved concerns. Retain QNX guard/default OFF.
 After publication the remaining work needs firmware/ABI, stock linkage, read-only
 signal/adapter evidence and a proven non-critical VC ownership rectangle before
 step 9, then separately authorized vehicle validation. Do not infer compatibility
 from these host results or start an invasive hook.
-Audit: [LOG.md](LOG.md), codex-p2-final-resume events -01 through -03.
+Audit: [LOG.md](LOG.md), codex-p2-final-resume events -01 through -05.

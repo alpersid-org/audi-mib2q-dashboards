@@ -869,3 +869,11 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Documentation checks PASS: 22 modified Markdown files, 466 relative file links (all exist), balanced code fences; git diff --check PASS. Source unchanged since passing test batches; no redundant reruns.
 - Origin fetched immediately before publication; both origin/master and origin/feature/p2-final-testing remain b180e36, no new remote commits.
 - Next: commit validated increment on feature/p2-final-testing, fast-forward local master, push both fork branches, verify remote SHAs, append publication evidence. No force-push/release/vehicle actions.
+
+## 2026-11-07T21:42:53Z | codex-p2-final-resume-05 | PUBLICATION / COMPLETE
+
+- User-authorized completion published: f1cb7d9322839bdc28557f6346d4201c0a9eb486 (fix: close dashboard shutdown race and complete host validation) pushed to origin/master and origin/feature/p2-final-testing. git ls-remote verified both exact SHAs.
+- Master fast-forwarded without conflicts/rewrite; all prior dashboard and Claude work preserved. Upstream untouched. No release or vehicle action.
+- Source and tests unchanged since successful validation. Final Markdown check: 22 files/466 relative file links and code fences PASS; git diff --check PASS. No code WIP or active processes.
+- This audit/current/report publication note is a final documentation commit under the same authorization; final remote SHA must match local HEAD before reporting completion.
+- Remaining blocker: step 9 needs exact target firmware/ABI, proprietary stock linkage and proven non-critical VC surface/ownership; no invasive hook or guessed compatibility. Phase 2 vehicle delivery is not complete. Await that evidence or a separately scoped next task.
