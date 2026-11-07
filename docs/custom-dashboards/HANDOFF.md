@@ -4,8 +4,9 @@ Read the canonical [AGENTS.md](../../AGENTS.md) first. This guide is a restart
 checklist for any agent or coding tool; it is not a second set of project rules.
 
 **P2-04 handoff (current):** the user requested "Start P2-04, but before make sure you update the documentation, as instructed".
-P2-04 is the final testing stage; the no-test instruction below has ended. Work is
-on `feature/p2-04-validation`; read the audit checkpoint for progress.
+P2-04 is the final testing stage; the no-test instruction below has ended. It is
+complete on `feature/p2-04-validation` (not merged); results in
+[validation.md](validation.md). Next eligible step: P2-05 when requested.
 
 **P2-03 handoff (historical; merged to master on request):** the user requested "Start P2-03 on a dedicated
 feature branch". Host configuration and manager are implemented on

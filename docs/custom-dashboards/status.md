@@ -4,8 +4,19 @@
 
 User request: "Start P2-04, but before make sure you update the documentation, as instructed". Branch `feature/p2-04-validation` from master
 12cb0b5. The P2-02 test deferral ended when the user started P2-04, the final testing
-stage it was waiting for. Results will be recorded here and in
-the audit as they are produced. Not merged to master.
+stage it was waiting for. Full report: [validation.md](validation.md).
+
+- Dashboard: `make -C dashboard all test` and `test-sanitize` **PASS** (five
+  suites incl. new config/manager and CLI tests; ASan/UBSan with leak detection).
+  Saved previews still match CLI output. Host benchmark: prepare 1.0–1.5 us,
+  SVG 8.4–11.4 us per frame (host only).
+- Upstream `run_tests.sh`: official run fails at check 22 (gcc 13
+  `warn_unused_result` in upstream altscreen code). With labelled diagnostic
+  adjustments 38/39 pass; `hw301_bridge_tests` unavailable (no IPv6 here).
+- Java/stock scripts unavailable (proprietary HMI JAR/JDK 8 absent); native
+  maneuver script passes its Linux part, macOS GL link unavailable.
+- Not merged to master. Next eligible step: P2-05 (packaging, previews,
+  rollback evidence) when requested.
 
 ## Completed — P2-03 (host configuration and manager; merged to master)
 

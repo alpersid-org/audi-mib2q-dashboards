@@ -7,8 +7,9 @@ the API section of [dashboard.h](../../dashboard/dashboard.h). Two host CLIs:
 [manager_preview.c](../../dashboard/manager_preview.c).
 
 **Validation state:** strict C99 compilation (`make -C dashboard all`) succeeded.
-P2-03 itself ran no tests (user deferral). P2-04, the final testing stage,
-tests this behavior; until its results are recorded, treat it as unverified.
+P2-03 itself ran no tests (user deferral). P2-04 tested this behavior on the
+host: `dashboard_manager_test` and `dashboard_cli_test.py` pass, also under
+ASan/UBSan; see [validation.md](validation.md).
 No GEM, upstream runtime, install payload or vehicle code was changed.
 
 ## Configuration format (version 1)
@@ -99,7 +100,7 @@ writes nothing to stdout, prints the suppression reason and exits 3. Output stil
 carries MOCK badges and the host-only banner. `dashboard_preview` (P2-02) stays a
 config-independent preview tool.
 
-## Final-stage acceptance targets (tested in P2-04)
+## Final-stage acceptance targets (all passed in P2-04)
 
 - No config file and every malformed variant (empty, wrong/missing/late version,
   unknown/duplicate key, whitespace, bad value, NUL, >64-byte line, >512 bytes)

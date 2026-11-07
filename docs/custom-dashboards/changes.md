@@ -4,7 +4,7 @@ This ledger describes concrete changes for reviewers and subsequent agents.
 Chronological session evidence remains append-only in [audit/LOG.md](audit/LOG.md).
 Current work state is in [audit/CURRENT.md](audit/CURRENT.md).
 
-## P2-04 — final testing stage (2026-11-07, in progress)
+## P2-04 — final testing stage (2026-11-07)
 
 User request: "Start P2-04, but before make sure you update the documentation,
 as instructed". Branch `feature/p2-04-validation`.
@@ -17,6 +17,18 @@ Documentation update (first commit, before any test):
 | [PROJECT.md](../../PROJECT.md), [PLAN.md](PLAN.md), [HANDOFF.md](HANDOFF.md), [status.md](status.md) | P2-04 scope, branch and step-4 state; P2-03 marked complete/merged. |
 | [audit/README.md](audit/README.md), [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | Scope change recorded; START event and checklist. |
 | [module.md](module.md), [rendering.md](rendering.md), [config.md](config.md), [architecture.md](architecture.md), [requirements.md](requirements.md), [data-providers.md](data-providers.md), [ROADMAP.md](../ROADMAP.md), [previews README](../../dashboard/previews/README.md) | Active "do not run tests" statements replaced with the P2-04 testing state. |
+
+Tests and report (second commit):
+
+| Changed path | Change and purpose |
+| --- | --- |
+| [tests/dashboard_manager_test.c](../../tests/dashboard_manager_test.c) | New C suite for P2-03 config parser/limits/actions/loader and manager gating, clearing and fallback. |
+| [tests/dashboard_cli_test.py](../../tests/dashboard_cli_test.py) | New stdlib-only checks for `dashboard_config` and `dashboard_manager_preview` outputs and exit codes. |
+| [dashboard/benchmark.c](../../dashboard/benchmark.c) | New bounded host benchmark (fixed iterations, mock provider). |
+| [dashboard/Makefile](../../dashboard/Makefile) | Adds the new suites to `test`/`test-sanitize`, a `benchmark` target and cleanup. |
+| [validation.md](validation.md) | New P2-04 regression report: commands, results, unavailable checks with causes, benchmark, acceptance. |
+| [status.md](status.md), [PLAN.md](PLAN.md), [HANDOFF.md](HANDOFF.md), [config.md](config.md), [module.md](module.md) | Record P2-04 results and the next eligible step. |
+| [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | Checkpoints and COMPLETE event. |
 
 ## P2-03 — host configuration and dashboard manager (2026-11-07)
 

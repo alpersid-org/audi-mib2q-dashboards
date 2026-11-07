@@ -9,8 +9,10 @@ or tests were added for publication. Historical feature-test deferral below is
 superseded only for maintenance scope.
 
 **P2-04 (current):** user request "Start P2-04, but before make sure you update the documentation, as instructed".
-This is the final testing stage; the testing override below has ended. Work on
-`feature/p2-04-validation`. Not merged to master.
+This is the final testing stage; the testing override below has ended. Done on
+`feature/p2-04-validation`; report in [validation.md](validation.md). Targets are
+`make -C dashboard test|test-sanitize|benchmark` (no root Makefile; see report).
+Not merged to master.
 
 **P2-03 (complete, merged to master on request):** user request "Start P2-03 on a dedicated feature branch".
 Implemented on `feature/p2-03-config-manager`; see [config.md](config.md).
@@ -78,7 +80,7 @@ git diff --name-only b127988a68c8d690841f4a75d35717ffc01e668e HEAD
 | 1 | 0; user request received | Host module, typed snapshot contract, mock provider and widget formatters | Implemented; focused host tests pass; see module.md and audit |
 | 2 | 1; user request received | Compact/Extended frame builders and SVG adapter | Implemented with four saved host SVGs; final testing/visual review deferred by user |
 | 3 | 1–2; user request received | Disabled-by-default configuration and suppression behavior | Implemented on host (config.c/manager.c, two CLIs); compiled, tests deferred by user |
-| 4 | 1–3; user request received | Automated tests, host benchmark and regression report | In progress on `feature/p2-04-validation` (final testing stage) |
+| 4 | 1–3; user request received | Automated tests, host benchmark and regression report | Complete on `feature/p2-04-validation`; dashboard suites/sanitizers pass; upstream results and unavailable checks in [validation.md](validation.md) |
 | 5 | 4 | Reproducible previews, documentation and rollback evidence | Deferred |
 | 6 | 5 plus firmware/surface evidence | Separately reviewed vehicle feasibility decision | Blocked; no vehicle execution authorized |
 

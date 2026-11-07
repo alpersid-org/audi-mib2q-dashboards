@@ -8,7 +8,8 @@ service, and changes no inherited runtime, install payload or firmware file.
 ## Testing policy
 
 The P2-02 test deferral ended when the user started P2-04, the final testing
-stage. The commands below are run as part of P2-04. P2-01 historical results remain recorded; see status.md.
+stage. P2-04 adds config/manager and CLI suites and a benchmark target; results
+are in [validation.md](validation.md). P2-01 historical results remain recorded; see status.md.
 
 ## Build and run
 

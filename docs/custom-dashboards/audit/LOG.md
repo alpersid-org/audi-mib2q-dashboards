@@ -502,3 +502,43 @@ feature; earlier project history is available in Git and [status.md](../status.m
   ROADMAP.md and previews/README.md. Historical sections were relabelled, not
   deleted. No tests run yet.
 - Next action: commit/push docs to the feature branch, then add P2-03 tests.
+
+## 2026-11-07T20:25:28Z | 20261107T200748Z-claude-06 | CHECKPOINT / P2-04 dashboard suite
+
+- Added tests/dashboard_manager_test.c (config parser accept/reject incl. NUL,
+  64-byte line and 512-byte caps; actions; write/parse round trip; loader
+  missing/invalid/oversize/directory; manager gating, clearing, provider and
+  geometry fallback, sticky invalid-config, NULL safety), tests/dashboard_cli_test.py
+  (both CLIs: outputs, exit codes 0/1/2/3, empty stdout when suppressed),
+  dashboard/benchmark.c; Makefile test/test-sanitize/benchmark wiring.
+- make -C dashboard all test → exit 0: dashboard_test, dashboard_render_test,
+  dashboard_svg_test (saved previews still byte-identical), dashboard_manager_test,
+  dashboard_cli_test all PASS. Host: gcc 13.3.0, Python 3.13.18.
+- make -C dashboard test-sanitize → exit 0, ASan+UBSan, ASAN_OPTIONS unset
+  (default leak detection) — the earlier LeakSanitizer sandbox failure did not occur.
+- Mutation check: (a) select_layout also enabling and (b) provider failure not
+  clearing the frame were each caught by dashboard_manager_test; sources restored
+  with git checkout. A disabled-path mutation was not caught because every action
+  already clears the frame (redundant safety path); recorded, not a defect.
+- make -C dashboard benchmark (20000 prepares/2000 SVG writes, 4 profiles): prepare
+  1.0–1.5 us/frame, SVG 8.4–11.4 us/frame on this 4-CPU host; Extended uses 42 of
+  48 command slots. Host-only numbers; no head-unit claim.
+- Next: inspect and run inherited upstream host scripts from PLAN step 4.
+
+## 2026-11-07T20:28:08Z | 20261107T200748Z-claude-07 | COMPLETE / P2-04
+
+- Task/status: `P2-04` / `COMPLETE` on `feature/p2-04-validation` (not merged).
+- Upstream: SKIP_JAR_CHECK=1 sh scripts/run_tests.sh → exit 1; 21 checks PASS,
+  alt111_settings_test compile error (gcc 13 warn_unused_result on write() with
+  -Werror in altscreen_hook/libaltscreen111_gen2.c). Diagnostic with scratch cc
+  wrapper adding -Wno-error=unused-result → exit 134 at hw301_bridge_tests
+  (errno 97: container has no IPv6, reproduced in Python). Diagnostic scratch copy
+  without hw301 → exit 0, remaining 16 PASS. Total 38/39 under labelled
+  adjustments; repository scripts and upstream sources unchanged.
+- test_maneuver_native.sh → exit 1 (lane receiver PASS; macOS -framework link).
+  test_route_info, test_java_transports, test_mmi_settings, test_pdc,
+  test_lane_guidance_e2e, audit_maneuvers, audit_java_stock → exit 2 each:
+  stock/ empty, stock_env.sh fails on JCL glob under pipefail. Unavailable.
+- Report: docs/custom-dashboards/validation.md; status/PLAN/HANDOFF/config/
+  module/changes/CURRENT updated. git diff --check and link check before commit.
+- Next action: commit/push feature branch; await P2-05 or merge approval.

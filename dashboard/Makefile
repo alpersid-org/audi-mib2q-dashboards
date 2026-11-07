@@ -11,7 +11,7 @@ OBJECTS = $(addprefix $(OUT)/,$(SOURCES:.c=.o))
 HEADERS = dashboard.h ../maneuver_render/visible_area.h ../maneuver_render/protocol.h
 SAN = -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer
 
-.PHONY: all test test-sanitize demo previews clean
+.PHONY: all test test-sanitize demo previews benchmark clean
 all: $(OUT)/libdashboard.a $(OUT)/dashboard_demo $(OUT)/dashboard_preview \
 	$(OUT)/dashboard_config $(OUT)/dashboard_manager_preview
 
@@ -37,6 +37,16 @@ $(OUT)/dashboard_config: dashboard_config.c $(OUT)/libdashboard.a $(HEADERS)
 $(OUT)/dashboard_manager_preview: manager_preview.c $(OUT)/libdashboard.a $(HEADERS)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) manager_preview.c $(OUT)/libdashboard.a $(LDFLAGS) -o $@
 
+$(OUT)/dashboard_manager_test: ../tests/dashboard_manager_test.c $(SOURCES) $(HEADERS) | $(OUT)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -UNDEBUG ../tests/dashboard_manager_test.c $(SOURCES) $(LDFLAGS) -o $@
+
+$(OUT)/dashboard_manager_test_sanitize: ../tests/dashboard_manager_test.c $(SOURCES) $(HEADERS) | $(OUT)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -O1 -UNDEBUG $(SAN) ../tests/dashboard_manager_test.c $(SOURCES) $(LDFLAGS) -o $@
+
+# Bounded host-only measurement; not a head-unit performance claim.
+$(OUT)/dashboard_benchmark: benchmark.c $(OUT)/libdashboard.a $(HEADERS)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) benchmark.c $(OUT)/libdashboard.a $(LDFLAGS) -o $@
+
 $(OUT)/dashboard_test: ../tests/dashboard_test.c $(SOURCES) $(HEADERS) | $(OUT)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -UNDEBUG ../tests/dashboard_test.c $(SOURCES) $(LDFLAGS) -o $@
 
@@ -49,14 +59,24 @@ $(OUT)/dashboard_render_test: ../tests/dashboard_render_test.c $(SOURCES) $(HEAD
 $(OUT)/dashboard_render_test_sanitize: ../tests/dashboard_render_test.c $(SOURCES) $(HEADERS) | $(OUT)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -O1 -UNDEBUG $(SAN) ../tests/dashboard_render_test.c $(SOURCES) $(LDFLAGS) -o $@
 
-test: $(OUT)/dashboard_test $(OUT)/dashboard_render_test $(OUT)/dashboard_preview
+test: $(OUT)/dashboard_test $(OUT)/dashboard_render_test $(OUT)/dashboard_preview \
+	$(OUT)/dashboard_manager_test $(OUT)/dashboard_config $(OUT)/dashboard_manager_preview
 	$(OUT)/dashboard_test
 	$(OUT)/dashboard_render_test $(OUT)/escaped.svg
 	$(PYTHON) ../tests/dashboard_svg_test.py $(OUT)/dashboard_preview $(OUT)/escaped.svg
+	mkdir -p $(OUT)/fixtures
+	$(OUT)/dashboard_manager_test $(OUT)/fixtures
+	$(PYTHON) ../tests/dashboard_cli_test.py $(OUT)/dashboard_config $(OUT)/dashboard_manager_preview
 
-test-sanitize: $(OUT)/dashboard_test_sanitize $(OUT)/dashboard_render_test_sanitize
+test-sanitize: $(OUT)/dashboard_test_sanitize $(OUT)/dashboard_render_test_sanitize \
+	$(OUT)/dashboard_manager_test_sanitize
 	$(OUT)/dashboard_test_sanitize
 	$(OUT)/dashboard_render_test_sanitize $(OUT)/escaped_sanitize.svg
+	mkdir -p $(OUT)/fixtures
+	$(OUT)/dashboard_manager_test_sanitize $(OUT)/fixtures
+
+benchmark: $(OUT)/dashboard_benchmark
+	$(OUT)/dashboard_benchmark
 
 demo: $(OUT)/dashboard_demo
 	$(OUT)/dashboard_demo
@@ -72,4 +92,6 @@ previews: $(OUT)/dashboard_preview
 clean:
 	rm -f $(OBJECTS) $(OUT)/libdashboard.a $(OUT)/dashboard_demo $(OUT)/dashboard_test $(OUT)/dashboard_test_sanitize
 	rm -f $(OUT)/dashboard_preview $(OUT)/dashboard_render_test $(OUT)/dashboard_render_test_sanitize $(OUT)/escaped.svg $(OUT)/escaped_sanitize.svg
-	rm -f $(OUT)/dashboard_config $(OUT)/dashboard_manager_preview
+	rm -f $(OUT)/dashboard_config $(OUT)/dashboard_manager_preview $(OUT)/dashboard_benchmark
+	rm -f $(OUT)/dashboard_manager_test $(OUT)/dashboard_manager_test_sanitize
+	rm -rf $(OUT)/fixtures
