@@ -4,6 +4,16 @@ Review date: 2026-11-07. Working branch: `maintenance/upstream-v1.4.1`.
 Starting project commit: `6d5e66021b5f511e499da35557af67bdf213b75d` on
 `feature/custom-dashboards`. The working tree was clean.
 
+## Publication update (2026-11-07)
+
+After the local review, the user requested "Push everything to main/master on my
+forked project". Master was fast-forwarded without conflicts from b127988 to
+`f5bd2e72290a1509d63f831e7dce4dc5282afaa9` and pushed to origin; the remote SHA was
+verified. All existing dashboard and roadmap work is included. A subsequent
+publication documentation checkpoint is discoverable in Git history. The report
+below records the original maintenance increment, which changed no runtime code.
+This supersedes its local-only restriction, not the vehicle/release restrictions.
+
 ## Outcome
 
 **The complete target release was already integrated before this task.** The
@@ -17,8 +27,9 @@ This local maintenance increment adds targeted regression coverage, records the
 complete source audit and updates agent/status instructions. It preserves all
 dashboard code, interfaces, previews, the five-phase roadmap and provider design.
 No upstream runtime, installer, GEM dispatcher or release files were modified.
-No push, main/master merge, release packaging/publication or vehicle action was
-performed. This is maintenance, not a new roadmap phase.
+At the original maintenance-review checkpoint, no push, main/master merge,
+release packaging/publication or vehicle action was performed. The later approved
+master publication is recorded above. This is maintenance, not a new roadmap phase.
 
 ## Upstream identity and full diff
 
@@ -211,5 +222,7 @@ git log --oneline feature/custom-dashboards..maintenance/upstream-v1.4.1
 
 No runtime change was made by this task, so there is no new vehicle rollback to
 perform. The inherited installer backups/uninstall remain as upstream. Local
-review work can be abandoned by returning to the unchanged feature branch;
-preserve any later user edits. Push/merge/release require user approval.
+review was subsequently published to master with user approval. To undo this
+maintenance increment after publication, use a reviewed revert of f5bd2e7 on a
+separate branch, preserving later edits and dashboard work; do not reset or
+force-push master. Future publication and releases require their own approval.

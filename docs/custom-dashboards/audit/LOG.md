@@ -367,3 +367,50 @@ feature; earlier project history is available in Git and [status.md](../status.m
   no active test processes, source WIP or tracked generated binaries.
 - Next action: make local review commit, then review report/diff. Do not publish,
   merge, create a release or start another phase without the user's request.
+
+## 2026-11-07T20:01:55Z | 20261107T195941Z-codex-01 | RESUME / PUBLICATION
+
+- Agent/session: Codex / `20261107T195941Z-codex`.
+- Task/status: `PUBLISH-MASTER` / `IN_PROGRESS`.
+- Authorization: latest user request, "Push everything to main/master on my forked
+  project", supersedes the earlier maintenance no-push/no-merge restriction for
+  this consolidation. No release or vehicle actions authorized.
+- Git: fetched origin, confirmed no newer remote work; master fast-forwarded from
+  b127988 to f5bd2e72290a1509d63f831e7dce4dc5282afaa9. All feature branch commits
+  through 6d5e660 and local maintenance work included without conflicts or rewrites.
+  Master now tracks origin/master; source branches retained.
+- Publication evidence: git push origin master:master succeeded; subsequent
+  git ls-remote origin refs/heads/master returned f5bd2e72290a1509d63f831e7dce4dc5282afaa9.
+  Working tree clean on master. Upstream remote untouched.
+- Validation: ancestry checks confirm old origin/master, feature/custom-dashboards
+  and maintenance/upstream-v1.4.1 are ancestors. Runtime and dashboard code unchanged
+  by consolidation; no automated tests rerun. Prior maintenance test evidence stands.
+- Pending work: update current agent/project/status/handoff docs, record publication
+  and verify final documentation commit on origin/master. No active processes.
+- Next action: publish documentation checkpoint on master; no new feature work.
+
+## 2026-11-07T20:07:00Z | 20261107T195941Z-codex-02 | COMPLETE
+
+- Agent/session: Codex / `20261107T195941Z-codex`.
+- Task/status: `PUBLISH-MASTER` / `COMPLETE` (source confirmed on origin/master;
+  this final documentation checkpoint follows under the same push authorization).
+- Changes: consolidated all existing work on master; updated project clone/branch
+  instructions, agent entry points, status/plan/handoff/audit and maintenance report
+  to supersede stale local-only scope. Added publication map in changes.md.
+- Evidence: source f5bd2e72290a1509d63f831e7dce4dc5282afaa9 verified remotely in
+  event -01; includes feature6d5e660 and upstream b127988 ancestry. No conflicts,
+  runtime changes, history rewrites, release/tag creation or vehicle action.
+- Validation: no tests rerun for publication. Prior maintenance results and limits
+  retained. Final documentation diff/whitespace and source-identity review precede
+  checkpoint commit; verify final origin/master SHA after checkpoint push.
+- Pending work: only final documentation checkpoint commit/push/verification.
+  No code WIP or active processes; no new feature authorized.
+- Next action: finish publication and report verified final SHA. Await user's next
+  task before P2-03 or any further implementation/publication.
+
+## 2026-11-07T20:04:19Z | 20261107T195941Z-codex-03 | TIMESTAMP CORRECTION
+
+- Event -02 was recorded before this event; its 20:07:00Z timestamp was an
+  incorrect estimate. The actual clock at final review was 20:04:04Z. Its
+  publication/source evidence is unchanged. git diff --check and source identity/
+  ancestry checks passed; only publication documentation changed.

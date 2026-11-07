@@ -48,10 +48,12 @@ reduces lost context; it cannot guarantee saving after an abrupt termination.
 
 ## Scope and state
 
-Latest MAINT-141 request authorizes applicable automated host tests for the upstream
-maintenance/dashboard review. It supersedes the older feature-test deferral below
-for this task only. The maintenance branch must remain local: no automatic push,
-main/master merge, release or vehicle actions. Read CURRENT.md for task scope.
+MAINT-141 authorized applicable automated host maintenance/dashboard tests despite
+the older feature-test deferral below. The subsequent explicit user request to
+push everything to the fork's main/master superseded the local-only restriction:
+all work is consolidated on `master`. This authorization covers that publication,
+not a new feature, future release or vehicle action. Read CURRENT.md for task scope;
+preserve historical authorization events and append updates rather than editing them.
 
 Current user override recorded during P2-02: no more tests now; testing is for the
 final stage. Continue implementation and document each change. Do not run tests

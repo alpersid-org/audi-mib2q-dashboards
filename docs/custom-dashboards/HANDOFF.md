@@ -3,11 +3,13 @@
 Read the canonical [AGENTS.md](../../AGENTS.md) first. This guide is a restart
 checklist for any agent or coding tool; it is not a second set of project rules.
 
-**Active maintenance handoff:** read [the v1.4.1 report](../maintenance/upstream-v1.4.1.md)
-and current audit before applying the older feature checkpoint below. Tests for
-MAINT-141 are explicitly authorized. The target release was already integrated;
-do not duplicate fixes or revert dashboards. Keep work on local
-maintenance/upstream-v1.4.1 and do not push/merge/release without approval.
+**Publication handoff:** the user explicitly authorized pushing all work to the
+fork's `master`. Source commit f5bd2e7, including both dashboard steps and MAINT-141,
+was fast-forwarded and pushed without conflicts; remote SHA was verified. Read
+[the v1.4.1 report](../maintenance/upstream-v1.4.1.md) and current audit before
+applying the historical feature checkpoint below. Do not duplicate inherited fixes.
+Publication adds no runtime changes or tests and does not start P2-03, authorize
+future publication, a release or vehicle actions. Await the next task.
 
 Read [docs/ROADMAP.md](../ROADMAP.md) for all five phases and
 [data-providers.md](data-providers.md) for the shared provider architecture.
@@ -25,8 +27,8 @@ making changes.
 
 - The user requested a separate project containing a fork of the original source,
   Markdown architecture/analysis, a phased executable plan and AI instructions.
-- The GitHub fork is `alpersid-org/audi-mib2q-dashboards`; use
-  `feature/custom-dashboards` for project work.
+- The GitHub fork is `alpersid-org/audi-mib2q-dashboards`; `master` now contains
+  all published project work. Use a dedicated branch for the next feature.
 - The fork contains full upstream history/source. Custom work adds documents,
   agent instructions and the host data/widget module.
 - P2-01 is complete. User authorized P2-02 with "Okay, push, commit and let's go

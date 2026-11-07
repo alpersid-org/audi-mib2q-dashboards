@@ -12,13 +12,16 @@ has deferred all further testing until the final stage; each change is documente
 Earlier test results are historical evidence, not final validation. Inherited runtime files and the original [upstream README](README.md)
 are unchanged; no vehicle connection, installation or deployment is performed.
 
-Development branch: `feature/custom-dashboards`.
+Published branch: `master`, tracking the fork's `origin/master`. All dashboard
+steps 1 and 2, roadmap/provider design, agent audit and maintenance work are included.
+The user explicitly authorized this consolidation on 2026-11-07.
 
 Current maintenance review: [upstream v1.4.1](docs/maintenance/upstream-v1.4.1.md)
-on local `maintenance/upstream-v1.4.1`. The exact release was already inherited;
-this task verifies it and adds upgrade regression coverage without modifying
-runtime/dashboard code. The latest request authorizes applicable maintenance
-tests. No push, main/master merge, release or vehicle action without approval.
+was prepared on `maintenance/upstream-v1.4.1` and is now included in `master`.
+The exact release was already inherited; this task verified it and added upgrade
+regression coverage without modifying runtime/dashboard code. Maintenance host
+tests were explicitly authorized and completed as reported. Publication does not
+start another implementation task or authorize a release or vehicle action.
 
 **Long-term context:** follow the [five-phase roadmap](docs/ROADMAP.md). The future
 Galaxy S23 Ultra app starts independently in Phase 3, communicates with MMI in
@@ -69,15 +72,16 @@ The upstream code is part of this repository itself, with its history; it is not
 merely linked or included as a submodule. New project documents are isolated under
 `docs/custom-dashboards/`. See PLAN.md there before beginning any implementation.
 
-To work with the documentation branch:
+To obtain the complete project:
 
 ```sh
-git clone --branch feature/custom-dashboards https://github.com/alpersid-org/audi-mib2q-dashboards.git
+git clone --branch master https://github.com/alpersid-org/audi-mib2q-dashboards.git
 cd audi-mib2q-dashboards
 ```
 
-The fork's `master` branch retains the inherited upstream baseline. The
-`feature/custom-dashboards` branch contains project documents and the host module.
+The fork's `master` contains the full upstream baseline, project documents,
+host module and maintenance verification. The earlier feature and maintenance
+branches remain available; no history was rewritten.
 
 Build with `make -C dashboard all`; generate mock SVGs with
 `make -C dashboard previews`. Tests are reserved for the final stage under the

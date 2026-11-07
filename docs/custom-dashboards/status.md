@@ -1,10 +1,20 @@
 # Project status
 
-## Current maintenance task — MAINT-141
+## Current publication — PUBLISH-MASTER
 
-Latest user authorization supersedes the older test deferral **for maintenance**:
-run applicable v1.4.1 and dashboard tests, keep the work local, and do not push,
-merge into main/master, create a release or deploy without approval.
+User request: "Push everything to main/master on my forked project". The fork's
+`master` was fast-forwarded from b127988 to maintenance source commit
+`f5bd2e72290a1509d63f831e7dce4dc5282afaa9` and pushed; remote SHA was verified.
+This includes P2-01, P2-02, roadmap/provider design, agent audit and MAINT-141.
+No conflicts, runtime changes or history rewrites. The final publication checkpoint
+is a later documentation commit; use Git history for its SHA. No release or vehicle
+execution. See [the audit](audit/LOG.md) for exact authorization and evidence.
+
+## Completed maintenance verification — MAINT-141
+
+Maintenance host tests were explicitly authorized despite the older feature-test
+deferral. The original local-only restriction was superseded by the publication
+request above. Testing results below are unchanged; no tests rerun for publication.
 
 Dedicated branch: `maintenance/upstream-v1.4.1`, based on `6d5e660`.
 The exact requested upstream commit b127988 was already our original baseline.
@@ -147,8 +157,9 @@ or committed; this document and the audit preserve the results.
 ## Repository and rollback
 
 Fork: [alpersid-org/audi-mib2q-dashboards](https://github.com/alpersid-org/audi-mib2q-dashboards).
-Branch: `feature/custom-dashboards`; upstream baseline:
-`b127988a68c8d690841f4a75d35717ffc01e668e`. Master remains inherited upstream.
+Published branch: `master`; upstream baseline:
+`b127988a68c8d690841f4a75d35717ffc01e668e`. Master includes all existing custom
+and maintenance work. Prior feature and maintenance branches are retained.
 Push project changes to the fork, never upstream.
 
 `make -C dashboard clean` removes module outputs. The host library/demo is not

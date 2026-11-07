@@ -4,11 +4,28 @@ This ledger describes concrete changes for reviewers and subsequent agents.
 Chronological session evidence remains append-only in [audit/LOG.md](audit/LOG.md).
 Current work state is in [audit/CURRENT.md](audit/CURRENT.md).
 
+## PUBLISH-MASTER — approved consolidation (2026-11-07)
+
+User authorized pushing everything to the fork's main/master. Master fast-forwarded
+from b127988 to f5bd2e7 and was pushed with a verified remote SHA. All dashboard,
+roadmap, agent and maintenance work is included; prior branches remain. No merge
+conflicts, source rewrites, new features, tests, release or vehicle execution.
+
+| Changed path | Change and purpose |
+| --- | --- |
+| [PROJECT.md](../../PROJECT.md) | Uses master clone instructions and describes consolidated project contents. |
+| [AGENTS.md](../../AGENTS.md), [CLAUDE.md](../../CLAUDE.md), [GEMINI.md](../../GEMINI.md), [Copilot instructions](../../.github/copilot-instructions.md) | Replaces stale local-only scope with explicit publication approval and retained safety/phase boundaries. |
+| [status.md](status.md), [PLAN.md](PLAN.md), [HANDOFF.md](HANDOFF.md) | Records master publication, preserves prior test evidence, awaits a new task before P2-03. |
+| [maintenance report](../maintenance/upstream-v1.4.1.md) | Adds later publication context and history-preserving rollback guidance. |
+| [audit/README.md](audit/README.md), [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | Records authorization, fast-forward and verified source SHA, plus checkpoint publication handoff. |
+| [changes.md](changes.md) | Records this documentation-only publication change map. |
+
 ## MAINT-141 — existing v1.4.1 integration verification (2026-11-07)
 
 The exact release already existed in project ancestry. No upstream runtime,
 dashboard code/tests/previews, interface, provider design or five-phase roadmap
-changed. This increment stays local; no push/merge/release or vehicle actions.
+changed. This increment was originally local-only; the later approved master
+publication is recorded above. No release or vehicle actions.
 
 | Changed path | Change and purpose |
 | --- | --- |

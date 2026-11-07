@@ -10,12 +10,13 @@ instructions to preserve context, not to override them.
 Build the foundation for modular, customizable Audi Virtual Cockpit dashboards
 within **roadmap Phase 2** of the mib2q-carplay-based project.
 
-**Current task is MAINT-141:** review/validate the exact upstream v1.4.1 integration
-on local branch `maintenance/upstream-v1.4.1`, preserving all Phase 2 work. The
-release already exists in our ancestry; avoid duplicate cherry-picks/rewrites.
-Applicable host tests are explicitly authorized for this maintenance task.
-Do not push, merge into master/main, create a release or deploy without approval.
-No new roadmap phase or Android communication implementation is authorized.
+**Current task is PUBLISH-MASTER:** the user explicitly requested "Push everything
+to main/master on my forked project". All Phase 2 work through P2-02, roadmap and
+agent documents, and MAINT-141 verification have been fast-forwarded and pushed
+to the fork's `master`. See the audit checkpoint for publication evidence.
+This supersedes the earlier local-only maintenance restriction for this push.
+No release, vehicle action, further feature or Android implementation is authorized.
+The v1.4.1 release was already inherited; avoid duplicate cherry-picks/rewrites.
 
 On each resume, reconcile this scope with the
 latest explicit user instruction and the scope recorded in
@@ -55,8 +56,11 @@ describes the proposed dashboard increment. Do not confuse the two.
 
 - Origin: `https://github.com/alpersid-org/audi-mib2q-dashboards.git`.
 - Upstream: `https://github.com/kamgurgul/mib2q-carplay.git`.
-- Working branch: `feature/custom-dashboards`, unless the user selects another
-  appropriate feature branch. Do not automatically merge into `master`.
+- Consolidated published branch: `master`, tracking `origin/master`. The user
+  authorized the 2026-11-07 fast-forward of feature and maintenance work into it.
+  Retain `feature/custom-dashboards` and `maintenance/upstream-v1.4.1` as history.
+  Use a dedicated branch for future implementation; do not infer approval for
+  subsequent master merges, pushes or releases from this completed publication.
 - Investigated upstream baseline: `b127988a68c8d690841f4a75d35717ffc01e668e`.
   The fork inherits the actual upstream source and Git history, not a submodule.
 - Inspect status, branch, remotes and recent commits first. Preserve existing

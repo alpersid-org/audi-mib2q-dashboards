@@ -1,10 +1,12 @@
 # Executable Phase 2 plan
 
-MAINT-141 is a separate local upstream maintenance review, not a plan step or new
-phase. The latest request authorizes applicable maintenance/dashboard tests and
-prohibits automatic push/merge/release. See
-[the report](../maintenance/upstream-v1.4.1.md). Historical feature-test deferral
-below is superseded only for that maintenance scope. P2-03 is not started.
+MAINT-141 is completed upstream maintenance verification, not a plan step or new
+phase. Applicable maintenance/dashboard tests were authorized; see
+[the report](../maintenance/upstream-v1.4.1.md). The subsequent user request to push
+everything to the fork's main/master authorized consolidation into `master`.
+P2-01/P2-02, roadmap and maintenance work are now included there. No new features
+or tests were added for publication. Historical feature-test deferral below is
+superseded only for maintenance scope. P2-03 is not started; await a new task.
 
 This plan subdivides **roadmap Phase 2 only**. Later-phase implementation is
 excluded; designing compatible provider boundaries for those phases is required.

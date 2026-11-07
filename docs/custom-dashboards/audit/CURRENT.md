@@ -1,61 +1,57 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T19:52:53Z. Agent: Codex.
-Session: `20261107T194002Z-codex`.
+Updated: 2026-11-07T20:04:19Z. Agent: Codex.
+Session: `20261107T195941Z-codex`.
 
 ## Active task and authorization
 
-- Task/state: `MAINT-141` / `READY_FOR_REVIEW`, local only.
-- User requests official upstream v1.4.1 (b127988) maintenance integration and
-  applicable automated tests, preserving Phase 2 dashboards and the full roadmap.
-- Host maintenance/dashboard testing explicitly authorized; earlier test deferral
-  is superseded for this task. No vehicle actions, automatic push, main/master
-  merge or release. Keep changes local and prepare for review.
+- Task/state: `PUBLISH-MASTER` / `COMPLETE` (source publication verified;
+  this documentation checkpoint is being committed/pushed with the same approval).
+- Latest user request: "Push everything to main/master on my forked project".
+  Supersedes the maintenance local-only/no-merge restriction for this publication.
+- No new feature, release, firmware action or vehicle execution authorized.
+  P2-03 configuration/manager work is not started. Roadmap Phases 3–5 remain future.
 
-## Git/source evidence
+## Git and publication evidence
 
-- Started clean at `6d5e66021b5f511e499da35557af67bdf213b75d`.
-- Dedicated local branch: `maintenance/upstream-v1.4.1`.
-- Exact baseline already v1.4.1: annotated tag peels to
-  `b127988a68c8d690841f4a75d35717ffc01e668e`, ancestor of existing branch.
-- Reviewed complete 20-file v1.4..v1.4.1 diff and official remote release/tag/
-  changelog. Runtime/deploy/installer files match target unchanged.
-- Commits e6ac2b9, d8bbfa0, b127988 already included; no cherry-pick/merge needed.
-- Preserve all dashboard sources/interfaces/previews and docs/ROADMAP.md unchanged.
+- Origin: https://github.com/alpersid-org/audi-mib2q-dashboards.git.
+- Current branch: master, tracking origin/master.
+- Master fast-forwarded from b127988a68c8d690841f4a75d35717ffc01e668e to
+  f5bd2e72290a1509d63f831e7dce4dc5282afaa9 without conflicts or history rewrites.
+- git push origin master:master succeeded; git ls-remote confirmed f5bd2e7 on
+  origin/master. This includes all feature work through 6d5e660 and maintenance.
+- Feature/custom-dashboards and maintenance/upstream-v1.4.1 branches retained.
+  Upstream remote untouched. No main branch, release or tag created.
+- This final documentation checkpoint follows the verified source commit; discover
+  its SHA with git log. Verify origin/master against local HEAD after pushing.
 
-## Acceptance
+## Included work and validation
 
-- [x] Inspect branch/relationships, complete release diff and existing integration.
-- [x] Confirm upstream tag/release and exact runtime source preservation.
-- [x] Run applicable upstream tests including AA tee/SIGPIPE, yield, lifecycle,
-  GEM, installer and dashboard tests; record missing proprietary/platform checks.
-- [x] Add targeted upgrade/preference coverage if absent.
-- [x] Review/report source mapping, conflicts, risks and future vehicle test gates.
-- [x] Prepared local review increment; source commit discoverable with
-  `git log -1 -- tests/upstream_v141_test.py`. No push/merge/release authorized.
+P2-01 host data/mock-provider/widgets; P2-02 Compact/Extended layouts, SVG export
+and four saved previews; full five-phase roadmap/provider design; AI instructions
+and audit; exact inherited v1.4.1 plus maintenance regression coverage and report.
+All source/runtime/tests/previews remain byte-for-byte unchanged by publication.
+Only agent/project/status/plan/handoff/report/change-ledger/audit docs were updated.
 
-## Files and next action
+No automated tests rerun for this fast-forward and documentation-only increment.
+Prior MAINT-141 evidence: upstream 39 host checks passed with SKIP_JAR_CHECK=1;
+dashboard C/XML/CLI/artifact and ASan/UBSan passed; four maintenance tests passed;
+renderer PID and sanitized FIN/RST recovery passed. Shipping JAR/proprietary Java,
+macOS GL, QNX toolchain and actual decoder/vehicle checks remain unavailable or
+failed as detailed in the linked maintenance report below.
+Host test success never establishes vehicle compatibility or safe VC composition.
+Earlier feature-test deferral remains for future feature work unless superseded.
 
-Implemented changes: tests/upstream_v141_test.py, docs/maintenance/upstream-v1.4.1.md
-and agent/project/status/plan/handoff/change-ledger/audit docs. No runtime rewrite.
-The complete file map and source/test evidence are in the maintenance report.
+## Handoff and next action
 
-Tests: upstream 39 named host checks ran to exit 0 with shipping-JAR check explicitly
-skipped; dashboard C/XML/artifact and ASan/UBSan passed; four new maintenance tests
-passed; renderer PID identity and sanitized FIN/RST recovery passed. Tests ran
-outside traced sandbox as needed with sanitizer defaults intact. Initial new
-fixture generation failed for a missing temp dispatcher resource, corrected in
-fixture only; final suite passed. No-skip shipping check cannot pass without JAR.
-Native lane test passed, macOS -framework link failed on Linux; Java setup failed
-on missing JCL/HMI/JDK. No local Docker images/QNX toolchain or FFmpeg dev packages.
-No vehicle compatibility/decoder/visual acceptance claim follows from host checks.
+No code WIP, active processes or pending feature task. No vehicle deployment.
+Finish checkpoint commit/push and verify remote HEAD. After that, await the next
+user task. A future implementation request should use a dedicated feature branch,
+read ROADMAP/provider/PLAN docs and write an audit RESUME event. Do not duplicate
+upstream fixes or infer publication/release approval for future work.
 
-Final documentation check: 21 Markdown files, 255 relative links and anchors/fences
-passed; git diff --check and release/custom preservation checks passed. No test
-processes remain. No packages installed or release artifacts created.
-
-Exact next action: review the local branch diff/report and await the user's
-approval before any push, main/master merge or release. Do not reapply already
-inherited upstream commits, discard Phase 2 work or begin another roadmap phase.
-Checkpoint commit: discover through Git history (no self-referential hash).
-Audit: [LOG.md](LOG.md), session `20261107T194002Z-codex`.
+Rollback for this publication: no head-unit changes require undoing. Remove local
+build outputs with make -C dashboard clean. Any source rollback should use reviewed
+reverts preserving later edits, never reset/force-push master.
+Audit: [LOG.md](LOG.md). Maintenance report:
+[upstream-v1.4.1.md](../../maintenance/upstream-v1.4.1.md).

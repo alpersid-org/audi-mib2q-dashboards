@@ -9,7 +9,8 @@ Use [the continuation guide](../docs/custom-dashboards/HANDOFF.md) to recover co
 Read [the current checkpoint](../docs/custom-dashboards/audit/CURRENT.md) and recent
 [audit events](../docs/custom-dashboards/audit/LOG.md); follow the audit protocol to
 record your RESUME event, milestones and handoff before context exhaustion.
-AGENTS.md and the active checkpoint define scope. MAINT-141 explicitly authorizes
-applicable host maintenance/dashboard tests despite the earlier feature-test
-deferral. Work locally on maintenance/upstream-v1.4.1; no push, main/master merge,
-release or vehicle actions without approval. Preserve the roadmap and dashboards.
+AGENTS.md and the active checkpoint define scope. The user authorized publishing
+all existing work to the fork's master, including P2-01/P2-02 and MAINT-141.
+That consolidation is published; retain its test evidence and audit trail.
+Future features/publication require their own scope. No release, vehicle action
+or Android communication is authorized. Preserve the roadmap and dashboards.
