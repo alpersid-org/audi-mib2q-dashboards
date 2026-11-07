@@ -14,6 +14,12 @@ are unchanged; no vehicle connection, installation or deployment is performed.
 
 Development branch: `feature/custom-dashboards`.
 
+Current maintenance review: [upstream v1.4.1](docs/maintenance/upstream-v1.4.1.md)
+on local `maintenance/upstream-v1.4.1`. The exact release was already inherited;
+this task verifies it and adds upgrade regression coverage without modifying
+runtime/dashboard code. The latest request authorizes applicable maintenance
+tests. No push, main/master merge, release or vehicle action without approval.
+
 **Long-term context:** follow the [five-phase roadmap](docs/ROADMAP.md). The future
 Galaxy S23 Ultra app starts independently in Phase 3, communicates with MMI in
 Phase 4 and supplies existing widgets in Phase 5. Phase 2's VehicleDataProvider
@@ -26,6 +32,7 @@ adapters are not implemented, and no Android communication is added now.
 | Document | Purpose |
 | --- | --- |
 | [Five-phase roadmap](docs/ROADMAP.md) | Persistent full-project context, phase boundaries and acceptance targets. |
+| [v1.4.1 maintenance review](docs/maintenance/upstream-v1.4.1.md) | Full release mapping, existing integration proof, new regressions, results and hardware gates. |
 | [Data Provider Interface design](docs/custom-dashboards/data-providers.md) | Vehicle/Android adapter roles, shared manager/widgets and future metadata/selection rules. |
 | [AI agent instructions](AGENTS.md) | Canonical scope, safety, engineering and validation rules for agents. |
 | [AI continuation guide](docs/custom-dashboards/HANDOFF.md) | Restart checklist, next eligible task and reusable prompt. |

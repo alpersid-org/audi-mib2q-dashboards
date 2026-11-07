@@ -1,5 +1,31 @@
 # Project status
 
+## Current maintenance task — MAINT-141
+
+Latest user authorization supersedes the older test deferral **for maintenance**:
+run applicable v1.4.1 and dashboard tests, keep the work local, and do not push,
+merge into main/master, create a release or deploy without approval.
+
+Dedicated branch: `maintenance/upstream-v1.4.1`, based on `6d5e660`.
+The exact requested upstream commit b127988 was already our original baseline.
+The complete 20-file release delta remains unchanged; no duplicate integration
+or runtime rewrite was needed. New targeted regressions verify release/custom
+preservation, renderer policy and v1.4→v1.4.1 program/menu preference upgrades.
+
+Host results: upstream suite passed with its explicit missing shipping-JAR skip;
+dashboard C/XML/CLI/saved-preview checks and ASan/UBSan passed; new maintenance
+test's four methods passed; renderer identity and FIN/RST recovery passed. Native
+macOS GL and proprietary Java checks could not complete on this host. Actual
+QNX decoder/vehicle behavior remains unverified. Full commands, limits, source
+mapping and future A4 B9 test gates are in
+[the maintenance report](../maintenance/upstream-v1.4.1.md).
+
+No phase 3–5 work, new product mock provider, source-interface change, release
+artifact or vehicle action. P2-02 visual/in-car acceptance is not established by
+these successful host regressions. The five-phase roadmap remains unchanged.
+
+## Prior feature-work checkpoint (historical)
+
 Status date: 2026-11-07. Scope: user-authorized P2-02 / PLAN step 2, host only.
 Further tests are deferred until the final stage by explicit user instruction.
 

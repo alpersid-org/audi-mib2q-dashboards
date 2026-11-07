@@ -10,11 +10,12 @@ instructions to preserve context, not to override them.
 Build the foundation for modular, customizable Audi Virtual Cockpit dashboards
 within **roadmap Phase 2** of the mib2q-carplay-based project.
 
-**Current task is DOC-ROADMAP:** document the full five-phase context and the
-shared Data Provider Interface for VehicleDataProvider (Phase 2) and future
-AndroidDataProvider (Phases 4–5). P2-01 and P2-02 host implementations are published;
-their final test gate is deferred. Do not implement Android communication or a
-live vehicle adapter in this documentation update. No vehicle actions authorized.
+**Current task is MAINT-141:** review/validate the exact upstream v1.4.1 integration
+on local branch `maintenance/upstream-v1.4.1`, preserving all Phase 2 work. The
+release already exists in our ancestry; avoid duplicate cherry-picks/rewrites.
+Applicable host tests are explicitly authorized for this maintenance task.
+Do not push, merge into master/main, create a release or deploy without approval.
+No new roadmap phase or Android communication implementation is authorized.
 
 On each resume, reconcile this scope with the
 latest explicit user instruction and the scope recorded in
@@ -134,6 +135,12 @@ When host implementation is requested, follow the next eligible PLAN step:
   Upstream menu generation alone is insufficient evidence for dashboard activation.
 
 ## Validation and handoff
+
+**MAINT-141 exception:** the latest user request explicitly authorizes all
+applicable automated maintenance/dashboard tests, including tee/SIGPIPE tests.
+Run those host checks and report missing assets/toolchains separately. This
+supersedes the older deferral below for this task only; it does not authorize
+vehicle execution, publication or unrelated feature development.
 
 **User override during P2-02:** "Sa nu executi teste momentan, testele sunt
 pentru final, mergem inainte fara teste. Doar sa documentezi fiecare schimbare."

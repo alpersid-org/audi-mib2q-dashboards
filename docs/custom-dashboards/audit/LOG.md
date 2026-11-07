@@ -310,3 +310,60 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Next action: save this record. On a later P2-03 request keep manager inputs
   provider independent and use roadmap/provider docs as context. Do not implement
   Android communication or run tests until the corresponding user request.
+
+## 2026-11-07T19:40:02Z | 20261107T194002Z-codex-01 | START
+
+- Agent/session: Codex / `20261107T194002Z-codex`.
+- Task/status: `MAINT-141` / `IN_PROGRESS`.
+- Authorization: integrate/review official v1.4.1, run applicable automated tests,
+  preserve dashboard work. No automatic push, main merge, release or vehicle actions.
+- Git: started clean at `6d5e66021b5f511e499da35557af67bdf213b75d` on the dashboard
+  branch; created local maintenance/upstream-v1.4.1 after inspection.
+- Changes: instructions/checkpoint only at start; runtime fixes already inherited.
+- Decisions/evidence: reviewed all 20 changed files in v1.4..v1.4.1. Tag peels to
+  b127988a68c8d690841f4a75d35717ffc01e668e, an ancestor of our HEAD; touched runtime
+  paths match upstream. Remote release/tag/changelog checked via GitHub read API.
+  Three intervening commits e6ac2b9, d8bbfa0 and b127988 already present. No conflicts.
+- Validation: read-only source/Git review so far. Latest request authorizes host
+  maintenance tests despite prior test deferral; no vehicle/publish permission.
+- Pending/dirty work: instruction/audit edits only; no active test processes.
+- Blockers: none to maintenance verification; proprietary assets and hardware
+  may limit available tests. No duplicate integration or new hooks needed.
+- Next action: run host/dashboard suites and add targeted upgrade preference
+  coverage if absent, then prepare a source-preservation report and local commit.
+
+## 2026-11-07T19:52:53Z | 20261107T194002Z-codex-02 | HANDOFF
+
+- Agent/session: Codex / `20261107T194002Z-codex`.
+- Task/status: `MAINT-141` / `READY_FOR_REVIEW`, local only.
+- Authorization: upstream maintenance/testing request in event `-01`; explicitly
+  no push, main/master merge, release or vehicle actions without approval.
+- Git: maintenance/upstream-v1.4.1 based on `6d5e660`. No upstream merge/cherry-pick
+  needed because the target and all three release commits were already inherited.
+- Changes: new tests/upstream_v141_test.py and full maintenance report. Updated
+  project/agent/status/plan/handoff/change-ledger/audit docs to record current scope.
+  Runtime, all 20 release-delta files, dashboard sources/tests/previews/interfaces,
+  five-phase roadmap and provider design remain unchanged.
+- Decisions/evidence: new fixtures use real old/current program/menu scripts and
+  production renderer policy functions, with temp paths/clock/inert copy payloads
+  only. No executable firmware stand-ins, new product mocks or interface changes.
+- Validation: upstream suite exited 0 with documented SKIP_JAR_CHECK=1; 39 named
+  checks reached, including tee/SIGPIPE, yield, AA lifecycle, installer/GEM and
+  CarPlay regressions. Dashboard C/XML/CLI/artifact tests and default ASan/UBSan
+  exited 0. New four-method maintenance suite passed, including OFF/ON upgrades
+  and repeated menu/program installation under dash/sh, backups/uninstall and
+  decoder immediate/delayed/fallback/yield/cooldown policies. Initial fixture
+  generation missed its temp GEM dispatcher, failed and was corrected; production
+  code unchanged, final suite passed. Renderer PID and FIN/RST tests passed.
+- Unavailable/failed checks: no-skip protocol check exited 1 after 41 constants
+  passed (shipping JAR absent). Native lane receiver passed, full native script
+  exited 1 at unsupported macOS -framework on Linux. Java route-info attempt exited
+  2 in stock_env JCL glob/pipefail; stock HMI/JCL/JDK absent. Docker has no images;
+  QNX build and FFmpeg host decoder prerequisites missing. Hardware behavior unknown.
+- Final review: Markdown checks passed for 21 files/255 links/anchors/fences;
+  git diff --check passed. Release blob/custom-source preservation checked again.
+  No sanitizer disabled; no package/toolchain installed.
+- Pending/dirty work: only this local maintenance increment is to be committed;
+  no active test processes, source WIP or tracked generated binaries.
+- Next action: make local review commit, then review report/diff. Do not publish,
+  merge, create a release or start another phase without the user's request.

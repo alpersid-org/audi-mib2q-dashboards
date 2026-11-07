@@ -3,6 +3,12 @@
 Read the canonical [AGENTS.md](../../AGENTS.md) first. This guide is a restart
 checklist for any agent or coding tool; it is not a second set of project rules.
 
+**Active maintenance handoff:** read [the v1.4.1 report](../maintenance/upstream-v1.4.1.md)
+and current audit before applying the older feature checkpoint below. Tests for
+MAINT-141 are explicitly authorized. The target release was already integrated;
+do not duplicate fixes or revert dashboards. Keep work on local
+maintenance/upstream-v1.4.1 and do not push/merge/release without approval.
+
 Read [docs/ROADMAP.md](../ROADMAP.md) for all five phases and
 [data-providers.md](data-providers.md) for the shared provider architecture.
 Current DOC-ROADMAP work is documentation only: no Android communication or live

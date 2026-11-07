@@ -1,5 +1,11 @@
 # Executable Phase 2 plan
 
+MAINT-141 is a separate local upstream maintenance review, not a plan step or new
+phase. The latest request authorizes applicable maintenance/dashboard tests and
+prohibits automatic push/merge/release. See
+[the report](../maintenance/upstream-v1.4.1.md). Historical feature-test deferral
+below is superseded only for that maintenance scope. P2-03 is not started.
+
 This plan subdivides **roadmap Phase 2 only**. Later-phase implementation is
 excluded; designing compatible provider boundaries for those phases is required.
 Read the complete [five-phase roadmap](../ROADMAP.md) and

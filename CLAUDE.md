@@ -9,7 +9,7 @@ Use [the continuation guide](docs/custom-dashboards/HANDOFF.md) to recover conte
 Read [the current checkpoint](docs/custom-dashboards/audit/CURRENT.md) and recent
 [audit events](docs/custom-dashboards/audit/LOG.md); follow the audit protocol to
 record your RESUME event, milestones and handoff before context exhaustion.
-AGENTS.md is the canonical project instruction source; use the active checkpoint
-for the current task and authorized scope. Do not execute more tests until the final
-stage; continue implementation and document every change. Preserve this policy
-on resume. Vehicle actions remain outside scope.
+AGENTS.md and the active checkpoint define scope. MAINT-141 explicitly authorizes
+applicable host maintenance/dashboard tests despite the earlier feature-test
+deferral. Work locally on maintenance/upstream-v1.4.1; no push, main/master merge,
+release or vehicle actions without approval. Preserve the roadmap and dashboards.

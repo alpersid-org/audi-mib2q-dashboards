@@ -4,6 +4,22 @@ This ledger describes concrete changes for reviewers and subsequent agents.
 Chronological session evidence remains append-only in [audit/LOG.md](audit/LOG.md).
 Current work state is in [audit/CURRENT.md](audit/CURRENT.md).
 
+## MAINT-141 — existing v1.4.1 integration verification (2026-11-07)
+
+The exact release already existed in project ancestry. No upstream runtime,
+dashboard code/tests/previews, interface, provider design or five-phase roadmap
+changed. This increment stays local; no push/merge/release or vehicle actions.
+
+| Changed path | Change and purpose |
+| --- | --- |
+| [tests/upstream_v141_test.py](../../tests/upstream_v141_test.py) | Adds exact 20-file release/ancestry and custom-source preservation checks, extracted renderer policy regression, and real old/current program + menu upgrade fixtures covering delayed preference OFF/ON, other settings, idempotency, original backups and uninstall. Temp host paths/inert payloads only. |
+| [docs/maintenance/upstream-v1.4.1.md](../maintenance/upstream-v1.4.1.md) | Full three-commit/20-file mapping, no-conflict/already-integrated evidence, reproducible tests and actual outcomes, missing toolchains/firmware, risks and A4 B9 pre-install/future hardware test plan. |
+| [PROJECT.md](../../PROJECT.md) | Links the local maintenance report and explicit no-publication scope. |
+| [AGENTS.md](../../AGENTS.md), [CLAUDE.md](../../CLAUDE.md), [GEMINI.md](../../GEMINI.md), [Copilot instructions](../../.github/copilot-instructions.md) | Records maintenance-specific test authorization and prohibits automatic push/merge/release. |
+| [status.md](status.md), [PLAN.md](PLAN.md), [HANDOFF.md](HANDOFF.md) | Separates maintenance verification from roadmap development; keeps earlier feature checkpoints as history, adds current results and links. |
+| [audit/README.md](audit/README.md), [audit/CURRENT.md](audit/CURRENT.md), [audit/LOG.md](audit/LOG.md) | Preserves authorization, fixture correction/test outcomes, source proof and local review handoff. |
+| [changes.md](changes.md) | Records this per-file maintenance change map. |
+
 ## DOC-ROADMAP — five-phase context and shared providers (2026-11-07)
 
 Documentation-only update requested by the user. No application, adapter,
