@@ -8,6 +8,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 #include "../maneuver_render/visible_area.h"
 
 #ifdef __cplusplus
@@ -78,8 +79,7 @@ typedef struct {
 void db_widget_format(db_widget widget, const db_snapshot *snapshot,
                       uint64_t now_ms, db_widget_view *out);
 
-/* Reserved bounded command types for PLAN step 2. No builder, renderer or
- * vehicle window exists in P2-01. A zeroed frame has no drawing commands. */
+/* Bounded host draw list. A zeroed frame has no commands and no valid canvas. */
 typedef enum { DB_DRAW_RECT, DB_DRAW_TEXT } db_draw_kind;
 typedef struct {
     db_draw_kind kind;
@@ -94,6 +94,24 @@ typedef struct {
     size_t count;
     db_draw_command commands[DB_COMMAND_CAP];
 } db_frame;
+
+typedef enum { DB_COMPACT, DB_EXTENDED } db_layout;
+/* Explicit host preview preparation, NOT an activation/configuration API.
+ * Integer source-pixel viewport, minimum 640x240, inside canvas <=4096x2160.
+ * Returns 1 ready, 0 invalid; always clears previous output on failure.
+ * Missing/stale fields render placeholders through the existing formatter.
+ * NULL snapshot, unknown layout or unsupported geometry fails closed.
+ * NULL output is a no-op.
+ * out must not alias snapshot. No threads, allocations, I/O or vehicle routing. */
+int db_layout_build(db_layout layout, const db_snapshot *snapshot, uint64_t now_ms,
+                    int width, int height, cr_rect_t area, db_frame *out);
+/* Checks canvas/clip, count, kinds, RGB, integer coordinates, bounded ASCII text
+ * and primitive containment. This is host frame validation, not VC safety proof. */
+int db_frame_valid(const db_frame *frame);
+/* Validates whole frame before first byte; escapes XML and clips every text box.
+ * Returns 1 success, 0 invalid/error. Caller owns FILE and checks flush/close errors.
+ * Formatting uses integer coordinates, independent of floating-point locale. */
+int db_frame_write_svg(FILE *stream, const db_frame *frame);
 
 #ifdef __cplusplus
 }

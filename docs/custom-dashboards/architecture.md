@@ -1,8 +1,10 @@
 # Dashboard architecture
 
-Status: P2-01 data snapshots, provider/mock and widget formatting are implemented
-and host-tested; see [module.md](module.md). Managers, layouts, configuration and
-rendering remain proposed acceptance targets. No vehicle backend exists.
+Status: P2-01 data/widgets and P2-02 Compact/Extended layouts/SVG export are
+implemented. See [module.md](module.md) and [rendering.md](rendering.md).
+Configuration/activation manager remains future work; no vehicle backend exists.
+The user has deferred further testing until the final stage. Earlier test results
+are historical evidence, not final graphics acceptance.
 
 ## Decision
 
@@ -27,7 +29,7 @@ docs/custom-dashboards/             architecture, investigation, plan, requireme
 maneuver_render/ altscreen_render/  inherited renderers, unchanged
 common/ aa_hook/ java_patch/        inherited common code/hooks/HMI patch, unchanged
 deploy/ mods/ scripts/ tests/       inherited tooling and tests, unchanged
-dashboard/                         IMPLEMENTED data/widget library, Makefile, text demo
+dashboard/                         IMPLEMENTED data/widgets, layouts, SVG, CLIs and previews
 tests/dashboard_test.c             IMPLEMENTED host contract and formatter tests
 build/                             existing ignored host build output
 ```
@@ -61,7 +63,7 @@ distance/duration, trip distance and average consumption. All initial values are
 explicitly labeled MOCK. No speed, warning, braking, steering or ADAS widget is
 planned. ETA must not be derived from an unverified clock.
 
-The planned **Layout Manager** creates Compact (2x2) and Extended (3x2) dark layouts with
+The implemented host **Layout Builder** creates Compact (2x2) and Extended (3x2) dark layouts with
 bounded labels, high contrast and minimal decoration. Host preview dimensions
 are experiments, not certified VC configurations. The initial prototype will
 reject the known 210x153 and 328x180 maneuver crops as a deliberate design limit;
@@ -73,11 +75,11 @@ means disabled Compact. Layout selection alone never enables output. Restore
 default uses the same disabled configuration. Paths are supplied explicitly;
 there are no vehicle marker paths or automatic file writes.
 
-The proposed **Renderer Adapter** exports clipped, escaped SVG from fixed rectangle/text
-commands. It should reuse the upstream source-pixel rectangle type through its header,
+The implemented host **Renderer Adapter** exports clipped, escaped SVG from fixed rectangle/text
+commands. It reuses the upstream source-pixel rectangle type through its header,
 without linking the GL renderer or creating a QNX window. SVG text uses host
 fonts; production Unicode shaping and a GLES text adapter are deferred. The
-implementation should deliberately reject QNX compilation until a vehicle backend
+header rejects QNX compilation until a vehicle backend
 has passed a separate feasibility gate.
 
 ## Future integration gate

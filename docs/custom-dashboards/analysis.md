@@ -7,7 +7,8 @@ in the separate `audi-mib2q-dashboards` project on `feature/custom-dashboards`,
 which inherits the full upstream source and Git history. Inherited implementation
 files remain unchanged. No vehicle connection or installation was performed.
 This investigation preceded implementation. P2-01 now supplies the isolated
-host provider/widget module; graphics and vehicle integration remain deferred.
+host provider/widget module and P2-02 now adds standalone host SVG layouts.
+Vehicle integration remains deferred; final graphics validation is pending.
 Source evidence below establishes what this checkout does, not what this
 particular A4 supports.
 
@@ -71,7 +72,7 @@ No GEM buttons or vehicle markers are added now: they would advertise a function
 which has no validated vehicle backend. No controller or steering-wheel key is
 intercepted or repurposed.
 
-## Smallest feasible increment (P2-01 data/widgets implemented; rendering deferred)
+## Smallest feasible increment (P2-01 data/widgets and P2-02 host SVG implemented)
 
 Safe VC rendering cannot be established from this checkout alone. Use the
 explicitly permitted standalone renderer fallback. Implement an isolated host C99
@@ -88,7 +89,7 @@ supervisors or menu scripts. No QNX build/install target.
 | Widget system | Small typed formatter switch for temperature, range, trip, consumption, media and navigation; missing/stale/invalid data stays explicit. |
 | Data provider | Callback fills an owned snapshot, canonical units, per-field sample time and provenance. Independent of DSI/phone transport. Only a deterministic mock implementation in Phase 2. |
 | Configuration Manager | Strict bounded versioned text format; absent/invalid config disables. Selecting layout does not implicitly enable. Restore default returns disabled compact. |
-| Layout Manager | Proposed Compact 2x2 and Extended 3x2 grids, in source pixels. Host wide 800x252 and tall 640x360 are planned preview dimensions, not vehicle layouts. Reject 210x153 and 328x180 maneuver crops in the initial prototype as a deliberate design limit; readability still requires host validation. |
+| Layout Manager | Proposed Compact 2x2 and Extended 3x2 grids, in source pixels. Host wide 800x252 and tall 640x360 are saved host preview dimensions, not vehicle layouts. Reject 210x153 and 328x180 maneuver crops in the initial prototype as a deliberate design limit; readability still requires host validation. |
 
 No additional framework, dependency, rendering loop or animation is needed. SVG
 text uses a host font and is not proof of QNX font support. A future provider can

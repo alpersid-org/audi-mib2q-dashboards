@@ -155,3 +155,69 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Blockers: no P2-01 blocker; missing shipping/Java/vehicle validation is explicit.
 - Next action: save/publish completion record. For a later request, resume P2-02
   from existing data/widget contracts; do not repeat P2-01 or infer a vehicle slot.
+
+## 2026-11-07T19:17:00Z | 20261107T191700Z-codex-01 | START
+
+- Agent/session: Codex / `20261107T191700Z-codex`.
+- Task/status: `P2-02` / `IN_PROGRESS`.
+- Authorization: user said "Okay, push, commit and let's go with step 2."
+- Git: clean feature/custom-dashboards, starting SHA
+  `69db637e6cef70caba139bfd84913db067fdd3de`, previously published.
+- Changes: instruction/checkpoint scope updated; no P2-02 code at start.
+- Decisions/evidence: build on existing db_frame and formatter contracts; host
+  viewport only, no vehicle routing. Fixed capacity, no animation or new packages.
+- Validation: Git/document/source inspection and `make -C dashboard test` pass.
+- Pending/dirty work: instructions/audit; no running processes or source WIP.
+- Blockers: none for host layouts; vehicle compatibility/safe surface still unknown.
+- Next action: implement two layouts, strict frame validator, escaped/clipped SVG
+  export and explicit mock preview CLI; add bounds/render tests and previews.
+
+## 2026-11-07T19:24:04Z | 20261107T191700Z-codex-02 | CHECKPOINT
+
+- Agent/session: Codex / `20261107T191700Z-codex`.
+- Task/status: `P2-02` / `IN_PROGRESS`; frame/layout/export implementation exists.
+- Authorization/scope update: user said "Sa nu executi teste momentan, testele
+  sunt pentru final, mergem inainte fara teste. Doar sa documentezi fiecare schimbare."
+  Stop further testing until final test stage; continue implementation/documentation.
+- Git: feature branch based on `69db637`; P2-02 files are uncommitted.
+- Changes: layout.c, svg.c, preview.c, API/Makefile extensions, C/XML tests written,
+  and four deterministic host SVG previews generated before the new instruction.
+- Decisions/evidence: explicit host canvas only; 2x2/3x2 grids with bounded text,
+  per-text SVG clips, strict frame validation and invalid-input clearing. No vehicle
+  integration or persistent configuration added.
+- Validation BEFORE instruction: `make -C dashboard all test previews` exited 0;
+  widget/C layout/XML/CLI checks passed. `make -C dashboard test-sanitize` outside
+  traced sandbox exited 0 with default leak checks. `SKIP_JAR_CHECK=1 sh
+  scripts/run_tests.sh` outside sandbox exited 0, shipping JAR explicitly skipped.
+- Visual attempts BEFORE instruction: ImageMagick SVG rasterization failed because
+  rsvg-convert is missing. Sandboxed Chromium exited 133; temporary outside-sandbox
+  screenshot processes did not finish. Playwright file navigation failed with
+  ERR_BLOCKED_BY_ADMINISTRATOR. No successful screenshot or visual inspection
+  claimed; no packages installed or browser restrictions bypassed.
+- Pending/dirty work: source/tests/SVG artifacts plus audit/instruction edits.
+  Temporary screenshot processes being stopped; no additional tests will run.
+- Blockers: final testing/visual validation deferred by explicit user request;
+  vehicle compatibility/safe surface and proprietary Java checks still unavailable.
+- Next action: document each changed file/API and preview limitation, propagate
+  no-test policy to all agent entries/status/checkpoint, then commit/push step 2.
+
+## 2026-11-07T19:28:11Z | 20261107T191700Z-codex-03 | CHECKPOINT
+
+- Agent/session: Codex / `20261107T191700Z-codex`.
+- Task/status: `P2-02` / `READY_FOR_REVIEW`; implementation/artifacts ready,
+  final validation explicitly deferred by the user.
+- Authorization: step 2 request in event `-01`; no-test policy in event `-02`.
+- Git: source SHA `69db637`, all P2-02 work still uncommitted on the feature branch.
+- Changes: added rendering.md, changes.md and preview README. Updated every agent
+  entry and scope/status/plan/handoff document. The change ledger maps each source,
+  test/artifact and document to its purpose. API comment clarified null inputs.
+- Decisions/evidence: retain previously prepared tests and four SVG artifacts for
+  final-stage use; do not claim screenshots, measured typography or vehicle safety.
+- Validation: NO tests or automated validation after the user's instruction.
+  Only read-only file/Git review and documentation edits. Earlier results remain
+  in event `-02` and status.md. Temporary screenshot processes have been stopped.
+- Pending/dirty work: documented source/artifacts/instructions/audit; no active
+  test processes. Build products remain local and ignored.
+- Blockers: final testing/visual review deferred; no vehicle surface proven.
+- Next action: commit and push the implementation plus checkpoint, verify remote
+  publication, record the source SHA in a handoff event; preserve no-test policy.

@@ -1,9 +1,15 @@
 # P2-01: host data and widget module
 
 Implemented in [dashboard/](../../dashboard/) with tests in
-[dashboard_test.c](../../tests/dashboard_test.c). This is PLAN step 1 only: a
-library and deterministic text demo. It creates no display window, connects to no
+[dashboard_test.c](../../tests/dashboard_test.c). This page describes PLAN step 1: a library and deterministic text demo.
+P2-02 now adds [host layouts and SVG export](rendering.md). It creates no display window, connects to no
 service, and changes no inherited runtime, install payload or firmware file.
+
+## Testing policy during P2-02
+
+The user has deferred further tests until the final stage. Commands containing
+`test` below are retained as reference and must not be executed under the current
+instruction. P2-01 historical results remain recorded; see status.md.
 
 ## Build and run
 
@@ -36,8 +42,10 @@ NOW PLAYING          [MOCK] Night Drive | Studio Session
 NAVIGATION           [MOCK] 42.5 km / 38 min | City Centre
 ```
 
-This is a data/formatter demonstration, not a dashboard screenshot. No layout,
-renderer, configuration manager or activation feature is supplied in this step.
+This text output is a data/formatter demonstration, not a dashboard screenshot.
+Host SVG layouts are supplied separately by P2-02. No configuration manager or
+vehicle activation feature exists. Further tests are deferred to the final stage
+by the user; commands on this page are retained for that stage.
 
 ## Snapshot and provider contract
 
@@ -102,15 +110,16 @@ does not perform markup escaping, font shaping or production Unicode support.
 
 The header reserves a 48-command rectangle/text frame using upstream `cr_rect_t`
 from [visible_area.h](../../maneuver_render/visible_area.h). No upstream crop
-fallback is called. Zeroed frames contain no drawing commands. No frame builder
-or graphics backend is implemented. The header rejects QNX compilation until a
+fallback is called. Zeroed frames contain no drawing commands. P2-02 implements host frame building
+and SVG export; see rendering.md. The header rejects QNX compilation until a
 separate safe-surface decision authorizes a vehicle backend.
 
-The module is not included in upstream build/release scripts. It has no enable
-switch because there is no display output to activate. Disabled-by-default
+The module is not included in upstream build/release scripts. It has no vehicle enable
+switch; the explicit SVG CLI produces host files only. Disabled-by-default
 configuration and rendering suppression are PLAN step 3 acceptance targets.
 There is no performance claim for the head unit and no vehicle compatibility
-claim. Layout/rendering previews are step 2; no preview artifacts exist yet.
+claim. Four SVG artifacts now exist under dashboard/previews/; final visual acceptance
+is deferred by the user.
 
 Rollback is `make -C dashboard clean` to remove outputs and ceasing host demo use;
 no head-unit file restoration is required. Source changes can be reverted with

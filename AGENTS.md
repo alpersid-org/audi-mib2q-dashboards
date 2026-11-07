@@ -10,11 +10,11 @@ instructions to preserve context, not to override them.
 Build the foundation for modular, customizable Audi Virtual Cockpit dashboards
 within **roadmap Phase 2** of the mib2q-carplay-based project.
 
-**Current authorized work is P2-01, PLAN step 1, on the host.** After reviewing
-the plan the user instructed: "Okay, go ahead with the first part." Implement
-the isolated module, typed snapshots, deterministic mock provider and widget
-formatters with meaningful tests. Steps 2–6 remain later work; no vehicle actions
-are authorized. Preserve this authorization across agent handoffs.
+**Current authorized work is P2-02, PLAN step 2, on the host.** User instruction:
+"Okay, push, commit and let's go with step 2." P2-01 is complete and published.
+Implement Compact/Extended frame builders, SVG export, host previews and tests.
+Configuration/activation (step 3), later increments and vehicle actions remain
+outside this task. Preserve this authorization across agent handoffs.
 
 On each resume, reconcile this scope with the
 latest explicit user instruction and the scope recorded in
@@ -127,6 +127,15 @@ When host implementation is requested, follow the next eligible PLAN step:
   Upstream menu generation alone is insufficient evidence for dashboard activation.
 
 ## Validation and handoff
+
+**User override during P2-02:** "Sa nu executi teste momentan, testele sunt
+pentru final, mergem inainte fara teste. Doar sa documentezi fiecare schimbare."
+Do not execute further unit, integration, sanitizer, browser/visual or automated
+validation tests until the user requests the final testing stage. Continue
+implementation and document every change. Tests already run before this request
+remain historical evidence, not permission to rerun them. Record deferred checks
+explicitly; do not claim final validation. This overrides the run-test guidance
+below while the instruction is active, including during subsequent agent handoffs.
 
 For documentation changes, check relative links, Markdown code fences, Git diff
 whitespace and change scope. Do not run full firmware builds for a text edit.

@@ -4,9 +4,10 @@ Read the canonical [AGENTS.md](../../AGENTS.md) first. This guide is a restart
 checklist for any agent or coding tool; it is not a second set of project rules.
 
 For live task state, read [audit/CURRENT.md](audit/CURRENT.md) and recent
-[audit/LOG.md](audit/LOG.md) events. The checkpoint below describes P2-01; the active audit records exact
-progress and supersedes stale summaries. Follow [the audit lifecycle](audit/README.md), including writing
-a RESUME event before making changes.
+[audit/LOG.md](audit/LOG.md) events. The checkpoint below describes P2-02; the
+active audit records exact progress and supersedes stale summaries. Follow
+[the audit lifecycle](audit/README.md), including writing a RESUME event before
+making changes.
 
 ## Current checkpoint
 
@@ -16,12 +17,13 @@ a RESUME event before making changes.
   `feature/custom-dashboards` for project work.
 - The fork contains full upstream history/source. Custom work adds documents,
   agent instructions and the host data/widget module.
-- User authorized P2-01 with "Okay, go ahead with the first part." Host module,
-  mock source and formatters now exist; do not restart them or request the same
-  authorization again. Layout/rendering work is a later step.
+- P2-01 is complete. User authorized P2-02 with "Okay, push, commit and let's go
+  with step 2." Both host layouts, SVG export/CLI and saved previews now exist.
+- Latest steering: no more tests now; tests are for the final stage. Document
+  every change. This overrides earlier run-test instructions across model handoffs.
 - Vehicle firmware/compatibility, original AAWireless behavior, Phase 1 success
   and a safe dashboard surface remain unconfirmed.
-- The proposed first implementation is a standalone host renderer with mock
+- The implementation is a standalone host renderer with mock
   data, not a new vehicle hook or replacement of navigation graphics.
 
 ## Restart checklist
@@ -45,18 +47,20 @@ choosing work. Do not discard edits or assume a clean tree.
 
 If asked for more documentation, keep the change within documentation.
 
-For the already authorized [PLAN step 1](PLAN.md#1-establish-the-isolated-module-and-provider),
-resume any unfinished acceptance item recorded in audit/CURRENT.md. Read
-[module.md](module.md) for the implemented API and test commands. Once complete,
-the next eligible task is step 2 (Compact/Extended frame builders and host SVG
-adapter), when requested by the user.
+P2-01 is complete and P2-02 is implemented. Read [module.md](module.md) and
+[rendering.md](rendering.md) for the existing contracts. Follow the active
+checkpoint for remaining publication/documentation work. The next implementation
+task is step 3 (disabled-by-default configuration and suppression), when requested.
+Do not execute tests until the user requests the final testing stage.
 Do not start with QNX window creation, context routing, Java lifecycle changes,
 GEM buttons, live vehicle feeds or Android communication.
 
-Follow steps 2–5 after their dependencies pass. Vehicle integration remains
+Follow later steps according to their dependencies, with testing explicitly
+deferred under the current user instruction. Vehicle integration remains
 blocked under [step 6](PLAN.md#6-vehicle-feasibility-investigation--blocked--future-phase-2-work).
 If the user asks to continue without specifying implementation, use the
-latest recorded scope/checkpoint and explain the next eligible task; do not silently interpret the old roadmap as permission to code.
+latest recorded scope/checkpoint and explain the next eligible task; do not
+silently interpret the old roadmap as permission to code.
 
 ## Suggested prompt for another AI tool
 
@@ -66,11 +70,13 @@ latest recorded scope/checkpoint and explain the next eligible task; do not sile
 > append a RESUME event. Continue from the recorded next action within the
 > existing user-authorized scope; do not restart completed work or expand scope.
 > Read the linked project documents/source as needed. Keep the audit updated at
-> milestones and before context exhaustion, with exact test results and the next
-> action. Do not contact or deploy to the vehicle.
+> milestones and before context exhaustion, with changes, historical test results
+> and the next action. Do not run tests until the final stage is requested.
+> Do not contact or deploy to the vehicle.
 
 Append the concrete task, for example "review the architecture document" or,
-when implementation is intended, "implement PLAN step 1 on the host."
+when the next increment is intended, "implement PLAN step 3 on the host without
+running tests; document every change."
 
 ## Completion record for future increments
 

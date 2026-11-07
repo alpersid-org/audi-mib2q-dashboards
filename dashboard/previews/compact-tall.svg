@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+<title>Custom dashboards - host preview, no vehicle output</title>
+<defs>
+<clipPath id="viewport"><rect x="0" y="0" width="640" height="360"/></clipPath>
+<clipPath id="text2"><rect x="28" y="9" width="596" height="24"/></clipPath>
+<clipPath id="text3"><rect x="16" y="35" width="608" height="16"/></clipPath>
+<clipPath id="text5"><rect x="16" y="344" width="608" height="15"/></clipPath>
+<clipPath id="text8"><rect x="28" y="63" width="275" height="16"/></clipPath>
+<clipPath id="text9"><rect x="28" y="112" width="275" height="30"/></clipPath>
+<clipPath id="text10"><rect x="28" y="172" width="243" height="16"/></clipPath>
+<clipPath id="text11"><rect x="279" y="173" width="24" height="15"/></clipPath>
+<clipPath id="text14"><rect x="337" y="63" width="275" height="16"/></clipPath>
+<clipPath id="text15"><rect x="337" y="112" width="275" height="30"/></clipPath>
+<clipPath id="text16"><rect x="337" y="172" width="243" height="16"/></clipPath>
+<clipPath id="text17"><rect x="588" y="173" width="24" height="15"/></clipPath>
+<clipPath id="text20"><rect x="28" y="209" width="275" height="16"/></clipPath>
+<clipPath id="text21"><rect x="28" y="258" width="275" height="26"/></clipPath>
+<clipPath id="text22"><rect x="28" y="318" width="243" height="16"/></clipPath>
+<clipPath id="text23"><rect x="279" y="319" width="24" height="15"/></clipPath>
+<clipPath id="text26"><rect x="337" y="209" width="275" height="16"/></clipPath>
+<clipPath id="text27"><rect x="337" y="258" width="275" height="22"/></clipPath>
+<clipPath id="text28"><rect x="337" y="318" width="243" height="16"/></clipPath>
+<clipPath id="text29"><rect x="588" y="319" width="24" height="15"/></clipPath>
+</defs>
+<g clip-path="url(#viewport)" font-family="DejaVu Sans Mono,monospace">
+<g fill="#080b10"><rect x="0" y="0" width="640" height="360"/></g>
+<g fill="#dc3545"><rect x="16" y="10" width="3" height="24"/></g>
+<text x="28" y="27" font-size="18" fill="#f5f7fa" clip-path="url(#text2)">CUSTOM DASHBOARDS</text>
+<text x="16" y="45" font-size="10" fill="#aab5c2" clip-path="url(#text3)">COMPACT / HOST PREVIEW</text>
+<g fill="#303945"><rect x="16" y="341" width="608" height="1"/></g>
+<text x="16" y="353" font-size="9" fill="#aab5c2" clip-path="url(#text5)">HOST PREVIEW - NO VEHICLE OUTPUT</text>
+<g fill="#141a21"><rect x="16" y="56" width="299" height="136"/></g>
+<g fill="#424c59"><rect x="16" y="56" width="2" height="136"/></g>
+<text x="28" y="73" font-size="10" fill="#c9d0d8" clip-path="url(#text8)">OUTSIDE TEMPERATURE</text>
+<text x="28" y="136" font-size="24" fill="#f5f7fa" clip-path="url(#text9)">12.5 C</text>
+<text x="28" y="182" font-size="10" fill="#aab5c2" clip-path="url(#text10)"></text>
+<text x="279" y="182" font-size="9" fill="#78bde8" clip-path="url(#text11)">MOCK</text>
+<g fill="#141a21"><rect x="325" y="56" width="299" height="136"/></g>
+<g fill="#424c59"><rect x="325" y="56" width="2" height="136"/></g>
+<text x="337" y="73" font-size="10" fill="#c9d0d8" clip-path="url(#text14)">DRIVING RANGE</text>
+<text x="337" y="136" font-size="24" fill="#f5f7fa" clip-path="url(#text15)">620 km</text>
+<text x="337" y="182" font-size="10" fill="#aab5c2" clip-path="url(#text16)">Estimated range</text>
+<text x="588" y="182" font-size="9" fill="#78bde8" clip-path="url(#text17)">MOCK</text>
+<g fill="#141a21"><rect x="16" y="202" width="299" height="136"/></g>
+<g fill="#424c59"><rect x="16" y="202" width="2" height="136"/></g>
+<text x="28" y="219" font-size="10" fill="#c9d0d8" clip-path="url(#text20)">NOW PLAYING</text>
+<text x="28" y="278" font-size="20" fill="#f5f7fa" clip-path="url(#text21)">Night Drive</text>
+<text x="28" y="328" font-size="10" fill="#aab5c2" clip-path="url(#text22)">Studio Session</text>
+<text x="279" y="328" font-size="9" fill="#78bde8" clip-path="url(#text23)">MOCK</text>
+<g fill="#141a21"><rect x="325" y="202" width="299" height="136"/></g>
+<g fill="#424c59"><rect x="325" y="202" width="2" height="136"/></g>
+<text x="337" y="219" font-size="10" fill="#c9d0d8" clip-path="url(#text26)">NAVIGATION</text>
+<text x="337" y="274" font-size="16" fill="#f5f7fa" clip-path="url(#text27)">42.5 km / 38 min</text>
+<text x="337" y="328" font-size="10" fill="#aab5c2" clip-path="url(#text28)">City Centre</text>
+<text x="588" y="328" font-size="9" fill="#78bde8" clip-path="url(#text29)">MOCK</text>
+</g>
+</svg>

@@ -15,8 +15,10 @@ establish compatibility with this particular vehicle/phone/adapter combination.
 
 A separate Git project containing source-backed investigation, proposed
 architecture, requirements and an ordered implementation plan, now extended by
-user-authorized P2-01 host data/widgets, a mock provider, focused tests and text
-demo. Layouts, renderer, configuration and graphics previews remain later work.
+user-authorized P2-01 data/widgets and P2-02 Compact/Extended host layouts,
+SVG export and four mock previews. Configuration/activation remains later work.
+The user has deferred further testing to the final stage and requires every
+change to be documented; see changes.md and the audit.
 
 ## Future MVP acceptance criteria
 

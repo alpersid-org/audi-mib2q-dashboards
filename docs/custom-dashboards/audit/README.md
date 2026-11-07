@@ -48,6 +48,12 @@ reduces lost context; it cannot guarantee saving after an abrupt termination.
 
 ## Scope and state
 
+Current user override recorded during P2-02: no more tests now; testing is for the
+final stage. Continue implementation and document each change. Do not run tests
+or automated validation to fill audit fields; record checks as DEFERRED BY USER.
+Earlier test evidence remains historical. Consult AGENTS.md and CURRENT.md for
+scope changes; preserve this override when handing work to another agent.
+
 Use `IN_PROGRESS`, `PAUSED`, `BLOCKED`, `READY_FOR_REVIEW` or `COMPLETE` for a
 started task, and `NOT_STARTED` for queued work. Record why a task is blocked and
 whether the blocker affects independent work.

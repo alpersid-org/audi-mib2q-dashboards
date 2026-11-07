@@ -5,10 +5,15 @@ Run commands from this project's root (the directory containing PROJECT.md).
 Steps marked blocked require new evidence;
 they are not authorization to contact, install on or deploy to the vehicle.
 
-**Current authorized scope:** P2-01 / step 1 on the host, per the user
-instruction "Okay, go ahead with the first part." Step 0 is complete. Step 1
-provides data/widgets and tests; steps 2–5 remain future work. No graphics previews
-exist yet. Step 6 remains blocked by vehicle-specific evidence.
+**Current authorized scope:** P2-02 / step 2 on the host. User instruction:
+"Okay, push, commit and let's go with step 2." P2-01 is complete; step 2 now
+supplies Compact/Extended frames and SVG previews. Steps 3–5 are later work;
+vehicle step 6 remains blocked.
+
+**Testing override:** the user subsequently instructed that no further tests
+should run now; testing is for the final stage. Continue implementation and
+document every change. Test commands below are retained for that final stage,
+not permission to execute them now. Earlier results remain in the audit.
 
 Actual step 1 commands: `make -C dashboard all test demo` and
 `make -C dashboard test-sanitize`; see [module.md](module.md). The bare `make`
@@ -47,7 +52,7 @@ git diff --name-only b127988a68c8d690841f4a75d35717ffc01e668e HEAD
 | --- | --- | --- | --- |
 | 0 | Repository investigation | Full upstream-derived project plus Markdown documents and Git publication | Documentation complete; destination fork verified as alpersid-org/audi-mib2q-dashboards |
 | 1 | 0; user request received | Host module, typed snapshot contract, mock provider and widget formatters | Implemented; focused host tests pass; see module.md and audit |
-| 2 | 1 | Compact/Extended frame builders and SVG adapter | Deferred |
+| 2 | 1; user request received | Compact/Extended frame builders and SVG adapter | Implemented with four saved host SVGs; final testing/visual review deferred by user |
 | 3 | 1–2 | Disabled-by-default configuration and suppression behavior | Deferred |
 | 4 | 1–3 | Automated tests, host benchmark and regression report | Deferred |
 | 5 | 4 | Reproducible previews, documentation and rollback evidence | Deferred |
@@ -84,12 +89,15 @@ renderer or configuration manager are claimed by this increment.
 Execution after implementation:
 
 ```sh
-make
-make previews
+make -C dashboard all
+make -C dashboard previews
 ```
 
-Acceptance: both layouts show clear MOCK labels and a host-only banner; exported
-graphics stay inside the requested rectangle. Dimensions do not claim VC support.
+Acceptance targets: both layouts show clear MOCK labels and a host-only banner;
+exported graphics stay inside the requested rectangle. Dimensions do not claim
+VC support. Implementation and artifacts exist; final visual/testing acceptance
+is deferred by user instruction. See [rendering.md](rendering.md) and
+[changes.md](changes.md).
 
 ## 3. Configuration and safe suppression
 

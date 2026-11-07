@@ -1,64 +1,64 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T19:11:52Z. Agent: Codex.
-Session: `20261107T190217Z-codex`.
+Updated: 2026-11-07T19:28:11Z. Agent: Codex.
+Session: `20261107T191700Z-codex`.
 
 ## Active task and authorization
 
-- Task: `P2-01` — isolated host module, typed snapshots, mock provider and widget
-  formatters ([PLAN step 1](../PLAN.md#1-establish-the-isolated-module-and-provider)).
-- State: `COMPLETE` (P2-01 implemented, tested, published and verified).
-- User instruction: "Okay, go ahead with the first part", following the ordered
-  dashboard plan. This supersedes documentation-only scope for step 1. Existing
-  publication authorization continues on the feature branch.
-- Excluded: layouts/rendering, config UI, live feeds, GEM, vehicle actions,
-  new Android communication and roadmap Phases 3–5. A replacement agent can
-  finish this authorized host-only task without asking again.
+- Task: `P2-02` — Compact/Extended host layouts and SVG export.
+- State: `READY_FOR_REVIEW` — implementation/artifacts ready; final testing deferred.
+- Authorization: "Okay, push, commit and let's go with step 2."
+- Latest steering: "Sa nu executi teste momentan, testele sunt pentru final,
+  mergem inainte fara teste. Doar sa documentezi fiecare schimbare."
+- Do not execute more tests or automated validation until the user requests the
+  final stage. Continue implementation/documentation. This policy persists across
+  model switches and future increments; earlier results are historical only.
+- No live data, vehicle/GEM/config manager or roadmap Phases 3–5 in this increment.
 
-## Git and file boundaries
+## Git and files
 
-- Branch: `feature/custom-dashboards`.
-- Starting SHA: `64fd3295924badb8346c58cefeedd7aa878bd031`, pushed; tree was clean.
-- Intended new files: `dashboard/` C99 module/Makefile/demo,
-  `tests/dashboard_test.c`, `docs/custom-dashboards/module.md`.
-- Update scope/status/plan/instructions/audit; leave upstream runtime unchanged.
-- Build outputs: ignored `build/dashboard/`. No new dependencies or firmware assets.
-- Verified implementation commit: `0b256c07d736a3f47062c9f4afa751dd5b4a1e20`,
-  pushed to origin; remote SHA matched local HEAD.
-- This completion checkpoint commit: inspect
-  `git log -1 -- docs/custom-dashboards/audit/CURRENT.md`; compare it with the
-  remote on resume rather than embedding its own unknown hash.
+- Branch: feature/custom-dashboards; starting SHA:
+  `69db637e6cef70caba139bfd84913db067fdd3de`; P2-01 already published.
+- P2-02 source/artifacts/docs are currently uncommitted. Publication authorized.
+- New source: dashboard/layout.c, svg.c, preview.c. API/Makefile extended.
+- Prepared tests: tests/dashboard_render_test.c, tests/dashboard_svg_test.py.
+- Saved artifacts: dashboard/previews/{compact,extended}-{wide,tall}.svg and README.
+- Detailed changed-file map: [changes.md](../changes.md). Upstream runtime unchanged.
+- Generated executables/temporary screenshots stay ignored under build/dashboard.
+- This checkpoint commit: `git log -1 -- docs/custom-dashboards/audit/CURRENT.md`.
 
-## Acceptance checklist
+## Acceptance status
 
-- [x] Bounded owned snapshots, metadata/provenance and future frame types.
-- [x] Deterministic MOCK source through a provider callback.
-- [x] Widget formatting with explicit units and bounded text.
-- [x] Missing/invalid/future/stale rejection and clearing on provider failure.
-- [x] Strict host tests, sanitizer run and appropriate upstream regression attempt.
-- [x] API docs, updated scope/status/plan; 16 Markdown files and 111 links validated.
-- [x] Commit/push and verify publication.
+- [x] Compact 2x2 and Extended 3x2 source-pixel grids, bounded command capacity.
+- [x] Dark theme, mock badges, explicit host-only banner, text elision.
+- [x] Whole-frame validation, XML escaping, viewport/per-text clipping.
+- [x] Mock export CLI and four saved wide/tall SVGs; reject maneuver crops.
+- [x] Per-file change ledger, API/design/limitations and scope docs updated.
+- [ ] Final tests and visual/font/readability inspection — DEFERRED BY USER.
+- [ ] Commit/push and verify publication of implementation and checkpoint.
 
-## Decisions, validation and pending work
+## Evidence and pending work
 
-Per-widget typed data uses caller-supplied monotonic sample times. The provider
-interface has no sockets/subscriptions. Only mocks ship. Frame types reserve a
-bounded command buffer; rendering waits for step 2. Reuse `cr_rect_t` without GL.
+Before the no-test instruction, `make -C dashboard all test previews`, both C
+sanitizer suites outside traced sandbox, and the inherited host suite with
+SKIP_JAR_CHECK=1 exited 0. Shipping JAR/Java and vehicle checks remain unavailable.
+Screenshot attempts failed: missing rsvg-convert, sandboxed Chromium exit 133,
+nonfinishing temporary CLI browsers, and Playwright ERR_BLOCKED_BY_ADMINISTRATOR.
+No screenshot or visual inspection succeeded. Temporary CLI browser processes
+were stopped. No tests/processes are running now and no more tests are to start.
+See [status.md](../status.md) and audit event `-02` for exact historical outcomes.
 
-Validation: focused build/tests/demo pass. ASan/UBSan with default leak detection
-pass outside the traced sandbox (sandboxed invocation failed at LeakSanitizer).
-Upstream host suite passed outside sandbox with documented SKIP_JAR_CHECK=1;
-shipping JAR/Java unavailable. Full results/commands are in [status.md](../status.md).
-No running processes remain. All implementation sources/tests/docs are committed
-and published. Only audit/status completion recording is being saved now;
-no unfinished source work. Outputs remain ignored under build/dashboard. No
-inherited runtime files were modified. Vehicle unknowns remain.
+No source WIP beyond publishing this increment. Final validation deferred;
+compatibility/safe vehicle surface remains unproven. No new packages installed.
 
 ## Exact next action
 
-P2-01 is COMPLETE; do not reimplement it. On resume append a RESUME event and
-read the latest user task. The next eligible increment is P2-02 (Compact/Extended
-frame builders and host SVG export), when requested. Start from dashboard.h and
-module.md contracts, run the existing dashboard tests as a baseline and keep
-all output host-only. Vehicle integration remains blocked.
-Audit session: `20261107T190217Z-codex` in [LOG.md](LOG.md).
+Review the changed file list/documentation, commit/push P2-02 and verify the
+remote SHA (Git publication only, not test execution). Record the published
+source commit in a subsequent audit handoff event. Do not run automated checks.
+
+The next implementation task, when requested, is P2-03 configuration and manager
+suppression. Start from existing frame/provider contracts, keep default disabled,
+and preserve the no-test policy until final-stage testing is requested. Do not
+repeat P2-01/P2-02 or infer a safe vehicle rectangle.
+Audit: [LOG.md](LOG.md), session `20261107T191700Z-codex`.

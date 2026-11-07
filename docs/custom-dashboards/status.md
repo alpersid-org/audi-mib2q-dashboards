@@ -1,6 +1,16 @@
 # Project status
 
-Status date: 2026-11-07. Scope: user-authorized P2-01 / PLAN step 1, host only.
+Status date: 2026-11-07. Scope: user-authorized P2-02 / PLAN step 2, host only.
+Further tests are deferred until the final stage by explicit user instruction.
+
+## Active testing policy
+
+During P2-02 the user instructed: "Sa nu executi teste momentan, testele sunt
+pentru final, mergem inainte fara teste. Doar sa documentezi fiecare schimbare."
+No further tests or automated validation checks are to run until the final stage
+is requested. Continue implementation, record every change and preserve this
+policy across agent handoffs. Earlier results below remain historical evidence.
+Final validation and visual/readability acceptance are not complete.
 
 ## Completed
 
@@ -17,32 +27,60 @@ Status date: 2026-11-07. Scope: user-authorized P2-01 / PLAN step 1, host only.
 - Preserved inherited runtime/source, upstream README and installation payloads.
   No vehicle connection or actions performed; all demo values are explicitly MOCK.
 
-Live progress: [audit/CURRENT.md](audit/CURRENT.md). History:
-[audit/LOG.md](audit/LOG.md). Scope was authorized by the user's instruction
-"Okay, go ahead with the first part" following the ordered plan; an agent switch
-must not reimpose the previous documentation-only scope on P2-01.
+- Implemented P2-02 host Compact/Extended frames, strict draw-list validation,
+  escaped/clipped SVG export, explicit mock preview CLI and four saved SVGs.
+- Prepared C rendering and independent Python XML/CLI test cases for the final
+  stage. They were written and first run before the testing-deferral instruction.
+- Documented every P2-02 change in [changes.md](changes.md), with design/API and
+  preview limitations in [rendering.md](rendering.md).
 
-Implementation commit: `0b256c07d736a3f47062c9f4afa751dd5b4a1e20`, pushed and
+Live progress: [audit/CURRENT.md](audit/CURRENT.md). History:
+[audit/LOG.md](audit/LOG.md). P2-02 was authorized by "Okay, push, commit and let's go with step 2." An agent
+switch must preserve the active implementation scope and the later no-test policy.
+
+P2-01 implementation commit: `0b256c07d736a3f47062c9f4afa751dd5b4a1e20`, pushed and
 verified on `origin/feature/custom-dashboards`.
 
 ## Not implemented
 
-Compact/Extended layouts, SVG/GL renderer, configuration/activation manager,
-graphics previews, performance benchmark, GEM controls, live data adapters or
-vehicle backend. Root `make` targets in later PLAN steps remain planned; actual
+Configuration/activation manager, GL/QNX renderer, performance benchmark, GEM
+controls, live data adapters or vehicle backend. SVG previews exist; no successful
+screenshots or final visual/readability validation are claimed. Root `make` targets in later PLAN steps remain planned; actual
 commands currently use `make -C dashboard`. No vehicle compatibility is claimed.
 
 ## Reproduce the implemented increment
 
 ```sh
-make -C dashboard all test demo
-make -C dashboard test-sanitize
+make -C dashboard all
+make -C dashboard previews
 ```
 
 No new packages, firmware files, QNX SDK or HMI jar are needed for these targets.
-Generated files stay under ignored `build/dashboard/`.
+Compiled outputs stay under ignored `build/dashboard/`. Reviewable SVG artifacts
+are intentionally saved in `dashboard/previews/` and committed with the source.
 
-## P2-01 validation evidence
+These build/export commands are for reproducing host artifacts. Test commands
+remain documented in module.md/rendering.md for the final stage; do not run them now.
+
+## P2-02 evidence before test deferral
+
+| Earlier command/attempt | Actual result before the no-test instruction |
+| --- | --- |
+| `make -C dashboard all test previews` | Exit 0. Widget, C layout/export and independent XML/CLI checks passed; four SVGs generated. This is not final acceptance. |
+| `make -C dashboard test-sanitize`, outside traced sandbox | Exit 0, both C suites, ASan/UBSan/default leak detection unchanged. |
+| `SKIP_JAR_CHECK=1 sh scripts/run_tests.sh`, outside traced sandbox | Exit 0, shipping JAR check explicitly skipped; sanitizer checks unchanged. Dummy LD_PRELOAD fixture warnings were expected. |
+| ImageMagick SVG rasterization | Failed because its rsvg-convert delegate is unavailable; no screenshot produced. |
+| Sandboxed Chromium CLI screenshots | Exit 133. Outside-sandbox temporary screenshot processes did not finish and were stopped. No successful visual inspection. |
+| Playwright local-file preview attempt | Failed with ERR_BLOCKED_BY_ADMINISTRATOR; no bypass attempted and no screenshot/measurement success claimed. |
+
+After the user instruction, no further tests or automated validation checks ran.
+Documentation/source review and Git publication are the remaining activities.
+No package was installed for screenshots. Four saved mock SVGs are available in
+[dashboard/previews/](../../dashboard/previews/); final visual review is deferred.
+Local logs under `/tmp/mib2q-p2-02-*` and `/tmp/dashboard-*` are not committed;
+the audit preserves the observed outcomes.
+
+## P2-01 validation evidence (historical)
 
 | Command / environment | Actual result |
 | --- | --- |
@@ -62,7 +100,7 @@ about sandbox behavior.
 
 Other Java linkage suites, native macOS GL rendering and QNX cross/vehicle builds
 were not run for this isolated module. The proprietary assets/toolchains/platform
-prerequisites are unavailable here. No host graphics renderer exists yet to test.
+prerequisites are unavailable here. The P2-02 host SVG exporter is isolated from those unavailable platform paths.
 Local `/tmp/mib2q-p2-01-*.log` files contain these run outputs but are not portable
 or committed; this document and the audit preserve the results.
 
@@ -85,6 +123,8 @@ Source changes can be reverted by their feature commit without discarding other 
 4. Real data semantics, validity and availability during AA require validation.
 5. Shipping-JAR/Java and vehicle checks remain unavailable, not passed.
 
-P2-01 acceptance is complete. Next eligible task, when requested, is P2-02:
-Compact/Extended frame builders and a host SVG adapter using the module contracts.
+P2-01 is complete. P2-02 implementation and artifacts are ready for review;
+final testing is deferred. Next implementation task, when requested, is P2-03:
+disabled-by-default configuration and manager suppression. Do not run tests in
+that increment unless the user changes the final-stage-only testing policy.
 No vehicle integration or roadmap Phases 3–5 are authorized.
