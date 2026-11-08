@@ -1188,3 +1188,10 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Docs: status, HANDOFF, AGENTS, CLAUDE/GEMINI/Copilot pointers, changes, CURRENT.
 - Git: origin/master ab97450 is an ancestor; master fast-forwarded to the commit
   containing this event (fdebc21 + this event).
+
+## 2026-11-08T19:49:46Z | 20261108T172937Z-claude-14 | P2-C01 Actions enabled by user; first run
+
+- User: "enabled" (GitHub Actions enabled on the fork). list_workflow_runs still 0
+  right after; workflow_dispatch from the agent still 403.
+- Triggering the first run by pushing this audit-only commit to branch
+  ci/first-run (code identical to master c49da24). master untouched.
