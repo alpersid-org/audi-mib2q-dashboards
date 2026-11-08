@@ -7,7 +7,7 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
-**Latest — P2-C04 (branch, not merged):** the user asked to "start C04". Signal
+**Latest — P2-C04 host part (merged):** the user asked to "start C04". Signal
 acceptance register and per-signal eligibility are implemented and host-tested
 ([signal-acceptance.md](docs/custom-dashboards/signal-acceptance.md)). Production
 mode shows only ACCEPTED signals; none is accepted until vehicle evidence exists.
@@ -20,7 +20,7 @@ stale installation instructions reconciled. See [resolution](docs/custom-dashboa
 and audit checkpoint. Committed as `62b18e1`, fast-forwarded and pushed to fork
 master on "Commit and push to master"; remote SHA verified.
 
-**Latest — P2-C05 (merged):** the user asked to "start C05"; the host runtime
+**Earlier — P2-C05 (merged):** the user asked to "start C05"; the host runtime
 controller ([runtime.md](docs/custom-dashboards/runtime.md)) is merged to master
 with passing host tests. Next eligible host work: C05's shared Java/C settings
 contract or C04 signal policy. Native drawing (C06) stays gated on C03 evidence;

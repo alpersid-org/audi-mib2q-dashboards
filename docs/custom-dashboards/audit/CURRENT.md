@@ -1,16 +1,15 @@
 # Current agent checkpoint
 
-Updated: 2026-11-08T18:51:08Z. Agent: Claude Code. Task: P2-C04 host signal policy / READY_FOR_REVIEW
-on `feature/p2-c04-signal-policy` (from master ed599b9). Not merged.
+Updated: 2026-11-08T18:55:24Z. Agent: Claude Code. Task: P2-C04 host part / COMPLETE (merged to
+master on "merge + update docs").
 
-- Done: acceptance register (signal-acceptance.md), signal_policy.{h,c}, runtime
-  integration (default PRODUCTION + compiled register; VALIDATION explicit),
-  policy suite, runtime test updates. Clean make all test test-sanitize test-java PASS;
-  three policy mutants caught.
-- No signal is ACCEPTED; production draws nothing by design.
-- Blocked on C02 evidence: range attribute meaning, DSI cache/confirmation and
-  service-loss semantics (plan items 2–4). Java unchanged; DBV1 unchanged.
+- Merged: signal acceptance register (signal-acceptance.md), signal_policy.{h,c},
+  runtime eligibility (default PRODUCTION + compiled register), tests.
+- No signal is ACCEPTED: the production runtime draws nothing by design.
+- Open: C04 items 2–4 (range meaning, DSI cache/confirmation, service loss) need
+  C02 vehicle evidence; C05 shared Java/C settings contract; C06 gated on C03.
 - Boundaries: QNX guard, default OFF, no native backend, no vehicle actions.
 
-Next: await merge approval; then user-run on-car evidence (Phase 1 handover step 1
-logs) to move candidates toward ACCEPTED. Audit: [LOG.md](LOG.md).
+Next: user-run on-car evidence (Phase 1 handover step 1 logs; later validation-mode
+checks) to accept candidates; host options: C05 settings contract, C01 CI.
+Audit: [LOG.md](LOG.md).

@@ -1,6 +1,6 @@
 # Project status
 
-**P2-C04 (2026-11-08, branch `feature/p2-c04-signal-policy`):** signal acceptance register [signal-acceptance.md](signal-acceptance.md) and per-signal eligibility (`signal_policy.{h,c}`); production shows ACCEPTED signals only and none is accepted yet; items 2–4 wait for C02 vehicle evidence.
+**P2-C04 (2026-11-08, host part merged to master):** signal acceptance register [signal-acceptance.md](signal-acceptance.md) and per-signal eligibility (`signal_policy.{h,c}`); production shows ACCEPTED signals only and none is accepted yet; items 2–4 wait for C02 vehicle evidence.
 
 **P2-C05 review corrections (published, 2026-11-08, `62b18e1`):** [resolution](reviews/claude-p2-c05-resolution.md)
 closes all three findings: shutdown stays disabled until explicit enable,

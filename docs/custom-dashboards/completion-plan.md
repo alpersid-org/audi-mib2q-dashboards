@@ -112,7 +112,7 @@ to execute independent authorized host work.
 | P2-C01 | Reproducible baseline and observed CI results | Published corrections | Yes: source and service diagnosis | Small |
 | P2-C02 | Exact target profile, build prerequisites and baseline evidence | User identity supplied; Phase 1 installed (handover) | Identity inventory partly complete; stock ABI/assets and original baseline required to finish | Medium |
 | P2-C03 | Verified candidate display geometry and ownership design | C02 target identity | Source analysis now; final surface decision blocked on evidence | Large / investigation |
-| P2-C04 | Accepted signal/capability and freshness policy | C02 real DSI/receiver evidence | Host policy/tests now; source promotion gated | Medium |
+| P2-C04 | Accepted signal/capability and freshness policy | C02 real DSI/receiver evidence | **Register + per-signal eligibility merged** ([signal-acceptance.md](signal-acceptance.md)); acceptance of each signal gated on vehicle evidence | Medium |
 | P2-C05 | Host-testable production consumer/controller contract | Existing core; C04 contract | **Controller implemented and host-tested** ([runtime.md](runtime.md)); shared Java/C settings contract remains | Medium |
 | P2-C06 | VC drawing backend and native display lifecycle | C02, C03, C04, C05 | Target integration blocked on gates | Large |
 | P2-C07 | MMI controls and persistent runtime settings | C05 controller and safely gated C06 consumer | Schema/controller tests now; GEM integration after consumer | Medium |
@@ -256,7 +256,7 @@ values or produce live zero. Tests cover real source callbacks/service transitio
 not just the existing substituted VehicleDataModule. Unaccepted signals are omitted;
 MOCK remains confined to development/test paths.
 
-**State (2026-11-08, `feature/p2-c04-signal-policy`):** items 1 and 5 done —
+**State (2026-11-08, host part merged to master):** items 1 and 5 done —
 [signal-acceptance.md](signal-acceptance.md) register and `dashboard/signal_policy.{h,c}`
 (production shows ACCEPTED only, per-signal VERIFIED promotion, validation mode for
 on-car checks, MOCK always removed), integrated into the runtime and host-tested.

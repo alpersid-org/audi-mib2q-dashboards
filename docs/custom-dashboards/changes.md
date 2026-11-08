@@ -7,6 +7,7 @@ User: "start C04". Added `dashboard/signal_policy.{h,c}`, runtime integration
 `tests/dashboard_signal_policy_test.c`, runtime test updates (explicit VALIDATION
 mode; production-default case), Makefile wiring, [signal-acceptance.md](signal-acceptance.md),
 completion-plan/status/HANDOFF/AGENTS/runtime docs. Host tests pass; mutants caught.
+Merged to master on "merge + update docs"; current-state docs and agent pointers updated.
 
 ## FIX-CLAUDE-C05 — review corrections (2026-11-08, published)
 

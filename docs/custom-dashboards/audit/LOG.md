@@ -1131,3 +1131,11 @@ feature; earlier project history is available in Git and [status.md](../status.m
   Mutants: global VERIFIED promotion, candidates in production, MOCK allowed -> each
   caught; source restored (cmp identical).
 - Items 2–4 recorded as blocked on C02 evidence. Next: commit/push; await approval.
+
+## 2026-11-08T18:55:24Z | 20261108T172937Z-claude-08 | PUBLICATION / P2-C04 TO MASTER + DOCS
+
+- User: "merge + update docs". Covers this fast-forward only; no release, no vehicle.
+- Docs: status, HANDOFF, AGENTS (latest/earlier), completion-plan C04 row/state,
+  CLAUDE/GEMINI/Copilot pointers, changes, CURRENT.
+- Git: origin/master ed599b9 is an ancestor; master fast-forwarded to the commit
+  containing this event (3c8342d + this event). No tests rerun (docs only).
