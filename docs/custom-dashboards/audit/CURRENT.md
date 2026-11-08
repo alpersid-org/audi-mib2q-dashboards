@@ -1,15 +1,14 @@
 # Current agent checkpoint
 
-Updated: 2026-11-08T18:55:24Z. Agent: Claude Code. Task: P2-C04 host part / COMPLETE (merged to
-master on "merge + update docs").
+Updated: 2026-11-08T19:36:10Z. Agent: Claude Code. Task: P2-C05 settings contract / READY_FOR_REVIEW
+on `feature/p2-c05-settings` (from master d6d37fb). Not merged.
 
-- Merged: signal acceptance register (signal-acceptance.md), signal_policy.{h,c},
-  runtime eligibility (default PRODUCTION + compiled register), tests.
-- No signal is ACCEPTED: the production runtime draws nothing by design.
-- Open: C04 items 2–4 (range meaning, DSI cache/confirmation, service loss) need
-  C02 vehicle evidence; C05 shared Java/C settings contract; C06 gated on C03.
+- Done: typed Java DashboardSettings + DashboardConfig.parse/load; shared 48-vector
+  file run by C (dashboard_config_vectors_test) and Java (DashboardConfigTest);
+  settings-contract.md. Clean make all test test-sanitize test-java PASS.
+- C05 is now complete on the host. Format unchanged (v1).
+- Open elsewhere: C04 items 2–4 and signal acceptance need vehicle evidence; C06
+  gated on C03; C07 controls; C01 CI.
 - Boundaries: QNX guard, default OFF, no native backend, no vehicle actions.
 
-Next: user-run on-car evidence (Phase 1 handover step 1 logs; later validation-mode
-checks) to accept candidates; host options: C05 settings contract, C01 CI.
-Audit: [LOG.md](LOG.md).
+Next: await merge approval. Audit: [LOG.md](LOG.md).

@@ -1139,3 +1139,24 @@ feature; earlier project history is available in Git and [status.md](../status.m
   CLAUDE/GEMINI/Copilot pointers, changes, CURRENT.
 - Git: origin/master ed599b9 is an ancestor; master fast-forwarded to the commit
   containing this event (3c8342d + this event). No tests rerun (docs only).
+
+## 2026-11-08T19:32:47Z | 20261108T172937Z-claude-09 | START / P2-C05 settings contract
+
+- User: "start C05 settings contract". Start: master = origin/master d6d37fb.
+  Branch feature/p2-c05-settings.
+- Scope: one typed settings contract for the v1 config shared by C (db_config /
+  config.c) and Java (new DashboardSettings / DashboardConfig.parse), plus a
+  shared conformance-vector file consumed by both test suites. Format unchanged
+  (no new keys/version); no vehicle actions; C07 controls not started.
+
+## 2026-11-08T19:36:10Z | 20261108T172937Z-claude-10 | COMPLETE / P2-C05 settings contract READY_FOR_REVIEW
+
+- Added DashboardSettings.java; DashboardConfig.parse()/load() typed (enabled()
+  = load().enabled); shared vectors (48, spec-derived) + C runner + Java runner.
+- Fixed own test-order issue: Codex's directory case left the config path as a
+  directory; the typed-load check now removes it first.
+- Clean make -C dashboard all test test-sanitize test-java -> exit 0.
+- Mutants: Java equalsIgnoreCase layout -> caught (layout-case); C line cap 65 ->
+  caught (line-65-bytes); C space allowed -> survived, equivalent (exact key/value
+  matching rejects all space vectors). Sources restored (cmp identical).
+- Next: commit/push branch; await merge approval.

@@ -11,7 +11,56 @@ public final class DashboardConfigTest {
     }
     private static byte[] b(String s) throws Exception { return s.getBytes("ISO-8859-1"); }
 
+    /* P2-C05: shared conformance vectors (same file as dashboard_config_vectors_test.c). */
+    static int vectors(String path) throws Exception {
+        java.io.BufferedReader r = new java.io.BufferedReader(
+            new java.io.InputStreamReader(new java.io.FileInputStream(path), "US-ASCII"));
+        String line, name = null, expect = null;
+        int cases = 0;
+        try {
+            while ((line = r.readLine()) != null) {
+                if (line.length() == 0 || line.charAt(0) == '#') continue;
+                if (line.startsWith("case ")) {
+                    check(name == null, "vector without hex: " + line);
+                    int sp = line.indexOf(' ', 5);
+                    name = line.substring(5, sp);
+                    expect = line.substring(sp + 1);
+                    continue;
+                }
+                check(name != null && line.startsWith("hex "), "bad vector line: " + line);
+                String hex = line.substring(4);
+                byte[] data = new byte[hex.equals("-") ? 0 : hex.length() / 2];
+                for (int i = 0; i < data.length; i++)
+                    data[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
+                DashboardSettings got = DashboardConfig.parse(data);
+                if (expect.equals("invalid")) {
+                    check(!got.valid && !got.enabled && got.layout == DashboardSettings.LAYOUT_COMPACT,
+                        "vector " + name + ": accepted, expected invalid (" + got + ")");
+                } else {
+                    boolean en = expect.indexOf("enabled=1") >= 0;
+                    int lay = expect.endsWith("layout=extended") ? DashboardSettings.LAYOUT_EXTENDED
+                                                                 : DashboardSettings.LAYOUT_COMPACT;
+                    check(expect.startsWith("valid ") && got.valid && got.enabled == en && got.layout == lay,
+                        "vector " + name + ": got " + got + ", expected " + expect);
+                }
+                check(DashboardConfig.enabled(data) == got.enabled, "enabled() differs from parse()");
+                name = null;
+                cases++;
+            }
+        } finally { r.close(); }
+        check(name == null && cases >= 40, "vector count " + cases);
+        return cases;
+    }
+
     public static void main(String[] args) throws Exception {
+        int nv = vectors(args[1]);
+        check(DashboardSettings.LAYOUT_COMPACT == 0 && DashboardSettings.LAYOUT_EXTENDED == 1,
+            "layout values must equal C db_layout");
+        check(!DashboardSettings.DEFAULT.valid && !DashboardSettings.DEFAULT.enabled
+            && DashboardSettings.DEFAULT.layout == DashboardSettings.LAYOUT_COMPACT, "default");
+        check(!new DashboardSettings(false, true, 1).enabled
+            && new DashboardSettings(false, true, 1).layout == DashboardSettings.LAYOUT_COMPACT,
+            "invalid settings can never enable or select a layout");
         /* Accepted by config.c: enabled only where enabled=1. */
         String[][] accept = {
             { "version=1\n", "0" }, { "version=1", "0" },
@@ -80,9 +129,15 @@ public final class DashboardConfigTest {
         cfg.delete(); target.delete();
         cfg.mkdir();
         check(!DashboardConfig.enabled(), "directory config must disable");
+        check(DashboardConfig.load() == DashboardSettings.DEFAULT, "directory -> default settings");
+        cfg.delete();                                   /* remove the directory again */
+        write(cfg, b("version=1\nenabled=1\nlayout=extended\n"));
+        DashboardSettings ls = DashboardConfig.load();
+        check(ls.valid && ls.enabled && ls.layout == DashboardSettings.LAYOUT_EXTENDED, "typed load");
         cfg.delete();
+        check(DashboardConfig.load() == DashboardSettings.DEFAULT, "missing file -> default");
         check(DashboardConfig.PATH.equals("/mnt/app/carplay_dashboard.cfg"), "production path");
-        System.out.println("DashboardConfigTest: config.c parity (accept/reject/caps/NUL), file gate PASS");
+        System.out.println("DashboardConfigTest: " + nv + " shared vectors, typed settings, config.c parity (accept/reject/caps/NUL), file gate PASS");
     }
 
     static void write(File f, byte[] data) throws Exception {

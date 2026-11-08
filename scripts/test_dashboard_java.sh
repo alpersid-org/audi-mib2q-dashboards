@@ -17,7 +17,8 @@ J="$PROJECT_DIR/java_patch/com/luka/carplay"
 S="$PROJECT_DIR/tests/stubs/dashboard-feed/com/luka/carplay"
 mkdir -p "$TEST_DIR/classes" "$TEST_DIR/scratch"
 "$JAVAC" -encoding UTF-8 -d "$TEST_DIR/classes" \
-    "$J/dashboard/DashboardConfig.java" "$J/dashboard/DashboardModule.java" \
+    "$J/dashboard/DashboardConfig.java" "$J/dashboard/DashboardSettings.java" \
+    "$J/dashboard/DashboardModule.java" \
     "$J/aa/AaRgState.java" "$J/aa/AaTripFeed.java" "$J/aa/AaManeuverMap.java" "$J/aa/AaLaneFeed.java" \
     "$J/core/Module.java" \
     "$S/core/CarPlayApp.java" "$S/core/FrameworkRef.java" "$S/core/VehicleDataModule.java" \
@@ -25,7 +26,8 @@ mkdir -p "$TEST_DIR/classes" "$TEST_DIR/scratch"
     "$PROJECT_DIR/tests/stubs/app-lifecycle/com/luka/carplay/framework/Log.java" \
     "$PROJECT_DIR/tests/DashboardConfigTest.java" "$PROJECT_DIR/tests/DashboardModuleTest.java" \
     "$PROJECT_DIR/tests/AaRgStateDashboardTest.java"
-"$JAVA" -cp "$TEST_DIR/classes" com.luka.carplay.dashboard.DashboardConfigTest "$TEST_DIR/scratch"
+"$JAVA" -cp "$TEST_DIR/classes" com.luka.carplay.dashboard.DashboardConfigTest "$TEST_DIR/scratch" \
+    "$PROJECT_DIR/tests/fixtures/dashboard_config_vectors.txt"
 "$JAVA" -cp "$TEST_DIR/classes" com.luka.carplay.aa.AaRgStateDashboardTest
 "$JAVA" -cp "$TEST_DIR/classes" com.luka.carplay.dashboard.DashboardModuleTest \
     "$TEST_DIR/scratch" "$TEST_DIR/java_record.bin"

@@ -1,5 +1,14 @@
 # Change ledger
 
+## P2-C05 — shared settings contract (2026-11-08)
+
+User: "start C05 settings contract". Added `DashboardSettings.java`, typed
+`DashboardConfig.parse/load` (enabled() unchanged in meaning), shared vectors
+`tests/fixtures/dashboard_config_vectors.txt`, `tests/dashboard_config_vectors_test.c`,
+vector + typed checks in `DashboardConfigTest`, Makefile/script wiring,
+[settings-contract.md](settings-contract.md), config.md pointer, plan/status/HANDOFF/AGENTS.
+Format unchanged. Host tests pass; mutants caught (one equivalent mutant noted).
+
 ## P2-C04 — signal acceptance and eligibility (2026-11-08)
 
 User: "start C04". Added `dashboard/signal_policy.{h,c}`, runtime integration

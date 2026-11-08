@@ -1,5 +1,8 @@
 # P2-03: configuration and dashboard manager
 
+> The authoritative format and its Java/C typed mapping are now in
+> [settings-contract.md](settings-contract.md) (P2-C05, shared conformance vectors).
+
 **Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)
 records installer recovery, widget omission, feed I/O/restart hardening and CI.
 Host checks pass; firmware/safe-surface/stock-linkage/vehicle gates remain open.

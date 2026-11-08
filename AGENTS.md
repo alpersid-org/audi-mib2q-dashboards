@@ -7,7 +7,11 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
-**Latest — P2-C04 host part (merged):** the user asked to "start C04". Signal
+**Latest — P2-C05 settings contract (branch, not merged):** the user asked to
+"start C05 settings contract". One typed v1 settings contract shared by C and
+Java with 48 conformance vectors ([settings-contract.md](docs/custom-dashboards/settings-contract.md)).
+
+**Earlier — P2-C04 host part (merged):** the user asked to "start C04". Signal
 acceptance register and per-signal eligibility are implemented and host-tested
 ([signal-acceptance.md](docs/custom-dashboards/signal-acceptance.md)). Production
 mode shows only ACCEPTED signals; none is accepted until vehicle evidence exists.

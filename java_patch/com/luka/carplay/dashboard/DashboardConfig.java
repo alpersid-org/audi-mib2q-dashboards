@@ -21,7 +21,13 @@ public final class DashboardConfig {
 
     /** True only for a valid file at PATH with enabled=1.  Never throws. */
     public static boolean enabled() {
-        return enabled(read(path));
+        return load().enabled;
+    }
+
+    /** P2-C05 typed settings from PATH; the disabled default for a missing,
+     *  unreadable or invalid file.  Never throws. */
+    public static DashboardSettings load() {
+        return parse(read(path));
     }
 
     static byte[] read(String path) {
@@ -50,8 +56,15 @@ public final class DashboardConfig {
 
     /** Strict parse; returns true only when the text is valid and enabled=1. */
     static boolean enabled(byte[] text) {
-        if (text == null || text.length == 0 || text.length > TEXT_CAP) return false;
+        return parse(text).enabled;
+    }
+
+    /** Strict v1 parse (settings-contract.md); DashboardSettings.DEFAULT if invalid. */
+    public static DashboardSettings parse(byte[] text) {
+        DashboardSettings d = DashboardSettings.DEFAULT;
+        if (text == null || text.length == 0 || text.length > TEXT_CAP) return d;
         boolean version = false, seenEnabled = false, seenLayout = false, on = false;
+        int layout = DashboardSettings.LAYOUT_COMPACT;
         int pos = 0;
         while (pos < text.length) {
             int end = pos;
@@ -59,36 +72,37 @@ public final class DashboardConfig {
             int next = end < text.length ? end + 1 : end;
             int n = end - pos;
             if (n > 0 && text[pos + n - 1] == '\r') n--;
-            if (n > LINE_CAP) return false;
+            if (n > LINE_CAP) return d;
             if (n > 0 && text[pos] != '#') {
                 int eq = -1;
                 for (int i = pos; i < pos + n; i++) {
                     int c = text[i] & 0xff;
-                    if (c <= 0x20 || c >= 0x7f) return false;
+                    if (c <= 0x20 || c >= 0x7f) return d;
                     if (c == '=' && eq < 0) eq = i;
                 }
-                if (eq < 0) return false;
+                if (eq < 0) return d;
                 String key = ascii(text, pos, eq - pos);
                 String value = ascii(text, eq + 1, pos + n - eq - 1);
                 if (!version) {
-                    if (!key.equals("version") || !value.equals("1")) return false;
+                    if (!key.equals("version") || !value.equals("1")) return d;
                     version = true;
                 } else if (key.equals("enabled") && !seenEnabled) {
                     seenEnabled = true;
                     if (value.equals("1")) on = true;
-                    else if (!value.equals("0")) return false;
+                    else if (!value.equals("0")) return d;
                 } else if (key.equals("layout") && !seenLayout) {
                     seenLayout = true;
-                    if (!value.equals("compact") && !value.equals("extended")) return false;
+                    if (value.equals("extended")) layout = DashboardSettings.LAYOUT_EXTENDED;
+                    else if (!value.equals("compact")) return d;
                 } else {
-                    return false;                          /* unknown or duplicate key */
+                    return d;                              /* unknown or duplicate key */
                 }
             }
             /* NUL anywhere (comments included) rejects the file, as in config.c */
-            for (int i = pos; i < end; i++) if (text[i] == 0) return false;
+            for (int i = pos; i < end; i++) if (text[i] == 0) return d;
             pos = next;
         }
-        return version && on;
+        return version ? new DashboardSettings(true, on, layout) : d;
     }
 
     private static String ascii(byte[] b, int off, int len) {
