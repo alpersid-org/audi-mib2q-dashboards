@@ -920,3 +920,9 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - PLAN.md now points to the active plan and labels old stage statuses historical; status/HANDOFF/PROJECT/AGENTS/audit entry points reconciled. Prior corrections/runtime remain unchanged.
 - Validation: Markdown relative links and balanced fences PASS (nine Markdown files, 133 links before this final checkpoint update); git diff --check PASS. No code tests repeated for text-only work. GitHub Actions still returns zero runs; cause unverified.
 - Next: commit documentation, fast-forward/push fork master under existing authorization, verify remote SHA. Then begin C01/C05 independent host work when implementing the plan; target work follows C02/C03 evidence gates.
+
+## 2026-11-08T09:41:35Z | codex-completion-plan-03 | PUBLICATION / COMPLETE
+
+- Completion plan commit fa1733c138fea78b768bec81fd1e55438f34a0e6 fast-forwarded and pushed to fork master. git ls-remote verified the exact SHA. Working tree clean after publication; no source/runtime changes, release, upstream write or vehicle action.
+- Documentation checks passed: nine Markdown files, 134 valid relative links, balanced fences and git diff --check. This final checkpoint records publication; its own commit follows in Git history under the same authorization.
+- Next implementation remains C01 CI diagnosis and C05 host controller/settings contracts, alongside C02 evidence inventory/C03 surface analysis. No target evidence was supplied; target integration remains gated as described in completion-plan.md.
