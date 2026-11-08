@@ -7,7 +7,7 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
-**Latest — P2-C07 host part (branch, not merged):** settings persistence and live
+**Latest — P2-C07 host part (merged):** settings persistence and live
 application ([controls.md](docs/custom-dashboards/controls.md)). GEM controls stay
 unimplemented until a safely gated consumer exists (C06).
 

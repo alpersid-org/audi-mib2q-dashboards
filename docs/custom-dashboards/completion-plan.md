@@ -368,7 +368,7 @@ invalid config, toggles, selection, reconnect, restart and persistence pass host
 stock-linked tests; applied state is distinguishable from persisted intent.
 On-unit control behavior is confirmed in C09.
 
-**State (2026-11-08, `feature/p2-c07-settings-persistence`):** host part done —
+**State (2026-11-08, merged; CI run 42518493954 passed):** host part done —
 [controls.md](controls.md): atomic store + `dashboard_config -w`, live runtime
 reload with persisted-vs-applied state (fail closed), shutdown latch kept, Java
 publisher withdraws on disable without reconnect (505 ms host), reboot cannot

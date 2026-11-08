@@ -8,6 +8,7 @@ shutdown latch flag, `DashboardModule` per-cycle config re-check (withdraw on
 disable). Tests: `tests/dashboard_settings_test.c`, CLI `-w` cases,
 `DashboardModuleTest.liveSettings`. Docs: [controls.md](controls.md), plan,
 settings-contract, status/HANDOFF/AGENTS. GEM buttons not added (rule).
+CI run 42518493954 passed. Merged to master on "merge + update docs".
 
 ## P2-C01 — first CI run passed (2026-11-08)
 

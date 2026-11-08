@@ -1235,3 +1235,12 @@ feature; earlier project history is available in Git and [status.md](../status.m
   liveSettings (505 ms). Clean make all test test-sanitize test-java, lifecycle 6/6.
 - Mutants: latch ignored -> caught; no withdrawal -> caught. Sources restored.
 - GEM buttons not added (consumer gate). Next: push; check branch CI; await approval.
+
+## 2026-11-08T20:10:58Z | 20261108T172937Z-claude-19 | PUBLICATION / P2-C07 TO MASTER + DOCS
+
+- User: "merge + update docs". Covers this fast-forward only; no release, no vehicle.
+- Branch CI run 42518493954 success (log shows dashboard_settings_test, CLI -w,
+  liveSettings 503 ms).
+- Docs: status, HANDOFF, AGENTS, completion-plan, controls, pointers, changes, CURRENT.
+- Git: origin/master 90e86b5 is an ancestor; master fast-forwarded to the commit
+  containing this event (0e306d1 + this event).

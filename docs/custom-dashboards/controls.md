@@ -40,7 +40,11 @@ on-unit behaviour is confirmed in C09.
   lifecycle work that cannot be compiled or tested here (stock JAR absent).
 - **Wheel/safety keys:** not used (plan rule).
 
-## Validation (2026-11-08, host)
+## Validation (2026-11-08, host and CI)
+
+CI: [run 42518493954](https://github.com/alpersid-org/audi-mib2q-dashboards/actions/runs/42518493954)
+passed on `0e306d1`; its log shows the new suites, including liveSettings at 503 ms.
+
 
 | Check | Result |
 | --- | --- |

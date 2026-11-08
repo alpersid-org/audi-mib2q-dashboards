@@ -14,6 +14,8 @@ is merged (docs/custom-dashboards/runtime.md). P2-C04 signal register/eligibilit
 merged (docs/custom-dashboards/signal-acceptance.md); no signal is ACCEPTED yet.
 C05 shared Java/C settings contract is merged (docs/custom-dashboards/settings-contract.md).
 CI (GitHub Actions) is enabled; the first run passed (docs/custom-dashboards/ci-status.md).
+C07 host part (atomic settings, live reload, disable without reconnect) is merged
+(docs/custom-dashboards/controls.md); GEM buttons wait for a safe consumer (C06).
 Use [the continuation guide](../docs/custom-dashboards/HANDOFF.md) to recover context.
 Read [the current checkpoint](../docs/custom-dashboards/audit/CURRENT.md) and recent
 [audit events](../docs/custom-dashboards/audit/LOG.md); follow the audit protocol to

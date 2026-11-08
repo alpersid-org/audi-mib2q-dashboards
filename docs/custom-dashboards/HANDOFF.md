@@ -1,6 +1,6 @@
 # AI continuation guide
 
-**P2-C07 host part (2026-11-08, branch `feature/p2-c07-settings-persistence`):** atomic settings store, live reload with persisted-vs-applied state, disable without reconnect ([controls.md](controls.md)); GEM buttons wait for C06.
+**P2-C07 host part (2026-11-08, merged; CI run 42518493954 passed):** atomic settings store, live reload with persisted-vs-applied state, disable without reconnect ([controls.md](controls.md)); GEM buttons wait for C06.
 
 **P2-C01 (2026-11-08):** CI enabled by the owner; first run **passed** (run 42516991181: 39/39 host checks, all dashboard/Java/lifecycle/installer/v1.4.1 regressions). See [ci-status.md](ci-status.md).
 
