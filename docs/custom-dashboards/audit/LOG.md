@@ -1168,3 +1168,15 @@ feature; earlier project history is available in Git and [status.md](../status.m
   pointers, changes, CURRENT.
 - Git: origin/master d6d37fb is an ancestor; master fast-forwarded to the commit
   containing this event (29817dc + this event). No tests rerun (docs only).
+
+## 2026-11-08T19:45:33Z | 20261108T172937Z-claude-12 | P2-C01 CI diagnosis (BLOCKED on owner)
+
+- User: "start C01". Start master ab97450; branch feature/p2-c01-ci.
+- list_workflows: Tests id 410626026 active (2026-11-07). list_workflow_runs: 0.
+  run_workflow(master): 403 Resource not accessible by integration.
+- Local equivalent run in scratch clone: clang 18 as cc after installing ksh, mksh,
+  zlib1g-dev and libclang-rt-18-dev (asan runtime missing initially -> link error,
+  environment difference). run_tests.sh: hw301 abort (no IPv6); scratch copy without
+  hw301 exit 0 (38 checks). make all test test-sanitize test-java, lifecycle,
+  installer_recovery (10 OK), tag fetch, upstream_v141 (4 OK): all exit 0.
+- Documented in ci-status.md; no workflow/code change. Observed CI run unresolved.

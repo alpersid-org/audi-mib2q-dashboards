@@ -1,5 +1,11 @@
 # Change ledger
 
+## P2-C01 — CI diagnosis (2026-11-08)
+
+User: "start C01". Added [ci-status.md](ci-status.md) (API evidence, owner action,
+local workflow-equivalent results); completion-plan C01 state, status, HANDOFF, AGENTS.
+No workflow or code change.
+
 ## P2-C05 — shared settings contract (2026-11-08)
 
 User: "start C05 settings contract". Added `DashboardSettings.java`, typed

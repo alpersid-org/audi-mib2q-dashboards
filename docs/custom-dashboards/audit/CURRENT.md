@@ -1,15 +1,15 @@
 # Current agent checkpoint
 
-Updated: 2026-11-08T19:39:58Z. Agent: Claude Code. Task: P2-C05 settings contract / COMPLETE (merged
-to master on "merge + update docs"). C05 is complete on the host.
+Updated: 2026-11-08T19:45:33Z. Agent: Claude Code. Task: P2-C01 CI diagnosis / BLOCKED (owner action)
+on `feature/p2-c01-ci` (from master ab97450). Not merged.
 
-- Merged: DashboardSettings + typed DashboardConfig.parse/load; 48 shared v1
-  conformance vectors run by C and Java; settings-contract.md.
-- Host work done so far: C05 (runtime + settings), C04 host part (register +
-  eligibility). No signal is ACCEPTED; production draws nothing by design.
-- Open: C04 items 2–4 and signal acceptance (vehicle evidence), C01 CI, C07
-  controls/persistence, C06 native drawing (gated on C03), C08/C09.
-- Boundaries: QNX guard, default OFF, no native backend, no vehicle actions.
+- GitHub API: workflow "Tests" active, 0 runs ever; workflow_dispatch from this
+  session -> 403 (agent token lacks actions write). Likely cause: Actions disabled
+  on the fork (or org policy). Owner must enable Actions; see ci-status.md.
+- Local workflow-equivalent run (fresh clone, clang 18, ksh/mksh, SKIP_JAR_CHECK=1):
+  run_tests 38/39 PASS (hw301 needs IPv6, absent here); dashboard all/test/
+  sanitize/java, lifecycle, installer recovery (10), upstream v1.4.1 (4) PASS.
+- Container changes (local only): installed ksh, mksh, zlib1g-dev, libclang-rt-18-dev.
 
-Next: user-run post-reboot logs (Phase 1 handover step 1); host options C01 or the
-C07 schema/controller part. Audit: [LOG.md](LOG.md).
+Next: user enables Actions and starts a run; then inspect run/jobs/logs and fix
+real failures. Audit: [LOG.md](LOG.md).

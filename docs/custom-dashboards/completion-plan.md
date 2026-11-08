@@ -150,6 +150,11 @@ run/job evidence and explicit stock/hardware exclusions. Local-only success is
 recorded separately. If external execution remains unavailable, report that gate
 as unresolved instead of inventing a successful run.
 
+**State (2026-11-08):** diagnosed in [ci-status.md](ci-status.md): workflow active,
+0 runs ever; Actions not executing on this fork (owner must enable it; the agent's
+token cannot dispatch, 403). A local workflow-equivalent run passes every step
+except the IPv6-only hw301 check. Observed CI run: unresolved.
+
 ## P2-C02 — target profile, assets and baseline
 
 **Purpose:** prevent implementing and packaging against another car's ABI.
