@@ -103,7 +103,10 @@ db_runtime_state db_runtime_tick(db_runtime *rt, uint64_t now_ms)
     }
     frame = db_manager_frame(&rt->manager);
     if (!rt->owned) {
-        if (!rt->backend.acquire ||
+        /* Reject incomplete backends before taking a surface: every successful
+         * acquire must have both a drawing path and a guaranteed cleanup path. */
+        if (!rt->backend.acquire || !rt->backend.draw ||
+            !rt->backend.clear || !rt->backend.release ||
             !rt->backend.acquire(rt->backend.context, rt->profile.width, rt->profile.height,
                                  rt->profile.area)) {
             rt->acquire_failures++;
@@ -131,6 +134,11 @@ db_runtime_state db_runtime_tick(db_runtime *rt, uint64_t now_ms)
 void db_runtime_shutdown(db_runtime *rt)
 {
     if (!rt) return;
+    /* Latch disabled intent so an already-scheduled tick cannot restart output.
+     * Applying enabled config explicitly starts the next lifecycle. */
+    db_config_disable(&rt->config);
+    db_manager_disable(&rt->manager);
+    rt->backoff_ms = rt->retry_at_ms = 0;
     leave(rt, DB_RT_DISABLED);
 }
 

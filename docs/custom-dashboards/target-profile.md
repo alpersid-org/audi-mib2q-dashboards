@@ -38,11 +38,12 @@ record unsupported combinations explicitly rather than infer a mapping.
 
 - C02 target identity inventory is partially complete: firmware/MU/media-driver,
   cluster/modes, phone/adapter and installation status are now supplied.
-- Stock MMI Android Auto is reported working. This is a baseline observation to
-  preserve; it does not establish that the original project is installed.
-- Phase 1 is explicitly not performed. Its installation status must not be
-  described as unknown or complete. Enhanced cluster output and recovery behavior
-  remain untested on this setup.
+- Phase 1 is complete: upstream mib2q-carplay 1.4.1 is installed and vehicle-tested.
+  Android Auto cluster maps work wired and with the original AAWireless, in
+  Classic and wide map views; OEM checks passed. Preserve this installed baseline.
+- The fork's dashboard runtime is not the installed upstream release. Remaining
+  evidence includes post-reboot logs, long-session behavior and recovery testing;
+  these gaps do not reopen Phase 1 installation or prove dashboard compatibility.
 
 ## Repository compatibility evidence and limits
 
@@ -53,9 +54,10 @@ other units/releases do not certify this unit's new custom dashboards.
 
 The [wireless-adapter table](../../README.md#tested-wireless-adapters) names
 **AAWireless TWO+** with firmware qualifications (source line 120). It does not
-validate original AAWireless hardware `cs307-e2-prod` on firmware `3.5.0` for a
-secondary cluster stream or the richer navigation feed. No adapter firmware
-upgrade, replacement or TWO+ profile is inferred from that report.
+validate original AAWireless hardware `cs307-e2-prod` on firmware `3.5.0` for the
+richer navigation feed. The user's Phase 1 handover separately establishes
+working cluster maps with that original adapter, in short vehicle sessions.
+No adapter firmware upgrade, replacement or TWO+ profile is inferred from that report.
 
 The receiver [profile table and matching code](../../aa_hook/aa_hook.c) use actual
 `libautoreceiver` symbols/layouts and `gal` build evidence. MU1329 or the media-
@@ -79,17 +81,17 @@ avoid trial/unpinned overrides as a shortcut.
 ## Updated execution order
 
 1. Continue C01 CI diagnosis and C05's independent host controller/settings work.
-2. Complete C02 baseline **preparation** using this identity: review the original
-   solution's exact package/build compatibility and recovery needs before any
-   separately authorized installation. The already reviewed upstream v1.4.1
-   (`b127988a68c8d690841f4a75d35717ffc01e668e`) is a candidate pinned runtime
-   baseline, not an assertion that its distributed JAR matches this unit.
-3. Establish Phase 1 separately, then observe the original solution's behavior
-   with this adapter and both intended OEM modes. Phase 1 uses the original
-   runtime payload; the fork's Java build already contains dashboard changes
-   even with dashboards default OFF, so it is not automatically the original
-   Phase 1 baseline.
-4. Preserve the installer audit findings when planning Phase 1. Original upstream
+2. Complete the remaining C02 baseline evidence around the already installed
+   upstream v1.4.1 release: post-reboot logs, exact stock build prerequisites,
+   package provenance and documented recovery. Its reviewed source baseline is
+   `b127988a68c8d690841f4a75d35717ffc01e668e`; preserve the distinction between
+   source identity, distributed artifacts and the installed working runtime.
+3. Continue from the Phase 1 handover's vehicle-tested wired/wireless maps in
+   Classic and wide views. Longer-session observations and recovery checks remain
+   separate evidence tasks. The fork's Java build already contains dashboard
+   changes even with dashboards default OFF, so it is not the installed Phase 1
+   runtime payload.
+4. Preserve the installer audit findings for future package/recovery work. Upstream
    installation scripts do not acquire this fork's conflict-backup/journal fixes
    merely because the runtime version is 1.4.1. Inventory and preserve existing
    files and establish recovery; if a reviewed installer-only correction is used

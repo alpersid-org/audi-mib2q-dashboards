@@ -12,6 +12,7 @@
 static char path[512];
 static uint64_t wall;
 static uint32_t seq;
+static unsigned wall_reads;
 
 static void put32(unsigned char *b, uint32_t v)
 { b[0] = (unsigned char)(v >> 24); b[1] = (unsigned char)(v >> 16); b[2] = (unsigned char)(v >> 8); b[3] = (unsigned char)v; }
@@ -35,7 +36,7 @@ static void publish(uint32_t session, int32_t temp)
     f = fopen(path, "wb"); assert(f);
     assert(fwrite(b, 1, sizeof(b), f) == sizeof(b)); assert(!fclose(f));
 }
-static uint64_t wall_cb(void) { return wall; }
+static uint64_t wall_cb(void) { wall_reads++; return wall; }
 
 /* ---- fake output backend: enforces the ownership contract ---- */
 typedef struct {
@@ -215,31 +216,70 @@ int main(int argc, char **argv)
         assert(db_runtime_tick(&rt, t) == DB_RT_WAITING && !k.owned);
     }
 
-    /* Shutdown is idempotent and leaves nothing owned. */
+    /* Shutdown stays disabled across ticks with fresh data until explicit enable. */
     publish(2, 125);
+    c = cfg(1, DB_EXTENDED); db_runtime_apply_config(&rt, &c);
     assert(db_runtime_tick(&rt, t) == DB_RT_ACTIVE);
     db_runtime_shutdown(&rt);
     db_runtime_shutdown(&rt);
     assert(!k.owned && !k.visible && rt.state == DB_RT_DISABLED);
+    {
+        int acquires = k.acquires, clears = k.clears, releases = k.releases;
+        unsigned reads = wall_reads;
+        draws = k.draws;
+        for (i = 0; i < 3; ++i) {
+            t += 250; wall += 250; publish(2, 125);
+            assert(db_runtime_tick(&rt, t) == DB_RT_DISABLED);
+        }
+        assert(k.acquires == acquires && k.draws == draws);
+        assert(k.clears == clears && k.releases == releases && wall_reads == reads);
+        /* Reapply the pre-shutdown enabled intent to restart, keeping the layout. */
+        db_runtime_apply_config(&rt, &c);
+        assert(db_runtime_tick(&rt, t) == DB_RT_ACTIVE);
+        assert(k.acquires == acquires + 1 && k.draws == draws + 1);
+        assert(has_text(&k.last, "TIME TO DESTINATION"));
+    }
+    /* Shutdown during recovery cancels retry; explicit enable may retry immediately. */
+    k.fail_draw = 1; publish(2, 140);
+    assert(db_runtime_tick(&rt, t) == DB_RT_RECOVERING && rt.retry_at_ms > t);
+    db_runtime_shutdown(&rt);
+    assert(db_runtime_tick(&rt, t) == DB_RT_DISABLED);
+    assert(rt.backoff_ms == 0 && rt.retry_at_ms == 0);
+    db_runtime_apply_config(&rt, &c);
+    assert(db_runtime_tick(&rt, t) == DB_RT_ACTIVE && has_text(&k.last, "14.0 C"));
+    db_runtime_shutdown(&rt);
     assert(k.granted == k.releases);                  /* every granted surface was released */
 
-    /* Backend without callbacks fails safe (no crash, never active). */
-    {
-        db_output_backend none;
+    /* Every incomplete callback combination is rejected before any backend call. */
+    for (i = 0; i < 15; ++i) {
+        fake partial;
+        db_output_backend incomplete;
         db_runtime r2;
-        memset(&none, 0, sizeof(none));
-        db_runtime_init(&r2, &none, path, wall_cb);
+        memset(&partial, 0, sizeof(partial));
+        incomplete.context = &partial;
+        incomplete.acquire = i & 1 ? f_acquire : NULL;
+        incomplete.draw = i & 2 ? f_draw : NULL;
+        incomplete.clear = i & 4 ? f_clear : NULL;
+        incomplete.release = i & 8 ? f_release : NULL;
+        db_runtime_init(&r2, &incomplete, path, wall_cb);
         db_runtime_set_profile(&r2, &WIDE);
         c = cfg(1, DB_COMPACT); db_runtime_apply_config(&r2, &c);
         publish(3, 125);
         assert(db_runtime_tick(&r2, t) == DB_RT_RECOVERING);
+        assert(!partial.acquires && !partial.draws);
+        assert(db_runtime_tick(&r2, t + DB_RT_BACKOFF_MIN_MS - 1) == DB_RT_RECOVERING);
+        assert(db_runtime_tick(&r2, t + DB_RT_BACKOFF_MIN_MS) == DB_RT_RECOVERING);
+        c.enabled = 0; db_runtime_apply_config(&r2, &c);
         db_runtime_shutdown(&r2);
+        assert(db_runtime_tick(&r2, t) == DB_RT_DISABLED);
+        assert(!partial.owned && !partial.visible && !partial.acquires && !partial.draws);
+        assert(!partial.clears && !partial.releases);
     }
     assert(db_runtime_tick(NULL, 0) == DB_RT_DISABLED);
     db_runtime_init(NULL, &be, NULL, NULL); db_runtime_shutdown(NULL);
     assert(!strcmp(db_runtime_state_name(DB_RT_ACTIVE), "active"));
     assert(!strcmp(db_runtime_state_name((db_runtime_state)99), "unknown"));
     remove(path);
-    puts("dashboard_runtime_test: disabled/unsupported/waiting/active/recovering, data-before-ownership, dirty redraw, layout/profile/config reconcile, stale writer release, bounded backoff, draw failure, shutdown PASS");
+    puts("dashboard_runtime_test: states, data-before-ownership, dirty redraw, reconcile, stale writer release, bounded backoff, draw failure, latched shutdown/restart, all incomplete backends rejected PASS");
     return 0;
 }

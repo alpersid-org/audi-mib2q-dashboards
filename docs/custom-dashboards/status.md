@@ -1,5 +1,11 @@
 # Project status
 
+**P2-C05 review corrections (local, 2026-11-08):** [resolution](reviews/claude-p2-c05-resolution.md)
+closes all three findings: shutdown stays disabled until explicit enable,
+incomplete backends cannot acquire output, and Phase 1 instructions accept the
+installed/vehicle-tested upstream baseline. New regressions, normal C/XML/CLI and
+ASan/UBSan suites PASS. Java unavailable (no javac). Not merged or pushed.
+
 **P2-C05 (2026-11-08, merged to master):** host runtime controller [runtime.md](runtime.md) — states, data-before-ownership, dirty redraw, bounded retry, config/profile reconciler, backend contract; host tests and sanitizers pass. Remaining in C05: shared Java/C settings contract. No native backend; nothing on the vehicle.
 
 **Phase 1 handover (2026-11-08, supersedes "NOT INSTALLED"):** [Phase 1 handover](../phase1-handover/README.md) shows the

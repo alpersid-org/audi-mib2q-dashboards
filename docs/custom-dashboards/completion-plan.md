@@ -41,19 +41,21 @@ Consequences for this plan:
 - **C08:** licensing of modified stock classes (handover B11) must be decided
   before distributing builds.
 
-## Target evidence update — user supplied (superseded where it conflicts)
+## Target evidence update — current baseline
 
 The [target profile](target-profile.md) now records P5092/MU1329, the exact media
 driver, VC Classic/Extended Map, Galaxy S23 Ultra and original AAWireless
-cs307-e2-prod / 3.5.0. Android Auto is working on MMI. ~~Phase 1 is installed (upstream 1.4.1; Phase 1 handover)~~ (superseded above: installed and vehicle-tested).
+cs307-e2-prod / 3.5.0. Phase 1 is installed and vehicle-tested (upstream 1.4.1;
+Phase 1 handover): AA cluster maps work wired/wireless in Classic and wide views.
 C02's identity inventory is partially complete; do not keep requesting the already
 supplied identifiers or mark the full work package complete. Exact stock ABI,
-original-solution baseline, real signal behavior and safe geometry remain open.
+remaining post-reboot/recovery evidence, real signal behavior and safe geometry
+remain open.
 
-The first hardware gate is now explicit: review/build/package/recovery preparation
-for the original runtime, then separately authorized Phase 1 installation and
-validation, before target dashboard validation. The fork's current Java runtime
-contains dashboard edits and must not be mistaken for the original Phase 1 payload.
+Before target dashboard validation, complete the remaining stock ABI, baseline
+and recovery evidence using the installed upstream release. Phase 1 installation
+is complete. The fork's current Java runtime contains dashboard edits and must
+not be mistaken for the installed Phase 1 payload.
 Independent C01/C05 host work and source-level C03 analysis can proceed now.
 
 ## Decisions and boundaries
@@ -162,10 +164,10 @@ remaining target evidence set:
 - Supplied: Galaxy S23 Ultra and original AAWireless cs307-e2-prod / 3.5.0;
   Android Auto working on MMI. Enhanced cluster/rich-feed behavior is not proven
   by the main screen or another adapter's reports.
-- Phase 1 installed (upstream 1.4.1 release; Phase 1 handover, 2026-11-08). Review the exact original-runtime build/package
-  and recovery procedure, then establish the installed original-solution baseline
-  through a separately authorized procedure. Preserve stock MMI behavior for
-  comparison; record the upstream revision, package identity and recovery results.
+- Phase 1 installed and vehicle-tested (upstream 1.4.1 release; Phase 1 handover,
+  2026-11-08). Preserve that working baseline and complete remaining post-reboot,
+  package-provenance and recovery evidence through separately authorized
+  observations. Record the upstream revision, package identity and recovery results.
   Keep original runtime and reviewed installer-only deviations explicit.
 - Exact stock HMI and relevant JCL/DSI/receiver/graphics artifacts or identifiers,
   with provenance and hashes. Keep proprietary binaries and private logs outside
@@ -289,6 +291,10 @@ and tested by `tests/dashboard_runtime_test.c` with a fake backend (see
 one persistent reader with no mock path, acquisition outside draw, dirty redraw,
 bounded backoff, stale-writer/session transitions, idempotent reconciler.
 Remaining: the shared typed Java/C settings contract (overlaps C07).
+
+**Review corrections (local, 2026-11-08):** shutdown now latches disabled intent
+until explicit enable; incomplete backends are rejected before acquisition.
+Regression tests and ASan/UBSan pass; see the [resolution record](reviews/claude-p2-c05-resolution.md).
 
 ## P2-C06 — native drawing and VC lifecycle
 
@@ -431,7 +437,8 @@ as hardware acceptance. Only after this matrix passes is Phase 2 GO for closure.
 
 - [ ] CI result observed for the relevant implementation revision.
 - [x] User-supplied firmware/MU/media driver, VC modes, adapter and Phase 1 status recorded.
-- [ ] Exact stock/build prerequisites and actual Phase 1 original-solution baseline established.
+- [x] Phase 1 upstream original-solution baseline installed and vehicle-tested (handover).
+- [ ] Remaining exact stock/build prerequisites, post-reboot and recovery evidence collected.
 - [ ] Supported surface/ownership and signal policies accepted with evidence.
 - [ ] Controller/native backend and runtime settings integrated and tested.
 - [ ] Complete target package and recovery path validated.

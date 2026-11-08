@@ -5,6 +5,13 @@ It applies to Codex, Claude, Gemini, Copilot and agents using other tools.
 
 ## Report and current state
 
+- Latest review: [Claude P2-C05 at 28dab92](claude-p2-c05.md), 2026-11-08.
+  [Resolution](claude-p2-c05-resolution.md): all three findings corrected locally
+  on `fix/claude-p2-c05-review`. Shutdown stays disabled until explicit enable;
+  incomplete backends are rejected before ownership. Regression and sanitizer
+  suites pass; Phase 1 instructions reconciled. No merge/push performed.
+  Phase 1 is installed and vehicle-tested. The R1/R2 identifiers in this report
+  are separate from the historical 312215a findings below.
 - [Original review at 312215a](claude-312215a.md) remains revision-pinned.
 - [Resolution history](claude-312215a-resolution.md) and
   [final host validation](../validation-final.md) describe current evidence.

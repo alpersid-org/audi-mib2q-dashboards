@@ -1,5 +1,11 @@
 # AI continuation guide
 
+**Latest — C05 review corrections (local, 2026-11-08):** all three findings
+corrected on `fix/claude-p2-c05-review`; see [resolution](reviews/claude-p2-c05-resolution.md).
+Shutdown latches disabled intent; incomplete backends are rejected before taking
+a surface. Regression and sanitizer suites pass; Phase 1 planning is reconciled.
+Changes are uncommitted; no merge/push requested for this correction.
+
 **P2-C05 (2026-11-08, merged to master):** host runtime controller [runtime.md](runtime.md) — states, data-before-ownership, dirty redraw, bounded retry, config/profile reconciler, backend contract; host tests and sanitizers pass. Remaining in C05: shared Java/C settings contract. No native backend; nothing on the vehicle.
 Next eligible host work: C05 settings contract or C04 signal policy; C03/C06 stay gated.
 

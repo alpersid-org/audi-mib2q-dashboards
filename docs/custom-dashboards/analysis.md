@@ -21,10 +21,15 @@ receiver/`gal` profiles and object-layout assumptions in
 [aa_hook.c](../../aa_hook/aa_hook.c), described in
 [firmware-porting](../../docs/android-auto/firmware-porting.md).
 
-**Unsupported or unknown:** this A4's exact firmware, HMI ABI, receiver profile,
+**Unsupported or unknown at the 2026-11-07 investigation baseline:** this A4's exact firmware, HMI ABI, receiver profile,
 cluster geometry, original AAWireless compatibility, Galaxy S23 Ultra combination,
 and Phase 1 success. A model/year match, build success, or a TWO+ report establishes
 none of these. Do not enable ABI trial mode or infer offsets for this iteration.
+
+Current target evidence supersedes those historical unknowns where documented:
+[target profile](target-profile.md) and [Phase 1 handover](../phase1-handover/README.md).
+Phase 1 is installed and vehicle-tested; exact safe dashboard geometry and
+unaccepted signal/stock-ABI details remain open.
 
 ## Architecture and controllable surfaces
 

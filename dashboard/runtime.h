@@ -25,7 +25,9 @@ typedef enum {
 
 /* Output backend contract. Callbacks run synchronously from db_runtime_tick /
  * apply_* / shutdown and must not block or do file I/O on the draw path.
- * - acquire: take the output surface for this geometry; 1 owned, 0 failed.
+ * All four callbacks are required; an incomplete backend enters RECOVERING
+ * without invoking any of its callbacks or acquiring a surface.
+ * - acquire: take the output surface for this geometry; 1 owned, 0 failed/unowned.
  * - draw:    present a valid frame on the owned surface; 1 shown, 0 failed.
  * - clear:   show nothing from the dashboard (keep ownership).
  * - release: give the surface back so OEM composition is restored. Idempotent.
@@ -73,7 +75,9 @@ void db_runtime_apply_config(db_runtime *rt, const db_config *config);
 /* One controller step at monotonic now_ms (call periodically, e.g. every 250 ms):
  * read the record once (I/O happens here, never in draw), then converge output. */
 db_runtime_state db_runtime_tick(db_runtime *rt, uint64_t now_ms);
-/* Clear and release, then DISABLED. Safe to call repeatedly. */
+/* Clear and release, disable runtime/manager config, and cancel pending retries.
+ * Repeated calls and later ticks stay DISABLED without reads or backend calls.
+ * Restart by explicitly applying enabled config; the selected layout is kept. */
 void db_runtime_shutdown(db_runtime *rt);
 const char *db_runtime_state_name(db_runtime_state state);
 

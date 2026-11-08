@@ -36,6 +36,13 @@ whenever the dashboard is not actively drawing.
   frame, or after re-acquisition. Unchanged data costs no backend call.
 - **Bounded recovery.** Acquire/draw failures back off 250 ms, doubling to an 8 s
   cap; success resets it. No retry happens before the deadline.
+- **Complete backend required.** Acquire, draw, clear and release callbacks must
+  all exist before acquisition. An incomplete backend enters recovering without
+  invoking any output callback, including during retries, disable or shutdown.
+- **Latched shutdown.** Shutdown clears/releases output, disables runtime and
+  manager configuration, and cancels pending retries. Later ticks stay disabled
+  without reading records or invoking the backend. Explicitly applying enabled
+  configuration restarts immediately; the selected layout is preserved.
 - **Reconciler.** `db_runtime_apply_config` is idempotent; disabling clears and
   releases immediately; a layout change redraws on the next tick without
   re-acquiring. `db_runtime_set_profile` releases on a geometry change (the surface
@@ -58,6 +65,14 @@ config reconciliation (including idempotence and invalid config); stale writer â
 release, new writer session â†’ re-acquire; corrupt record; bounded exponential
 backoff and its cap; draw failure clearing a partial draw; idempotent shutdown;
 a backend without callbacks; every granted surface released.
+
+Review corrections (2026-11-08): `make -C dashboard all test` and
+`make -C dashboard test-sanitize` **PASSED**, including regressions for repeated
+ticks with fresh records after shutdown, explicit restart, shutdown during
+recovery, and all 15 incomplete callback combinations. Sanitizers ran outside
+the traced sandbox with default leak checks enabled. Java was unchanged and
+remains unavailable on this host (no `javac`); the original Java result above is
+Claude's historical evidence. See [resolution](reviews/claude-p2-c05-resolution.md).
 
 ## Not done here
 

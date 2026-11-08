@@ -7,6 +7,13 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
+**Latest — FIX-CLAUDE-C05 (local):** user requested "Fix all findings" from the
+[C05 review](docs/custom-dashboards/reviews/claude-p2-c05.md). Shutdown now latches
+disabled intent until explicit enable; incomplete backends are rejected before
+ownership. Focused regressions and C/sanitizer suites pass. Phase 1 is complete;
+stale installation instructions reconciled. See [resolution](docs/custom-dashboards/reviews/claude-p2-c05-resolution.md)
+and audit checkpoint. Changes uncommitted, no publication requested in this task.
+
 **Latest — P2-C05 (merged):** the user asked to "start C05"; the host runtime
 controller ([runtime.md](docs/custom-dashboards/runtime.md)) is merged to master
 with passing host tests. Next eligible host work: C05's shared Java/C settings

@@ -1005,3 +1005,93 @@ feature; earlier project history is available in Git and [status.md](../status.m
   CLAUDE/GEMINI/Copilot pointers, changes, CURRENT.
 - Git: origin/master 1a2d1cd is an ancestor; master fast-forwarded to the commit
   containing this event (f9c1495 + this event). No tests rerun (docs only).
+
+## 2026-11-08T18:29:44Z | codex-review-p2-c05-01 | START / REVIEW-CLAUDE-C05
+
+- User: "Check the last push from Claude. FYI - Phase 1 was done".
+- Git: fresh checkout of fork master 28dab92461c69056ed162e4b2d4563b3b75d1689;
+  review branch `review/claude-p2-c05`. Initial tree clean.
+- Scope: review f9c1495 runtime controller and 28dab92 documentation, rerun
+  applicable host checks and reproduce suspected lifecycle defects. Phase 1 is
+  installed and vehicle-tested per the supplied handover. No implementation,
+  publication, release or vehicle operations requested.
+- Intended paths: review report and audit/checkpoint documentation only;
+  reproduction artifacts outside tracked source. Read AGENTS and audit protocol.
+- Next: run inspected dashboard C/sanitizer/Java suites and probe shutdown and
+  incomplete backend behavior against the documented ownership contract.
+
+## 2026-11-08T18:32:19Z | codex-review-p2-c05-02 | COMPLETE / REVIEW-CLAUDE-C05
+
+- Reviewed implementation f9c1495 and publication/docs 28dab92. Report:
+  reviews/claude-p2-c05.md; linked from reviews/README and status.
+- R1/P2: shutdown leaves enabled intent; next tick reacquires and draws.
+  R2/P2: NULL release callback accepted; disable drops runtime ownership bookkeeping
+  but backend retains the surface. Both reproduced via public API using the
+  pushed suite's DBV1 fixture/fake backend and unmodified library.
+- R3/P3: target-profile body still says Phase 1 not performed and directs an
+  installation, contradicting its own handover/banner. Phase 1 accepted as done.
+- `make -C dashboard all test test-sanitize test-java`: normal build/C tests PASS;
+  exit 2 at LeakSanitizer ptrace restriction. `make -C dashboard test-sanitize`
+  outside traced sandbox PASS with default sanitizers. `make -C dashboard
+  test-java` UNAVAILABLE (javac missing, make exit 2/script error 127).
+- `/tmp/claude-c05-repro {shutdown,missing-release}`: each exit 1 (defects
+  reproduced); source/binary/logs local to /tmp, generated build ignored by Git.
+  `git diff 1a2d1cd..28dab92 --check` PASS. GitHub statuses empty, not a CI pass.
+- Review documentation: four Markdown files / 41 local links and balanced
+  fences PASS; final `git diff --check` PASS.
+- Local documentation changes only; no production/test source changed, no
+  commits/push/merge/release or vehicle actions. No pending processes.
+- Next: report findings to user; corrective code work remains a separate task.
+
+## 2026-11-08T18:33:27Z | codex-fix-p2-c05-01 | START / FIX-CLAUDE-C05
+
+- User: "Fix all findings" (R1/R2 runtime lifecycle and R3 Phase 1 docs).
+- Branch `fix/claude-p2-c05-review`, starting at 28dab92. Preserved the local
+  uncommitted review report and audit/status/index documentation from review.
+- Scope: latch shutdown until explicit enable, reject incomplete output backends
+  before ownership, focused regression coverage, reconcile Phase 1 baseline and
+  review disposition. Intended source paths runtime.c/runtime.h and runtime test;
+  associated runtime/profile/plan/review/audit docs. No publication or vehicle work.
+- Acceptance: no reads/draws/acquisition after shutdown until explicit enable;
+  all incomplete callback combinations fail without backend calls; existing
+  lifecycle/retry behavior passes; current planning accepts Phase 1 as complete.
+- Next: add regressions, confirm failure on pushed code, implement fixes, run C
+  and sanitizer suites. Java source unchanged; javac was absent in the review.
+
+## 2026-11-08T18:37:41Z | codex-fix-p2-c05-02 | COMPLETE / FIX-CLAUDE-C05
+
+- R1 corrected: shutdown disables runtime/manager intent and cancels backoff;
+  fresh records and later ticks cannot restart output without explicit enable.
+  Selected layout retained. R2 corrected: require all four output callbacks
+  before acquire; incomplete backends cannot take a surface or invoke callbacks.
+- Regression suite RED on original code at post-shutdown tick (exit 134), then
+  RED after R1 alone on incomplete backend ownership (exit 134); GREEN with both
+  fixes. Core dumps disabled for intentional failing checks. Added restart,
+  shutdown-during-recovery and all 15 incomplete-backend combinations.
+- `make -C dashboard all test` PASS. `make -C dashboard test-sanitize` PASS outside
+  traced sandbox with all default sanitizer/leak checks enabled. Logs:
+  /tmp/claude-c05-fix-tests.log and /tmp/claude-c05-fix-sanitize.log.
+  Java unchanged and UNAVAILABLE here (javac absent); no new Java pass claimed.
+- R3 corrected: target-profile, completion-plan and ROADMAP accept the installed,
+  vehicle-tested upstream Phase 1 baseline; dated historical unknowns in analysis
+  point to current evidence. Original user handover documents unchanged.
+- Added reviews/claude-p2-c05-resolution.md and linked it from the pinned review,
+  review index, runtime contract, status, plan and handoff; AGENTS/ledger updated.
+  Documentation validation PASS: 14 Markdown files, 418 local links, balanced
+  fences, obsolete Phase 1 instructions absent from current profile/plan/roadmap;
+  `git diff --check` PASS. No unrelated/forbidden artifacts in changed paths.
+- Local branch fix/claude-p2-c05-review at starting commit 28dab92, all changes
+  uncommitted. No publication, merge, release or vehicle actions requested/done.
+  No pending processes. Next: user review; shared settings/native/target evidence
+  remain separate unfinished C05/C06 work.
+
+## 2026-11-08T18:44:01Z | codex-publish-p2-c05-01 | START / PUBLISH-CLAUDE-C05
+
+- User: "Commit and push to master". Authorizes committing the completed review,
+  fixes, regressions and documentation and publishing them to fork master.
+- Git: fix/claude-p2-c05-review from 28dab92; all 17 expected source/test/doc paths
+  preserved. Fresh fetch shows origin/master still 28dab92, an ancestor of HEAD.
+- Validation from the correction remains applicable: C/XML/CLI and ASan/UBSan
+  PASS; Java unavailable (no javac); no source changed since those checks.
+- Next: commit the reviewed files, fast-forward local master and push origin;
+  record publication and verify the final remote SHA. No release or vehicle work.

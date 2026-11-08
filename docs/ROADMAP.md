@@ -44,18 +44,19 @@ roadmap Phase 2, described in [the Phase 2 plan](custom-dashboards/PLAN.md).
 `P2-03` means dashboard configuration/suppression. **Roadmap Phase 3 means the
 standalone Android application.** Never substitute one for the other.
 
-## Phase 1 — install upstream as-is
+## Phase 1 — upstream baseline (complete)
 
 Establish whether the exact unit/firmware, cluster and projection setup support
 upstream behavior. Record the upstream revision, compatibility evidence, existing
 OEM navigation behavior and rollback basis without introducing custom dashboards.
 Do not infer successful installation from the repository being present locally.
 
-Exit evidence, when separately authorized: confirmed firmware/hardware, recorded
-baseline behavior and documented recovery. No flashing, installation, stock-file
-modification or head-unit execution is authorized in the current work session.
-Phase 1 is not installed; that does not prevent independent host-only Phase 2 work;
-it does block claims that the vehicle integration is ready.
+The [Phase 1 handover](phase1-handover/README.md) records upstream 1.4.1 installed
+and vehicle-tested on 2026-11-08: wired/wireless AA cluster maps in Classic and
+wide views, with OEM checks passed. Phase 1 installation is complete. Remaining
+post-reboot logs, longer-session observations and recovery evidence support
+Phase 2 validation; they do not reopen installation. Custom dashboards still
+require their own target integration and acceptance evidence.
 
 ## Phase 2 — Real Vehicle Data Integration (current)
 
