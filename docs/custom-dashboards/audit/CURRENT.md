@@ -1,36 +1,35 @@
 # Current agent checkpoint
 
-Updated: 2026-11-08T09:40:11Z. Agent: Codex. Task: P2-COMPLETION-PLAN / COMPLETE.
-Plan publication VERIFIED; runtime/vehicle Phase 2 remains incomplete.
+Updated: 2026-11-08T11:05:46Z. Agent: Codex. Task: P2-TARGET-PROFILE / COMPLETE.
+Documentation publication pending; Phase 1 NOT INSTALLED; Phase 2 incomplete.
 
-## Scope and baseline
+## Source and authorization
 
-User requested reviewing the audit and planning all missing points with best
-judgment. Prior commit/push-to-master authorization persists. Starting clean
-master f5261ab7e78b10044da72ef4b2f7bbbaa8c49e43, matching remote; authoring branch
-docs/phase2-completion-plan; current branch master. Documentation-only increment; no vehicle actions.
+The user supplied target configuration after the completion plan. Incorporate
+that steering; prior commit/push-to-master authorization persists. Starting
+clean master 896cd9bd90a3bb70ae79aeb3f6c426d5cc81f4ce, authoring branch
+docs/target-p5092-profile. No vehicle operations, runtime or activation changes.
 
-## Deliverable and decisions
+## Current facts
 
-[completion-plan.md](../completion-plan.md) defines C01-C09, dependencies, effort,
-source targets and acceptance for every outstanding point. Initial dashboard
-support targets the documented AA session; no invented phone-free/CarPlay
-dashboard requirement or Phases 3–5. Preserve OEM/inherited behavior.
+[target-profile.md](../target-profile.md) records P5092/MU1329, media driver
+DEV_MMX2QC_AU_ER_G22_201PROD-1, VC Classic/Extended Map, Galaxy S23 Ultra, MMI AA
+working and original AAWireless cs307-e2-prod / 3.5.0. **Phase 1 NOT INSTALLED.**
+C02 identity inventory is partial; no need to re-request supplied identifiers.
+Actual receiver/HMI/graphics ABI, enhanced cluster/rich-feed behavior, per-signal
+validity and safe geometry remain unverified. No QNX guard/default OFF change.
 
-Start CI/service diagnosis (zero observed remote runs) and host consumer/controller
-contracts while collecting exact target/stock/signal evidence and examining safe
-surface feasibility. Native routing depends on C02/C03 gates; controls require a
-safely gated consumer. Actual vehicle acceptance remains mandatory for closure.
+## Plan and next action
 
-## Checks and publication
+[completion-plan.md](../completion-plan.md) now requires original-runtime build/
+package/recovery preparation and separately authorized Phase 1 validation before
+hardware dashboards. The fork's Java runtime is not an untouched Phase 1 payload.
+Original upstream installer risks remain relevant; installer-only deviations must
+be explicit. User-supplied modes are not dashboard layouts or pixel rectangles.
 
-Markdown links/fences and git diff --check PASS. No runtime code/test changes, no
-code suites repeated; prior host corrections remain as documented in
-[completion-audit.md](../completion-audit.md). No active processes or proprietary
-artifacts. Plan commit fa1733c138fea78b768bec81fd1e55438f34a0e6 was pushed to fork master;
-git ls-remote verified that exact SHA. This final publication checkpoint follows
-in Git history and is pushed under the same authorization. Do not force-push, publish a release or contact the vehicle.
-
-Next implementation: C01 and C05 host preparation, alongside C02 inventory/C03
-source analysis. Target evidence is still absent.
-Audit: [LOG.md](LOG.md), codex-completion-plan-01/-02/-03.
+Validation: twelve Markdown files/166 relative links/fences and exact-string checks
+PASS; git diff --check PASS. Runtime source/tests unchanged. No active processes.
+Commit/publish the documented profile update, fast-forward master and verify
+remote SHA; no publication claim yet. Then C01/C05 independent host work and C02
+stock/build/baseline preparation. No installation, flash, release or vehicle access.
+Audit: [LOG.md](LOG.md), codex-target-profile-01/-02.

@@ -1,5 +1,13 @@
 # AI continuation guide
 
+**Target update:** [target-profile.md](target-profile.md) records user-supplied
+P5092/MU1329, media driver DEV_MMX2QC_AU_ER_G22_201PROD-1, VC Classic/Extended Map,
+Galaxy S23 Ultra and original AAWireless cs307-e2-prod / 3.5.0. MMI Android Auto
+works; **Phase 1 is NOT INSTALLED**. Target identity is known as supplied; actual
+stock ABI, enhanced cluster behavior, signal validity and safe geometry remain
+open. Prepare/validate the original baseline before hardware dashboard validation;
+continue independent host work. Older unconfirmed-installation notes are historical.
+
 **Current completion execution plan:** [completion-plan.md](completion-plan.md),
 2026-11-08. C01-C09 map every remaining audit point to dependencies and acceptance;
 CI/host preparation can proceed while target/surface evidence is collected.
@@ -104,8 +112,9 @@ making changes.
   with step 2." Both host layouts, SVG export/CLI and saved previews now exist.
 - Historical steering (ended by P2-04): no more tests now; tests are for the final stage. Document
   every change. This overrides earlier run-test instructions across model handoffs.
-- Vehicle firmware/compatibility, original AAWireless behavior, Phase 1 success
-  and a safe dashboard surface remain unconfirmed.
+- Historical target unknowns are superseded by target-profile.md: firmware/adapter
+  identities are supplied and Phase 1 is NOT INSTALLED. Actual ABI, enhanced
+  behavior and safe geometry still require evidence.
 - The implementation is a standalone host renderer with mock
   data, not a new vehicle hook or replacement of navigation graphics.
 

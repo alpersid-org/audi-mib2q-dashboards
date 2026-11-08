@@ -1,5 +1,13 @@
 # Project status
 
+**Target update:** [target-profile.md](target-profile.md) records user-supplied
+P5092/MU1329, media driver DEV_MMX2QC_AU_ER_G22_201PROD-1, VC Classic/Extended Map,
+Galaxy S23 Ultra and original AAWireless cs307-e2-prod / 3.5.0. MMI Android Auto
+works; **Phase 1 is NOT INSTALLED**. Target identity is known as supplied; actual
+stock ABI, enhanced cluster behavior, signal validity and safe geometry remain
+open. Prepare/validate the original baseline before hardware dashboard validation;
+continue independent host work. Older unconfirmed-installation notes are historical.
+
 **Current completion execution plan:** [completion-plan.md](completion-plan.md),
 2026-11-08. C01-C09 map every remaining audit point to dependencies and acceptance;
 CI/host preparation can proceed while target/surface evidence is collected.
@@ -276,8 +284,8 @@ Source changes can be reverted by their feature commit without discarding other 
 
 ## Remaining blockers and next step
 
-1. Exact firmware/hardware and Phase 1 success remain unconfirmed.
-2. Original AAWireless compatibility is unknown; TWO+ evidence is insufficient.
+1. Target identities are supplied in target-profile.md; Phase 1 is explicitly NOT INSTALLED.
+2. MMI AA works; enhanced cluster/rich-feed compatibility with the original adapter remains unverified. TWO+ evidence is insufficient.
 3. No safe dashboard rectangle/ownership policy has been demonstrated.
 4. Real data semantics, validity and availability during AA require validation.
 5. Shipping-JAR/Java and vehicle checks remain unavailable, not passed.

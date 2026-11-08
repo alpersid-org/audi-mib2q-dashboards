@@ -13,6 +13,12 @@ not-started labels are historical and must not override the active plan, publish
 corrections or latest user request. Existing source and tests are not reopened
 merely because a historical section predates their completion.
 
+Current C02 evidence: [target-profile.md](target-profile.md) records the supplied
+P5092/MU1329 configuration and **Phase 1 NOT INSTALLED**. Identity inventory is
+partial, not blocked on the already supplied firmware string. Original-solution
+compatibility/recovery preparation and subsequent baseline validation are the
+first hardware gate; independent CI/host work remains eligible.
+
 ## Historical stage records through f5261ab
 
 **Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)

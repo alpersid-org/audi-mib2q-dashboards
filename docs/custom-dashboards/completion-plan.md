@@ -1,7 +1,7 @@
 # Phase 2 remaining implementation plan
 
 Current plan: 2026-11-08. Reviewed baseline:
-`f5261ab7e78b10044da72ef4b2f7bbbaa8c49e43` on fork master.
+`896cd9bd90a3bb70ae79aeb3f6c426d5cc81f4ce` on fork master.
 
 **Outcome:** working Compact and Extended dashboards inside this A4's Virtual
 Cockpit, using accepted real MMI data, with safe controls, persistence, OEM
@@ -12,6 +12,21 @@ This is the active completion plan. The original numbered steps in [PLAN.md](PLA
 remain historical implementation context. [completion-audit.md](completion-audit.md)
 records fixes already shipped and their host tests. Work packages below are
 subtasks of roadmap Phase 2, not new roadmap phases.
+
+## Target evidence update — user supplied
+
+The [target profile](target-profile.md) now records P5092/MU1329, the exact media
+driver, VC Classic/Extended Map, Galaxy S23 Ultra and original AAWireless
+cs307-e2-prod / 3.5.0. Android Auto is working on MMI. **Phase 1 is NOT INSTALLED.**
+C02's identity inventory is partially complete; do not keep requesting the already
+supplied identifiers or mark the full work package complete. Exact stock ABI,
+original-solution baseline, real signal behavior and safe geometry remain open.
+
+The first hardware gate is now explicit: review/build/package/recovery preparation
+for the original runtime, then separately authorized Phase 1 installation and
+validation, before target dashboard validation. The fork's current Java runtime
+contains dashboard edits and must not be mistaken for the original Phase 1 payload.
+Independent C01/C05 host work and source-level C03 analysis can proceed now.
 
 ## Decisions and boundaries
 
@@ -65,7 +80,7 @@ to execute independent authorized host work.
 | ID | Deliverable | Dependencies | Can start now? | Complexity |
 | --- | --- | --- | --- | --- |
 | P2-C01 | Reproducible baseline and observed CI results | Published corrections | Yes: source and service diagnosis | Small |
-| P2-C02 | Exact target profile, build prerequisites and baseline evidence | None for evidence inventory | Inventory now; target facts/assets required to finish | Medium |
+| P2-C02 | Exact target profile, build prerequisites and baseline evidence | User identity supplied; Phase 1 NOT INSTALLED | Identity inventory partly complete; stock ABI/assets and original baseline required to finish | Medium |
 | P2-C03 | Verified candidate display geometry and ownership design | C02 target identity | Source analysis now; final surface decision blocked on evidence | Large / investigation |
 | P2-C04 | Accepted signal/capability and freshness policy | C02 real DSI/receiver evidence | Host policy/tests now; source promotion gated | Medium |
 | P2-C05 | Host-testable production consumer/controller contract | Existing core; C04 contract | Yes, using explicit host profiles and fake platform | Medium |
@@ -109,13 +124,21 @@ as unresolved instead of inventing a successful run.
 
 **Purpose:** prevent implementing and packaging against another car's ABI.
 
-Record a minimal target evidence set:
+Identity evidence is recorded in [target-profile.md](target-profile.md). Treat it
+as supplied input, not automatic receiver/profile activation. Complete the
+remaining target evidence set:
 
-- Exact MHI2Q firmware train, MU, head-unit/cluster variant and software identity.
-- Galaxy S23 Ultra, original AAWireless model/firmware and actual projection
-  behavior. Reports for AAWireless TWO+ cannot fill this field.
-- Phase 1 upstream revision/install status and working OEM/navigation/AA/CarPlay
-  behaviors needed for regression comparison; available recovery access.
+- Supplied: MHI2Q_ER_AUG22_P5092 / MU1329; media driver
+  DEV_MMX2QC_AU_ER_G22_201PROD-1; Virtual Cockpit Classic and Extended Map.
+  Additional actual binary/API and measured geometry evidence remains open.
+- Supplied: Galaxy S23 Ultra and original AAWireless cs307-e2-prod / 3.5.0;
+  Android Auto working on MMI. Enhanced cluster/rich-feed behavior is not proven
+  by the main screen or another adapter's reports.
+- Supplied: Phase 1 NOT INSTALLED. Review the exact original-runtime build/package
+  and recovery procedure, then establish the installed original-solution baseline
+  through a separately authorized procedure. Preserve stock MMI behavior for
+  comparison; record the upstream revision, package identity and recovery results.
+  Keep original runtime and reviewed installer-only deviations explicit.
 - Exact stock HMI and relevant JCL/DSI/receiver/graphics artifacts or identifiers,
   with provenance and hashes. Keep proprietary binaries and private logs outside
   Git; use the existing `stock/README.md`/`stock_env.sh` asset layout.
@@ -128,7 +151,7 @@ Record a minimal target evidence set:
 Prepare the existing stock-linked Java tests/build early, before adding target
 rendering. Fix only demonstrated linkage issues against this exact profile.
 
-**Files:** proposed `docs/custom-dashboards/target-profile.md`; existing stock/build
+**Files:** existing [target-profile.md](target-profile.md); existing stock/build
 instructions and private local assets. A runtime profile, if needed, records
 verified identities/capabilities rather than arbitrary operator-entered IDs.
 
@@ -372,7 +395,8 @@ as hardware acceptance. Only after this matrix passes is Phase 2 GO for closure.
 | v1.4.1 target behavior (T07) | C01 behavioral protection, C08 package, C09 hardware |
 
 - [ ] CI result observed for the relevant implementation revision.
-- [ ] Target/stock/build prerequisites and Phase 1 baseline established.
+- [x] User-supplied firmware/MU/media driver, VC modes, adapter and Phase 1 status recorded.
+- [ ] Exact stock/build prerequisites and actual Phase 1 original-solution baseline established.
 - [ ] Supported surface/ownership and signal policies accepted with evidence.
 - [ ] Controller/native backend and runtime settings integrated and tested.
 - [ ] Complete target package and recovery path validated.

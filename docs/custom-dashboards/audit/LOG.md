@@ -926,3 +926,19 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Completion plan commit fa1733c138fea78b768bec81fd1e55438f34a0e6 fast-forwarded and pushed to fork master. git ls-remote verified the exact SHA. Working tree clean after publication; no source/runtime changes, release, upstream write or vehicle action.
 - Documentation checks passed: nine Markdown files, 134 valid relative links, balanced fences and git diff --check. This final checkpoint records publication; its own commit follows in Git history under the same authorization.
 - Next implementation remains C01 CI diagnosis and C05 host controller/settings contracts, alongside C02 evidence inventory/C03 surface analysis. No target evidence was supplied; target integration remains gated as described in completion-plan.md.
+
+## 2026-11-08T11:03:20Z | codex-target-profile-01 | RESUME / USER TARGET EVIDENCE
+
+- User supplied A4 B9/2017, MHI2Q_ER_AUG22_P5092, MU1329, media driver DEV_MMX2QC_AU_ER_G22_201PROD-1, Virtual Cockpit Classic/Extended Map, Galaxy S23 Ultra, original AAWireless cs307-e2-prod/3.5.0, Android Auto working on MMI, and Phase 1 NOT INSTALLED.
+- Starting clean master 896cd9bd90a3bb70ae79aeb3f6c426d5cc81f4ce, matching remote branch through GitHub; authoring branch docs/target-p5092-profile. Prior commit/push authorization persists.
+- Record supplied identities as known planning inputs; do not call Phase 1 installed or infer receiver/graphics ABI, secondary cluster stream, real dashboard signals or safe geometry. Classic/Extended Map are VC modes, not dashboard layout selection.
+- Repository comparison: README.md:94 has reports for P5092/MU1329/A4; README.md:120 names AAWireless TWO+, not this adapter. aa_hook profiles match actual libraries/symbols rather than the media-driver label.
+- Scope: create target-profile.md and reconcile active requirements/plan/roadmap/agent/checkpoint docs. Phase 1 preparation becomes the first hardware gate; independent CI/host controller work remains eligible. No installation, head-unit commands, release or runtime profile changes.
+
+## 2026-11-08T11:05:46Z | codex-target-profile-02 | COMPLETE / DOCUMENTATION VERIFIED
+
+- Added target-profile.md with every supplied value and evidence provenance. C02 identity inventory is partially complete; Phase 1 is NOT INSTALLED, not unknown. Main-screen AA success does not establish original-solution installation or enhanced cluster support.
+- Reconciled active AGENTS/PROJECT/requirements/roadmap/plan/status/HANDOFF context. OEM Classic/Extended Map modes kept distinct from dashboard Compact/Extended layouts. Source profiles/guards unchanged.
+- Added original-runtime baseline and recovery preparation to the hardware sequence; documented that the fork's Java build already contains dashboard changes and upstream installers do not inherit this fork's safety fixes. No installation or ABI/profile activation performed.
+- Validation PASS: twelve Markdown files, 166 relative links, balanced fences, exact supplied identity strings/Phase 1 status and git diff --check. No runtime tests needed for documentation-only changes.
+- Next: commit/publish profile update under existing master publication authorization; then C01/C05 independent host work and remaining C02 stock/build/baseline preparation. Hardware integration still needs ABI, signal and safe-surface evidence.

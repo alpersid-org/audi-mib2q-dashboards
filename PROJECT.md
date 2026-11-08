@@ -83,11 +83,14 @@ Audi A4 B9 (2017), 2.0 TDI quattro 190 HP, MMI High without touchscreen, Virtual
 Cockpit and physical MMI controls. Phone: Galaxy S23 Ultra with Android Auto and
 the original AAWireless adapter, not TWO+.
 
-Exact firmware, hardware compatibility, original AAWireless behavior and successful
-Phase 1 installation have not been independently confirmed. No spare, safe
-dashboard rectangle has been demonstrated. The implementation
-therefore remains a host-only renderer with mock values. No safe vehicle
-integration is claimed.
+The user supplied [the exact target profile](docs/custom-dashboards/target-profile.md):
+MHI2Q_ER_AUG22_P5092 / MU1329, media driver DEV_MMX2QC_AU_ER_G22_201PROD-1,
+VC Classic/Extended Map and original AAWireless cs307-e2-prod / 3.5.0. Android
+Auto works on MMI; **Phase 1 is NOT INSTALLED**. Exact receiver/HMI/graphics ABI,
+enhanced cluster behavior, safe geometry and real dashboard signals remain
+unverified. The native dashboard renderer is still absent; host layouts and a
+host-tested, on-car-unverified data publisher/reader exist. Phase 1 preparation
+is the first hardware gate while independent host work continues.
 
 Only roadmap Phase 2 is in scope. Android companion applications, new
 Android-to-MMI communication and DPF monitoring are excluded.

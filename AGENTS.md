@@ -150,15 +150,20 @@ describes the proposed dashboard increment. Do not confuse the two.
 
 ## Vehicle facts and unknowns
 
-The supplied target is an Audi A4 B9 (2017), 2.0 TDI quattro 190 HP, MMI High
-without touchscreen, Virtual Cockpit and physical MMI rotary controller/buttons.
-The phone is a Samsung Galaxy S23 Ultra using Android Auto through the **original
-AAWireless adapter, not AAWireless TWO+**.
+Current user-supplied profile: [target-profile.md](docs/custom-dashboards/target-profile.md).
+Audi A4 B9/2017, MHI2Q_ER_AUG22_P5092, MU1329, media driver
+DEV_MMX2QC_AU_ER_G22_201PROD-1, Virtual Cockpit Classic and Extended Map;
+Galaxy S23 Ultra, Android Auto working on MMI, original AAWireless
+cs307-e2-prod / firmware 3.5.0. **Phase 1 is NOT INSTALLED.** Earlier context
+also specifies 2.0 TDI quattro 190 HP and physical MMI controls without touchscreen.
 
-Exact MHI2Q firmware, hardware/receiver ABI, original adapter compatibility,
-cluster geometry and successful Phase 1 installation remain unconfirmed.
-Reports for another car, firmware or TWO+ do not establish this combination.
-Never turn successful host compilation into a claim of vehicle compatibility.
+Treat supplied identities as known planning inputs. Receiver/graphics/HMI ABI,
+real signal/service-loss semantics, safe VC geometry and enhanced cluster behavior
+with this adapter remain unverified. Main-screen AA success is not Phase 1 success.
+Classic/Extended Map OEM modes are distinct from Compact/Extended dashboards.
+No profile/offset is activated from the media-driver label alone. Phase 1 review
+and recovery preparation precede hardware dashboard validation; independent host
+C01/C05 work remains eligible. No vehicle operations are authorized by these facts.
 
 ## Safety boundary
 

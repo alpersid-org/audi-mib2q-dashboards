@@ -23,15 +23,17 @@ additional data to existing dashboard widgets. Android Auto uses the **original
 AAWireless adapter, not AAWireless TWO+**; this does not establish a general
 application-to-MMI transport.
 
-Exact MHI2Q firmware, hardware/receiver compatibility, safe dashboard surface and
-successful Phase 1 installation have not been independently confirmed. Existing
-reports for another car, firmware or adapter do not resolve these unknowns.
+The user now supplies P5092/MU1329, VC Classic/Extended Map, original AAWireless
+cs307-e2-prod / 3.5.0 and working MMI Android Auto. **Phase 1 is NOT INSTALLED.**
+See [target-profile.md](custom-dashboards/target-profile.md) for the exact media-
+driver string and evidence status. Receiver/HMI/graphics ABI, safe dashboard
+surface and enhanced behavior on this exact adapter remain unverified.
 
 ## Phase summary
 
 | Roadmap phase | Deliverable | Current state |
 | --- | --- | --- |
-| 1 — Upstream baseline | Install and establish the upstream project as-is through a separately authorized process. | Vehicle installation/success unconfirmed; local source investigation complete. |
+| 1 — Upstream baseline | Install and establish the upstream project as-is through a separately authorized process. | **NOT INSTALLED**, explicitly reported by the user; review exact build/package compatibility and recovery before separately authorized baseline installation. |
 | 2 — Custom dashboards: Real Vehicle Data Integration | Working Compact/Extended dashboards in the Virtual Cockpit showing real data from existing MMI systems; mock only for tests ([scope](custom-dashboards/requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative)). | CURRENT PHASE, **not complete**. Host foundation done (P2-01..P2-05); P2-07 widget cleanup and P2-08 real data binding implemented, host feed tests pass, unverified on the car ([final validation](custom-dashboards/validation-final.md)). VC rendering and in-car validation outstanding; head-unit work awaits user decision. |
 | 3 — Independent Android app | Standalone app on Galaxy S23 Ultra, usable without MMI. | Future; not implemented. |
 | 4 — Android/MMI communication | Establish a separately validated data connection; introduce AndroidDataProvider as its normalized adapter. | Future; transport unknown and unimplemented. |
@@ -52,7 +54,7 @@ Do not infer successful installation from the repository being present locally.
 Exit evidence, when separately authorized: confirmed firmware/hardware, recorded
 baseline behavior and documented recovery. No flashing, installation, stock-file
 modification or head-unit execution is authorized in the current work session.
-Missing Phase 1 confirmation does not prevent independent host-only Phase 2 work;
+Phase 1 is not installed; that does not prevent independent host-only Phase 2 work;
 it does block claims that the vehicle integration is ready.
 
 ## Phase 2 — Real Vehicle Data Integration (current)

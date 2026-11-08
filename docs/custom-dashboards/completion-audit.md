@@ -1,5 +1,10 @@
 # Phase 2 completion audit corrections — 2026-11-08
 
+**Subsequent target evidence:** [target-profile.md](target-profile.md) records the
+user's P5092/MU1329 configuration, exact adapter and **Phase 1 NOT INSTALLED**.
+These supplied identities update the earlier evidence gaps; they do not validate
+the original solution, real signals or a safe VC surface.
+
 Implementation sequence for remaining points:
 [completion-plan.md](completion-plan.md), 2026-11-08. This audit retains the
 revision-specific findings and already-executed test evidence.

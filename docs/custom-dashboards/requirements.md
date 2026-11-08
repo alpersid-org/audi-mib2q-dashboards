@@ -12,9 +12,12 @@ Phase 2 is not complete. Earlier stage notes below retain their historical scope
 - Samsung Galaxy S23 Ultra with Android Auto.
 - Original AAWireless adapter; **not AAWireless TWO+**.
 
-Exact MHI2Q firmware, hardware compatibility and successful upstream Phase 1
-installation are unknown. The repository's reported vehicle results do not
-establish compatibility with this particular vehicle/phone/adapter combination.
+Updated user-supplied facts: [target-profile.md](target-profile.md).
+Firmware MHI2Q_ER_AUG22_P5092 / MU1329; media driver
+DEV_MMX2QC_AU_ER_G22_201PROD-1; VC Classic/Extended Map; original AAWireless
+cs307-e2-prod / 3.5.0. Android Auto works on MMI. **Phase 1 is NOT INSTALLED.**
+Actual ABI, signal behavior and safe geometry remain unverified. Reports for other
+units or AAWireless TWO+ do not establish this exact combination's compatibility.
 
 ## Phase 2 scope — Real Vehicle Data Integration (authoritative)
 
@@ -72,8 +75,9 @@ Phase 2 deliverable.
    (phone map video) are proven paths into the cluster. A dashboard area must
    be chosen and validated on the car, never covering speed, warnings or
    navigation guidance.
-3. **Vehicle evidence.** Exact MHI2Q firmware/hardware, original AAWireless
-   behaviour and per-signal availability/units while Android Auto runs.
+3. **Vehicle evidence.** Target identifiers are now supplied in target-profile.md;
+   exact stock ABI, Phase 1 baseline, enhanced original-AAWireless behavior and
+   per-signal availability/units while Android Auto runs still require evidence.
 
 If no safe surface can be demonstrated, the host foundation remains useful,
 but it must be reported as a blocked Phase 2, not a completed one.
