@@ -46,6 +46,15 @@ static int profile_supported(const db_runtime_profile *p)
            db_layout_build(DB_EXTENDED, &full, 0, p->width, p->height, p->area, &probe);
 }
 
+/* Manager provider: the persistent vehicle reader, then the eligibility filter. */
+static int eligible_read(void *context, uint64_t now_ms, db_snapshot *out)
+{
+    db_runtime *rt = context;
+    if (!db_vehicle_read(&rt->source, now_ms, out)) return 0;
+    db_signal_policy_apply(&rt->policy, rt->mode, out); /* empty -> manager OFF_DATA */
+    return 1;
+}
+
 void db_runtime_init(db_runtime *rt, const db_output_backend *backend,
                      const char *record_path, uint64_t (*wall_ms)(void))
 {
@@ -55,8 +64,10 @@ void db_runtime_init(db_runtime *rt, const db_output_backend *backend,
     if (backend) rt->backend = *backend;
     rt->source.path = record_path;
     rt->source.wall_ms = wall_ms;
-    p.read = db_vehicle_read;
-    p.context = &rt->source;
+    db_signal_policy_default(&rt->policy);
+    rt->mode = DB_ELIGIBILITY_PRODUCTION;
+    p.read = eligible_read;
+    p.context = rt;
     db_manager_init(&rt->manager, &p);
     db_config_default(&rt->config);
     db_manager_set_config(&rt->manager, &rt->config);
@@ -71,6 +82,25 @@ void db_runtime_set_profile(db_runtime *rt, const db_runtime_profile *profile)
     if (profile) rt->profile = *profile;
     else memset(&rt->profile, 0, sizeof(rt->profile));
     rt->profile_ok = profile && profile_supported(profile);
+}
+
+void db_runtime_set_signal_policy(db_runtime *rt, const db_signal_policy *policy,
+                                  db_eligibility_mode mode)
+{
+    db_signal_policy next;
+    if (!rt) return;
+    if (db_signal_policy_valid(policy)) next = *policy;
+    else memset(&next, 0, sizeof(next));                 /* all OMITTED */
+    if (mode != DB_ELIGIBILITY_PRODUCTION && mode != DB_ELIGIBILITY_VALIDATION) {
+        memset(&next, 0, sizeof(next));
+        mode = DB_ELIGIBILITY_PRODUCTION;
+    }
+    if (!memcmp(&next, &rt->policy, sizeof(next)) && mode == rt->mode) return;
+    rt->policy = next;
+    rt->mode = mode;
+    /* Eligibility may have shrunk: never keep showing a frame built under the old
+     * policy. Same latch rule as set_profile (shutdown/disabled stay disabled). */
+    leave(rt, rt->state == DB_RT_ACTIVE ? DB_RT_WAITING : rt->state);
 }
 
 void db_runtime_apply_config(db_runtime *rt, const db_config *config)

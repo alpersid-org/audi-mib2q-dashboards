@@ -7,6 +7,11 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
+**Latest — P2-C04 (branch, not merged):** the user asked to "start C04". Signal
+acceptance register and per-signal eligibility are implemented and host-tested
+([signal-acceptance.md](docs/custom-dashboards/signal-acceptance.md)). Production
+mode shows only ACCEPTED signals; none is accepted until vehicle evidence exists.
+
 **Latest — FIX-CLAUDE-C05 (published):** user requested "Fix all findings" from the
 [C05 review](docs/custom-dashboards/reviews/claude-p2-c05.md). Shutdown now latches
 disabled intent until explicit enable; incomplete backends are rejected before

@@ -108,6 +108,22 @@ int main(int argc, char **argv)
     assert(db_runtime_tick(&rt, t) == DB_RT_DISABLED);
     assert(k.acquires == 0 && k.draws == 0);
 
+    /* P2-C04: enabled in the default PRODUCTION mode, a valid fresh record still
+     * draws nothing because no signal is ACCEPTED yet (all candidates/omitted). */
+    assert(rt.mode == DB_ELIGIBILITY_PRODUCTION);
+    c = cfg(1, DB_COMPACT); db_runtime_apply_config(&rt, &c);
+    assert(db_runtime_tick(&rt, t) == DB_RT_WAITING && k.acquires == 0);
+    assert(db_manager_get_status(&rt.manager) == DB_MANAGER_OFF_DATA);
+    c = cfg(0, DB_COMPACT); db_runtime_apply_config(&rt, &c);
+
+    /* The remaining lifecycle cases run in the explicit on-car VALIDATION mode,
+     * where candidates are shown badged UNVERIFIED. */
+    {
+        db_signal_policy reg;
+        db_signal_policy_default(&reg);
+        db_runtime_set_signal_policy(&rt, &reg, DB_ELIGIBILITY_VALIDATION);
+    }
+
     /* Enabled but unsupported profile: no acquire. NULL profile likewise. */
     c = cfg(1, DB_COMPACT); db_runtime_apply_config(&rt, &c);
     db_runtime_set_profile(&rt, &bad);
@@ -262,6 +278,11 @@ int main(int argc, char **argv)
         incomplete.clear = i & 4 ? f_clear : NULL;
         incomplete.release = i & 8 ? f_release : NULL;
         db_runtime_init(&r2, &incomplete, path, wall_cb);
+        {
+            db_signal_policy reg;
+            db_signal_policy_default(&reg);
+            db_runtime_set_signal_policy(&r2, &reg, DB_ELIGIBILITY_VALIDATION);
+        }
         db_runtime_set_profile(&r2, &WIDE);
         c = cfg(1, DB_COMPACT); db_runtime_apply_config(&r2, &c);
         publish(3, 125);

@@ -1109,3 +1109,25 @@ feature; earlier project history is available in Git and [status.md](../status.m
   gap unchanged. No need to repeat code tests for publication-only documentation.
 - Next: check doc links/whitespace, commit/push checkpoint, verify final remote
   SHA equals local master and tree is clean. No release or vehicle actions.
+
+## 2026-11-08T18:47:57Z | 20261108T172937Z-claude-06 | START / P2-C04 host signal policy
+
+- User: "start C04". Start: master = origin/master ed599b9 (Codex C05 review fixes
+  merged). Branch feature/p2-c04-signal-policy.
+- Host scope: per-signal acceptance register (plan item 1) and per-signal/profile
+  production eligibility with per-signal VERIFIED promotion (item 5), plus tests.
+- Blocked on C02 stock/vehicle evidence (recorded, not guessed): DSI meanings/
+  units/total-vs-range-1 (item 2), DSI cache/confirmation semantics and service-
+  loss detection in VehicleDataModule (items 3-4). No Java DSI changes; no DBV1
+  format change; no vehicle actions.
+
+## 2026-11-08T18:51:08Z | 20261108T172937Z-claude-07 | COMPLETE / P2-C04 host part READY_FOR_REVIEW
+
+- Added dashboard/signal_policy.{h,c}, db_runtime_set_signal_policy (runtime reads
+  pass the policy; default PRODUCTION + register), tests/dashboard_signal_policy_test.c,
+  runtime test now sets VALIDATION for lifecycle cases + a production-default case.
+- Register: temperature/range/navigation CANDIDATE, media OMITTED, none ACCEPTED.
+- make -C dashboard clean; make all test test-sanitize test-java -> exit 0.
+  Mutants: global VERIFIED promotion, candidates in production, MOCK allowed -> each
+  caught; source restored (cmp identical).
+- Items 2–4 recorded as blocked on C02 evidence. Next: commit/push; await approval.

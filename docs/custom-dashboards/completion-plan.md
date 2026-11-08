@@ -256,6 +256,13 @@ values or produce live zero. Tests cover real source callbacks/service transitio
 not just the existing substituted VehicleDataModule. Unaccepted signals are omitted;
 MOCK remains confined to development/test paths.
 
+**State (2026-11-08, `feature/p2-c04-signal-policy`):** items 1 and 5 done —
+[signal-acceptance.md](signal-acceptance.md) register and `dashboard/signal_policy.{h,c}`
+(production shows ACCEPTED only, per-signal VERIFIED promotion, validation mode for
+on-car checks, MOCK always removed), integrated into the runtime and host-tested.
+No signal is ACCEPTED yet. Items 2–4 (range meaning, DSI cache/confirmation and
+service-loss semantics) are blocked on C02 stock/vehicle evidence.
+
 ## P2-C05 — consumer and lifecycle controller on the host
 
 **Purpose:** prepare the missing runtime orchestration without guessing routing.

@@ -7,6 +7,7 @@
 #define CUSTOM_DASHBOARD_RUNTIME_H
 
 #include "dashboard.h"
+#include "signal_policy.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,6 +53,8 @@ typedef struct {
     db_runtime_profile profile;
     int profile_ok;
     db_vehicle_source source;   /* one persistent, stateful reader */
+    db_signal_policy policy;    /* P2-C04 per-signal eligibility */
+    db_eligibility_mode mode;   /* PRODUCTION by default */
     db_manager manager;
     db_config config;           /* last applied (valid) configuration */
     db_runtime_state state;
@@ -69,6 +72,14 @@ void db_runtime_init(db_runtime *rt, const db_output_backend *backend,
 /* NULL or geometry the layouts reject -> UNSUPPORTED at the next tick. A changed
  * profile releases the surface first (it must be re-acquired for new geometry). */
 void db_runtime_set_profile(db_runtime *rt, const db_runtime_profile *profile);
+/* P2-C04: per-signal eligibility applied to every record read. init uses the
+ * compiled register (db_signal_policy_default) in PRODUCTION mode, where only
+ * ACCEPTED signals are shown; none is accepted yet, so the default runtime draws
+ * nothing. VALIDATION is an explicit on-car check mode (candidates, UNVERIFIED).
+ * NULL/invalid policy or mode removes every signal. A change releases output; the
+ * next tick redraws only what is still eligible. */
+void db_runtime_set_signal_policy(db_runtime *rt, const db_signal_policy *policy,
+                                  db_eligibility_mode mode);
 /* Idempotent reconciler: an identical config is a no-op. NULL/invalid applies the
  * disabled default. Disabling clears and releases output immediately. */
 void db_runtime_apply_config(db_runtime *rt, const db_config *config);

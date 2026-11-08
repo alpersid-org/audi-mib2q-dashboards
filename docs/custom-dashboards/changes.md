@@ -1,5 +1,13 @@
 # Change ledger
 
+## P2-C04 — signal acceptance and eligibility (2026-11-08)
+
+User: "start C04". Added `dashboard/signal_policy.{h,c}`, runtime integration
+(`db_runtime_set_signal_policy`, default PRODUCTION + compiled register),
+`tests/dashboard_signal_policy_test.c`, runtime test updates (explicit VALIDATION
+mode; production-default case), Makefile wiring, [signal-acceptance.md](signal-acceptance.md),
+completion-plan/status/HANDOFF/AGENTS/runtime docs. Host tests pass; mutants caught.
+
 ## FIX-CLAUDE-C05 — review corrections (2026-11-08, published)
 
 User: "Fix all findings". Runtime shutdown now disables intent and cancels

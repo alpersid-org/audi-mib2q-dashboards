@@ -74,6 +74,13 @@ the traced sandbox with default leak checks enabled. Java was unchanged and
 remains unavailable on this host (no `javac`); the original Java result above is
 Claude's historical evidence. See [resolution](reviews/claude-p2-c05-resolution.md).
 
+## Signal eligibility (P2-C04)
+
+Every record read passes `db_signal_policy_apply` before the manager. Default:
+the compiled register in PRODUCTION mode, so nothing is drawn until a signal is
+ACCEPTED; `db_runtime_set_signal_policy` selects VALIDATION for on-car checks.
+See [signal-acceptance.md](signal-acceptance.md).
+
 ## Not done here
 
 Native backend (C06), the real surface/context mapping (C03), signal acceptance
