@@ -1,5 +1,10 @@
 # Change ledger
 
+## P2-C01 — first CI run passed (2026-11-08)
+
+Owner enabled Actions. Run 42516991181 on `ci/first-run` succeeded; evidence added
+to [ci-status.md](ci-status.md); plan/status/HANDOFF/AGENTS/pointers updated.
+
 ## P2-C01 — CI diagnosis (2026-11-08)
 
 User: "start C01". Added [ci-status.md](ci-status.md) (API evidence, owner action,

@@ -1195,3 +1195,12 @@ feature; earlier project history is available in Git and [status.md](../status.m
   right after; workflow_dispatch from the agent still 403.
 - Triggering the first run by pushing this audit-only commit to branch
   ci/first-run (code identical to master c49da24). master untouched.
+
+## 2026-11-08T19:52:53Z | 20261108T172937Z-claude-15 | P2-C01 COMPLETE: first CI run passed
+
+- Run 42516991181 (#1, push, ci/first-run, 496fef1): job host success 19:49:56–
+  19:51:53Z. Steps checkout/setup-java/toolchain/host tests/dashboard regressions
+  all success. Log: run_tests 39/39 (hw301 OK on runner), make all test
+  test-sanitize test-java PASS, lifecycle 6/6, installer recovery 10 OK, upstream
+  tags fetched, upstream_v141 4 OK. Warnings: setup-java@v4 deprecated, Node 20.
+- Docs updated (ci-status, plan, status, HANDOFF, AGENTS, pointers, changes).

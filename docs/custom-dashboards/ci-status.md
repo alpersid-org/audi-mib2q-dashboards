@@ -3,6 +3,24 @@
 User request: "start C01". Workflow: [.github/workflows/tests.yml](../../.github/workflows/tests.yml)
 ("Tests": push, pull_request, workflow_dispatch; one `host` job on ubuntu-24.04).
 
+## Observed CI run (2026-11-08) — PASSED
+
+After the owner enabled Actions ("enabled"), a push of an audit-only commit to
+branch `ci/first-run` started the first run ever (the agent token still cannot
+dispatch: 403).
+
+| Item | Value |
+| --- | --- |
+| Run | [#1, id 42516991181](https://github.com/alpersid-org/audi-mib2q-dashboards/actions/runs/42516991181) (push, `ci/first-run`) |
+| Revision | `496fef1` = master `c49da24` code + one audit-log entry |
+| Job | `host`, ubuntu-24.04, Temurin 17.0.21, clang 18.1.3: **success** (19:49:56–19:51:53 UTC) |
+| Host tests (`run_tests.sh`) | **39/39 PASS**, including `hw301_bridge_tests` (IPv6 available on the runner); shipping-JAR check skipped by design (`SKIP_JAR_CHECK=1`) |
+| Dashboard and deployment step | `make all test test-sanitize test-java` PASS (all C suites, ASan/UBSan, Java feed/config/AaRgState, Java→C fixture); lifecycle 6/6 PASS; installer recovery 10 OK; upstream v1.4.1 4 OK |
+| Warnings (not failures) | `actions/setup-java@v4` deprecated; `checkout@v4`/`setup-java@v4` target Node.js 20 (forced onto Node 24) |
+
+Still not covered by CI: shipping Java 1.4 build/stock linkage (stock JAR is
+proprietary and absent), QNX build, and anything on the vehicle.
+
 ## Diagnosis (2026-11-08)
 
 | Evidence | Result |
@@ -58,6 +76,7 @@ deliberately uses clang for that reason.
 | Criterion | State |
 | --- | --- |
 | Determine whether Actions is enabled/discovering the workflow | Discovered and active; **not executing** (0 runs). Exact cause needs the owner's settings view. |
-| Execute the workflow and inspect jobs/logs | **Blocked**: needs the owner to enable Actions (agent token cannot dispatch). |
+| Execute the workflow and inspect jobs/logs | **Done**: run #1 inspected step by step and in the full job log. |
 | Local evidence recorded separately | Done (table above). |
-| Successful observed CI run for the revision | **Unresolved** until a run exists; not claimed. |
+| Successful observed CI run for the revision | **Met** for `496fef1` (code = master `c49da24`). Later revisions run automatically on push. |
+| Follow-up | Optional: move to `actions/checkout@v5` / `actions/setup-java@v5` before Node 20 support ends. |

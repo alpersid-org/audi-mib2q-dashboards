@@ -7,9 +7,8 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
-**Latest — P2-C01 (merged; blocked on owner action):** CI diagnosis in [ci-status.md](docs/custom-dashboards/ci-status.md):
-Actions is not executing on this fork; the owner must enable it. Do not claim CI
-results until a real run exists.
+**Latest — P2-C01:** GitHub Actions enabled; first CI run passed ([ci-status.md](docs/custom-dashboards/ci-status.md)).
+CI now runs on every push; check run results before claiming CI status.
 
 **Earlier — P2-C05 settings contract (merged):** C05 is complete on the host. the user asked to
 "start C05 settings contract". One typed v1 settings contract shared by C and

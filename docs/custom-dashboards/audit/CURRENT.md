@@ -1,16 +1,14 @@
 # Current agent checkpoint
 
-Updated: 2026-11-08T19:46:48Z. Agent: Claude Code. Task: P2-C01 CI diagnosis / merged to master;
-BLOCKED on owner action (enable GitHub Actions on the fork).
+Updated: 2026-11-08T19:52:53Z. Agent: Claude Code. Task: P2-C01 / COMPLETE on branch `ci/first-run`
+(not merged). CI run 42516991181 passed.
 
-- Evidence (ci-status.md): workflow "Tests" active, 0 runs ever (also after the
-  last pushes); agent workflow_dispatch -> 403. Local workflow-equivalent run
-  passes every step except IPv6-only hw301.
-- Host work done: C05 (runtime + settings), C04 host part, C01 diagnosis.
-  No signal is ACCEPTED; production draws nothing by design.
-- Open: owner enables Actions -> agent inspects the run; vehicle evidence for C04;
-  C07 schema/controller; C06 gated on C03; C08/C09.
+- Owner enabled Actions; push of an audit commit triggered run #1 (agent dispatch
+  still 403). Job host: success; run_tests 39/39 incl. hw301; dashboard all/test/
+  sanitize/java, lifecycle 6/6, installer recovery 10, upstream v1.4.1 4: PASS.
+- Warnings only: setup-java@v4 deprecated; Node 20 actions. Optional v5 bump.
+- Host work done: C01, C04 host part, C05. No signal ACCEPTED.
 - Boundaries: QNX guard, default OFF, no native backend, no vehicle actions.
 
-Next: user enables Actions and starts a run (Actions -> Tests -> Run workflow), then
-the agent reads jobs/logs. Audit: [LOG.md](LOG.md).
+Next: await merge approval for ci/first-run; then C07 schema/controller or
+vehicle evidence for C04. Audit: [LOG.md](LOG.md).

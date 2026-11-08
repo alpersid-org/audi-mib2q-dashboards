@@ -153,7 +153,8 @@ as unresolved instead of inventing a successful run.
 **State (2026-11-08):** diagnosed in [ci-status.md](ci-status.md): workflow active,
 0 runs ever; Actions not executing on this fork (owner must enable it; the agent's
 token cannot dispatch, 403). A local workflow-equivalent run passes every step
-except the IPv6-only hw301 check. Observed CI run: unresolved.
+except the IPv6-only hw301 check. Owner enabled Actions; **run #1 passed** (39/39 host checks incl. hw301, all
+dashboard/Java/lifecycle/installer/v1.4.1 regressions). C01 acceptance met.
 
 ## P2-C02 — target profile, assets and baseline
 
