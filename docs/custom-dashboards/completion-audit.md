@@ -1,5 +1,9 @@
 # Phase 2 completion audit corrections — 2026-11-08
 
+Implementation sequence for remaining points:
+[completion-plan.md](completion-plan.md), 2026-11-08. This audit retains the
+revision-specific findings and already-executed test evidence.
+
 **Phase 2 remains NO-GO for closure.** The source corrections below are implemented
 and host-tested; a safe VC renderer and actual vehicle acceptance are still
 blocked by missing target evidence. This report supersedes earlier current-state

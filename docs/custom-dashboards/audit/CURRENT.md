@@ -1,46 +1,36 @@
 # Current agent checkpoint
 
-Updated: 2026-11-08T00:18:21Z. Agent: Codex. Task: P2-COMPLETION-AUDIT.
-Status: host corrections COMPLETE; source publication VERIFIED; vehicle delivery BLOCKED.
+Updated: 2026-11-08T09:40:11Z. Agent: Codex. Task: P2-COMPLETION-PLAN / COMPLETE.
+Publication pending; runtime/vehicle Phase 2 remains incomplete.
 
-## Authorization and source
+## Scope and baseline
 
-User: "After the audit is done, don't stop until you fix everything. At the end,
-commit and push to master". Baseline 93e44079d6847eb84a5016f0f2e4fff852dbca1a;
-working branch fix/phase2-completion-audit. Origin refreshed, no concurrent changes.
-No release, vehicle commands/deployment or Phases 3–5.
+User requested reviewing the audit and planning all missing points with best
+judgment. Prior commit/push-to-master authorization persists. Starting clean
+master f5261ab7e78b10044da72ef4b2f7bbbaa8c49e43, matching remote; working branch
+docs/phase2-completion-plan. Documentation-only increment; no vehicle actions.
 
-## Completed corrections
+## Deliverable and decisions
 
-Installer conflict backups/restoration, error propagation, staged update with
-persistent journal/recovery and uninstall collision protection; missing-widget
-omission/reflow/no-data suppression; C nonblocking regular-file loaders; unique
-Java staging, independent restart generations and deletion diagnostics; tests/CI.
-Atomic replacement race in initial hardening reproduced and fixed with regression.
-Full disposition and remaining gates: [completion-audit.md](../completion-audit.md).
+[completion-plan.md](../completion-plan.md) defines C01-C09, dependencies, effort,
+source targets and acceptance for every outstanding point. Initial dashboard
+support targets the documented AA session; no invented phone-free/CarPlay
+dashboard requirement or Phases 3–5. Preserve OEM/inherited behavior.
 
-## Validation
+Start CI/service diagnosis (zero observed remote runs) and host consumer/controller
+contracts while collecting exact target/stock/signal evidence and examining safe
+surface feasibility. Native routing depends on C02/C03 gates; controls require a
+safely gated consumer. Actual vehicle acceptance remains mandatory for closure.
 
-- PASS: dashboard all/test/test-sanitize/test-java and benchmark; all sanitizer
-  checks enabled outside ptrace. Normal/sanitized/Java-C concurrent reader test.
-- PASS: isolated lifecycle six scenarios, inherited native suite 39 checks with
-  shipping JAR explicitly skipped, maintenance four methods, installer recovery
-  ten methods, existing payload/dio/listing/GEM fixtures. Four previews unchanged.
-- LIMITS: no local ksh/mksh, stock HMI/JCL/Java1.4/QNX toolchain or hardware. CI
-  configured but execution not observed. No target compatibility claim.
-- Initial ptrace/tag/fault-wrapper/race failures and corrections preserved in the
-  report/log. Raw local logs /tmp/mib2q-completion, not portable artifacts.
+## Checks and publication
 
-## Publication / next action
+Markdown links/fences and git diff --check PASS. No runtime code/test changes, no
+code suites repeated; prior host corrections remain as documented in
+[completion-audit.md](../completion-audit.md). No active processes or proprietary
+artifacts. Commit plan/checkpoint, fast-forward fork master, push and verify remote
+SHA; publication is not yet claimed here. The checkpoint commit is discoverable
+through Git history. Do not force-push, publish a release or contact the vehicle.
 
-Tested source commit 1ea8d98870112cbb22ba95933f8b135fbea402df was fast-forwarded and pushed to
-origin/master. git ls-remote verified that exact SHA. Local branch: master, clean
-after publication. This final documentation checkpoint follows that commit; its
-own SHA is discoverable in Git history and must match remote after its push.
-No background commands remain; no force-push/upstream/tag/release/vehicle action.
-
-Next vehicle work remains blocked by exact firmware/ABI, actual signal validity/
-freshness, stock target linkage and proven safe VC rectangle/ownership. User
-evidence requested and not received. Keep QNX guard/default OFF; no guessed
-renderer routing or activation controls before a safe consumer exists.
-Audit: [LOG.md](LOG.md), codex-completion-audit-01/-02/-03.
+Next implementation: C01 and C05 host preparation, alongside C02 inventory/C03
+source analysis. Target evidence is still absent.
+Audit: [LOG.md](LOG.md), codex-completion-plan-01/-02.

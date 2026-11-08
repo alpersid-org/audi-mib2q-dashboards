@@ -1,5 +1,20 @@
 # Executable Phase 2 plan
 
+## Active completion execution plan — 2026-11-08
+
+[completion-plan.md](completion-plan.md) is the current dependency-ordered plan for
+all remaining audit points. It defines C01-C09, proposed scope/design choices,
+source targets, acceptance evidence and hardware gates. Start independent CI and
+host controller/settings work while obtaining target/surface evidence. No vehicle
+operation or guessed routing follows from this plan.
+
+The sections below preserve earlier stage history. Their old current/deferred/
+not-started labels are historical and must not override the active plan, published
+corrections or latest user request. Existing source and tests are not reopened
+merely because a historical section predates their completion.
+
+## Historical stage records through f5261ab
+
 **Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)
 records installer recovery, widget omission, feed I/O/restart hardening and CI.
 Host checks pass; firmware/safe-surface/stock-linkage/vehicle gates remain open.

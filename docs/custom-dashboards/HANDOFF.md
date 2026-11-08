@@ -1,5 +1,10 @@
 # AI continuation guide
 
+**Current completion execution plan:** [completion-plan.md](completion-plan.md),
+2026-11-08. C01-C09 map every remaining audit point to dependencies and acceptance;
+CI/host preparation can proceed while target/surface evidence is collected.
+Phase 2 remains incomplete until actual target integration and vehicle acceptance.
+
 **Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)
 records installer recovery, widget omission, feed I/O/restart hardening and CI.
 Host checks pass; firmware/safe-surface/stock-linkage/vehicle gates remain open.

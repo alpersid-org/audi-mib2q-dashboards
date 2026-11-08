@@ -904,3 +904,19 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Working tree clean after source publication. All runtime source unchanged since passing host/sanitizer/feed/lifecycle/recovery tests. Relative links/fences and git diff --check pass.
 - This final documentation checkpoint records verified source publication; its own commit is discoverable through Git history and will be pushed under the same user authorization.
 - Host-fix task complete. Vehicle Phase 2 remains blocked: exact firmware/ABI, real DSI validity/service-loss behavior, stock target build assets, proven safe VC rectangle, native consumer/controls and actual vehicle acceptance. No target evidence received in this session. See ../completion-audit.md.
+
+## 2026-11-08T09:35:02Z | codex-completion-plan-01 | START
+
+- User requests reviewing the audit and providing a plan to implement every missing point, using best judgment. Scope this increment: a repository-backed execution plan and current handoff updates; no vehicle operations or speculative target implementation. Prior commit/push-to-master authorization remains in force for this continuation.
+- Clean master f5261ab7e78b10044da72ef4b2f7bbbaa8c49e43, matching remote branch read through GitHub. Working branch docs/phase2-completion-plan. Prior implemented fixes remain intact.
+- Rechecked source/contracts/build/graphics/requirements and remote Actions runs: total_count=0. Workflow activation/permissions unknown; workflow metadata endpoint is unavailable through this connector. Do not call CI passed or broken from this evidence.
+- Plan will map all outstanding audit items to work packages, dependencies, proposed design decisions, acceptance evidence, owners and hardware gates. Keep the five-phase boundary and distinguish current requirements from new design proposals.
+- Next: write completion-plan.md, make PLAN.md point to it as current, reconcile checkpoint/status, validate documentation, commit and publish to fork master.
+
+## 2026-11-08T09:40:11Z | codex-completion-plan-02 | COMPLETE / PLAN READY
+
+- Added completion-plan.md: nine work packages C01-C09, evidence-based gates, dependencies, complexity, source boundaries, acceptance and audit traceability. AA-first support, verified-only capabilities, active-session controls, target fonts/geometry, independent OEM crash fallback, package/recovery and v1.4.1 validation are explicit design choices/criteria.
+- Independent CI diagnosis and host consumer/controller preparation can start while target/surface evidence is collected. Exact firmware/ABI, source semantics, stock build prerequisites and safe output remain hard evidence gaps. No routing or vehicle action invented.
+- PLAN.md now points to the active plan and labels old stage statuses historical; status/HANDOFF/PROJECT/AGENTS/audit entry points reconciled. Prior corrections/runtime remain unchanged.
+- Validation: Markdown relative links and balanced fences PASS (nine Markdown files, 133 links before this final checkpoint update); git diff --check PASS. No code tests repeated for text-only work. GitHub Actions still returns zero runs; cause unverified.
+- Next: commit documentation, fast-forward/push fork master under existing authorization, verify remote SHA. Then begin C01/C05 independent host work when implementing the plan; target work follows C02/C03 evidence gates.

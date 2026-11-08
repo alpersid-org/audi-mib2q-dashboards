@@ -1,5 +1,8 @@
 # Audi MIB2Q — Custom Dashboards project
 
+Current remaining-work sequence: [Phase 2 completion plan](docs/custom-dashboards/completion-plan.md).
+It supersedes old stage-status summaries and preserves the target/safe-surface gate.
+
 **2026-11-08 current work:** [audit corrections](docs/custom-dashboards/completion-audit.md)
 fix installer safety/recovery, unsupported-widget omission, feed handling and CI.
 Host validation passes; Phase 2 vehicle completion remains blocked by target and

@@ -7,6 +7,15 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
+**Current — P2-COMPLETION-PLAN:** user requested reviewing the audit and planning
+all missing points using best judgment. The current execution sequence is
+[completion-plan.md](docs/custom-dashboards/completion-plan.md), C01-C09. This
+increment updates planning/handoff documentation; earlier tested fixes remain
+published. Execute independent host work within existing authorization, keep
+firmware/signal/safe-surface evidence explicit, and do not infer vehicle operations
+or target routing from this plan. Prior commit/push authorization persists.
+
+
 **Current — P2-COMPLETION-AUDIT:** the user requests correcting the independent
 audit findings, running applicable tests, then committing/pushing to fork master.
 This supersedes the earlier audit-only task. Correct host-code and deployment
