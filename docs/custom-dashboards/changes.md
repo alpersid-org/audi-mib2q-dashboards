@@ -1,6 +1,6 @@
 # Change ledger
 
-## FIX-CLAUDE-C05 — review corrections (2026-11-08, local)
+## FIX-CLAUDE-C05 — review corrections (2026-11-08, published)
 
 User: "Fix all findings". Runtime shutdown now disables intent and cancels
 pending retries until explicit enable; acquisition requires all output callbacks.
@@ -8,7 +8,8 @@ Tests cover shutdown/restart with fresh records, recovery cancellation and every
 incomplete backend combination. Normal and sanitizer suites pass. Reconciled
 Phase 1 target/profile/roadmap planning as installed and vehicle-tested; updated
 runtime contract and agent handoff. [Resolution](reviews/claude-p2-c05-resolution.md)
-records validation and Java prerequisite gap. No publication or vehicle action.
+records validation and Java prerequisite gap. Committed as `62b18e1` and pushed
+to fork master on "Commit and push to master"; remote SHA verified. No vehicle action.
 
 ## P2-C05 — runtime controller (2026-11-08)
 

@@ -1095,3 +1095,17 @@ feature; earlier project history is available in Git and [status.md](../status.m
   PASS; Java unavailable (no javac); no source changed since those checks.
 - Next: commit the reviewed files, fast-forward local master and push origin;
   record publication and verify the final remote SHA. No release or vehicle work.
+
+## 2026-11-08T18:45:00Z | codex-publish-p2-c05-02 | PUBLICATION / COMPLETE
+
+- Committed fixes/review/regressions/docs as
+  62b18e13d758a886753afd86f1ab0c0b001da328. Local master fast-forwarded from
+  28dab92; `git push origin master` succeeded. `git ls-remote origin
+  refs/heads/master` returned the exact source commit SHA.
+- Updating agent/status/plan/review handoffs to show publication instead of local
+  uncommitted state. This docs checkpoint will also be committed/pushed under the
+  same user authorization; its own SHA is discoverable via git log.
+- Source unchanged since passing C/XML/CLI and ASan/UBSan checks; Java prerequisite
+  gap unchanged. No need to repeat code tests for publication-only documentation.
+- Next: check doc links/whitespace, commit/push checkpoint, verify final remote
+  SHA equals local master and tree is clean. No release or vehicle actions.

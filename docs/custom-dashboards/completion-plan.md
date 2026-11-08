@@ -292,7 +292,7 @@ one persistent reader with no mock path, acquisition outside draw, dirty redraw,
 bounded backoff, stale-writer/session transitions, idempotent reconciler.
 Remaining: the shared typed Java/C settings contract (overlaps C07).
 
-**Review corrections (local, 2026-11-08):** shutdown now latches disabled intent
+**Review corrections (published, 2026-11-08, `62b18e1`):** shutdown now latches disabled intent
 until explicit enable; incomplete backends are rejected before acquisition.
 Regression tests and ASan/UBSan pass; see the [resolution record](reviews/claude-p2-c05-resolution.md).
 

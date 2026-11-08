@@ -1,6 +1,6 @@
 # Review of Claude's P2-C05 push
 
-**Follow-up:** user requested "Fix all findings"; all three are corrected locally
+**Follow-up:** user requested "Fix all findings"; all three are corrected in `62b18e1`, published to fork master
 with evidence in the [resolution record](claude-p2-c05-resolution.md). The review
 below remains pinned to the pushed revision and preserves its original findings.
 

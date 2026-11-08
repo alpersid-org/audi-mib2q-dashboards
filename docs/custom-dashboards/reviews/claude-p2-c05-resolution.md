@@ -3,7 +3,9 @@
 User: "Fix all findings", 2026-11-08. This resolves the three findings in the
 [review pinned to 28dab92](claude-p2-c05.md). Branch:
 `fix/claude-p2-c05-review`, based on `28dab92461c69056ed162e4b2d4563b3b75d1689`.
-Changes are local and uncommitted; no merge or push performed.
+Committed as `62b18e13d758a886753afd86f1ab0c0b001da328`, fast-forwarded into master
+and pushed to the fork on the user's "Commit and push to master". `git ls-remote`
+verified that exact remote SHA. Publication checkpoint follows in a docs commit.
 
 | Finding | Disposition | Correction and evidence |
 | --- | --- | --- |
@@ -30,4 +32,4 @@ Changes are local and uncommitted; no merge or push performed.
 
 The runtime backend remains a host contract. Native/QNX integration and shared
 typed Java/C settings are still separate unfinished C05/C06 work. No vehicle
-action, installation, release or remote publication occurred.
+action, installation or release occurred. Remote publication is recorded above.
