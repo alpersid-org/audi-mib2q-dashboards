@@ -109,7 +109,7 @@ to execute independent authorized host work.
 
 | ID | Deliverable | Dependencies | Can start now? | Complexity |
 | --- | --- | --- | --- | --- |
-| P2-C01 | Reproducible baseline and observed CI results | Published corrections | Yes: source and service diagnosis | Small |
+| P2-C01 | Reproducible baseline and observed CI results | Published corrections | **Done**: Actions enabled, run 42516991181 passed ([ci-status.md](ci-status.md)) | Small |
 | P2-C02 | Exact target profile, build prerequisites and baseline evidence | User identity supplied; Phase 1 installed (handover) | Identity inventory partly complete; stock ABI/assets and original baseline required to finish | Medium |
 | P2-C03 | Verified candidate display geometry and ownership design | C02 target identity | Source analysis now; final surface decision blocked on evidence | Large / investigation |
 | P2-C04 | Accepted signal/capability and freshness policy | C02 real DSI/receiver evidence | **Register + per-signal eligibility merged** ([signal-acceptance.md](signal-acceptance.md)); acceptance of each signal gated on vehicle evidence | Medium |

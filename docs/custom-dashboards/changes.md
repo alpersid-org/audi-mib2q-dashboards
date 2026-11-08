@@ -4,6 +4,7 @@
 
 Owner enabled Actions. Run 42516991181 on `ci/first-run` succeeded; evidence added
 to [ci-status.md](ci-status.md); plan/status/HANDOFF/AGENTS/pointers updated.
+Merged to master on "merge + update docs".
 
 ## P2-C01 — CI diagnosis (2026-11-08)
 

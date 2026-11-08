@@ -1,14 +1,14 @@
 # Current agent checkpoint
 
-Updated: 2026-11-08T19:52:53Z. Agent: Claude Code. Task: P2-C01 / COMPLETE on branch `ci/first-run`
-(not merged). CI run 42516991181 passed.
+Updated: 2026-11-08T19:53:42Z. Agent: Claude Code. Task: P2-C01 / COMPLETE, merged to master on
+"merge + update docs". CI runs on every push; run 42516991181 passed.
 
-- Owner enabled Actions; push of an audit commit triggered run #1 (agent dispatch
-  still 403). Job host: success; run_tests 39/39 incl. hw301; dashboard all/test/
-  sanitize/java, lifecycle 6/6, installer recovery 10, upstream v1.4.1 4: PASS.
-- Warnings only: setup-java@v4 deprecated; Node 20 actions. Optional v5 bump.
-- Host work done: C01, C04 host part, C05. No signal ACCEPTED.
+- Host work done: C01 (CI), C04 host part (register + eligibility), C05 (runtime +
+  settings contract). No signal ACCEPTED; production draws nothing by design.
+- Open: C04 items 2–4 + signal acceptance (vehicle evidence); C07 controls/
+  persistence; C02 stock/baseline evidence; C03 surface gate; C06/C08/C09.
+- Optional: actions/checkout@v5 + setup-java@v5 (Node 20 deprecation warnings).
 - Boundaries: QNX guard, default OFF, no native backend, no vehicle actions.
 
-Next: await merge approval for ci/first-run; then C07 schema/controller or
-vehicle evidence for C04. Audit: [LOG.md](LOG.md).
+Next: await the user. This merge push to master triggers a CI run; check its
+result before claiming CI status for the merged revision. Audit: [LOG.md](LOG.md).

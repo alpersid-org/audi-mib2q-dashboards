@@ -1204,3 +1204,10 @@ feature; earlier project history is available in Git and [status.md](../status.m
   test-sanitize test-java PASS, lifecycle 6/6, installer recovery 10 OK, upstream
   tags fetched, upstream_v141 4 OK. Warnings: setup-java@v4 deprecated, Node 20.
 - Docs updated (ci-status, plan, status, HANDOFF, AGENTS, pointers, changes).
+
+## 2026-11-08T19:53:42Z | 20261108T172937Z-claude-16 | PUBLICATION / P2-C01 TO MASTER + DOCS
+
+- User: "merge + update docs". Covers this fast-forward only; no release, no vehicle.
+- Docs: completion-plan C01 row (Done), changes, CURRENT.
+- Git: origin/master c49da24 is an ancestor; master fast-forwarded to the commit
+  containing this event (496fef1, 2ac0386 + this event). The push to master runs CI.
