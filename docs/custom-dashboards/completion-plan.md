@@ -283,6 +283,13 @@ suite; existing manager/provider/config code. Keep QNX compilation blocked here.
 output; bounded recovery, no late publications, no live mock fallback and stable
 resource ownership. Repeat source/clock/race failures deterministically.
 
+**State (2026-11-08, merged):** controller implemented in `dashboard/runtime.{h,c}`
+and tested by `tests/dashboard_runtime_test.c` with a fake backend (see
+[runtime.md](runtime.md)). Met: states, every non-active path clears/releases,
+one persistent reader with no mock path, acquisition outside draw, dirty redraw,
+bounded backoff, stale-writer/session transitions, idempotent reconciler.
+Remaining: the shared typed Java/C settings contract (overlaps C07).
+
 ## P2-C06 — native drawing and VC lifecycle
 
 **Purpose:** supply the actual missing on-unit dashboard backend.

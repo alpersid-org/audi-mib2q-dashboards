@@ -7,6 +7,12 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
+**Latest — P2-C05 (merged):** the user asked to "start C05"; the host runtime
+controller ([runtime.md](docs/custom-dashboards/runtime.md)) is merged to master
+with passing host tests. Next eligible host work: C05's shared Java/C settings
+contract or C04 signal policy. Native drawing (C06) stays gated on C03 evidence;
+no vehicle actions.
+
 **Current — P2-COMPLETION-PLAN:** user requested reviewing the audit and planning
 all missing points using best judgment. The current execution sequence is
 [completion-plan.md](docs/custom-dashboards/completion-plan.md), C01-C09. This

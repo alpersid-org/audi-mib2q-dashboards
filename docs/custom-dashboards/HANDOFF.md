@@ -1,5 +1,8 @@
 # AI continuation guide
 
+**P2-C05 (2026-11-08, merged to master):** host runtime controller [runtime.md](runtime.md) — states, data-before-ownership, dirty redraw, bounded retry, config/profile reconciler, backend contract; host tests and sanitizers pass. Remaining in C05: shared Java/C settings contract. No native backend; nothing on the vehicle.
+Next eligible host work: C05 settings contract or C04 signal policy; C03/C06 stay gated.
+
 **Phase 1 handover (2026-11-08, supersedes "NOT INSTALLED"):** [Phase 1 handover](../phase1-handover/README.md) shows the
 upstream mib2q-carplay **1.4.1 release** installed via M.I.B. V3.8.0 and vehicle-
 tested: AA cluster map wired and wireless (AAWireless Gen1), Classic and wide view,

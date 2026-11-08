@@ -9,7 +9,8 @@ Phase 2 scope is "Real Vehicle Data Integration": real MMI data in the Virtual
 Cockpit; mock data only for tests. See [requirements](docs/custom-dashboards/requirements.md).
 Phase 2 is not complete; the existing work is a mock-only host foundation.
 Phase 1 (upstream 1.4.1 release) is installed and vehicle-tested: read the
-[Phase 1 handover](docs/phase1-handover/README.md).
+[Phase 1 handover](docs/phase1-handover/README.md). P2-C05 host runtime controller
+is merged (docs/custom-dashboards/runtime.md).
 Use [the continuation guide](docs/custom-dashboards/HANDOFF.md) to recover context.
 Read [the current checkpoint](docs/custom-dashboards/audit/CURRENT.md) and recent
 [audit events](docs/custom-dashboards/audit/LOG.md); follow the audit protocol to

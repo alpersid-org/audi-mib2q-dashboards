@@ -997,3 +997,11 @@ feature; earlier project history is available in Git and [status.md](../status.m
   Mutants (always redraw / keep surface while waiting / acquire before data)
   each caught; source restored (cmp identical).
 - Next: commit/push branch; await merge approval.
+
+## 2026-11-08T18:24:46Z | 20261108T172937Z-claude-05 | PUBLICATION / P2-C05 TO MASTER + DOCS
+
+- User: "merge + update docs". Covers this fast-forward only; no release, no vehicle.
+- Docs: AGENTS latest-state, HANDOFF, status (merged), completion-plan C05 state,
+  CLAUDE/GEMINI/Copilot pointers, changes, CURRENT.
+- Git: origin/master 1a2d1cd is an ancestor; master fast-forwarded to the commit
+  containing this event (f9c1495 + this event). No tests rerun (docs only).
