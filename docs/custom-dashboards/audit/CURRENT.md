@@ -1,12 +1,12 @@
 # Current agent checkpoint
 
-Updated: 2026-11-08T17:29:37Z. Agent: Claude Code. Task: DOC-PHASE1-HANDOVER / READY_FOR_REVIEW.
+Updated: 2026-11-08T17:49:03Z. Agent: Claude Code. Task: DOC-PHASE1-HANDOVER / COMPLETE (merged to master).
 
 ## Source and authorization
 
 The user supplied a Phase 1 → Phase 2 handover (ZIP + PHASE2_HANDOVER.md) and
 pointed to it for incorporation. Documentation only: no runtime, test or vehicle
-changes. Branch `docs/phase1-handover` from master 8787d20; not merged.
+changes. Branch `docs/phase1-handover` fast-forwarded into master on "merge to master and push".
 
 ## Current facts (from the handover; labels are the author's)
 
@@ -20,7 +20,7 @@ changes. Branch `docs/phase1-handover` from master 8787d20; not merged.
 
 ## Next action
 
-Await the user: merge approval for `docs/phase1-handover`; then the handover's
+Await the user. Next: the handover's
 validation step 1 (post-reboot log capture, user-run) and C03/C04 offline work
 (lsd.jxe survey kept outside Git). Step 9 / native drawing still needs
 displayable/context evidence and authorization. Audit: [LOG.md](LOG.md).

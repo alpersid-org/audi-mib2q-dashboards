@@ -965,3 +965,10 @@ feature; earlier project history is available in Git and [status.md](../status.m
   consequences), requirements (surface note; licensing decision), ROADMAP,
   PROJECT, PLAN, status, HANDOFF, completion-audit, AGENTS, CLAUDE/GEMINI/Copilot.
 - No tests or runtime changes. Next: commit/push branch; await merge approval.
+
+## 2026-11-08T17:49:03Z | 20261108T172937Z-claude-02 | PUBLICATION / PHASE1-HANDOVER TO MASTER
+
+- User: "merge to master and push". Covers this fast-forward only; no release,
+  no vehicle action.
+- Git: origin/master 8787d20 is an ancestor; master fast-forwarded to the commit
+  containing this event (e0490a2 handover + this event). No merge commit.
