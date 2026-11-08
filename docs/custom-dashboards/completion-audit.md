@@ -137,3 +137,10 @@ No Android companion, new phone transport or live companion telemetry was added.
 **Next eligible action:** obtain target/signal/surface evidence. No safe graphics
 routing can be selected from the current repository alone. Source corrections
 and host passes do not make Phase 2 ready to close.
+
+## Publication
+
+Tested source commit `1ea8d98870112cbb22ba95933f8b135fbea402df` was pushed to fork `master`;
+`git ls-remote` verified the exact SHA. A final documentation checkpoint follows
+in Git history. No release, tag push or vehicle action. Remote CI execution is
+not substituted for the local test evidence above.

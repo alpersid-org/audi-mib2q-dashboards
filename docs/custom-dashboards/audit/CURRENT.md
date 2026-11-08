@@ -1,7 +1,7 @@
 # Current agent checkpoint
 
-Updated: 2026-11-08T00:17:25Z. Agent: Codex. Task: P2-COMPLETION-AUDIT.
-Status: host corrections COMPLETE; publication pending; vehicle delivery BLOCKED.
+Updated: 2026-11-08T00:18:21Z. Agent: Codex. Task: P2-COMPLETION-AUDIT.
+Status: host corrections COMPLETE; source publication VERIFIED; vehicle delivery BLOCKED.
 
 ## Authorization and source
 
@@ -33,13 +33,14 @@ Full disposition and remaining gates: [completion-audit.md](../completion-audit.
 
 ## Publication / next action
 
-All corrective changes are uncommitted on the working branch; expected diff is
-source/tests/workflow/current documentation only. No proprietary/generated files.
-Finish review/checks, commit, fast-forward local master, push origin/master and
-verify exact remote SHA. Never force-push or publish upstream/tags.
+Tested source commit 1ea8d98870112cbb22ba95933f8b135fbea402df was fast-forwarded and pushed to
+origin/master. git ls-remote verified that exact SHA. Local branch: master, clean
+after publication. This final documentation checkpoint follows that commit; its
+own SHA is discoverable in Git history and must match remote after its push.
+No background commands remain; no force-push/upstream/tag/release/vehicle action.
 
 Next vehicle work remains blocked by exact firmware/ABI, actual signal validity/
 freshness, stock target linkage and proven safe VC rectangle/ownership. User
 evidence requested and not received. Keep QNX guard/default OFF; no guessed
 renderer routing or activation controls before a safe consumer exists.
-Audit: [LOG.md](LOG.md), codex-completion-audit-01/-02.
+Audit: [LOG.md](LOG.md), codex-completion-audit-01/-02/-03.
