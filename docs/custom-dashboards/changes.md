@@ -4,7 +4,7 @@
 
 User: "start C01". Added [ci-status.md](ci-status.md) (API evidence, owner action,
 local workflow-equivalent results); completion-plan C01 state, status, HANDOFF, AGENTS.
-No workflow or code change.
+No workflow or code change. Merged to master on "merge + update docs".
 
 ## P2-C05 — shared settings contract (2026-11-08)
 

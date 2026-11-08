@@ -1180,3 +1180,11 @@ feature; earlier project history is available in Git and [status.md](../status.m
   hw301 exit 0 (38 checks). make all test test-sanitize test-java, lifecycle,
   installer_recovery (10 OK), tag fetch, upstream_v141 (4 OK): all exit 0.
 - Documented in ci-status.md; no workflow/code change. Observed CI run unresolved.
+
+## 2026-11-08T19:46:48Z | 20261108T172937Z-claude-13 | PUBLICATION / P2-C01 TO MASTER + DOCS
+
+- User: "merge + update docs". Covers this fast-forward only; no release, no vehicle.
+- Re-check after the branch push: list_workflow_runs still 0 (Actions not executing).
+- Docs: status, HANDOFF, AGENTS, CLAUDE/GEMINI/Copilot pointers, changes, CURRENT.
+- Git: origin/master ab97450 is an ancestor; master fast-forwarded to the commit
+  containing this event (fdebc21 + this event).

@@ -1,6 +1,6 @@
 # Project status
 
-**P2-C01 (2026-11-08):** CI diagnosed ([ci-status.md](ci-status.md)): the Tests workflow is active but has never run; GitHub Actions must be enabled by the owner on this fork. Local workflow-equivalent run passes (except IPv6-only hw301).
+**P2-C01 (2026-11-08, merged; blocked on owner):** CI diagnosed ([ci-status.md](ci-status.md)): the Tests workflow is active but has never run; GitHub Actions must be enabled by the owner on this fork. Local workflow-equivalent run passes (except IPv6-only hw301).
 
 **P2-C05 settings contract (2026-11-08, merged to master):** [settings-contract.md](settings-contract.md) — typed Java `DashboardSettings`, 48 shared conformance vectors run by both C and Java; host tests pass. C05 complete on the host.
 

@@ -13,6 +13,7 @@ Phase 1 (upstream 1.4.1 release) is installed and vehicle-tested: read the
 is merged (docs/custom-dashboards/runtime.md). P2-C04 signal register/eligibility is
 merged (docs/custom-dashboards/signal-acceptance.md); no signal is ACCEPTED yet.
 C05 shared Java/C settings contract is merged (docs/custom-dashboards/settings-contract.md).
+CI has never run: Actions must be enabled on this fork by the owner (docs/custom-dashboards/ci-status.md).
 Use [the continuation guide](docs/custom-dashboards/HANDOFF.md) to recover context.
 Read [the current checkpoint](docs/custom-dashboards/audit/CURRENT.md) and recent
 [audit events](docs/custom-dashboards/audit/LOG.md); follow the audit protocol to
