@@ -942,3 +942,9 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Added original-runtime baseline and recovery preparation to the hardware sequence; documented that the fork's Java build already contains dashboard changes and upstream installers do not inherit this fork's safety fixes. No installation or ABI/profile activation performed.
 - Validation PASS: twelve Markdown files, 166 relative links, balanced fences, exact supplied identity strings/Phase 1 status and git diff --check. No runtime tests needed for documentation-only changes.
 - Next: commit/publish profile update under existing master publication authorization; then C01/C05 independent host work and remaining C02 stock/build/baseline preparation. Hardware integration still needs ABI, signal and safe-surface evidence.
+
+## 2026-11-08T11:07:07Z | codex-target-profile-03 | PUBLICATION / COMPLETE
+
+- Target profile and active plan/context updates committed as e6fef46dd81e871f43add03ea17f9f451895743b, fast-forwarded and pushed to fork master. git ls-remote verified the exact SHA; working tree clean.
+- Final documentation validation: twelve Markdown files, 168 relative links, balanced fences and exact user values/NOT INSTALLED state preserved; git diff --check PASS. No runtime changes or vehicle actions.
+- This final checkpoint records verified profile publication and follows in Git history under existing authorization. Next: original-baseline compatibility/recovery preparation and independent C01/C05 host work. Exact ABI, safe surface and real signal gates remain.

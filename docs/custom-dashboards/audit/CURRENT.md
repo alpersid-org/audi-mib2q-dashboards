@@ -1,14 +1,14 @@
 # Current agent checkpoint
 
 Updated: 2026-11-08T11:05:46Z. Agent: Codex. Task: P2-TARGET-PROFILE / COMPLETE.
-Documentation publication pending; Phase 1 NOT INSTALLED; Phase 2 incomplete.
+Target profile publication VERIFIED; Phase 1 NOT INSTALLED; Phase 2 incomplete.
 
 ## Source and authorization
 
 The user supplied target configuration after the completion plan. Incorporate
 that steering; prior commit/push-to-master authorization persists. Starting
 clean master 896cd9bd90a3bb70ae79aeb3f6c426d5cc81f4ce, authoring branch
-docs/target-p5092-profile. No vehicle operations, runtime or activation changes.
+docs/target-p5092-profile; current branch master. No vehicle operations, runtime or activation changes.
 
 ## Current facts
 
@@ -29,7 +29,8 @@ be explicit. User-supplied modes are not dashboard layouts or pixel rectangles.
 
 Validation: twelve Markdown files/166 relative links/fences and exact-string checks
 PASS; git diff --check PASS. Runtime source/tests unchanged. No active processes.
-Commit/publish the documented profile update, fast-forward master and verify
-remote SHA; no publication claim yet. Then C01/C05 independent host work and C02
+Profile commit e6fef46dd81e871f43add03ea17f9f451895743b was pushed to master;
+git ls-remote verified that exact SHA. This final documentation checkpoint follows
+in Git history under the same authorization. Next: C01/C05 host work and C02
 stock/build/baseline preparation. No installation, flash, release or vehicle access.
-Audit: [LOG.md](LOG.md), codex-target-profile-01/-02.
+Audit: [LOG.md](LOG.md), codex-target-profile-01/-02/-03.
