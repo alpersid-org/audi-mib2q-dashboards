@@ -1,5 +1,14 @@
 # Change ledger
 
+## DOC-PHASE1-HANDOVER — Phase 1 handover incorporated (2026-11-08)
+
+User-supplied handover stored unchanged in [docs/phase1-handover/](../phase1-handover/README.md)
+(three documents; manifest CSV kept with the user). Phase 1 status corrected to
+INSTALLED (upstream 1.4.1, vehicle-tested) across target-profile, completion-plan,
+requirements, ROADMAP, PROJECT, PLAN, status, HANDOFF, completion-audit, AGENTS and
+agent pointers; map-area surface constraint and licensing decision recorded.
+Documentation only.
+
 ## 2026-11-08 — independent completion audit corrections
 
 See [completion-audit.md](completion-audit.md) for finding disposition, exact

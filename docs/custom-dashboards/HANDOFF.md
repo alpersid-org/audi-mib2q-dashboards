@@ -1,9 +1,16 @@
 # AI continuation guide
 
+**Phase 1 handover (2026-11-08, supersedes "NOT INSTALLED"):** [Phase 1 handover](../phase1-handover/README.md) shows the
+upstream mib2q-carplay **1.4.1 release** installed via M.I.B. V3.8.0 and vehicle-
+tested: AA cluster map wired and wireless (AAWireless Gen1), Classic and wide view,
+OEM functions intact. The unit's `gal` matches upstream profile P5152 (pinned).
+Surface constraint (INFERRED, high confidence): dashboards can occupy only the VC
+map area; only displayables 98/99 are proven. No post-reboot log set exists yet.
+
 **Target update:** [target-profile.md](target-profile.md) records user-supplied
 P5092/MU1329, media driver DEV_MMX2QC_AU_ER_G22_201PROD-1, VC Classic/Extended Map,
 Galaxy S23 Ultra and original AAWireless cs307-e2-prod / 3.5.0. MMI Android Auto
-works; **Phase 1 is NOT INSTALLED**. Target identity is known as supplied; actual
+works; **Phase 1 is installed** (upstream 1.4.1, vehicle-tested; Phase 1 handover supersedes the earlier "NOT INSTALLED"). Target identity is known as supplied; actual
 stock ABI, enhanced cluster behavior, signal validity and safe geometry remain
 open. Prepare/validate the original baseline before hardware dashboard validation;
 continue independent host work. Older unconfirmed-installation notes are historical.
@@ -113,7 +120,7 @@ making changes.
 - Historical steering (ended by P2-04): no more tests now; tests are for the final stage. Document
   every change. This overrides earlier run-test instructions across model handoffs.
 - Historical target unknowns are superseded by target-profile.md: firmware/adapter
-  identities are supplied and Phase 1 is NOT INSTALLED. Actual ABI, enhanced
+  identities are supplied and Phase 1 is installed (upstream 1.4.1; Phase 1 handover). Actual ABI, enhanced
   behavior and safe geometry still require evidence.
 - The implementation is a standalone host renderer with mock
   data, not a new vehicle hook or replacement of navigation graphics.

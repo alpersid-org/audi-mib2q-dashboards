@@ -86,7 +86,7 @@ the original AAWireless adapter, not TWO+.
 The user supplied [the exact target profile](docs/custom-dashboards/target-profile.md):
 MHI2Q_ER_AUG22_P5092 / MU1329, media driver DEV_MMX2QC_AU_ER_G22_201PROD-1,
 VC Classic/Extended Map and original AAWireless cs307-e2-prod / 3.5.0. Android
-Auto works on MMI; **Phase 1 is NOT INSTALLED**. Exact receiver/HMI/graphics ABI,
+Auto works on MMI; **Phase 1 is installed** (upstream 1.4.1, vehicle-tested; Phase 1 handover supersedes the earlier "NOT INSTALLED"). Exact receiver/HMI/graphics ABI,
 enhanced cluster behavior, safe geometry and real dashboard signals remain
 unverified. The native dashboard renderer is still absent; host layouts and a
 host-tested, on-car-unverified data publisher/reader exist. Phase 1 preparation

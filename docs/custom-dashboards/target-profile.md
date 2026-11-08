@@ -1,5 +1,12 @@
 # Target vehicle profile — P5092 / MU1329
 
+> **Phase 1 handover (2026-11-08, supersedes "NOT INSTALLED"):** [Phase 1 handover](../phase1-handover/README.md) shows the
+> upstream mib2q-carplay **1.4.1 release** installed via M.I.B. V3.8.0 and vehicle-
+> tested: AA cluster map wired and wireless (AAWireless Gen1), Classic and wide view,
+> OEM functions intact. The unit's `gal` matches upstream profile P5152 (pinned).
+> Surface constraint (INFERRED, high confidence): dashboards can occupy only the VC
+> map area; only displayables 98/99 are proven. No post-reboot log set exists yet.
+
 Updated: 2026-11-08. Source: the user's explicit target configuration in this
 conversation. These values are accepted planning inputs. No head-unit inspection,
 installation or physical compatibility test was performed by the agent.
@@ -19,7 +26,7 @@ installation or physical compatibility test was performed by the agent.
 | Wireless adapter | Original AAWireless |
 | Adapter hardware | `cs307-e2-prod` |
 | Adapter firmware | `3.5.0` |
-| Phase 1 installation | **NOT INSTALLED** |
+| Phase 1 installation | **INSTALLED and vehicle-tested 2026-11-08** (upstream 1.4.1 release via M.I.B. V3.8.0; see the Phase 1 handover). Earlier value "NOT INSTALLED" superseded. |
 
 Classic and Extended Map describe the **OEM VC modes**. Compact and Extended
 describe our **custom dashboard layouts**. Their names do not establish a pixel
@@ -61,10 +68,10 @@ avoid trial/unpinned overrides as a shortcut.
 
 | Item | Current state | Required evidence |
 | --- | --- | --- |
-| Original project installed/validated | NOT INSTALLED | Reviewed upstream baseline, matching package/build, actual baseline and recovery results |
-| Exact receiver/HMI/graphics ABI | Not established | Exact stock artifacts/API/symbol identities and provenance; keep proprietary files outside Git |
-| Cluster dimensions and ownership | Modes named; geometry unmeasured | Rectangle, clipping, scale, priorities and OEM restoration evidence per Classic/Extended Map |
-| Original adapter's enhanced projection behavior | Not established | Behavior of the original upstream solution with this exact adapter/version; a working main MMI screen is insufficient |
+| Original project installed/validated | **INSTALLED** (upstream 1.4.1 release), AA cluster map vehicle-tested; OEM checks passed | Post-reboot (working-state) log set; recovery ladder exercised only as documented, not tested |
+| Exact receiver/HMI/graphics ABI | Receiver: unit `gal` byte-identical to profile P5152 (pinned), MU0918 `libautoreceiver.so` (handover §2.3). HMI/graphics ABI not established | Exact stock artifacts/API/symbol identities and provenance; keep proprietary files outside Git |
+| Cluster dimensions and ownership | Cluster KI_FPK_AU491; terminal surface 1440×540 displays correctly; VC draws dials itself, HU supplies the map area only (INFERRED); exact visible rectangle unmeasured | Rectangle, clipping, scale, priorities and OEM restoration evidence per Classic/Extended Map |
+| Original adapter's enhanced projection behavior | Cluster map works with AAWireless Gen1 (vehicle test, short sessions); long-session behaviour (#48) not established | Behavior of the original upstream solution with this exact adapter/version; a working main MMI screen is insufficient |
 | Real dashboard signals | Not observed through this project | Source meanings/units/validity, update/service-loss behavior and session ownership |
 | Target resource/storage limits | Not measured | Baseline measurements and a reviewed recovery/storage budget |
 | Dashboard on VC | Missing implementation; not tested | C03-C09 gates in the completion plan |

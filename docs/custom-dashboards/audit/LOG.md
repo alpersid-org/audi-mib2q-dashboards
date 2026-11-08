@@ -948,3 +948,20 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Target profile and active plan/context updates committed as e6fef46dd81e871f43add03ea17f9f451895743b, fast-forwarded and pushed to fork master. git ls-remote verified the exact SHA; working tree clean.
 - Final documentation validation: twelve Markdown files, 168 relative links, balanced fences and exact user values/NOT INSTALLED state preserved; git diff --check PASS. No runtime changes or vehicle actions.
 - This final checkpoint records verified profile publication and follows in Git history under existing authorization. Next: original-baseline compatibility/recovery preparation and independent C01/C05 host work. Exact ABI, safe surface and real signal gates remain.
+
+## 2026-11-08T17:29:37Z | 20261108T172937Z-claude-01 | DOC-PHASE1-HANDOVER
+
+- Agent: Claude Code (resumed session). Start: master = origin/master 8787d20
+  (Codex had completed P2-FINAL, hardening, completion plan, target profile).
+- User supplied `phase2-handover_2026-11-08.zip` (SHA-256 ecb6840d…18c2, as
+  received; companion .sha256 not supplied) and PHASE2_HANDOVER.md (identical to
+  the ZIP copy). Extracted in scratchpad with path checks.
+- Verification: the three documents match the handover manifest's SHA-256 values;
+  own scan found no VIN/IMSI/MAC/e-mail/IP strings (only 127.0.0.1).
+- Stored unchanged in docs/phase1-handover/ with README index. Manifest CSV not
+  committed (inventories the private laptop backup incl. sensitive-file entries).
+- Reconciled: Phase 1 NOT INSTALLED -> INSTALLED (upstream 1.4.1, vehicle-tested)
+  in target-profile, completion-plan (new handover section; C02/C03/C04/C06/C08
+  consequences), requirements (surface note; licensing decision), ROADMAP,
+  PROJECT, PLAN, status, HANDOFF, completion-audit, AGENTS, CLAUDE/GEMINI/Copilot.
+- No tests or runtime changes. Next: commit/push branch; await merge approval.

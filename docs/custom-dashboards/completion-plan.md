@@ -13,11 +13,39 @@ remain historical implementation context. [completion-audit.md](completion-audit
 records fixes already shipped and their host tests. Work packages below are
 subtasks of roadmap Phase 2, not new roadmap phases.
 
-## Target evidence update — user supplied
+## Phase 1 handover update — user supplied (2026-11-08)
+
+**Phase 1 handover (2026-11-08, supersedes "NOT INSTALLED"):** [Phase 1 handover](../phase1-handover/README.md) shows the
+upstream mib2q-carplay **1.4.1 release** installed via M.I.B. V3.8.0 and vehicle-
+tested: AA cluster map wired and wireless (AAWireless Gen1), Classic and wide view,
+OEM functions intact. The unit's `gal` matches upstream profile P5152 (pinned).
+Surface constraint (INFERRED, high confidence): dashboards can occupy only the VC
+map area; only displayables 98/99 are proven. No post-reboot log set exists yet.
+
+Consequences for this plan:
+
+- **C02:** the Phase 1 baseline now exists on the car (upstream release, not this
+  fork's build). Remaining: a post-reboot log set (handover validation step 1),
+  resource baseline (step 5) and stock `MU1329-lsd.jxe` linkage/decompile survey
+  (step 3) kept outside Git. The fork's jar must not silently replace the
+  known-good 1.4.1 jar; any switch is a separately authorized step.
+- **C03:** treat the target surface as the VC map area of cluster terminal 1
+  (Classic window, wide view), via displayable 99 (opaque) or 98 (transparent),
+  in existing contexts 80–82 with `ScreenModule` as the only context writer. New
+  displayable/context ids stay UNKNOWN (103 rejected). Full-screen gauges over the
+  dials are out of scope unless new evidence appears.
+- **C04:** candidate signals unchanged; add the handover's DSI survey of
+  `lsd.jxe` (RPM/temperatures etc. UNKNOWN; `org.dsi.*` interfaces only).
+- **C06:** respect the single Venus video core (`hw_yield`), 30 fps encoder cap,
+  priority-15 renderers, `-Xmx60m` HMI heap and storage limits (handover §9.4).
+- **C08:** licensing of modified stock classes (handover B11) must be decided
+  before distributing builds.
+
+## Target evidence update — user supplied (superseded where it conflicts)
 
 The [target profile](target-profile.md) now records P5092/MU1329, the exact media
 driver, VC Classic/Extended Map, Galaxy S23 Ultra and original AAWireless
-cs307-e2-prod / 3.5.0. Android Auto is working on MMI. **Phase 1 is NOT INSTALLED.**
+cs307-e2-prod / 3.5.0. Android Auto is working on MMI. ~~Phase 1 is installed (upstream 1.4.1; Phase 1 handover)~~ (superseded above: installed and vehicle-tested).
 C02's identity inventory is partially complete; do not keep requesting the already
 supplied identifiers or mark the full work package complete. Exact stock ABI,
 original-solution baseline, real signal behavior and safe geometry remain open.
@@ -80,7 +108,7 @@ to execute independent authorized host work.
 | ID | Deliverable | Dependencies | Can start now? | Complexity |
 | --- | --- | --- | --- | --- |
 | P2-C01 | Reproducible baseline and observed CI results | Published corrections | Yes: source and service diagnosis | Small |
-| P2-C02 | Exact target profile, build prerequisites and baseline evidence | User identity supplied; Phase 1 NOT INSTALLED | Identity inventory partly complete; stock ABI/assets and original baseline required to finish | Medium |
+| P2-C02 | Exact target profile, build prerequisites and baseline evidence | User identity supplied; Phase 1 installed (handover) | Identity inventory partly complete; stock ABI/assets and original baseline required to finish | Medium |
 | P2-C03 | Verified candidate display geometry and ownership design | C02 target identity | Source analysis now; final surface decision blocked on evidence | Large / investigation |
 | P2-C04 | Accepted signal/capability and freshness policy | C02 real DSI/receiver evidence | Host policy/tests now; source promotion gated | Medium |
 | P2-C05 | Host-testable production consumer/controller contract | Existing core; C04 contract | Yes, using explicit host profiles and fake platform | Medium |
@@ -134,7 +162,7 @@ remaining target evidence set:
 - Supplied: Galaxy S23 Ultra and original AAWireless cs307-e2-prod / 3.5.0;
   Android Auto working on MMI. Enhanced cluster/rich-feed behavior is not proven
   by the main screen or another adapter's reports.
-- Supplied: Phase 1 NOT INSTALLED. Review the exact original-runtime build/package
+- Phase 1 installed (upstream 1.4.1 release; Phase 1 handover, 2026-11-08). Review the exact original-runtime build/package
   and recovery procedure, then establish the installed original-solution baseline
   through a separately authorized procedure. Preserve stock MMI behavior for
   comparison; record the upstream revision, package identity and recovery results.

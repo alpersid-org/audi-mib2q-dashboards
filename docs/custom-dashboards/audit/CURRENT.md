@@ -1,36 +1,26 @@
 # Current agent checkpoint
 
-Updated: 2026-11-08T11:05:46Z. Agent: Codex. Task: P2-TARGET-PROFILE / COMPLETE.
-Target profile publication VERIFIED; Phase 1 NOT INSTALLED; Phase 2 incomplete.
+Updated: 2026-11-08T17:29:37Z. Agent: Claude Code. Task: DOC-PHASE1-HANDOVER / READY_FOR_REVIEW.
 
 ## Source and authorization
 
-The user supplied target configuration after the completion plan. Incorporate
-that steering; prior commit/push-to-master authorization persists. Starting
-clean master 896cd9bd90a3bb70ae79aeb3f6c426d5cc81f4ce, authoring branch
-docs/target-p5092-profile; current branch master. No vehicle operations, runtime or activation changes.
+The user supplied a Phase 1 → Phase 2 handover (ZIP + PHASE2_HANDOVER.md) and
+pointed to it for incorporation. Documentation only: no runtime, test or vehicle
+changes. Branch `docs/phase1-handover` from master 8787d20; not merged.
 
-## Current facts
+## Current facts (from the handover; labels are the author's)
 
-[target-profile.md](../target-profile.md) records P5092/MU1329, media driver
-DEV_MMX2QC_AU_ER_G22_201PROD-1, VC Classic/Extended Map, Galaxy S23 Ultra, MMI AA
-working and original AAWireless cs307-e2-prod / 3.5.0. **Phase 1 NOT INSTALLED.**
-C02 identity inventory is partial; no need to re-request supplied identifiers.
-Actual receiver/HMI/graphics ABI, enhanced cluster/rich-feed behavior, per-signal
-validity and safe geometry remain unverified. No QNX guard/default OFF change.
+- **Phase 1 INSTALLED and vehicle-tested** 2026-11-08: upstream mib2q-carplay 1.4.1
+  release via M.I.B. V3.8.0; AA cluster map wired + wireless (AAWireless Gen1),
+  Classic and wide view; OEM functions intact. Supersedes "Phase 1 NOT INSTALLED".
+- Unit `gal` = upstream profile P5152 (pinned); MU0918 receiver; cluster KI_FPK_AU491.
+- Surface (INFERRED high): HU supplies only the VC map area; 98/99 proven, 103 rejected.
+- No post-reboot log set yet; licensing of modified stock classes to decide (B11).
+- The installed runtime is the upstream release, not this fork's jar.
 
-## Plan and next action
+## Next action
 
-[completion-plan.md](../completion-plan.md) now requires original-runtime build/
-package/recovery preparation and separately authorized Phase 1 validation before
-hardware dashboards. The fork's Java runtime is not an untouched Phase 1 payload.
-Original upstream installer risks remain relevant; installer-only deviations must
-be explicit. User-supplied modes are not dashboard layouts or pixel rectangles.
-
-Validation: twelve Markdown files/166 relative links/fences and exact-string checks
-PASS; git diff --check PASS. Runtime source/tests unchanged. No active processes.
-Profile commit e6fef46dd81e871f43add03ea17f9f451895743b was pushed to master;
-git ls-remote verified that exact SHA. This final documentation checkpoint follows
-in Git history under the same authorization. Next: C01/C05 host work and C02
-stock/build/baseline preparation. No installation, flash, release or vehicle access.
-Audit: [LOG.md](LOG.md), codex-target-profile-01/-02/-03.
+Await the user: merge approval for `docs/phase1-handover`; then the handover's
+validation step 1 (post-reboot log capture, user-run) and C03/C04 offline work
+(lsd.jxe survey kept outside Git). Step 9 / native drawing still needs
+displayable/context evidence and authorization. Audit: [LOG.md](LOG.md).

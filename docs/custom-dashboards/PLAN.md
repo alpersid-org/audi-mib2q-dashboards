@@ -14,7 +14,7 @@ corrections or latest user request. Existing source and tests are not reopened
 merely because a historical section predates their completion.
 
 Current C02 evidence: [target-profile.md](target-profile.md) records the supplied
-P5092/MU1329 configuration and **Phase 1 NOT INSTALLED**. Identity inventory is
+P5092/MU1329 configuration and **Phase 1 installed** (upstream 1.4.1; Phase 1 handover). Identity inventory is
 partial, not blocked on the already supplied firmware string. Original-solution
 compatibility/recovery preparation and subsequent baseline validation are the
 first hardware gate; independent CI/host work remains eligible.

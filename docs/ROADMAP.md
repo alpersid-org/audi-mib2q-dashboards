@@ -24,7 +24,7 @@ AAWireless adapter, not AAWireless TWO+**; this does not establish a general
 application-to-MMI transport.
 
 The user now supplies P5092/MU1329, VC Classic/Extended Map, original AAWireless
-cs307-e2-prod / 3.5.0 and working MMI Android Auto. **Phase 1 is NOT INSTALLED.**
+cs307-e2-prod / 3.5.0 and working MMI Android Auto. **Phase 1 is installed** (upstream 1.4.1, vehicle-tested; see the Phase 1 handover).
 See [target-profile.md](custom-dashboards/target-profile.md) for the exact media-
 driver string and evidence status. Receiver/HMI/graphics ABI, safe dashboard
 surface and enhanced behavior on this exact adapter remain unverified.
@@ -33,7 +33,7 @@ surface and enhanced behavior on this exact adapter remain unverified.
 
 | Roadmap phase | Deliverable | Current state |
 | --- | --- | --- |
-| 1 — Upstream baseline | Install and establish the upstream project as-is through a separately authorized process. | **NOT INSTALLED**, explicitly reported by the user; review exact build/package compatibility and recovery before separately authorized baseline installation. |
+| 1 — Upstream baseline | Install and establish the upstream project as-is through a separately authorized process. | **INSTALLED and vehicle-tested 2026-11-08**: upstream mib2q-carplay 1.4.1 release via M.I.B. V3.8.0; AA cluster map works wired/wireless in Classic and wide view ([Phase 1 handover](phase1-handover/README.md)). Earlier "NOT INSTALLED" superseded. Post-reboot log set still to capture. |
 | 2 — Custom dashboards: Real Vehicle Data Integration | Working Compact/Extended dashboards in the Virtual Cockpit showing real data from existing MMI systems; mock only for tests ([scope](custom-dashboards/requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative)). | CURRENT PHASE, **not complete**. Host foundation done (P2-01..P2-05); P2-07 widget cleanup and P2-08 real data binding implemented, host feed tests pass, unverified on the car ([final validation](custom-dashboards/validation-final.md)). VC rendering and in-car validation outstanding; head-unit work awaits user decision. |
 | 3 — Independent Android app | Standalone app on Galaxy S23 Ultra, usable without MMI. | Future; not implemented. |
 | 4 — Android/MMI communication | Establish a separately validated data connection; introduce AndroidDataProvider as its normalized adapter. | Future; transport unknown and unimplemented. |
