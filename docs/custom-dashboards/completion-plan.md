@@ -111,7 +111,7 @@ to execute independent authorized host work.
 | P2-C02 | Exact target profile, build prerequisites and baseline evidence | User identity supplied; Phase 1 installed (handover) | Identity inventory partly complete; stock ABI/assets and original baseline required to finish | Medium |
 | P2-C03 | Verified candidate display geometry and ownership design | C02 target identity | Source analysis now; final surface decision blocked on evidence | Large / investigation |
 | P2-C04 | Accepted signal/capability and freshness policy | C02 real DSI/receiver evidence | Host policy/tests now; source promotion gated | Medium |
-| P2-C05 | Host-testable production consumer/controller contract | Existing core; C04 contract | Yes, using explicit host profiles and fake platform | Medium |
+| P2-C05 | Host-testable production consumer/controller contract | Existing core; C04 contract | **Controller implemented and host-tested** ([runtime.md](runtime.md)); shared Java/C settings contract remains | Medium |
 | P2-C06 | VC drawing backend and native display lifecycle | C02, C03, C04, C05 | Target integration blocked on gates | Large |
 | P2-C07 | MMI controls and persistent runtime settings | C05 controller and safely gated C06 consumer | Schema/controller tests now; GEM integration after consumer | Medium |
 | P2-C08 | Shipping build, package and recovery validation | C02, C04, C06, C07; green host evidence | Baseline build preparation now; final package later | Medium |

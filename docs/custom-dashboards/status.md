@@ -1,5 +1,7 @@
 # Project status
 
+**P2-C05 (2026-11-08):** host runtime controller implemented and tested on `feature/p2-c05-runtime` ([runtime.md](runtime.md)); no native backend, nothing on the vehicle.
+
 **Phase 1 handover (2026-11-08, supersedes "NOT INSTALLED"):** [Phase 1 handover](../phase1-handover/README.md) shows the
 upstream mib2q-carplay **1.4.1 release** installed via M.I.B. V3.8.0 and vehicle-
 tested: AA cluster map wired and wireless (AAWireless Gen1), Classic and wide view,

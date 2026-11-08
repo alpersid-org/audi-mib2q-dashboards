@@ -1,26 +1,15 @@
 # Current agent checkpoint
 
-Updated: 2026-11-08T17:49:03Z. Agent: Claude Code. Task: DOC-PHASE1-HANDOVER / COMPLETE (merged to master).
+Updated: 2026-11-08T18:23:18Z. Agent: Claude Code. Task: P2-C05 / READY_FOR_REVIEW on
+`feature/p2-c05-runtime` (from master 1a2d1cd). Not merged.
 
-## Source and authorization
+- Implemented: dashboard/runtime.{h,c} host controller and fake-backend suite;
+  docs/custom-dashboards/runtime.md. Make test/test-sanitize/test-java PASS (clean
+  build); three runtime mutants caught.
+- Remaining in C05: shared typed Java/C settings contract (C07 overlap).
+- Unchanged boundaries: QNX guard, default OFF, no native backend, no displayable/
+  context ids, no vehicle actions; step 9 blocked on C03 evidence.
 
-The user supplied a Phase 1 → Phase 2 handover (ZIP + PHASE2_HANDOVER.md) and
-pointed to it for incorporation. Documentation only: no runtime, test or vehicle
-changes. Branch `docs/phase1-handover` fast-forwarded into master on "merge to master and push".
-
-## Current facts (from the handover; labels are the author's)
-
-- **Phase 1 INSTALLED and vehicle-tested** 2026-11-08: upstream mib2q-carplay 1.4.1
-  release via M.I.B. V3.8.0; AA cluster map wired + wireless (AAWireless Gen1),
-  Classic and wide view; OEM functions intact. Supersedes "Phase 1 NOT INSTALLED".
-- Unit `gal` = upstream profile P5152 (pinned); MU0918 receiver; cluster KI_FPK_AU491.
-- Surface (INFERRED high): HU supplies only the VC map area; 98/99 proven, 103 rejected.
-- No post-reboot log set yet; licensing of modified stock classes to decide (B11).
-- The installed runtime is the upstream release, not this fork's jar.
-
-## Next action
-
-Await the user. Next: the handover's
-validation step 1 (post-reboot log capture, user-run) and C03/C04 offline work
-(lsd.jxe survey kept outside Git). Step 9 / native drawing still needs
-displayable/context evidence and authorization. Audit: [LOG.md](LOG.md).
+Next: await merge approval; then C04 host policy or the remaining settings
+contract. Phase 1 handover validation step 1 (post-reboot logs) is user-run.
+Audit: [LOG.md](LOG.md).

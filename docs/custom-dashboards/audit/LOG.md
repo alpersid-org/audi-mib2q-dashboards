@@ -972,3 +972,28 @@ feature; earlier project history is available in Git and [status.md](../status.m
   no vehicle action.
 - Git: origin/master 8787d20 is an ancestor; master fast-forwarded to the commit
   containing this event (e0490a2 handover + this event). No merge commit.
+
+## 2026-11-08T18:20:14Z | 20261108T172937Z-claude-03 | START / P2-C05 runtime controller
+
+- User: "start C05". Completion-plan P2-C05: host-testable consumer/lifecycle
+  controller around the existing manager; fake output backend; QNX stays blocked.
+- Host tests authorized (P2-FINAL ended the deferral). No vehicle actions, no
+  native backend, no new displayable/context ids.
+- Branch feature/p2-c05-runtime from master 1a2d1cd.
+- Design: dashboard/runtime.{h,c}: states disabled/unsupported/waiting/active/
+  recovering; persistent db_vehicle_source (no mock path); data acquisition before
+  ownership; draw only on change; every non-active path clears+releases through a
+  backend contract; bounded exponential retry; idempotent config/profile
+  reconciler. Suite tests/dashboard_runtime_test.c with a fake backend.
+
+## 2026-11-08T18:23:18Z | 20261108T172937Z-claude-04 | COMPLETE / P2-C05 READY_FOR_REVIEW
+
+- Added dashboard/runtime.{h,c}, tests/dashboard_runtime_test.c, Makefile wiring,
+  docs/custom-dashboards/runtime.md; completion-plan C05 row, status, changes.
+- Finding during work: Codex's layout now omits unsupplied cards and rejects an
+  all-empty snapshot, so the geometry probe uses a local worst-case snapshot
+  (labelled MOCK, discarded, never drawn).
+- make -C dashboard clean; make all test test-sanitize test-java -> exit 0.
+  Mutants (always redraw / keep surface while waiting / acquire before data)
+  each caught; source restored (cmp identical).
+- Next: commit/push branch; await merge approval.

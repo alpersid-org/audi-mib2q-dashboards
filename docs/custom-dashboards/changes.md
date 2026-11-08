@@ -1,5 +1,12 @@
 # Change ledger
 
+## P2-C05 — runtime controller (2026-11-08)
+
+User: "start C05". Added `dashboard/runtime.{h,c}` (states, backend contract,
+data-before-ownership, dirty redraw, bounded backoff, config/profile reconciler),
+`tests/dashboard_runtime_test.c`, Makefile wiring, [runtime.md](runtime.md);
+completion-plan/status updated. Host tests pass incl. sanitizers; mutation checks caught.
+
 ## DOC-PHASE1-HANDOVER — Phase 1 handover incorporated (2026-11-08)
 
 User-supplied handover stored unchanged in [docs/phase1-handover/](../phase1-handover/README.md)
