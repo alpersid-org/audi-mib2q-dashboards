@@ -1,5 +1,9 @@
 # P2-08: VehicleDataProvider (real-time binding)
 
+Current corrective report: [completion-audit.md](completion-audit.md), 2026-11-08.
+C loaders reject non-regular/symlink paths; Java staging uses unique regular files;
+restarted generations no longer wait behind cancelled staging.
+
 PLAN step 8 (scope requirements 3–4). User request: "merge to master and start
 step 8". This step connects the dashboard to data the HMI **already receives**,
 through existing pipelines. It adds no new DSI attributes, CAN access, sockets or
@@ -38,7 +42,7 @@ AA gal hook ─► /tmp/aa_trip ─►    │                                   
 | Part | File | Role |
 | --- | --- | --- |
 | Enable gate | `java_patch/com/luka/carplay/dashboard/DashboardConfig.java` | Reads `/mnt/app/carplay_dashboard.cfg`, the same strict v1 format as `dashboard/config.c`. Only a valid file with `enabled=1` enables the feed; missing/invalid means disabled. |
-| Publisher | `java_patch/com/luka/carplay/dashboard/DashboardModule.java` | New module, started for any phone session. If enabled, writes the 256-byte DBV1 record every 500 ms (per-generation temp file, then rename). Each start is a new writer generation; an ended generation can never publish, and no record survives `stop()` (lifecycle below). If disabled, does nothing and removes any old record. |
+| Publisher | `java_patch/com/luka/carplay/dashboard/DashboardModule.java` | New module, started for any phone session. If enabled, writes the 256-byte DBV1 record every 500 ms (unique regular temp file, then rename). Each start is a new writer generation; an ended generation can never publish, and no record survives `stop()` (lifecycle below). If disabled, does nothing and removes any old record. |
 | Vehicle readings | `java_patch/com/luka/carplay/core/VehicleDataModule.java` | Now started for Android Auto sessions too, but **binds during Android Auto only when the dashboard is enabled**, and then **only `DSICarKombi`** with no sender thread (temperature/range are all the dashboard uses). CarPlay sessions keep the original three bindings and `CMD_VEHICLE`. New read-only `dashboardVehicle()`. |
 | Session list | `java_patch/com/luka/carplay/core/CarPlayApp.java` | `VehicleDataModule` owner changed from CarPlay to any session; `DashboardModule` appended (any session). |
 | Navigation | `java_patch/com/luka/carplay/aa/AaRgState.java`, `AaBridge.java` | Read-only `dashboardNav()`: the destination, distance and time that `onTrip` already resolved (route-start and 30 s freshness guards), plus the destination sample time. Route state is not changed. |
@@ -52,7 +56,7 @@ AA gal hook ─► /tmp/aa_trip ─►    │                                   
 | Outside temperature | `DSICarKombi.updateBCOutsideTemperature` via VehicleDataModule | Bound; not yet seen on this car during Android Auto. |
 | Driving range | `BCTotalCurrentRange`, else `BCCurrentRange1` | Bound; km precision (VehicleDataModule rounds to km); total-vs-range-1 meaning on this diesel unverified. |
 | Distance / time to destination, destination | Android Auto trip feed (`aa_hook/aa_trip.c` → `AaRgState`) | Android Auto sessions only; depends on the navigation app sending rich trip data. |
-| Now playing | — | **Not supplied.** During Android Auto it is only reachable through stock `DSIAndroidAuto2` classes whose fields are not available in this repository; writing it would mean guessing signatures. The card shows UNAVAILABLE. Scope requirement 8 says to omit such a widget; layout-level omission is deferred to P2-09, where the real Virtual Cockpit layout is defined. |
+| Now playing | — | **Not supplied.** During Android Auto it is only reachable through stock `DSIAndroidAuto2` classes whose fields are not available in this repository; writing it would mean guessing signatures. The formatter reports UNAVAILABLE; both layouts now omit the card and reflow. Actual Virtual Cockpit rendering is still blocked. |
 | Trip distance, average consumption | — | Removed in P2-07 (no source). |
 | Speed, warnings, gear | Available in VehicleDataModule | **Deliberately excluded** (safety boundary). |
 
@@ -92,16 +96,17 @@ record leaves the navigation group empty there.
 ## Writer lifecycle (review R2)
 
 - `start()` opens a new generation; the writer thread is bound to it.
-- At most one publication stages data at a time. Bulk file open/write/close runs
+- At most one publication per generation stages data at a time. A restarted
+  generation can publish before cancelled old staging returns. Bulk file open/write/close runs
   outside the coordination lock, so stop does not wait for that work.
 - The final generation check and rename share the lock with stop's generation
   invalidation and deletion. A cancelled old generation cannot commit afterwards.
 - `stop()` always removes the published record, including the previous successful
   one when a subsequent write is blocked. The old post-rename cleanup scheme at
   9187a88 missed this case; the final regression reproduced it before correction.
-- Temporary files are per generation (`/tmp/carplay_dashboard.tmp.<gen>`) and
-  cleaned by their owning writer. An in-flight blocked open retains its temp
-  path until it finishes; a restart cannot publish until that staging ends.
+- Temporary files are atomically created with unique names in the destination
+  directory (`carplay-dashboard-<gen>-*.tmp`) and cleaned by their owning writer.
+  Cancelled old I/O may finish later; it cannot replace the restarted output.
 - Only short metadata operations (rename/delete) run under the lock. Actual QNX
   filesystem behavior and failure modes remain unverified; no hard real-time
   timing guarantee follows from the host test.

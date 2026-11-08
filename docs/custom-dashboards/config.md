@@ -1,5 +1,10 @@
 # P2-03: configuration and dashboard manager
 
+**Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)
+records installer recovery, widget omission, feed I/O/restart hardening and CI.
+Host checks pass; firmware/safe-surface/stock-linkage/vehicle gates remain open.
+Phase 2 is not complete. Earlier stage notes below retain their historical scope.
+
 PLAN step 3, host only. Implemented in
 [config.c](../../dashboard/config.c), [manager.c](../../dashboard/manager.c) and
 the API section of [dashboard.h](../../dashboard/dashboard.h). Two host CLIs:

@@ -31,6 +31,36 @@ static int text(db_frame *f, int x, int y, int w, int size, uint32_t rgb, const 
     return 1;
 }
 
+static const db_widget compact[] = { DB_TEMPERATURE, DB_RANGE, DB_MEDIA, DB_NAVIGATION };
+static const db_widget extended[] = {
+    DB_TEMPERATURE, DB_RANGE, DB_MEDIA, DB_NAV_DISTANCE, DB_NAV_TIME, DB_DESTINATION
+};
+
+static size_t select_widgets(db_layout layout, const db_snapshot *s, uint64_t now,
+                             db_widget *selected)
+{
+    const db_widget *candidates;
+    size_t i, count = 0, total;
+    if (!s || (layout != DB_COMPACT && layout != DB_EXTENDED)) return 0;
+    candidates = layout == DB_COMPACT ? compact : extended;
+    total = layout == DB_COMPACT ? sizeof(compact)/sizeof(*compact) : sizeof(extended)/sizeof(*extended);
+    for (i = 0; i < total; ++i) {
+        db_widget_view view;
+        db_widget_format(candidates[i], s, now, &view);
+        /* Missing means unsupported/not supplied. Retain stale/invalid diagnostics
+         * for supplied fields; never fill an absent card with mock data. */
+        if (view.status == DB_VALUE_MISSING) continue;
+        if (selected) selected[count] = candidates[i];
+        ++count;
+    }
+    return count;
+}
+
+size_t db_layout_widget_count(db_layout layout, const db_snapshot *s, uint64_t now)
+{
+    return select_widgets(layout, s, now, NULL);
+}
+
 static int card(db_frame *f, db_widget widget, const db_snapshot *s, uint64_t now,
                 int x, int y, int w, int h)
 {
@@ -54,24 +84,23 @@ static int card(db_frame *f, db_widget widget, const db_snapshot *s, uint64_t no
 int db_layout_build(db_layout layout, const db_snapshot *snapshot, uint64_t now_ms,
                     int width, int height, cr_rect_t area, db_frame *out)
 {
-    static const db_widget compact[] = { DB_TEMPERATURE, DB_RANGE, DB_MEDIA, DB_NAVIGATION };
-    static const db_widget extended[] = {
-        /* P2-07: same verified signal groups as Compact, in more detail. */
-        DB_TEMPERATURE, DB_RANGE, DB_MEDIA, DB_NAV_DISTANCE, DB_NAV_TIME, DB_DESTINATION
-    };
-    const db_widget *widgets = layout == DB_COMPACT ? compact : extended;
+    db_widget widgets[DB_WIDGET_COUNT];
     int cols = layout == DB_COMPACT ? 2 : 3;
-    int x, y, w, h, i, total, card_w, card_h, top, grid_h, ok;
+    int x, y, w, h, i, total, rows, card_w, card_h, top, grid_h, ok;
     if (!out) return 0;
     memset(out, 0, sizeof(*out));
     out->width = width; out->height = height; out->clip = area;
     /* Validate before float-to-int conversions, including NaN/infinity/fractions. */
     if (!snapshot || (layout != DB_COMPACT && layout != DB_EXTENDED) ||
         !db_frame_valid(out) || area.w < 640 || area.h < 240) goto fail;
+    total = (int)select_widgets(layout, snapshot, now_ms, widgets);
+    if (!total) goto fail;
+    if (cols > total) cols = total;
+    rows = (total + cols - 1) / cols;
     x = (int)area.x; y = (int)area.y; w = (int)area.w; h = (int)area.h;
     top = y + 56; grid_h = h - 78;
     card_w = (w - 32 - (cols - 1) * 10) / cols;
-    card_h = (grid_h - 10) / 2;
+    card_h = (grid_h - (rows - 1) * 10) / rows;
     ok = rect(out, x, y, w, h, 0x080b10) &&
         rect(out, x + 16, y + 10, 3, 24, 0xdc3545) &&
         text(out, x + 28, y + 9, w - 44, 18, 0xf5f7fa, "CUSTOM DASHBOARDS") &&
@@ -80,7 +109,6 @@ int db_layout_build(db_layout layout, const db_snapshot *snapshot, uint64_t now_
         rect(out, x + 16, y + h - 19, w - 32, 1, 0x303945) &&
         text(out, x + 16, y + h - 16, w - 32, 9, 0xaab5c2,
              "HOST PREVIEW - NO VEHICLE OUTPUT");
-    total = cols * 2;
     for (i = 0; ok && i < total; ++i)
         ok = card(out, widgets[i], snapshot, now_ms,
                   x + 16 + (i % cols) * (card_w + 10),

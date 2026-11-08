@@ -197,6 +197,13 @@ static void ready(db_manager *m, db_layout expect)
     assert(has_text(db_manager_frame(m), "12.5 C"));
 }
 
+static int empty_read(void *context, uint64_t now, db_snapshot *out)
+{
+    (void)context; (void)now;
+    memset(out, 0, sizeof(*out));
+    return 1;
+}
+
 static void manager(void)
 {
     counter k = {0, 1};
@@ -281,6 +288,12 @@ static void manager(void)
     c = cfg(1, DB_COMPACT); db_manager_set_config(&m, &c);
     assert(db_manager_update(&m, 0, 800, 252, WIDE)); /* mock stamps now: fresh */
     assert(has_text(db_manager_frame(&m), "12.5 C"));
+
+    /* A successful provider with no supplied widgets suppresses all drawing. */
+    m.provider.read = empty_read;
+    assert(!db_manager_update(&m, 1000, 800, 252, WIDE) && empty(&m));
+    assert(db_manager_get_status(&m) == DB_MANAGER_OFF_DATA);
+    assert(!strcmp(db_manager_status_name(DB_MANAGER_OFF_DATA), "no-data"));
 
     /* NULL/missing provider and NULL manager. */
     db_manager_init(&m, NULL);

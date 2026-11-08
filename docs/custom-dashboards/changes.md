@@ -1,5 +1,15 @@
 # Change ledger
 
+## 2026-11-08 — independent completion audit corrections
+
+See [completion-audit.md](completion-audit.md) for finding disposition, exact
+validation and remaining vehicle gates. Changes: installer staging/journal/recovery,
+conflicting-JAR preservation and error propagation; configuration/setup/uninstall
+safeguards; missing-widget omission/no-data suppression; native regular-file
+loaders; unique Java staging and independent restart generations; fault-injection,
+omission/FIFO/symlink/lifecycle regressions; dashboard and maintenance CI steps.
+No decoder policy, vehicle routing, proprietary assets or Phases 3–5 changes.
+
 ## P2-FINAL resume — remaining regressions and shutdown correction (2026-11-07)
 
 Resumed b180e36 from Claude's checkpoint. User subsequently requested completing

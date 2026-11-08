@@ -7,6 +7,13 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
+**Current — P2-COMPLETION-AUDIT:** the user requests correcting the independent
+audit findings, running applicable tests, then committing/pushing to fork master.
+This supersedes the earlier audit-only task. Correct host-code and deployment
+safeguards; keep hardware/safe-surface requirements explicit. No vehicle access,
+release, guessed routing or Phases 3–5. Read CURRENT.md for active evidence.
+
+
 **Current — P2-FINAL host work complete:** Codex resumed from b180e36, completed
 available inherited regressions and reproduced/fixed an additional R2 blocked-
 second-write shutdown defect. Available C/sanitizer/Java/feed/lifecycle/upstream

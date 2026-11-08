@@ -4,7 +4,6 @@ import com.luka.carplay.aa.AaBridge;
 import com.luka.carplay.core.CarPlayApp;
 import com.luka.carplay.core.VehicleDataModule;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.RandomAccessFile;
 
@@ -110,21 +109,6 @@ public final class DashboardModuleTest {
         }
     }
 
-    /* Observe the publication gate without a scheduling-dependent fixed sleep. */
-    static void waitPublishing(DashboardModule m) throws Exception {
-        java.lang.reflect.Field filesField = DashboardModule.class.getDeclaredField("files");
-        java.lang.reflect.Field publishingField = DashboardModule.class.getDeclaredField("publishing");
-        filesField.setAccessible(true);
-        publishingField.setAccessible(true);
-        Object lock = filesField.get(m);
-        long end = System.currentTimeMillis() + 3000;
-        while (System.currentTimeMillis() < end) {
-            synchronized (lock) { if (publishingField.getBoolean(m)) return; }
-            Thread.sleep(10);
-        }
-        throw new AssertionError("writer never entered blocked publication");
-    }
-
     static void lifecycle(File dir) throws Exception {
         File cfg = new File(dir, "carplay_dashboard.cfg"), rec = new File(dir, "carplay_dashboard");
         DashboardConfig.path = cfg.getPath();
@@ -207,35 +191,44 @@ public final class DashboardModuleTest {
         synchronized (gate) { state[1] = true; gate.notifyAll(); }
         absentFor(rec, 1300, "publication after stop during collection");
 
-        /* R2: stop while the writer is blocked inside its file write. The first
-         * generation of a fresh module is 1; its temp file is a FIFO, so the writer's
-         * FileOutputStream open blocks until a reader appears. */
+        /* Stop during a permanently blocked second stage: restart must publish
+         * before the old I/O is released; its eventual completion cannot commit. */
         VehicleDataModule.source = null;
-        DashboardModule w = new DashboardModule();
+        final Object ioGate = new Object();
+        final boolean[] ioState = new boolean[2];
+        final int[] writes = new int[1];
+        DashboardModule w = new DashboardModule(new DashboardModule.RecordOutput() {
+            public void write(File file, byte[] record) throws Exception {
+                synchronized (ioGate) {
+                    if (++writes[0] == 2) {
+                        ioState[0] = true; ioGate.notifyAll();
+                        while (!ioState[1]) {
+                            try { ioGate.wait(); } catch (InterruptedException ignored) { }
+                        }
+                    }
+                }
+                FileOutputStream out = new FileOutputStream(file);
+                try { out.write(record); } finally { out.close(); }
+            }
+        });
         w.start(null);
-        b = waitRecord(rec, 3000);                           /* first publication succeeds */
+        b = waitRecord(rec, 3000);
         check(b != null, "no earlier record before blocked write");
         int blockedSession = u32(b, 60);
-        File fifo = new File(rec.getPath() + ".tmp.1");
-        fifo.delete();
-        Process p = Runtime.getRuntime().exec(new String[] { "mkfifo", fifo.getPath() });
-        check(p.waitFor() == 0 && fifo.exists(), "mkfifo");
-        waitPublishing(w);                                  /* next publication blocks in open */
-        check(rec.exists(), "earlier record missing before stop");
+        synchronized (ioGate) {
+            long end = System.currentTimeMillis() + 3000;
+            while (!ioState[0] && System.currentTimeMillis() < end) ioGate.wait(50);
+        }
+        check(ioState[0] && rec.exists(), "second write did not block after publication");
         t0 = System.currentTimeMillis();
         w.stop();
         check(System.currentTimeMillis() - t0 < 200, "stop waited for blocked file I/O");
         check(!rec.exists(), "earlier published record survived stop during blocked write");
-        w.start(null);                                      /* restart while old I/O is pending */
-        FileInputStream drain = new FileInputStream(fifo);  /* unblocks the writer */
-        byte[] sink = new byte[512];
-        int got = 0, r;
-        while ((r = drain.read(sink)) > 0) got += r;
-        drain.close();
-        check(got == 256, "writer finished its record into the FIFO");
-        b = waitRecord(rec, 3000);
-        check(b != null && u32(b, 60) != blockedSession, "restart kept blocked writer session");
+        w.start(null);
+        b = waitRecord(rec, 3000);  // old I/O is STILL blocked
+        check(b != null && u32(b, 60) != blockedSession, "old I/O prevented restart publication");
         int recoveredSession = u32(b, 60);
+        synchronized (ioGate) { ioState[1] = true; ioGate.notifyAll(); }
         for (int i = 0; i < 4; i++) {
             Thread.sleep(300);
             b = read(rec);
@@ -243,7 +236,9 @@ public final class DashboardModuleTest {
         }
         w.stop();
         absentFor(rec, 700, "in-flight write left a record after stop");
-        check(!fifo.exists(), "per-generation temp left behind");
+        String[] files = dir.list();
+        for (int i = 0; i < files.length; i++)
+            check(!files[i].startsWith("carplay-dashboard-"), "staged file left after completion");
 
         /* Disabled config: start removes a stale record and publishes nothing. */
         DashboardConfigTest.write(cfg, "version=1\nenabled=0\n".getBytes("ISO-8859-1"));

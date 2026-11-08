@@ -1,5 +1,10 @@
 # Dashboard architecture
 
+**Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)
+records installer recovery, widget omission, feed I/O/restart hardening and CI.
+Host checks pass; firmware/safe-surface/stock-linkage/vehicle gates remain open.
+Phase 2 is not complete. Earlier stage notes below retain their historical scope.
+
 Status: P2-01 data/widgets and P2-02 Compact/Extended layouts/SVG export are
 implemented. See [module.md](module.md) and [rendering.md](rendering.md).
 P2-03 adds a host Configuration and Dashboard Manager ([config.md](config.md));

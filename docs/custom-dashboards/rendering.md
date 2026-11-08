@@ -1,5 +1,10 @@
 # P2-02: host layouts and SVG export
 
+**Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)
+records installer recovery, widget omission, feed I/O/restart hardening and CI.
+Host checks pass; firmware/safe-surface/stock-linkage/vehicle gates remain open.
+Phase 2 is not complete. Earlier stage notes below retain their historical scope.
+
 Compact and Extended frames are now implemented on top of the P2-01 snapshot,
 widget formatter and fixed draw-list contracts. They export host SVG artifacts
 only. The host manager and VehicleDataProvider were added later; there is still
@@ -27,7 +32,7 @@ The Compact grid is 2x2: temperature, range, media and navigation. Extended is
 3x2 (since P2-07): temperature, range, now playing, distance to destination,
 time to destination and destination ([widgets-p2-07.md](widgets-p2-07.md)). Dark backgrounds,
 white primary text, muted labels, a restrained red heading accent and blue MOCK
-badges provide a stable theme. Unavailable/stale/invalid fields use placeholders
+badges provide a stable theme. Missing/not-supplied cards are omitted and the grid reflows; supplied stale/invalid fields use placeholders
 and amber state badges. No safety instrumentation is represented or replaced.
 
 ## API

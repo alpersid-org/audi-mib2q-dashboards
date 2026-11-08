@@ -1,5 +1,10 @@
 # Common Data Provider Interface
 
+**Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)
+records installer recovery, widget omission, feed I/O/restart hardening and CI.
+Host checks pass; firmware/safe-surface/stock-linkage/vehicle gates remain open.
+Phase 2 is not complete. Earlier stage notes below retain their historical scope.
+
 Required architecture: **VehicleDataProvider in Phase 2**, then
 **AndroidDataProvider in Phases 4–5**, eventually feed the **same Dashboard Manager
 and Widget System**. The future Android app runs independently on the Galaxy S23

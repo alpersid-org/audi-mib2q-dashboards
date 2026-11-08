@@ -40,12 +40,13 @@ import java.io.FileOutputStream;
  * (review R1).  Sequence starts at 1 for each writer session and increases by one.
  *
  * Lifecycle (review R2): every start() opens a new writer generation. At most one
- * publication stages its data at a time. File open/write/close run outside the
+ * publication per generation stages its data at a time; a restarted generation
+ * may proceed while cancelled old staging is still blocked. File open/write/close run outside the
  * coordination lock; the final generation check and rename run under it. stop()
  * invalidates the generation and deletes the published record under that same lock.
  * A blocked or cancelled old writer therefore cannot commit after stop, or replace a
  * newer generation's record. stop() does not wait for bulk file I/O. Temporary files
- * are per generation and cleaned by their owning writer.
+ * are atomically created with unique names and cleaned by their owning writer.
  *
  * Pure Java 1.4 apart from the module interfaces.
  */
@@ -69,6 +70,22 @@ public final class DashboardModule implements Module {
     private final Object files = new Object();
     private int generation;                     /* guarded by files */
     private boolean publishing;                 /* guarded by files */
+    private int publishingGeneration;           /* guarded by files */
+
+    /* File staging is an injected boundary for deterministic failure/stall tests. */
+    interface RecordOutput { void write(File file, byte[] record) throws Exception; }
+    private final RecordOutput output;
+
+    public DashboardModule() {
+        this(new RecordOutput() {
+            public void write(File file, byte[] record) throws Exception {
+                FileOutputStream out = new FileOutputStream(file);
+                try { out.write(record); } finally { out.close(); }
+            }
+        });
+    }
+
+    DashboardModule(RecordOutput output) { this.output = output; }
 
     public String name() { return "dashboard"; }
 
@@ -147,15 +164,16 @@ public final class DashboardModule implements Module {
     private int publish(int gen, byte[] rec) {
         synchronized (files) {
             if (generation != gen) return -1;
-            if (publishing) return 0;              /* an older writer is still finishing */
+            if (publishing && publishingGeneration == gen) return 0;
             publishing = true;
+            publishingGeneration = gen;
         }
         boolean ok = false;
         try {
             ok = writeAndRename(rec, gen);
         } finally {
             synchronized (files) {
-                publishing = false;
+                if (publishingGeneration == gen) publishing = false;
                 if (generation != gen) ok = false;
             }
         }
@@ -217,13 +235,13 @@ public final class DashboardModule implements Module {
     /* Stage outside the lock; commit only while this generation is still current.
      * POSIX rename replaces atomically; the fallback may briefly leave no record. */
     private boolean writeAndRename(byte[] rec, int gen) {
-        File tmp = new File(recordPath + ".tmp." + gen), dst = new File(recordPath);
-        FileOutputStream out = null;
+        File tmp = null, dst = new File(recordPath);
         try {
-            out = new FileOutputStream(tmp);
-            out.write(rec);
-            out.close();
-            out = null;
+            /* Atomically create a fresh regular file. A pre-created predictable
+             * FIFO/symlink must never be opened for writing/truncation. */
+            tmp = File.createTempFile("carplay-dashboard-" + gen + "-", ".tmp",
+                                      dst.getAbsoluteFile().getParentFile());
+            output.write(tmp, rec);
             synchronized (files) {
                 if (generation != gen) return false;
                 if (tmp.renameTo(dst)) return true;
@@ -233,15 +251,17 @@ public final class DashboardModule implements Module {
         } catch (Throwable t) {
             return false;
         } finally {
-            if (out != null) try { out.close(); } catch (Throwable t) { }
-            try { tmp.delete(); } catch (Throwable t) { }
+            if (tmp != null) try { tmp.delete(); } catch (Throwable t) { }
         }
     }
 
     /* Remove only the published record (call with files held). In-flight writers
      * own their temporary files, including a blocked open that stop must not await. */
     private static void removeRecord() {
-        try { new File(recordPath).delete(); } catch (Throwable t) { }
+        try {
+            File record = new File(recordPath);
+            if (record.exists() && !record.delete()) Log.w(TAG, "could not remove record: " + recordPath);
+        } catch (Throwable t) { Log.w(TAG, "could not remove record: " + t); }
     }
 
     private static void putInt(byte[] b, int p, int v) {

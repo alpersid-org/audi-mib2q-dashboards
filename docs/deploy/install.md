@@ -1,4 +1,14 @@
 ---
+
+## Fork installer safeguards (2026-11-08 source)
+
+The fork now stages complete updates with a persistent recovery journal, propagates
+configuration failures and preserves conflicting navigation JARs for uninstall.
+Interrupted transactions require the install script's explicit `recover` action;
+never delete an armed journal or its snapshots manually. Read the
+[recovery contract and host validation](../custom-dashboards/completion-audit.md#installer-recovery-contract)
+before any separately authorized installation. This source change is not a new
+release or evidence that custom dashboards are ready for the vehicle.
 title: Install, verify and uninstall
 tags: [deploy, install, verified]
 status: verified-source

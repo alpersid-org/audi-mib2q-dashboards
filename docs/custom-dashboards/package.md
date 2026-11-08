@@ -1,5 +1,10 @@
 # P2-05: reviewable Phase 2 host increment
 
+**Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)
+records installer recovery, widget omission, feed I/O/restart hardening and CI.
+Host checks pass; firmware/safe-surface/stock-linkage/vehicle gates remain open.
+Phase 2 is not complete. Earlier stage notes below retain their historical scope.
+
 > **Scope note:** under the user's Phase 2 scope ("Real Vehicle Data
 > Integration", [requirements.md](requirements.md#phase-2-scope--real-vehicle-data-integration-authoritative))
 > this package is a mock-only foundation, **not** the Phase 2 deliverable.

@@ -3,11 +3,14 @@
  * DashboardModule (java_patch/com/luka/carplay/dashboard) publishes from existing
  * pipelines. Read-only file access; no sockets, DSI or vehicle commands.
  * Layout is documented in DashboardModule.java and docs/custom-dashboards/vehicle-provider.md. */
-#define _POSIX_C_SOURCE 199309L
+#define _POSIX_C_SOURCE 200809L
 #include "dashboard.h"
 #include <limits.h>
 #include <string.h>
 #include <time.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #define MAGIC 0x44425631u /* "DBV1" */
 #define DEST_OFF 64
@@ -111,23 +114,34 @@ int db_vehicle_read(void *context, uint64_t now_ms, db_snapshot *out)
     unsigned char buf[DB_VEHICLE_RECORD_SIZE + 1];
     uint32_t session, sequence;
     uint64_t wall;
-    size_t n;
-    int bad;
-    FILE *f;
+    ssize_t n;
+    int fd, flags = O_RDONLY | O_NONBLOCK;
+    struct stat before, opened;
     if (!out) return 0;
     memset(out, 0, sizeof(*out));
-    f = fopen(path, "rb");
-    if (!f) return 0;                                /* no record: dashboard suppressed */
-    n = fread(buf, 1, sizeof(buf), f);
-    bad = ferror(f);
-    if (fclose(f) != 0) bad = 1;
-    if (bad) return 0;
+    /* O_NONBLOCK covers replacement by a FIFO between lstat/open. O_NOFOLLOW
+     * permits a legitimate atomic replacement by another regular record. */
+    if (lstat(path, &before) != 0 || !S_ISREG(before.st_mode)) return 0;
+#ifdef O_NOFOLLOW
+    flags |= O_NOFOLLOW;
+#endif
+    fd = open(path, flags);
+    if (fd < 0) return 0;
+    if (fstat(fd, &opened) != 0 || !S_ISREG(opened.st_mode) ||
+#ifndef O_NOFOLLOW
+        opened.st_dev != before.st_dev || opened.st_ino != before.st_ino ||
+#endif
+        opened.st_size != DB_VEHICLE_RECORD_SIZE) { close(fd); return 0; }
+    n = read(fd, buf, sizeof(buf));
+    if (close(fd) != 0 || n != DB_VEHICLE_RECORD_SIZE) return 0;
     /* Review R3: sample the clock only after the complete record is in memory, so a
      * record published while we opened/read the file is not judged "future". Ages are
      * then measured slightly late and mapped onto the earlier caller now_ms: errs old. */
     wall = src && src->wall_ms ? src->wall_ms() : realtime_ms();
-    if (!wall || !db_vehicle_parse(buf, n, wall, now_ms, out)) return 0;
+    if (!wall || !db_vehicle_parse(buf, (size_t)n, wall, now_ms, out)) return 0;
     if (!src) return 1;
+    /* A first/new-session read must not grant an old record another 2 s of life. */
+    if (wall - be64(buf + 8) > DB_VEHICLE_WRITER_TIMEOUT_MS) goto reject;
     session = be32(buf + 60);
     sequence = be32(buf + 4);
     if (session != src->last_session) {

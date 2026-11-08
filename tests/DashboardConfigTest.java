@@ -68,6 +68,19 @@ public final class DashboardConfigTest {
         write(cfg, b("version=1\nenabled=0\n"));
         check(!DashboardConfig.enabled(), "enabled=0");
         cfg.delete();
+        Process fifo = Runtime.getRuntime().exec(new String[] { "mkfifo", cfg.getPath() });
+        check(fifo.waitFor() == 0, "create FIFO config");
+        check(!DashboardConfig.enabled(), "FIFO config must disable without blocking");
+        cfg.delete();
+        File target = new File(dir, "real.cfg");
+        write(target, b("version=1\nenabled=1\n"));
+        Process link = Runtime.getRuntime().exec(new String[] { "ln", "-s", target.getPath(), cfg.getPath() });
+        check(link.waitFor() == 0, "create symlink config");
+        check(!DashboardConfig.enabled(), "symlink config must disable");
+        cfg.delete(); target.delete();
+        cfg.mkdir();
+        check(!DashboardConfig.enabled(), "directory config must disable");
+        cfg.delete();
         check(DashboardConfig.PATH.equals("/mnt/app/carplay_dashboard.cfg"), "production path");
         System.out.println("DashboardConfigTest: config.c parity (accept/reject/caps/NUL), file gate PASS");
     }

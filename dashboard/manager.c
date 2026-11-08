@@ -77,6 +77,10 @@ int db_manager_update(db_manager *m, uint64_t now_ms, int width, int height,
         suppress(m, DB_MANAGER_OFF_PROVIDER);
         return 0;
     }
+    if (!db_layout_widget_count(m->config.layout, &m->snapshot, now_ms)) {
+        suppress(m, DB_MANAGER_OFF_DATA);
+        return 0;
+    }
     if (!db_layout_build(m->config.layout, &m->snapshot, now_ms, width, height,
                          area, &m->frame)) {
         suppress(m, DB_MANAGER_OFF_GEOMETRY);
@@ -102,6 +106,7 @@ const char *db_manager_status_name(db_manager_status s)
     case DB_MANAGER_OFF_DISABLED: return "disabled";
     case DB_MANAGER_OFF_CONFIG: return "invalid-config";
     case DB_MANAGER_OFF_PROVIDER: return "provider-failure";
+    case DB_MANAGER_OFF_DATA: return "no-data";
     case DB_MANAGER_OFF_GEOMETRY: return "unsupported-geometry";
     case DB_MANAGER_READY: return "ready";
     }

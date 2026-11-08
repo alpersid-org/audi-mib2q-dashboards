@@ -1,5 +1,10 @@
 # P2-01: host data and widget module
 
+**Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)
+records installer recovery, widget omission, feed I/O/restart hardening and CI.
+Host checks pass; firmware/safe-surface/stock-linkage/vehicle gates remain open.
+Phase 2 is not complete. Earlier stage notes below retain their historical scope.
+
 Implemented in [dashboard/](../../dashboard/) with tests in
 [dashboard_test.c](../../tests/dashboard_test.c). This page describes PLAN step 1: a library and deterministic text demo.
 P2-02 now adds [host layouts and SVG export](rendering.md). It creates no display window, connects to no

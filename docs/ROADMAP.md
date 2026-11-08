@@ -1,5 +1,9 @@
 # Audi MIB2Q — five-phase project roadmap
 
+Current Phase 2 audit corrections and outstanding gates:
+[completion-audit.md](custom-dashboards/completion-audit.md). Installer, omission,
+feed and CI corrections do not close the missing VC integration/vehicle acceptance.
+
 This is the persistent product context for Codex, Claude and other agents. Read
 it with [AGENTS.md](../AGENTS.md) and the current
 [agent checkpoint](custom-dashboards/audit/CURRENT.md) before continuing work.

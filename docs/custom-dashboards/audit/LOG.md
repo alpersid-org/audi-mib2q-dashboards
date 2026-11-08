@@ -877,3 +877,23 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Source and tests unchanged since successful validation. Final Markdown check: 22 files/466 relative file links and code fences PASS; git diff --check PASS. No code WIP or active processes.
 - This audit/current/report publication note is a final documentation commit under the same authorization; final remote SHA must match local HEAD before reporting completion.
 - Remaining blocker: step 9 needs exact target firmware/ABI, proprietary stock linkage and proven non-critical VC surface/ownership; no invasive hook or guessed compatibility. Phase 2 vehicle delivery is not complete. Await that evidence or a separately scoped next task.
+
+## 2026-11-08T00:00:26Z | codex-completion-audit-01 | START
+
+- User: "After the audit is done, don't stop until you fix everything. At the end, commit and push to master". This supersedes audit-only/no-write restrictions for corrective code, tests and publication.
+- Clean clone of master 93e44079d6847eb84a5016f0f2e4fff852dbca1a; working branch fix/phase2-completion-audit. No existing local edits.
+- Scope: correct actionable installer safety/error/recovery, unsupported-widget omission, feed file handling, and CI findings; run host regressions; commit and fast-forward/push fork master. Preserve v1.4.1 decoder behavior unless a demonstrated fix is necessary.
+- Firmware/ABI, verified DSI semantics, safe VC rectangle, target build assets and real vehicle validation remain missing. Asked for target evidence; continue independent host work. Do not guess routing, remove QNX guard, add unsafe controls, contact the vehicle or implement Phases 3–5.
+- Intended paths: dashboard/layout/provider, Java feed/config, installer/setup/uninstaller, host tests/CI, and current project/audit documentation.
+- Next: add regression-backed installer recovery and conflict preservation, capability-based layouts, hardened record reads, CI; validate all affected host paths.
+
+## 2026-11-08T00:17:25Z | codex-completion-audit-02 | CHECKPOINT / HOST VALIDATION
+
+- Corrected installer conflict preservation, failure propagation, staged transaction/journal/recovery and uninstall collision handling; ten fault/termination/recovery tests pass on available dash/bash. Full inherited payload/dio/listing/GEM and maintenance upgrade fixtures pass.
+- Layouts omit missing widgets and reflow; no-data clears manager output. Native loaders reject special/symlink paths; Java staging uses unique regular files and permits restart while old staging is blocked. No mock fallback or source verification promotion.
+- Final review reproduced an introduced atomic-replacement race (reader rejected valid replacement inode); fixed no-follow path and added 2,000 concurrent publications/3,000 reads regression. Normal, ASan/UBSan/leak and Java/C suites now pass.
+- PASS: dashboard all/test/test-sanitize/test-java; benchmark; isolated app lifecycle six scenarios; inherited SKIP_JAR_CHECK=1 suite (39 checks); v1.4.1 maintenance four methods after fetching actual upstream tags; ten installer recovery methods. Four previews unchanged.
+- Initial traced sanitizer run failed with explicit ptrace limitation; untraced rerun passed with defaults. Initial maintenance failure was missing tags; fetched upstream v1.4/v1.4.1, no assertion weakened. Initial installer fault wrapper corrected to inspect cp destination.
+- CI now wires dashboard, Java/feed/lifecycle, recovery and pinned maintenance tests. CI execution not yet observed. Local ksh/mksh, stock HMI/JCL/Java1.4/QNX and actual vehicle checks unavailable.
+- Report: ../completion-audit.md. Logs: /tmp/mib2q-completion. No vehicle commands, artifacts or Phases 3–5. Target/safe-surface evidence remains missing; user information question pending, no evidence received.
+- Origin fetched; master still 93e4407. Next: final text/diff checks, commit tested corrections, fast-forward/push fork master and verify remote SHA.

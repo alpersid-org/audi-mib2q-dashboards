@@ -14,12 +14,19 @@ concurrency:
 
 jobs:
   host:
-    # C + shell suites (scripts/run_tests.sh). The Java suites need the proprietary stock
-    # HMI jar (stock/base.jar), which cannot be published, so they stay local.
+    # Dashboard/feed/lifecycle fixtures need only a host JDK. Full shipping Java
+    # linkage still needs proprietary stock assets and remains a separate gate.
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # maintenance regression verifies release ancestry
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
 
       # clang as cc: Ubuntu's gcc enables _FORTIFY_SOURCE by default, which rejects the hooks'
       # deliberately ignored write() results; neither the QNX toolchain nor macOS clang does.
@@ -39,3 +46,11 @@ jobs:
         run: |
           cc --version | head -1
           sh scripts/run_tests.sh
+
+      - name: Dashboard and deployment regressions
+        run: |
+          make -C dashboard all test test-sanitize test-java
+          bash scripts/test_app_lifecycle.sh
+          python3 tests/installer_recovery_test.py
+          git fetch --no-tags https://github.com/kamgurgul/mib2q-carplay.git refs/tags/v1.4:refs/tags/v1.4 refs/tags/v1.4.1:refs/tags/v1.4.1
+          python3 tests/upstream_v141_test.py

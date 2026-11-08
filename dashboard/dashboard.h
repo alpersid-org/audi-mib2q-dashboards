@@ -92,7 +92,8 @@ int db_vehicle_parse(const unsigned char *record, size_t len, uint64_t wall_now_
                      uint64_t now_ms, db_snapshot *out);
 /* db_read_fn: bounded read of the record file; wall clock sampled AFTER the read
  * (review R3); db_vehicle_parse; then writer-liveness checks against the context's
- * state: a new session is accepted and tracked; within one session the sequence must
+ * state: records older than the 2 s writer timeout fail even on the first read;
+ * a new session is accepted and tracked; within one session the sequence must
  * not go backwards, and an unchanged sequence older than
  * DB_VEHICLE_WRITER_TIMEOUT_MS fails. context must be a db_vehicle_source (or NULL
  * for a stateless read with defaults and no liveness tracking). */
@@ -142,12 +143,15 @@ typedef enum { DB_COMPACT, DB_EXTENDED } db_layout;
 /* Explicit host preview preparation, NOT an activation/configuration API.
  * Integer source-pixel viewport, minimum 640x240, inside canvas <=4096x2160.
  * Returns 1 ready, 0 invalid; always clears previous output on failure.
- * Missing/stale fields render placeholders through the existing formatter.
+ * Missing/not-supplied widgets are omitted and remaining cards reflow.
+ * Supplied stale/invalid fields retain diagnostics. No widgets clears output.
  * NULL snapshot, unknown layout or unsupported geometry fails closed.
  * NULL output is a no-op.
  * out must not alias snapshot. No threads, allocations, I/O or vehicle routing. */
 int db_layout_build(db_layout layout, const db_snapshot *snapshot, uint64_t now_ms,
                     int width, int height, cr_rect_t area, db_frame *out);
+/* Number of supplied cards for this layout; excludes missing navigation parts. */
+size_t db_layout_widget_count(db_layout layout, const db_snapshot *snapshot, uint64_t now_ms);
 /* Checks canvas/clip, count, kinds, RGB, integer coordinates, bounded ASCII text
  * and primitive containment. This is host frame validation, not VC safety proof. */
 int db_frame_valid(const db_frame *frame);
@@ -179,7 +183,7 @@ int db_config_valid(const db_config *config);
 int db_config_parse(const char *text, size_t len, db_config *out);
 
 typedef enum { DB_CONFIG_INVALID = -1, DB_CONFIG_MISSING = 0, DB_CONFIG_LOADED = 1 } db_config_load;
-/* Host file loader: bounded read, then db_config_parse. Missing file and
+/* Host regular-file loader: rejects symlinks/special files, bounded read, then db_config_parse. Missing file and
  * invalid content both leave out as the disabled default. */
 db_config_load db_config_load_path(const char *path, db_config *out);
 /* Writes canonical text after validating. Returns 1 success, 0 invalid/error. */
@@ -199,6 +203,7 @@ typedef enum {
     DB_MANAGER_OFF_DISABLED, /* valid config with enabled=0 (the default) */
     DB_MANAGER_OFF_CONFIG,   /* invalid/missing-required config: default applied */
     DB_MANAGER_OFF_PROVIDER, /* no provider, or provider read failed */
+    DB_MANAGER_OFF_DATA,     /* provider succeeded but no widget is supplied */
     DB_MANAGER_OFF_GEOMETRY, /* layout rejected canvas/viewport */
     DB_MANAGER_READY
 } db_manager_status;

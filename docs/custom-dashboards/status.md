@@ -1,5 +1,10 @@
 # Project status
 
+**Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)
+records installer recovery, widget omission, feed I/O/restart hardening and CI.
+Host checks pass; firmware/safe-surface/stock-linkage/vehicle gates remain open.
+Phase 2 is not complete. Earlier stage notes below retain their historical scope.
+
 ## P2-FINAL host testing — available checks complete
 
 Dashboard C/XML/CLI, ASan/UBSan, Java feed/Java-to-C, six lifecycle scenarios,

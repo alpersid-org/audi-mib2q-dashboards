@@ -1,8 +1,12 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 /* P2-03 strict versioned host configuration. Fails closed to disabled Compact. */
+#define _POSIX_C_SOURCE 200809L
 #include "dashboard.h"
 #include <errno.h>
 #include <string.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 void db_config_default(db_config *out)
 {
@@ -89,19 +93,28 @@ fail:
 db_config_load db_config_load_path(const char *path, db_config *out)
 {
     char buf[DB_CONFIG_TEXT_CAP + 1];
-    size_t n;
-    int bad;
-    FILE *f;
+    ssize_t n;
+    int fd, flags = O_RDONLY | O_NONBLOCK;
+    struct stat before, opened;
     db_config_default(out);
     if (!out || !path) return DB_CONFIG_INVALID;
     errno = 0;
-    f = fopen(path, "rb");
-    if (!f) return errno == ENOENT ? DB_CONFIG_MISSING : DB_CONFIG_INVALID;
-    n = fread(buf, 1, sizeof(buf), f); /* one extra byte detects oversize */
-    bad = ferror(f) || n > DB_CONFIG_TEXT_CAP;
-    if (fclose(f) != 0) bad = 1;
-    if (bad) return DB_CONFIG_INVALID;
-    return db_config_parse(buf, n, out) ? DB_CONFIG_LOADED : DB_CONFIG_INVALID;
+    if (lstat(path, &before) != 0)
+        return errno == ENOENT ? DB_CONFIG_MISSING : DB_CONFIG_INVALID;
+    if (!S_ISREG(before.st_mode)) return DB_CONFIG_INVALID;
+#ifdef O_NOFOLLOW
+    flags |= O_NOFOLLOW;
+#endif
+    fd = open(path, flags);
+    if (fd < 0) return DB_CONFIG_INVALID;
+    if (fstat(fd, &opened) != 0 || !S_ISREG(opened.st_mode) ||
+#ifndef O_NOFOLLOW
+        opened.st_dev != before.st_dev || opened.st_ino != before.st_ino ||
+#endif
+        opened.st_size > DB_CONFIG_TEXT_CAP) { close(fd); return DB_CONFIG_INVALID; }
+    n = read(fd, buf, sizeof(buf));
+    if (close(fd) != 0 || n < 0 || n > DB_CONFIG_TEXT_CAP) return DB_CONFIG_INVALID;
+    return db_config_parse(buf, (size_t)n, out) ? DB_CONFIG_LOADED : DB_CONFIG_INVALID;
 }
 
 int db_config_write(FILE *stream, const db_config *c)

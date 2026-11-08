@@ -35,27 +35,43 @@ OWNED="/mnt/app/root/hooks/libcarplay_hook.so
 /mnt/app/eso/hmi/lsd/jars/carplay_hook.jar"
 
 echo "custom.sh: CarPlay uninstall"
+[ ! -e /mnt/app/root/hooks/.carplay-transaction ] || {
+    echo "FAILED pending installation; run install custom.sh recover first"; exit 1; }
 echo "Remounting app and system read-write..."
 mount -uw /mnt/app    2>/dev/null || true
 mount -uw /mnt/system 2>/dev/null || true
 
 # 1. restore stock: every *.carplay-stock -> original (SI json, dio_manager.json).
 LIST=/tmp/carplay_stock.$$
-find /mnt/app /mnt/system -name '*.carplay-stock' > "$LIST" 2>/dev/null || : > "$LIST"
+find /mnt/app /mnt/system -name '*.carplay-stock' > "$LIST" 2>/dev/null || {
+    echo "FAILED listing backups; nothing restored"; rm -f "$LIST"; exit 1; }
+# Do not overwrite a conflict JAR installed independently since our installation.
+while IFS= read -r bak; do
+    case $bak in
+    */NavActiveIgnore.jar.carplay-stock|*/navignore_audi.jar.carplay-stock|*/navignore_vw.jar.carplay-stock)
+        orig=${bak%.carplay-stock}
+        [ ! -e "$orig" ] && [ ! -L "$orig" ] || {
+            echo "FAILED restore $orig: destination exists; backup retained"; rm -f "$LIST"; exit 1; } ;;
+    esac
+done < "$LIST"
 while IFS= read -r bak; do
     [ -n "$bak" ] || continue
     orig=${bak%.carplay-stock}
-    mv -f "$bak" "$orig" && echo "  restored $orig" || echo "  WARN restore $orig"
+    mv -f "$bak" "$orig" || { echo "FAILED restore $orig"; rm -f "$LIST"; exit 1; }
+    echo "  restored $orig"
 done < "$LIST"
 rm -f "$LIST"
 
 # 2. remove the files we own (no stock backup for these).
 for f in $OWNED; do
-    [ -e "$f" ] && rm -f "$f" && echo "  removed $f"
+    if [ -e "$f" ]; then
+        rm -f "$f" || { echo "FAILED remove $f"; exit 1; }
+        echo "  removed $f"
+    fi
 done
 
 # renderer GL program-binary cache (common/gl_program_cache.h)
 rm -rf /mnt/persist/var/app/luka_carplay_maneuver
 
-sync
+sync || exit 1
 echo "DONE (uninstall). Reboot the HU."

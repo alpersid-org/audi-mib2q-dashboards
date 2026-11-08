@@ -1,56 +1,45 @@
 # Current agent checkpoint
 
-Updated: 2026-11-07T21:42:53Z. Agent: Codex.
+Updated: 2026-11-08T00:17:25Z. Agent: Codex. Task: P2-COMPLETION-AUDIT.
+Status: host corrections COMPLETE; publication pending; vehicle delivery BLOCKED.
 
-## Task and authorization
+## Authorization and source
 
-- P2-FINAL / COMPLETE (available host work and source publication verified).
-- User requested resuming Claude's final stage, then: "Implement everything
-  remaining, push and commit to master". Commit completion on the working branch,
-  fast-forward/push the fork master and verify remote SHA. No force-push/release.
-- Vehicle rendering remains BLOCKED: no confirmed firmware/ABI or safe surface.
-  No vehicle commands, installation, flashing or deployment; no Phases 3–5.
+User: "After the audit is done, don't stop until you fix everything. At the end,
+commit and push to master". Baseline 93e44079d6847eb84a5016f0f2e4fff852dbca1a;
+working branch fix/phase2-completion-audit. Origin refreshed, no concurrent changes.
+No release, vehicle commands/deployment or Phases 3–5.
 
-## Source and changes
+## Completed corrections
 
-- Started clean at b180e367e18f55bafab1ea51f014a0cca262c81c on
-  feature/p2-final-testing, tracking origin/feature/p2-final-testing.
-- Changes: DashboardModule shutdown/commit ordering, strengthened Java lifecycle
-  test, revision-scoped historical maintenance assertion, final report and current
-  project/provider/agent/status/plan/handoff/preview-index/audit docs. Full file
-  map in changes.md. No SVG regeneration or unrelated native/runtime edits.
-- Residual R2 was reproduced: a prior published record survived stop while a
-  second write was blocked. Corrected with unconditional final-record deletion
-  and synchronized final generation-check/rename; regression now passes.
+Installer conflict backups/restoration, error propagation, staged update with
+persistent journal/recovery and uninstall collision protection; missing-widget
+omission/reflow/no-data suppression; C nonblocking regular-file loaders; unique
+Java staging, independent restart generations and deletion diagnostics; tests/CI.
+Atomic replacement race in initial hardening reproduced and fixed with regression.
+Full disposition and remaining gates: [completion-audit.md](../completion-audit.md).
 
 ## Validation
 
-- PASS: make -C dashboard all test test-sanitize benchmark (six normal suites,
-  four sanitized C suites; ASAN_OPTIONS/LSAN_OPTIONS/UBSAN_OPTIONS unset).
-- PASS: make -C dashboard test-java (real installed Java compiler via temporary
-  javac launcher), including new blocked-second-write/restart test and Java/C.
-- PASS: isolated app lifecycle all six scenarios; renderer PID identity and
-  sanitized production FIN/RST handler tests.
-- PASS: upstream SKIP_JAR_CHECK=1 suite, all 39 named checks including SIGPIPE/
-  yield; maintenance suite all four methods after scope correction.
-- LIMITS: native lane PASS but full macOS link exits 1 on Linux; no-skip protocol
-  check exits 1 after 41 constants (shipping JAR absent); stock Java script exits
-  2 in absent JCL glob/pipefail. Stock HMI/JCL/JDK8/QNX/real DSI/vehicle checks
-  unavailable, not passed. No sanitizer disabled, no packages installed.
-- Report: [validation-final.md](../validation-final.md). Logs under
-  /tmp/mib2q-p2-final-codex; no active processes. Earlier failures retained there.
+- PASS: dashboard all/test/test-sanitize/test-java and benchmark; all sanitizer
+  checks enabled outside ptrace. Normal/sanitized/Java-C concurrent reader test.
+- PASS: isolated lifecycle six scenarios, inherited native suite 39 checks with
+  shipping JAR explicitly skipped, maintenance four methods, installer recovery
+  ten methods, existing payload/dio/listing/GEM fixtures. Four previews unchanged.
+- LIMITS: no local ksh/mksh, stock HMI/JCL/Java1.4/QNX toolchain or hardware. CI
+  configured but execution not observed. No target compatibility claim.
+- Initial ptrace/tag/fault-wrapper/race failures and corrections preserved in the
+  report/log. Raw local logs /tmp/mib2q-completion, not portable artifacts.
 
-## Next action
+## Publication / next action
 
-Source commit f1cb7d9322839bdc28557f6346d4201c0a9eb486 was pushed to both
-origin/master and origin/feature/p2-final-testing; git ls-remote verified both
-exact SHAs. No merge conflicts, force-push or history rewrite. Local master now
-tracks origin/master. The final audit/report checkpoint follows in a documentation
-commit, discoverable through Git history; verify remote HEAD after its push.
-No further host source work or processes remain. All available host checks are complete; repeat only for
-new source changes, failures or unresolved concerns. Retain QNX guard/default OFF.
-After publication the remaining work needs firmware/ABI, stock linkage, read-only
-signal/adapter evidence and a proven non-critical VC ownership rectangle before
-step 9, then separately authorized vehicle validation. Do not infer compatibility
-from these host results or start an invasive hook.
-Audit: [LOG.md](LOG.md), codex-p2-final-resume events -01 through -05.
+All corrective changes are uncommitted on the working branch; expected diff is
+source/tests/workflow/current documentation only. No proprietary/generated files.
+Finish review/checks, commit, fast-forward local master, push origin/master and
+verify exact remote SHA. Never force-push or publish upstream/tags.
+
+Next vehicle work remains blocked by exact firmware/ABI, actual signal validity/
+freshness, stock target linkage and proven safe VC rectangle/ownership. User
+evidence requested and not received. Keep QNX guard/default OFF; no guessed
+renderer routing or activation controls before a safe consumer exists.
+Audit: [LOG.md](LOG.md), codex-completion-audit-01/-02.

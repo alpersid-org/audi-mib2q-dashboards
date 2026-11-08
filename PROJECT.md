@@ -1,5 +1,10 @@
 # Audi MIB2Q — Custom Dashboards project
 
+**2026-11-08 current work:** [audit corrections](docs/custom-dashboards/completion-audit.md)
+fix installer safety/recovery, unsupported-widget omission, feed handling and CI.
+Host validation passes; Phase 2 vehicle completion remains blocked by target and
+safe-surface evidence. No vehicle action or Phases 3–5 performed.
+
 Repository: [alpersid-org/audi-mib2q-dashboards](https://github.com/alpersid-org/audi-mib2q-dashboards),
 a GitHub fork of the original project. It includes the full source and Git history of
 [kamgurgul/mib2q-carplay](https://github.com/kamgurgul/mib2q-carplay), inspected at

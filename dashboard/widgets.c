@@ -31,7 +31,8 @@ static const db_sample *sample_for(db_widget w, const db_snapshot *s)
 }
 
 /* A split navigation field the source did not supply (-1 / empty name) is
- * shown as UNAVAILABLE, not INVALID: the route may legitimately lack it. */
+ * formatted as UNAVAILABLE, not INVALID: the route may legitimately lack it.
+ * Layouts omit these views; direct formatter users retain the explicit status. */
 static int not_supplied(db_widget w, const db_snapshot *s)
 {
     switch (w) {

@@ -1,5 +1,10 @@
 # Executable Phase 2 plan
 
+**Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)
+records installer recovery, widget omission, feed I/O/restart hardening and CI.
+Host checks pass; firmware/safe-surface/stock-linkage/vehicle gates remain open.
+Phase 2 is not complete. Earlier stage notes below retain their historical scope.
+
 ## Current final-stage acceptance
 
 Available host checks and the strengthened shutdown regression pass; see

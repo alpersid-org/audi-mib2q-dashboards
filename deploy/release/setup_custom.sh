@@ -35,7 +35,7 @@ echo "mib2q-carplay $VERSION setup"
 echo "=== 1/2 Install CarPlay ==="
 CP_INSTALL_RES=$CARD/carplay
 export CP_INSTALL_RES
-/bin/sh "$D/install/custom.sh" || { echo "FAILED: CarPlay install (see above). Nothing else was changed."; exit 1; }
+/bin/sh "$D/install/custom.sh" || { echo "FAILED: CarPlay install (see above). Check rollback/recovery messages before rebooting."; exit 1; }
 
 echo "=== 2/2 Install the Green Engineering Menu page ==="
 /bin/sh "$D/menu/custom.sh" || { echo "WARN: menu not installed (CarPlay itself is installed)."; }

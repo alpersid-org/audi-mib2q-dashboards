@@ -1,5 +1,10 @@
 # Phase 2 requirements and safety boundary
 
+**Current audit corrections (2026-11-08):** [completion-audit.md](completion-audit.md)
+records installer recovery, widget omission, feed I/O/restart hardening and CI.
+Host checks pass; firmware/safe-surface/stock-linkage/vehicle gates remain open.
+Phase 2 is not complete. Earlier stage notes below retain their historical scope.
+
 ## Target environment — supplied, not independently verified
 
 - Audi A4 B9, 2017, 2.0 TDI quattro 190 HP.

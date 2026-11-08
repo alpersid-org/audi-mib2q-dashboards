@@ -88,13 +88,37 @@ static void placeholders_and_elision(void)
     memset(s.media.title, 'W', sizeof(s.media.title)-1);
     s.media.title[sizeof(s.media.title)-1] = 0;
     assert(db_layout_build(DB_COMPACT,&s,DB_MAX_AGE_MS+1,640,360,(cr_rect_t){0,0,640,360},&f));
-    assert(has_text(&f, "UNAVAILABLE") && has_text(&f, "STALE") && has_text(&f,"--"));
+    assert(!has_text(&f, "UNAVAILABLE") && has_text(&f, "STALE") && has_text(&f,"--"));
     assert(!has_text(&f, "12.5 C") && !has_text(&f,"620 km"));
     for (i = 0; i < f.count; ++i) {
         db_draw_command *c = &f.commands[i];
         if (c->kind == DB_DRAW_TEXT && strstr(c->text,"...")) ++elided;
     }
     assert(elided > 0 && db_frame_valid(&f));
+}
+
+static void omitted_widgets(void)
+{
+    db_snapshot s;
+    db_frame f;
+    int mode;
+    for (mode = DB_COMPACT; mode <= DB_EXTENDED; ++mode) {
+        s = snapshot;
+        s.media.sample.availability = DB_MISSING;
+        s.navigation.remaining_seconds = -1;
+        s.navigation.destination[0] = 0;
+        assert(db_layout_widget_count((db_layout)mode, &s, 1000) == 3);
+        assert(db_layout_build((db_layout)mode, &s, 1000, 640, 240,
+                               (cr_rect_t){0,0,640,240}, &f));
+        assert(db_frame_valid(&f) && has_text(&f, "12.5 C") && has_text(&f, "620 km"));
+        assert(!has_text(&f, "NOW PLAYING") && !has_text(&f, "UNAVAILABLE"));
+        assert(!has_text(&f, "TIME TO DESTINATION") && !has_text(&f, "DESTINATION"));
+        memset(&s, 0, sizeof(s));
+        assert(db_layout_widget_count((db_layout)mode, &s, 1000) == 0);
+        assert(!db_layout_build((db_layout)mode, &s, 1000, 800, 252,
+                                (cr_rect_t){0,0,800,252}, &f));
+        assert(f.count == 0);
+    }
 }
 
 static void invalid_svg_writes_nothing(db_frame *f)
@@ -135,7 +159,7 @@ static void exporter(const char *fixture)
 int main(int argc, char **argv)
 {
     assert(argc==2 && db_mock_read(NULL,1000,&snapshot));
-    layouts(); failure_clears(); placeholders_and_elision(); exporter(argv[1]);
+    layouts(); failure_clears(); placeholders_and_elision(); omitted_widgets(); exporter(argv[1]);
     puts("dashboard_render_test: layout content/bounds, crops/clearing, placeholders/elision, invalid frames/XML and I/O errors PASS");
     return 0;
 }

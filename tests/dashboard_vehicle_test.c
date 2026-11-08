@@ -1,4 +1,5 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
+#define _POSIX_C_SOURCE 200809L
 /* P2-FINAL tests for the P2-08 VehicleDataProvider reader (dashboard/vehicle_provider.c):
  * DBV1 validation, absent parts, clock mapping, review R3 interleaving, writer
  * session/sequence liveness, manager integration and, with a path argument, a record
@@ -8,6 +9,10 @@
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #define W UINT64_C(1700000000000) /* wall-clock base, ms */
 
@@ -223,6 +228,19 @@ static void reader(const char *dir)
     f = fopen(rec_path, "wb"); assert(f); fputs("short", f); assert(!fclose(f));
     assert(!db_vehicle_read(&src, 100000, &s));                 /* short file */
 
+    remove(rec_path);
+    assert(!mkfifo(rec_path, 0600));
+    alarm(3); /* a regression must fail instead of hanging the suite */
+    assert(!db_vehicle_read(&src, 100000, &s));
+    alarm(0);
+    assert(!unlink(rec_path));
+    assert(!symlink("/dev/zero", rec_path));
+    assert(!db_vehicle_read(&src, 100000, &s));
+    assert(!unlink(rec_path));
+    assert(!mkdir(rec_path, 0700));
+    assert(!db_vehicle_read(&src, 100000, &s));
+    assert(!rmdir(rec_path));
+
     /* R3: reader sampled the clock at W in the old order; now it reads first. The
      * record on disk was written at W - 50; during the clock sample a new record
      * with written W + 1 is published. It must not cause a "future" rejection. */
@@ -260,6 +278,42 @@ static void reader(const char *dir)
     /* A new session (reconnect / HMI restart) is accepted even with a lower sequence. */
     r.session = 78; r.seq = 1; write_record(&r);
     assert(db_vehicle_read(&src, 100000, &s) && src.last_session == 78);
+    /* A newly observed writer session cannot revive a record already >2 s old. */
+    r.session = 79;
+    r.written = fake_wall - DB_VEHICLE_WRITER_TIMEOUT_MS - 1;
+    r.temp_ms = r.range_ms = r.nav_ms = r.written;
+    write_record(&r);
+    assert(!db_vehicle_read(&src, 100000, &s));
+    assert(s.temperature.sample.availability == DB_MISSING && src.last_session == 78);
+#ifdef O_NOFOLLOW
+    /* Atomic replacement is the normal publisher path. Opening a new regular
+     * inode after lstat must not spuriously blank otherwise valid data. */
+    {
+        char swap[600];
+        pid_t child;
+        int status, i, rejected = 0;
+        r = good(); r.session = 99; r.written = fake_wall;
+        r.temp_ms = r.range_ms = r.nav_ms = fake_wall;
+        write_record(&r);
+        memset(&src, 0, sizeof(src)); src.path = rec_path; src.wall_ms = wall_cb;
+        snprintf(swap, sizeof(swap), "%s.swap", rec_path);
+        child = fork(); assert(child >= 0);
+        if (!child) {
+            for (i = 0; i < 2000; ++i) {
+                unsigned char b[DB_VEHICLE_RECORD_SIZE];
+                FILE *next;
+                ++r.seq; build(b, &r);
+                next = fopen(swap, "wb"); assert(next);
+                assert(fwrite(b, 1, sizeof(b), next) == sizeof(b) && !fclose(next));
+                assert(!rename(swap, rec_path));
+            }
+            _exit(0);
+        }
+        for (i = 0; i < 3000; ++i) if (!db_vehicle_read(&src, 100000, &s)) ++rejected;
+        assert(waitpid(child, &status, 0) == child && WIFEXITED(status) && WEXITSTATUS(status) == 0);
+        assert(rejected == 0);
+    }
+#endif
     /* NULL context: stateless default read of the default path is allowed. */
     assert(db_vehicle_read(NULL, 100000, NULL) == 0);
 
@@ -281,6 +335,7 @@ static void reader(const char *dir)
         assert(db_manager_update(&m, 100000, 800, 252, (cr_rect_t){0, 0, 800, 252}));
         assert(has_text(db_manager_frame(&m), "UNVERIFIED") && has_text(db_manager_frame(&m), "12.5 C"));
         assert(!has_text(db_manager_frame(&m), "MOCK"));
+        assert(!has_text(db_manager_frame(&m), "NOW PLAYING"));
         fake_wall += DB_VEHICLE_WRITER_TIMEOUT_MS + 1;
         assert(!db_manager_update(&m, 100000, 800, 252, (cr_rect_t){0, 0, 800, 252}));
         assert(db_manager_get_status(&m) == DB_MANAGER_OFF_PROVIDER);

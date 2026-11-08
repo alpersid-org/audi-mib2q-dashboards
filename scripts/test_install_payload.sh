@@ -99,7 +99,9 @@ for sh in /bin/ksh /bin/mksh /bin/dash /bin/sh; do
         run "$sh" "$layout" install   # re-run: backups must stay stock
         grep -q '"exec": "dio_manager"' "$P/smartphone_integrator.json.carplay-stock" || fail "$sh $layout" "backup overwritten"
 
+        [ "$(cat "$J/NavActiveIgnore.jar.carplay-stock")" = nav ] || fail "$sh $layout" "conflict backup missing/overwritten"
         run "$sh" "$layout" uninstall
+        [ "$(cat "$J/NavActiveIgnore.jar")" = nav ] || fail "$sh $layout" "conflict JAR not restored"
         for a in $ASSETS aa_startup.sh libaa_cluster_hook.so; do
             [ ! -e "$H/$a" ] && [ ! -e "$S/mnt/app/eso/hmi/lsd/jars/$a" ] || fail "$sh $layout" "$a not removed"
         done

@@ -2,6 +2,7 @@
 package com.luka.carplay.dashboard;
 
 import java.io.FileInputStream;
+import java.io.File;
 
 /**
  * P2-08 custom dashboard enable gate.  Reads the same strict version-1 text format as
@@ -26,6 +27,12 @@ public final class DashboardConfig {
     static byte[] read(String path) {
         FileInputStream in = null;
         try {
+            /* Missing, directory or FIFO must not block the lifecycle worker.
+             * Java 1.4 cannot provide an atomic no-follow open; target filesystem
+             * trust/permissions remain a deployment prerequisite. */
+            File file = new File(path).getAbsoluteFile();
+            if (!file.isFile() || !file.getCanonicalFile().equals(
+                    new File(file.getParentFile().getCanonicalFile(), file.getName()))) return null;
             in = new FileInputStream(path);
             byte[] buf = new byte[TEXT_CAP + 1];         /* one extra byte detects oversize */
             int n = 0, r;

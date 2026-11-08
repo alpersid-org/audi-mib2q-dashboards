@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """P2-04 CLI checks for dashboard_config and dashboard_manager_preview (stdlib only)."""
 from pathlib import Path
+import os
 import subprocess
 import sys
 import tempfile
@@ -16,7 +17,7 @@ def canon(enabled, layout):
 
 
 def run(*args):
-    return subprocess.run([str(a) for a in args], capture_output=True)
+    return subprocess.run([str(a) for a in args], capture_output=True, timeout=5)
 
 
 def main():
@@ -49,6 +50,20 @@ def main():
         for args in ([], ["bogus"], ["show", "a", "b"]):
             r = run(config_bin, *args)
             assert r.returncode == 2 and not r.stdout and b"Usage:" in r.stderr
+
+        # Configuration must reject directories, symlinks and a FIFO without
+        # blocking. A timeout turns a regression into a bounded failure.
+        directory = tmp / "directory.cfg"
+        directory.mkdir()
+        fifo = tmp / "fifo.cfg"
+        os.mkfifo(fifo)
+        link = tmp / "link.cfg"
+        link.symlink_to(on_ext)
+        for path in (directory, fifo, link):
+            r = run(config_bin, "show", path)
+            assert r.returncode == 1 and r.stdout == canon(0, "compact")
+            r = run(preview_bin, path, "wide")
+            assert r.returncode == 3 and not r.stdout
 
         # Output of the tool is valid input to itself (round trip).
         step = tmp / "step.cfg"
