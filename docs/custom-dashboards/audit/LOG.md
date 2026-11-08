@@ -1160,3 +1160,11 @@ feature; earlier project history is available in Git and [status.md](../status.m
   caught (line-65-bytes); C space allowed -> survived, equivalent (exact key/value
   matching rejects all space vectors). Sources restored (cmp identical).
 - Next: commit/push branch; await merge approval.
+
+## 2026-11-08T19:39:58Z | 20261108T172937Z-claude-11 | PUBLICATION / P2-C05 SETTINGS TO MASTER + DOCS
+
+- User: "merge + update docs". Covers this fast-forward only; no release, no vehicle.
+- Docs: status, HANDOFF, AGENTS, completion-plan C05 note, CLAUDE/GEMINI/Copilot
+  pointers, changes, CURRENT.
+- Git: origin/master d6d37fb is an ancestor; master fast-forwarded to the commit
+  containing this event (29817dc + this event). No tests rerun (docs only).

@@ -7,7 +7,7 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
-**Latest — P2-C05 settings contract (branch, not merged):** the user asked to
+**Latest — P2-C05 settings contract (merged):** C05 is complete on the host. the user asked to
 "start C05 settings contract". One typed v1 settings contract shared by C and
 Java with 48 conformance vectors ([settings-contract.md](docs/custom-dashboards/settings-contract.md)).
 

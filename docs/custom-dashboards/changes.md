@@ -8,6 +8,7 @@ User: "start C05 settings contract". Added `DashboardSettings.java`, typed
 vector + typed checks in `DashboardConfigTest`, Makefile/script wiring,
 [settings-contract.md](settings-contract.md), config.md pointer, plan/status/HANDOFF/AGENTS.
 Format unchanged. Host tests pass; mutants caught (one equivalent mutant noted).
+Merged to master on "merge + update docs"; current-state docs and agent pointers updated.
 
 ## P2-C04 — signal acceptance and eligibility (2026-11-08)
 

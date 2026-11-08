@@ -1,6 +1,6 @@
 # Project status
 
-**P2-C05 settings contract (2026-11-08, branch `feature/p2-c05-settings`):** [settings-contract.md](settings-contract.md) — typed Java `DashboardSettings`, 48 shared conformance vectors run by both C and Java; host tests pass. C05 complete on the host.
+**P2-C05 settings contract (2026-11-08, merged to master):** [settings-contract.md](settings-contract.md) — typed Java `DashboardSettings`, 48 shared conformance vectors run by both C and Java; host tests pass. C05 complete on the host.
 
 **P2-C04 (2026-11-08, host part merged to master):** signal acceptance register [signal-acceptance.md](signal-acceptance.md) and per-signal eligibility (`signal_policy.{h,c}`); production shows ACCEPTED signals only and none is accepted yet; items 2–4 wait for C02 vehicle evidence.
 

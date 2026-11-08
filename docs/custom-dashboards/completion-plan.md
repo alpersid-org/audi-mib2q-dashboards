@@ -297,7 +297,7 @@ and tested by `tests/dashboard_runtime_test.c` with a fake backend (see
 [runtime.md](runtime.md)). Met: states, every non-active path clears/releases,
 one persistent reader with no mock path, acquisition outside draw, dirty redraw,
 bounded backoff, stale-writer/session transitions, idempotent reconciler.
-Settings contract: done on `feature/p2-c05-settings` ([settings-contract.md](settings-contract.md)): typed `DashboardSettings`, shared 48-vector conformance file run by both C and Java suites.
+Settings contract: done and merged ([settings-contract.md](settings-contract.md)): typed `DashboardSettings`, shared 48-vector conformance file run by both C and Java suites.
 
 **Review corrections (published, 2026-11-08, `62b18e1`):** shutdown now latches disabled intent
 until explicit enable; incomplete backends are rejected before acquisition.

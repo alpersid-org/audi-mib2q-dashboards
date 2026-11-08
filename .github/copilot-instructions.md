@@ -12,6 +12,7 @@ Phase 1 (upstream 1.4.1 release) is installed and vehicle-tested: read the
 [Phase 1 handover](../docs/phase1-handover/README.md). P2-C05 host runtime controller
 is merged (docs/custom-dashboards/runtime.md). P2-C04 signal register/eligibility is
 merged (docs/custom-dashboards/signal-acceptance.md); no signal is ACCEPTED yet.
+C05 shared Java/C settings contract is merged (docs/custom-dashboards/settings-contract.md).
 Use [the continuation guide](../docs/custom-dashboards/HANDOFF.md) to recover context.
 Read [the current checkpoint](../docs/custom-dashboards/audit/CURRENT.md) and recent
 [audit events](../docs/custom-dashboards/audit/LOG.md); follow the audit protocol to
