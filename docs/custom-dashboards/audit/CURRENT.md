@@ -1,14 +1,14 @@
 # Current agent checkpoint
 
-Updated: 2026-11-08T19:53:42Z. Agent: Claude Code. Task: P2-C01 / COMPLETE, merged to master on
-"merge + update docs". CI runs on every push; run 42516991181 passed.
+Updated: 2026-11-08T20:07:27Z. Agent: Claude Code. Task: P2-C07 host part / READY_FOR_REVIEW on
+`feature/p2-c07-settings-persistence` (from master 90e86b5). Not merged.
 
-- Host work done: C01 (CI), C04 host part (register + eligibility), C05 (runtime +
-  settings contract). No signal ACCEPTED; production draws nothing by design.
-- Open: C04 items 2–4 + signal acceptance (vehicle evidence); C07 controls/
-  persistence; C02 stock/baseline evidence; C03 surface gate; C06/C08/C09.
-- Optional: actions/checkout@v5 + setup-java@v5 (Node 20 deprecation warnings).
+- Done: atomic store + CLI -w; runtime live settings (persisted vs applied, fail
+  closed, shutdown latch flag); Java publisher withdraws on disable (505 ms host);
+  reboot gate tests. Clean make all test test-sanitize test-java + lifecycle PASS;
+  two mutants caught.
+- Deferred by rule: GEM buttons (need C06 consumer). Gap: AA mid-session enable
+  needs next session (stock-linked VehicleDataModule).
 - Boundaries: QNX guard, default OFF, no native backend, no vehicle actions.
 
-Next: await the user. This merge push to master triggers a CI run; check its
-result before claiming CI status for the merged revision. Audit: [LOG.md](LOG.md).
+Next: CI result for the branch push; await merge approval. Audit: [LOG.md](LOG.md).

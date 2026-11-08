@@ -52,6 +52,12 @@ $(OUT)/dashboard_signal_policy_test_sanitize: ../tests/dashboard_signal_policy_t
 $(OUT)/dashboard_config_vectors_test: ../tests/dashboard_config_vectors_test.c $(SOURCES) $(HEADERS) | $(OUT)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -UNDEBUG ../tests/dashboard_config_vectors_test.c $(SOURCES) $(LDFLAGS) -o $@
 
+$(OUT)/dashboard_settings_test: ../tests/dashboard_settings_test.c $(SOURCES) $(HEADERS) | $(OUT)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -D_POSIX_C_SOURCE=200809L -UNDEBUG ../tests/dashboard_settings_test.c $(SOURCES) $(LDFLAGS) -o $@
+
+$(OUT)/dashboard_settings_test_sanitize: ../tests/dashboard_settings_test.c $(SOURCES) $(HEADERS) | $(OUT)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -D_POSIX_C_SOURCE=200809L -O1 -UNDEBUG $(SAN) ../tests/dashboard_settings_test.c $(SOURCES) $(LDFLAGS) -o $@
+
 $(OUT)/dashboard_runtime_test: ../tests/dashboard_runtime_test.c $(SOURCES) $(HEADERS) | $(OUT)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(STRICT) -UNDEBUG ../tests/dashboard_runtime_test.c $(SOURCES) $(LDFLAGS) -o $@
 
@@ -83,7 +89,7 @@ $(OUT)/dashboard_render_test_sanitize: ../tests/dashboard_render_test.c $(SOURCE
 test: $(OUT)/dashboard_test $(OUT)/dashboard_render_test $(OUT)/dashboard_preview \
 	$(OUT)/dashboard_manager_test $(OUT)/dashboard_config $(OUT)/dashboard_manager_preview \
 	$(OUT)/dashboard_vehicle_test $(OUT)/dashboard_runtime_test $(OUT)/dashboard_signal_policy_test \
-	$(OUT)/dashboard_config_vectors_test
+	$(OUT)/dashboard_config_vectors_test $(OUT)/dashboard_settings_test
 	$(OUT)/dashboard_test
 	$(OUT)/dashboard_render_test $(OUT)/escaped.svg
 	$(PYTHON) ../tests/dashboard_svg_test.py $(OUT)/dashboard_preview $(OUT)/escaped.svg
@@ -94,10 +100,12 @@ test: $(OUT)/dashboard_test $(OUT)/dashboard_render_test $(OUT)/dashboard_previe
 	$(OUT)/dashboard_runtime_test $(OUT)/fixtures
 	$(OUT)/dashboard_signal_policy_test $(OUT)/fixtures
 	$(OUT)/dashboard_config_vectors_test ../tests/fixtures/dashboard_config_vectors.txt
+	$(OUT)/dashboard_settings_test $(OUT)/fixtures
 
 test-sanitize: $(OUT)/dashboard_test_sanitize $(OUT)/dashboard_render_test_sanitize \
 	$(OUT)/dashboard_manager_test_sanitize $(OUT)/dashboard_vehicle_test_sanitize \
-	$(OUT)/dashboard_runtime_test_sanitize $(OUT)/dashboard_signal_policy_test_sanitize
+	$(OUT)/dashboard_runtime_test_sanitize $(OUT)/dashboard_signal_policy_test_sanitize \
+	$(OUT)/dashboard_settings_test_sanitize
 	$(OUT)/dashboard_test_sanitize
 	$(OUT)/dashboard_render_test_sanitize $(OUT)/escaped_sanitize.svg
 	mkdir -p $(OUT)/fixtures
@@ -105,6 +113,7 @@ test-sanitize: $(OUT)/dashboard_test_sanitize $(OUT)/dashboard_render_test_sanit
 	$(OUT)/dashboard_vehicle_test_sanitize $(OUT)/fixtures
 	$(OUT)/dashboard_runtime_test_sanitize $(OUT)/fixtures
 	$(OUT)/dashboard_signal_policy_test_sanitize $(OUT)/fixtures
+	$(OUT)/dashboard_settings_test_sanitize $(OUT)/fixtures
 
 # Java feed/config/AaRgState tests + Java->C fixture (host JDK; no stock JAR needed).
 test-java: $(OUT)/dashboard_vehicle_test
@@ -132,5 +141,5 @@ clean:
 	rm -f $(OUT)/dashboard_vehicle_test $(OUT)/dashboard_vehicle_test_sanitize
 	rm -f $(OUT)/dashboard_runtime_test $(OUT)/dashboard_runtime_test_sanitize
 	rm -f $(OUT)/dashboard_signal_policy_test $(OUT)/dashboard_signal_policy_test_sanitize
-	rm -f $(OUT)/dashboard_config_vectors_test
+	rm -f $(OUT)/dashboard_config_vectors_test $(OUT)/dashboard_settings_test $(OUT)/dashboard_settings_test_sanitize
 	rm -rf $(OUT)/fixtures

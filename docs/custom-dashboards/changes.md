@@ -1,5 +1,14 @@
 # Change ledger
 
+## P2-C07 — settings persistence and live application (2026-11-08)
+
+User: "start C07". `db_config_store_path` (atomic), `dashboard_config -w`,
+`db_runtime_load_settings` / `applied_config` / `persisted_settings`, explicit
+shutdown latch flag, `DashboardModule` per-cycle config re-check (withdraw on
+disable). Tests: `tests/dashboard_settings_test.c`, CLI `-w` cases,
+`DashboardModuleTest.liveSettings`. Docs: [controls.md](controls.md), plan,
+settings-contract, status/HANDOFF/AGENTS. GEM buttons not added (rule).
+
 ## P2-C01 — first CI run passed (2026-11-08)
 
 Owner enabled Actions. Run 42516991181 on `ci/first-run` succeeded; evidence added

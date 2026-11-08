@@ -1211,3 +1211,27 @@ feature; earlier project history is available in Git and [status.md](../status.m
 - Docs: completion-plan C01 row (Done), changes, CURRENT.
 - Git: origin/master c49da24 is an ancestor; master fast-forwarded to the commit
   containing this event (496fef1, 2ac0386 + this event). The push to master runs CI.
+
+## 2026-11-08T20:02:42Z | 20261108T172937Z-claude-17 | START / P2-C07 host part (persistence + live settings)
+
+- User: "start C07". Start master = origin/master 90e86b5 (CI green, run
+  42517331878). Branch feature/p2-c07-settings-persistence.
+- Not done now, by rule: GEM Enable/Disable/Compact/Extended/Restore buttons. Plan
+  and AGENTS require a safely gated consumer first (C06 absent).
+- Host scope: atomic config store (C API + dashboard_config -w); runtime settings
+  reload keeping persisted intent distinct from applied state (fail closed);
+  Java publisher re-checks config each cycle so disable needs no reconnect;
+  reboot/old-enabled-file cannot bypass the unsupported-profile gate; tests.
+- Known gap kept: AA Kombi binding still starts only at session start (enable
+  mid-session needs the next session; disable/layout do not).
+
+## 2026-11-08T20:07:27Z | 20261108T172937Z-claude-18 | COMPLETE / P2-C07 host part READY_FOR_REVIEW
+
+- Added db_config_store_path, dashboard_config -w, db_runtime_load_settings/
+  applied_config/persisted_settings, shutdown_latched flag (found: per-cycle reload
+  would otherwise undo Codex's shutdown latch), DashboardModule per-cycle re-check
+  using Codex's removeRecord() under the files lock.
+- Tests: dashboard_settings_test (+sanitize), CLI -w cases, DashboardModuleTest.
+  liveSettings (505 ms). Clean make all test test-sanitize test-java, lifecycle 6/6.
+- Mutants: latch ignored -> caught; no withdrawal -> caught. Sources restored.
+- GEM buttons not added (consumer gate). Next: push; check branch CI; await approval.

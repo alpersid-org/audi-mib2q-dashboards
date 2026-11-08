@@ -57,6 +57,9 @@ typedef struct {
     db_eligibility_mode mode;   /* PRODUCTION by default */
     db_manager manager;
     db_config config;           /* last applied (valid) configuration */
+    db_config_load persisted_status; /* P2-C07: last settings load result */
+    db_config persisted;        /* settings as read (default if missing/invalid) */
+    int shutdown_latched;       /* set by shutdown; only explicit apply_config clears it */
     db_runtime_state state;
     int owned, shown;
     db_frame last;              /* last frame passed to draw (change detection) */
@@ -83,6 +86,19 @@ void db_runtime_set_signal_policy(db_runtime *rt, const db_signal_policy *policy
 /* Idempotent reconciler: an identical config is a no-op. NULL/invalid applies the
  * disabled default. Disabling clears and releases output immediately. */
 void db_runtime_apply_config(db_runtime *rt, const db_config *config);
+/* P2-C07: reads the settings file once (bounded, <= 512 bytes) and applies it.
+ * The persisted intent (status + config as read) is kept separately from the
+ * applied config. LOADED applies the file; MISSING applies the disabled default;
+ * INVALID (partial, unknown version, unreadable, wrong file type) fails closed
+ * with the disabled default and OFF_CONFIG. Applying is idempotent, so calling
+ * this every controller cycle is cheap and makes disable/layout changes take
+ * effect without a reconnect. A supported profile is still required to draw. */
+db_config_load db_runtime_load_settings(db_runtime *rt, const char *path);
+/* While shut down, load_settings only records the persisted intent; it never
+ * restarts output. db_runtime_apply_config is the explicit restart. */
+/* Applied vs persisted: applied is what the runtime acts on now. */
+const db_config *db_runtime_applied_config(const db_runtime *rt);
+db_config_load db_runtime_persisted_settings(const db_runtime *rt, db_config *out);
 /* One controller step at monotonic now_ms (call periodically, e.g. every 250 ms):
  * read the record once (I/O happens here, never in draw), then converge output. */
 db_runtime_state db_runtime_tick(db_runtime *rt, uint64_t now_ms);

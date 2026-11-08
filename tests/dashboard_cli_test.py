@@ -65,6 +65,27 @@ def main():
             r = run(preview_bin, path, "wide")
             assert r.returncode == 3 and not r.stdout
 
+        # P2-C07: -w stores the result atomically back to CONFIG.
+        wfile = tmp / "w.cfg"
+        r = run(config_bin, "-w", "extended", wfile)          # missing -> created
+        assert r.returncode == 0 and wfile.read_bytes() == canon(0, "extended"), r
+        r = run(config_bin, "-w", "enable", wfile)            # layout kept
+        assert r.returncode == 0 and wfile.read_bytes() == canon(1, "extended")
+        r = run(config_bin, "-w", "disable", wfile)
+        assert wfile.read_bytes() == canon(0, "extended")
+        wfile.write_bytes(b"version=9\nenabled=1\n")          # invalid -> default + action
+        r = run(config_bin, "-w", "compact", wfile)
+        assert r.returncode == 0 and wfile.read_bytes() == canon(0, "compact") and b"invalid" in r.stderr
+        r = run(config_bin, "-w", "restore-default", wfile)
+        assert wfile.read_bytes() == canon(0, "compact")
+        assert not list(tmp.glob("w.cfg.tmp.*")), "temporary file left behind"
+        for args in (["-w", "show", wfile], ["-w", "enable"], ["-w"], ["-w", "bogus", wfile]):
+            r = run(config_bin, *args)
+            assert r.returncode == 2 and not r.stdout and b"Usage:" in r.stderr, args
+        nodir = tmp / "no-such-dir" / "x.cfg"
+        r = run(config_bin, "-w", "enable", nodir)
+        assert r.returncode == 1 and b"atomic store failed" in r.stderr and not nodir.exists()
+
         # Output of the tool is valid input to itself (round trip).
         step = tmp / "step.cfg"
         step.write_bytes(run(config_bin, "extended").stdout)

@@ -72,6 +72,8 @@ void db_runtime_init(db_runtime *rt, const db_output_backend *backend,
     db_config_default(&rt->config);
     db_manager_set_config(&rt->manager, &rt->config);
     rt->state = DB_RT_DISABLED;
+    rt->persisted_status = DB_CONFIG_MISSING;
+    db_config_default(&rt->persisted);
 }
 
 void db_runtime_set_profile(db_runtime *rt, const db_runtime_profile *profile)
@@ -107,6 +109,7 @@ void db_runtime_apply_config(db_runtime *rt, const db_config *config)
 {
     db_config next;
     if (!rt) return;
+    rt->shutdown_latched = 0;                      /* explicit intent ends a shutdown */
     if (db_config_valid(config)) next = *config;
     else db_config_default(&next);
     if (!memcmp(&next, &rt->config, sizeof(next)) && db_config_valid(config)) return;
@@ -168,6 +171,7 @@ void db_runtime_shutdown(db_runtime *rt)
      * Applying enabled config explicitly starts the next lifecycle. */
     db_config_disable(&rt->config);
     db_manager_disable(&rt->manager);
+    rt->shutdown_latched = 1;
     rt->backoff_ms = rt->retry_at_ms = 0;
     leave(rt, DB_RT_DISABLED);
 }
@@ -182,4 +186,29 @@ const char *db_runtime_state_name(db_runtime_state s)
     case DB_RT_RECOVERING: return "recovering";
     }
     return "unknown";
+}
+
+db_config_load db_runtime_load_settings(db_runtime *rt, const char *path)
+{
+    db_config c;
+    db_config_load st;
+    if (!rt) return DB_CONFIG_INVALID;
+    st = db_config_load_path(path, &c);      /* c is the default unless LOADED */
+    rt->persisted_status = st;
+    rt->persisted = c;
+    if (rt->shutdown_latched) return st;       /* record intent, never restart */
+    db_runtime_apply_config(rt, st == DB_CONFIG_INVALID ? NULL : &c);
+    return st;
+}
+
+const db_config *db_runtime_applied_config(const db_runtime *rt)
+{
+    return rt ? &rt->config : NULL;
+}
+
+db_config_load db_runtime_persisted_settings(const db_runtime *rt, db_config *out)
+{
+    if (!rt) { if (out) db_config_default(out); return DB_CONFIG_INVALID; }
+    if (out) *out = rt->persisted;
+    return rt->persisted_status;
 }

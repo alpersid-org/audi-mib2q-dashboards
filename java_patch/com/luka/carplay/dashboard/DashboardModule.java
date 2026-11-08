@@ -39,6 +39,10 @@ import java.io.FileOutputStream;
  * The write time is taken AFTER all sources were read, so no sample is newer than it
  * (review R1).  Sequence starts at 1 for each writer session and increases by one.
  *
+ * Settings (P2-C07): the writer re-reads DashboardConfig every cycle; disabling during
+ * a session withdraws the record without a reconnect, re-enabling resumes publishing.
+ * Starting while disabled still runs nothing (enabling then needs the next session).
+ *
  * Lifecycle (review R2): every start() opens a new writer generation. At most one
  * publication per generation stages its data at a time; a restarted generation
  * may proceed while cancelled old staging is still blocked. File open/write/close run outside the
@@ -132,13 +136,26 @@ public final class DashboardModule implements Module {
     }
 
     private void writeLoop(int gen) {
-        boolean failLogged = false;
+        boolean failLogged = false, withdrawn = false;
         int sequence = 0;
         int session = sessionId(gen);
         while (current(gen)) {
             try { Thread.sleep(PERIOD_MS); }
             catch (InterruptedException e) { return; }
             if (!current(gen)) return;
+            /* P2-C07: settings apply during the session. Disabled -> stop publishing and
+             * withdraw the record once (the C runtime then restores OEM output); enabled
+             * again in the same session -> resume. Small bounded read, no lock held. */
+            if (!DashboardConfig.enabled()) {
+                if (!withdrawn) {
+                    /* Same thread as publish(): no publication of gen is in flight. */
+                    synchronized (files) { if (generation == gen) removeRecord(); }
+                    withdrawn = true;
+                    Log.i(TAG, "dashboard disabled during session: record withdrawn");
+                }
+                continue;
+            }
+            withdrawn = false;
             try {
                 /* Read every source first, then take the write time (review R1). */
                 int owner = CarPlayApp.sessionOwner();

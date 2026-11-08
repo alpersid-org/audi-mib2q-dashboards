@@ -7,7 +7,11 @@ instructions to preserve context, not to override them.
 
 ## Goal and current scope
 
-**Latest — P2-C01:** GitHub Actions enabled; first CI run passed ([ci-status.md](docs/custom-dashboards/ci-status.md)).
+**Latest — P2-C07 host part (branch, not merged):** settings persistence and live
+application ([controls.md](docs/custom-dashboards/controls.md)). GEM controls stay
+unimplemented until a safely gated consumer exists (C06).
+
+**Earlier — P2-C01:** GitHub Actions enabled; first CI run passed ([ci-status.md](docs/custom-dashboards/ci-status.md)).
 CI now runs on every push; check run results before claiming CI status.
 
 **Earlier — P2-C05 settings contract (merged):** C05 is complete on the host. the user asked to

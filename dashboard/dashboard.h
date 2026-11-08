@@ -186,6 +186,11 @@ typedef enum { DB_CONFIG_INVALID = -1, DB_CONFIG_MISSING = 0, DB_CONFIG_LOADED =
 /* Host regular-file loader: rejects symlinks/special files, bounded read, then db_config_parse. Missing file and
  * invalid content both leave out as the disabled default. */
 db_config_load db_config_load_path(const char *path, db_config *out);
+/* P2-C07: atomically replaces the file at path with the canonical text of a valid
+ * config: temporary file in the same directory, flush + fsync, then rename. On any
+ * failure the old file is left as it was and the temporary file is removed.
+ * Returns 1 stored, 0 invalid config or I/O error. */
+int db_config_store_path(const char *path, const db_config *config);
 /* Writes canonical text after validating. Returns 1 success, 0 invalid/error. */
 int db_config_write(FILE *stream, const db_config *config);
 

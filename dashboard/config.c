@@ -154,3 +154,22 @@ void db_config_restore_default(db_config *c)
 {
     db_config_default(c);
 }
+
+int db_config_store_path(const char *path, const db_config *c)
+{
+    char tmp[4096];
+    FILE *f;
+    int fd, ok;
+    if (!path || !db_config_valid(c)) return 0;
+    if ((size_t)snprintf(tmp, sizeof(tmp), "%s.tmp.%ld", path, (long)getpid()) >= sizeof(tmp))
+        return 0;
+    fd = open(tmp, O_WRONLY | O_CREAT | O_EXCL, 0644);   /* never follow/clobber */
+    if (fd < 0) return 0;
+    f = fdopen(fd, "w");
+    if (!f) { close(fd); unlink(tmp); return 0; }
+    ok = db_config_write(f, c) && fflush(f) == 0 && fsync(fileno(f)) == 0;
+    if (fclose(f) != 0) ok = 0;
+    if (ok && rename(tmp, path) != 0) ok = 0;
+    if (!ok) unlink(tmp);
+    return ok;
+}

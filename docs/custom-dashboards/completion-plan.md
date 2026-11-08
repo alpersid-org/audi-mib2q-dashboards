@@ -115,7 +115,7 @@ to execute independent authorized host work.
 | P2-C04 | Accepted signal/capability and freshness policy | C02 real DSI/receiver evidence | **Register + per-signal eligibility merged** ([signal-acceptance.md](signal-acceptance.md)); acceptance of each signal gated on vehicle evidence | Medium |
 | P2-C05 | Host-testable production consumer/controller contract | Existing core; C04 contract | **Controller and shared settings contract implemented and host-tested** ([runtime.md](runtime.md), [settings-contract.md](settings-contract.md)) | Medium |
 | P2-C06 | VC drawing backend and native display lifecycle | C02, C03, C04, C05 | Target integration blocked on gates | Large |
-| P2-C07 | MMI controls and persistent runtime settings | C05 controller and safely gated C06 consumer | Schema/controller tests now; GEM integration after consumer | Medium |
+| P2-C07 | MMI controls and persistent runtime settings | C05 controller and safely gated C06 consumer | **Host part done** ([controls.md](controls.md)); GEM integration after consumer | Medium |
 | P2-C08 | Shipping build, package and recovery validation | C02, C04, C06, C07; green host evidence | Baseline build preparation now; final package later | Medium |
 | P2-C09 | Actual vehicle acceptance and closure dossier | C01-C08; authorized vehicle procedure | No: prerequisites incomplete | Large / hardware validation |
 
@@ -367,6 +367,13 @@ lifecycle integration, `dashboard/config.c`/controller, `scripts/build_gem_menu.
 invalid config, toggles, selection, reconnect, restart and persistence pass host/
 stock-linked tests; applied state is distinguishable from persisted intent.
 On-unit control behavior is confirmed in C09.
+
+**State (2026-11-08, `feature/p2-c07-settings-persistence`):** host part done —
+[controls.md](controls.md): atomic store + `dashboard_config -w`, live runtime
+reload with persisted-vs-applied state (fail closed), shutdown latch kept, Java
+publisher withdraws on disable without reconnect (505 ms host), reboot cannot
+bypass profile/eligibility gates. GEM buttons deferred until a safely gated
+consumer exists (C06). AA mid-session *enable* still needs the next session.
 
 ## P2-C08 — shipping build, packaging and recovery
 

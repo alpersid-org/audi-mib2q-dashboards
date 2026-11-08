@@ -41,6 +41,11 @@ On the unit the file is `/mnt/app/carplay_dashboard.cfg` (`DashboardConfig.PATH`
 
 ## Lifecycle (reconciliation)
 
+> P2-C07 update: settings now also apply **during** a session (C runtime
+> `db_runtime_load_settings` each cycle; Java publisher re-reads each 500 ms),
+> and `db_config_store_path` / `dashboard_config -w` persist atomically. See
+> [controls.md](controls.md). The paragraph below describes the start-time read.
+
 The Java side reads the file when its modules start (phone session start), so a
 change takes effect at the next session (session-bound, see vehicle-provider.md).
 The C runtime applies settings through the idempotent `db_runtime_apply_config`:

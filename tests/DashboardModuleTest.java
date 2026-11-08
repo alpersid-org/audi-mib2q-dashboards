@@ -253,10 +253,54 @@ public final class DashboardModuleTest {
         absentFor(rec, 700, "missing config published");
     }
 
+    /* P2-C07: disabling during a session withdraws the record without a reconnect;
+     * re-enabling in the same session resumes publishing (same writer session). */
+    static void liveSettings(File dir) throws Exception {
+        File cfg = new File(dir, "live.cfg"), rec = new File(dir, "live_record");
+        DashboardConfig.path = cfg.getPath();
+        DashboardModule.recordPath = rec.getPath();
+        cfg.delete(); rec.delete();
+        CarPlayApp.owner = CarPlayApp.OWNER_ANDROID_AUTO;
+        VehicleDataModule.source = new VehicleDataModule.Source() {
+            public VehicleDataModule.DashboardVehicle read() {
+                long now = System.currentTimeMillis();
+                return new VehicleDataModule.DashboardVehicle(125, now, 620, now);
+            }
+        };
+        DashboardConfigTest.write(cfg, "version=1\nenabled=1\n".getBytes("ISO-8859-1"));
+        DashboardModule m = new DashboardModule();
+        check(m.start(null), "start");
+        byte[] b = waitRecord(rec, 3000);
+        check(b != null, "no record while enabled");
+        int session = u32(b, 60), seq = u32(b, 4);
+        /* Disable mid-session: record gone within two writer periods, stays gone. */
+        DashboardConfigTest.write(cfg, "version=1\nenabled=0\n".getBytes("ISO-8859-1"));
+        long t0 = System.currentTimeMillis();
+        while (rec.exists() && System.currentTimeMillis() - t0 < 1500) Thread.sleep(20);
+        long latency = System.currentTimeMillis() - t0;
+        check(!rec.exists(), "record not withdrawn after disable");
+        check(latency <= 1100, "disable latency " + latency + " ms > 2 writer periods");
+        absentFor(rec, 1200, "published while disabled");
+        /* Invalid config also counts as disabled. */
+        DashboardConfigTest.write(cfg, "version=2\nenabled=1\n".getBytes("ISO-8859-1"));
+        absentFor(rec, 1200, "published with invalid config");
+        /* Re-enable in the same session: publishing resumes, same writer session,
+         * sequence keeps increasing (the C reader requires monotonic sequences). */
+        DashboardConfigTest.write(cfg, "version=1\nenabled=1\n".getBytes("ISO-8859-1"));
+        b = waitRecord(rec, 3000);
+        check(b != null && u32(b, 60) == session && u32(b, 4) > seq, "resume after re-enable");
+        m.stop();
+        check(!rec.exists(), "record survived stop");
+        cfg.delete();
+        System.out.println("DashboardModuleTest.liveSettings: disable withdraws in " + latency
+            + " ms without reconnect; invalid = disabled; re-enable resumes PASS");
+    }
+
     public static void main(String[] args) throws Exception {
         layout();
         writeFixture(args[1]);
         lifecycle(new File(args[0]));
+        liveSettings(new File(args[0]));
         check(DashboardModule.PATH.equals("/tmp/carplay_dashboard"), "production record path");
         System.out.println("DashboardModuleTest: DBV1 layout/oldest time/UTF-8 cut, R1 write-time order, R2 stop during collection and blocked write, restart sessions, disabled/missing config PASS");
     }
